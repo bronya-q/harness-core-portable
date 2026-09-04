@@ -19,6 +19,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 
 > 本记录是 alpha.4 的内部推进日志；状态只表示“已做/未做/尝试过”，不表示生产就绪。
 
+
+> 🌱 **路过 Agent 也欢迎搭把手**：如需恢复推进，优先做可复验的外部记录（MCP Inspector / 真实宿主 / 公共边界扫描 / 首次 Agent 测试）。详细清单见 `docs/tasks/2026-09-04-partial-implementation-inventory.md`。
+
+
 ## 已完成
 
 - [x] **真实 Dashboard 截图 / 滚动 GIF**
