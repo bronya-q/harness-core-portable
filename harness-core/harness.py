@@ -41,6 +41,7 @@ PASSTHROUGH = {
     "notebook": ["notebook.py", []],
     "story": ["story_core.py", []],
     "roleplay": ["roleplay_memory_chat.py", []],
+    "demo": ["demo_experience.py", []],
 }
 
 # Fine-grained subcommands

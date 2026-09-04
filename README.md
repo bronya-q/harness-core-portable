@@ -15,6 +15,27 @@ Python：3.13+
 
 ---
 
+## 5 分钟看到什么
+
+```bash
+git clone https://github.com/bronya-q/harness-core-portable.git
+cd harness-core-portable
+python harness.py demo --offline
+```
+
+用完全合成的数据，一次展示：
+
+- 跨会话记忆：Alice 记住“蓝色钥匙在旧港钟楼下”；
+- 角色隔离：Bob 读不到 Alice 的私人记忆；
+- 共享 Story Core：Alice/Bob 都知道“旧港终年有雾”，但私人记忆仍隔离；
+- 纠错：蓝色钥匙 → 银色钥匙；
+- 版本恢复：v1 → v2 → restore 出 v3；
+- 一键清理：临时 demo 数据自动删除。
+
+不需要 Ollama、不需要 API key、不需要真实用户数据。
+
+---
+
 ## 目录
 
 - [这是什么](#这是什么)
@@ -126,13 +147,16 @@ cd harness-core-portable
 # 2. 发布前离线自检（不依赖 Ollama / 私有卡，干净 clone 应通过）
 python package_selfcheck.py
 
-# 3. 根目录统一 launcher（自检，失败返回非 0；生产门控未满足时预期失败）
+# 3. 5 分钟离线演示（合成数据，自动清理）
+python harness.py demo --offline
+
+# 4. 根目录统一 launcher（自检，失败返回非 0；生产门控未满足时预期失败）
 python harness.py audit
 
-# 4. 看政策
+# 5. 看政策
 python harness.py status
 
-# 5. 内生审查（走 harness review）
+# 6. 内生审查（走 harness review）
 python harness.py review run
 
 # 或直接进入核心目录
@@ -157,6 +181,7 @@ python roleplay_memory_chat.py --help
 ## 常用命令
 
 ```bash
+python harness.py demo --offline        # 5 分钟离线可感知演示（合成数据）
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -217,6 +242,7 @@ LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说�
 RESEARCH.md             研究动机、范式、数据与效果
 PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与研究建议
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
+demo_experience.py       离线可感知演示（合成数据，一键清理）
 local_records_export.py   本地记录快照生成脚本（需在原始环境运行）
 local_records_verify.py  本地记录快照校验脚本
 MENTAL_MODEL_EFFECTS.md 心智效果说明
