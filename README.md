@@ -81,6 +81,27 @@ python harness.py demo --offline
 
 第一次不用理解所有术语和命令。**先跑 Demo，再按自己的目标只选一条路。**
 
+## 本地 Dashboard 预览
+
+![Harness Core Portable 本地控制台预览](docs/images/harness-dashboard-preview.png)
+
+本地只读 HTML 控制台（合成示例图，非真实用户数据）。运行：
+
+```bash
+python harness.py dashboard build
+```
+
+会生成一个不开放端口、不自动上传的静态文件，里面包含：
+- 彩色运行桥状态条（Scope / Persona / Memory / Policy / Model）
+- 知识域关系网格（角色 ↔ 知识域 ↔ 权限）
+- 事件来源分组、向量队列、Token Provider 可视化
+
+动画版（合成演示，非真实录制）：
+
+![Harness Core Portable Dashboard 动画演示](docs/images/harness-dashboard-demo.gif)
+
+> 图片是刻意做的“外观预览”，不是浏览器截图；真实运行效果以 `python harness.py dashboard build` 生成为准。
+
 ## 角色不应该只是“口癖包”
 
 这里追求的不是让角色多说几句特色台词，而是让用户能够理解：角色**此刻处在什么处境、与用户共同经历过什么、为什么作出当前选择，以及理解错了以后在哪里纠正**。
@@ -112,6 +133,7 @@ See [Agent Compatibility](docs/AGENT_COMPATIBILITY.md). Compatibility varies by 
 - [这是什么](#这是什么)
 - [为什么值得看](#为什么值得看)
 - [快速开始](#快速开始)
+- [本地 Dashboard 预览](#本地-dashboard-预览)
 - [核心概念](#核心概念)
 - [常用命令](#常用命令)
 - [效果与边界](#效果与边界)

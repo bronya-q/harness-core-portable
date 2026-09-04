@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T14:09:36.098572+00:00",
+  "generated_at": "2026-09-04T14:13:51.026740+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 198,
+  "count": 201,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -30,7 +30,7 @@
     "PUBLIC_CONTENT_BOUNDARY.md": "5f679ea3f697e2c761a13004c75fad1355e3586a7835a8f90bea8d0a5e1739e7",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "960257bd0d47350263353780b33c3977984e28be7225fa52e9a95bc3bef7a1f4",
+    "README.md": "2c55780ad7c04cdbecb0aad468141e6ebf726ad190b638e3939c36f52e86a829",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
     "ROADMAP.md": "8f8a38abbd8d5e195cbe3cdcd2678f58b0fb2cc949f7d7cf6b5fff705332c6c7",
@@ -48,6 +48,8 @@
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.3-external-verification.md": "87c72ce0053c57870de23547683b6747709e79ac517d800f0b7458f8325a16c8",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.3.md": "a28d32c6997f6579e68a7fbbe50ca6d04458bc99c0291b1445574d6444542763",
     "docs/deployments/2026-09-04-situated-mode-and-readme-onboarding-deployment.md": "bcfbb6da8e6afc72badfd931da9b790b847a7d349b88f0e73f5fda5f4f39db3f",
+    "docs/images/harness-dashboard-demo.gif": "3bb900d54b918386f9541029d8c9c631651f490333b85d2857eba686ab94b759",
+    "docs/images/harness-dashboard-preview.png": "b3cb7bee3f18e1a6b1a80546459a39985e52b796680e0bf81c8c41f60cd4eac6",
     "docs/mcp/server.json": "05b322f08baecab48678e10d9457e70f2e6809fd99b4073854f5d08e19855c36",
     "docs/mcp/verification.md": "40c5567e29410e6f884376916286f718d6217628e607dd273186349e4ed4bf20",
     "docs/measurement/CONSTRUCT_DICTIONARY.md": "d39ee275ad33a2ac00dc3841bfc43c73909a8bc4a590ff910e0f91f876cd47f3",
@@ -86,7 +88,7 @@
     "harness-core/control_commands.py": "f6702ebafe6510fc6ac3cfa31e54991e336849fee2ba435b2070f289e51d69f8",
     "harness-core/cross_character_consistency.py": "1367dbffffcb3c4179992c2308c7212ae33d09dc44ab134c70bbe8a5e54f199b",
     "harness-core/daily_report.py": "0f6d2c41dc4391ebd5b54e1a25890fc9082b898fe779b001d86898c9ffade774",
-    "harness-core/dashboard.py": "4da1bde66d658ae6acd0e24717b06484c51b69bb57e4068cd1ef4df2d1c838d8",
+    "harness-core/dashboard.py": "b378ac47bc7eac90e3a0a51291e5d294b1ca5b75a50fff06fcfc0a1120c77c40",
     "harness-core/deep_fusion_retriever.py": "23c3b12fe2bb9f8cd103623848e7fabb867b068919dc3f52e843a3103e5e9fdb",
     "harness-core/demo_experience.py": "66a71cbebf50d11e78c1e395026a4d2bcf1222e98701667bfeb240e5b739e1ba",
     "harness-core/docs/Herta-NEKO-升级方案-20260901.md": "c7c43894816bf9deda6bdfa5ebdbc825a981ac3e326c800d9f1324795e44c0c8",
@@ -201,6 +203,7 @@
     "tests/test_ngram_fallback.py": "74aa0a9e91cfe1448b23d09de7207d868a717d4dc74da56dd94fa1bba13d8100",
     "tests/test_provider_usage.py": "e5e2189f78afbab00ddc66e3b535b0a2c33446c1ccdb841217acd5d75c401d81",
     "tests/test_vector_queue.py": "e67c27721f4c8f9a7545581619ace76b97386a7f16532e0e8a1c30c59aa06374",
+    "tools/generate_readme_visuals.py": "6322030adc3a75e31e8ac0af9a90ecf004cb877fa0f16c268eb2fa9238b7667a",
     "unified-object-model.example.json": "7880eab0a3a687b19901953a311779628da68e1b91158d909354332dd796a726",
     "开始体验.bat": "f91507f84ed67d819bcb6f5ffe3430c7878a8d8c3f8f4fec4d20df1b229dac19"
   }
