@@ -37,7 +37,7 @@ topics: [release, alpha, github, mcp, character, workspace]
 
 - commit: `b3ad9fc`
 - tag: `v0.1.0-alpha.3`
-- release manifest count: 184（后续工作区随 commit 持续更新）
+- release manifest count: 182（以 tag 冻结点为准）
 
 ## 5. 验证证据
 
@@ -52,7 +52,7 @@ topics: [release, alpha, github, mcp, character, workspace]
 - MCP Inspector / Official Registry / Claude Code / Codex / Copilot
 - 首次用户真实测试
 - 第三方 clone + ZIP 回读
-- MCP Inspector / Official Registry / 真实宿主仍待后续
+- Release body 中 manifest count 与 `schema validate --mode` 需勘误；见外部验证记录
 
 ## 7. 回滚方法
 
@@ -61,5 +61,5 @@ topics: [release, alpha, github, mcp, character, workspace]
 ## 8. 后辈接手说明
 
 - Release 页面已创建（Pre-release，draft=false）
-- 第三方 clone + ZIP 回读仍待核验
+- GitHub Download ZIP 仍待核验；本地 tag archive 已通过
 - 检查 `character mode` / `workspace worktree` / `mcp` 命令
