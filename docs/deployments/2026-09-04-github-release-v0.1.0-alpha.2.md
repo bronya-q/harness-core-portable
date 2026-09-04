@@ -68,7 +68,7 @@ git push origin v0.1.0-alpha.2
 
 ## 9. 回滚方法
 
-删除 tag 或回退 main 到上一提交。
+如果 Release 页面正文有误，优先编辑或删除 GitHub Release 对象；不要移动或删除已经公开的 tag。只有 tag 本身误指向错误 commit 且已评估下游影响时，才另行设计 tag 修复。创建 Release 页面不会改变 main，也不需要回退 main。
 
 ## 10. 后辈接手说明
 
