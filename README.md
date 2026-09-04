@@ -3,6 +3,11 @@
 > 心智模型 / 记忆系统 / 长期情感 的可迁移、可自检特化包。
 > 供其他 agent / 其他电脑导入使用。
 
+## 给其他 Agent 的指南
+
+- [[AGENT_USAGE.md]]
+- [[NATURAL_DATA_GAP.md]]
+
 ## 快速开始
 
 ```bash
