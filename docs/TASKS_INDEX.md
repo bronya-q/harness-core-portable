@@ -12,3 +12,5 @@
 | 2026-09-04 | [first-time-user-testing-design.md](tasks/2026-09-04-first-time-user-testing-design.md) | designed | v0.2+ | usability / testing | 待找 5 名首次用户 |
 
 | 2026-09-04 | [v0.3-release-preparation-design.md](tasks/2026-09-04-v0.3-release-preparation-design.md) | designed | v0.3 | release / hcp / activation | 补安全/失败测试/发布记录 |
+
+| 2026-09-04 | [official-mcp-and-coding-agent-ecosystem-validation-design.md](tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md) | designed | v0.5+ | MCP / Registry / coding-agent / interoperability | 先修协议合规与数据边界，再做 Inspector、PyPI、Registry 和真实宿主验证 |
