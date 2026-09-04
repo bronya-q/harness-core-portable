@@ -59,6 +59,48 @@ def cmd_character(args):
         return _cmd_character_preview(rest)
     if sub == "rollback":
         return _cmd_character_rollback()
+    if sub == "card-import":
+        path = output = ""
+        yes = False
+        i = 0
+        while i < len(rest):
+            if rest[i] in ("--output", "-o") and i + 1 < len(rest):
+                output = rest[i + 1]; i += 2
+            elif rest[i] == "--yes":
+                yes = True; i += 1
+            elif rest[i] == "--package":
+                path = rest[i + 1]; i += 2
+            elif i < len(rest):
+                path = rest[i]; i += 1
+            else:
+                i += 1
+        try:
+            from character_workbench import read_card, map_card, write_import
+            card = read_card(path)
+            m = map_card(card)
+            return write_import(m, output or "hcp-import", yes)
+        except Exception as e:
+            print(json.dumps({"ok": False, "error": type(e).__name__, "detail": str(e)}, ensure_ascii=False))
+            return 1
+    if sub == "build":
+        corpus = output = ""
+        approve = False
+        i = 0
+        while i < len(rest):
+            if rest[i] == "--from" and i + 1 < len(rest):
+                corpus = rest[i + 1]; i += 2
+            elif rest[i] == "--output" and i + 1 < len(rest):
+                output = rest[i + 1]; i += 2
+            elif rest[i] == "--approve":
+                approve = True; i += 1
+            else:
+                i += 1
+        try:
+            from character_workbench import build_draft
+            return build_draft(corpus, output or "draft-output", approve)
+        except Exception as e:
+            print(json.dumps({"ok": False, "error": type(e).__name__, "detail": str(e)}, ensure_ascii=False))
+            return 1
     if sub == "list":
         ensure_dirs()
         items = []
