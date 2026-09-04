@@ -796,6 +796,17 @@ def _knowledge_access(role, source_id, query=None, limit=10, max_chars=200):
             "note": "只读目录清单 + 有限上下文摘要（预算 %s 字符）；不会修改或上传知识源。" % max_chars}
 
 
+def _record_suggest_history(entry):
+    try:
+        hist = read_json(HARNESS_DIR / "knowledge-suggest-history.json") or {"schema_version": 1, "entries": []}
+        entries = hist.setdefault("entries", [])
+        entries.insert(0, entry)
+        hist["entries"] = entries[:20]
+        write_json(HARNESS_DIR / "knowledge-suggest-history.json", hist)
+    except Exception:
+        pass
+
+
 def cmd_knowledge(args):
     if not args:
         print("用法：harness.py knowledge list|sources|health|mount|delegate")
@@ -924,6 +935,10 @@ def cmd_knowledge(args):
         acc = {"ok": True, "role": role, "allowed": True, "matches": merged_matches,
                "delegate": d, "sources": accs, "max_chars": max_chars,
                "note": "委派匹配 + 多源只读访问（%d 个 source）返回去重上下文；不会修改/上传知识源。" % len(accs)}
+        _record_suggest_history({
+            "at": time.strftime("%Y-%m-%dT%H:%M:%S"), "role": role,
+            "question": question, "sources": len(accs), "matches": len(merged_matches),
+        })
         print(json.dumps(acc, ensure_ascii=False, indent=2))
         return 0 if acc.get("ok") else 1
     print("未知 knowledge 子命令：" + sub)

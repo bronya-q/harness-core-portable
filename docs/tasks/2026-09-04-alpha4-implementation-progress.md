@@ -68,6 +68,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **A/B 结果可视化**
   - `ab role` / `ab retriever` 支持 `--save <name>`，写入 `docs/evidence/ab-*.json`
   - Dashboard 新增「A/B 记录」卡片，列出保存的 A/B 结果
+- [x] **知识桥 Suggest 历史可视化**
+  - `knowledge suggest` 写入 `~/.dsh/harness/knowledge-suggest-history.json`
+  - Dashboard 新增「知识桥 Suggest 历史」卡片
 
 ## 尝试过 / 未通过
 

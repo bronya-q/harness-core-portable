@@ -579,3 +579,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 29. 后续处理记录（2026-09-04 续 17）
 
 - **A/B 结果可视化**：`ab role` / `ab retriever` 支持 `--save <name>` 写入 `docs/evidence/ab-*.json`；Dashboard 新增「A/B 记录」卡片；`test_dashboard_visualization` 增加断言。
+
+## 30. 后续处理记录（2026-09-04 续 18）
+
+- **知识桥 Suggest 历史可视化**：`knowledge suggest` 写入 `~/.dsh/harness/knowledge-suggest-history.json`；Dashboard 新增「知识桥 Suggest 历史」卡片；`test_dashboard_visualization` 增加断言。
