@@ -207,15 +207,30 @@ def _collab_block(scope, namespace=None, collab_telemetry=None):
         return text + "\n", COLLAB_TELEMETRY
     return "", COLLAB_TELEMETRY
 
+def _accumulate_provider_usage(agg, usage):
+    if not usage:
+        return
+    agg["calls"] += 1
+    pt = int(usage.get("prompt_eval_count") or 0)
+    ct = int(usage.get("eval_count") or 0)
+    agg["prompt_tokens"] += pt
+    agg["completion_tokens"] += ct
+    agg["total_tokens"] += pt + ct
+
+
 def generate(model, prompt, num_predict):
-    """Single Ollama generate call. Returns response string."""
+    """Single Ollama generate call. Returns (text, provider_usage_dict)."""
     payload = {"model": model, "prompt": prompt, "stream": False,
                "think": False, "options": {"temperature": 0.7, "num_ctx": 8192, "num_predict": num_predict}}
     req = urllib.request.Request(OLLAMA + "/api/generate", data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
         data = json.loads(r.read().decode("utf-8"))
-    return data.get("response", "").strip()
+    usage = {
+        "prompt_eval_count": data.get("prompt_eval_count"),
+        "eval_count": data.get("eval_count"),
+    }
+    return data.get("response", "").strip(), usage
 
 def rel_snapshot(scope):
     """只读读取关系状态快照。"""
@@ -334,16 +349,20 @@ def main():
     canary_pair_done = False
     selected = args.canary_select
     error_type = None
+    provider_usage = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
     try:
         if args.canary_pair and expression_prefix:
-            original_output = generate(model, base_prompt, args.num_predict)
-            enhanced_output = generate(model, prompt, args.num_predict)
+            original_output, u1 = generate(model, base_prompt, args.num_predict)
+            _accumulate_provider_usage(provider_usage, u1)
+            enhanced_output, u2 = generate(model, prompt, args.num_predict)
+            _accumulate_provider_usage(provider_usage, u2)
             if expression_prefix and not enhanced_output.lstrip().startswith("【" + expression_prefix):
                 enhanced_output = "【%s】%s" % (expression_prefix, enhanced_output)
             response = original_output if selected == "original" else enhanced_output
             canary_pair_done = True
         else:
-            response = generate(model, prompt, args.num_predict)
+            response, u3 = generate(model, prompt, args.num_predict)
+            _accumulate_provider_usage(provider_usage, u3)
             if expression_prefix and not response.lstrip().startswith("【" + expression_prefix):
                 response = "【%s】%s" % (expression_prefix, response)
         print(response)
@@ -382,10 +401,23 @@ def main():
             from event_store import record_usage
             _est_actual = max(0, int((len(prompt) + len(response)) / 4))
             _est_baseline = max(0, int(len(base_prompt) / 4))
-            record_usage({"usage_source": "character_estimate", "model_id": model,
-                          "actual_tokens": _est_actual, "baseline_id": "prompt_chars_estimate",
-                          "baseline_tokens": _est_baseline,
-                          "estimated_avoided_tokens": max(0, _est_baseline - _est_actual)})
+            if provider_usage.get("total_tokens"):
+                record_usage({"usage_source": "provider_reported", "model_id": model,
+                              "provider": "ollama",
+                              "actual_tokens": provider_usage["total_tokens"],
+                              "prompt_tokens": provider_usage["prompt_tokens"],
+                              "completion_tokens": provider_usage["completion_tokens"],
+                              "components": {"provider": "ollama", "calls": provider_usage.get("calls", 0),
+                                             "prompt_tokens": provider_usage["prompt_tokens"],
+                                             "completion_tokens": provider_usage["completion_tokens"]},
+                              "baseline_id": "prompt_chars_estimate",
+                              "baseline_tokens": _est_baseline,
+                              "estimated_avoided_tokens": max(0, _est_baseline - _est_actual)})
+            else:
+                record_usage({"usage_source": "character_estimate", "model_id": model,
+                              "actual_tokens": _est_actual, "baseline_id": "prompt_chars_estimate",
+                              "baseline_tokens": _est_baseline,
+                              "estimated_avoided_tokens": max(0, _est_baseline - _est_actual)})
         except Exception:
             pass
         try:
