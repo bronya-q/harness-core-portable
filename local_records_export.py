@@ -241,6 +241,20 @@ def main():
     if gcsv.exists():
         commitments["recall_gold_independent_blind.csv"] = sha256_file(gcsv)
 
+    # 对公共快照做本机私人 scope 匿名化
+    def _sanitize(obj):
+        if isinstance(obj, dict):
+            return {k: _sanitize(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [_sanitize(v) for v in obj]
+        if isinstance(obj, str):
+            for old_name, new_name in [("character:demo-alice", "character:demo-alice"),
+                                       ("character:demo-storykeeper", "character:demo-storykeeper"),
+                                       ("character:demo-bob", "character:demo-bob")]:
+                obj = obj.replace(old_name, new_name)
+            return obj
+        return obj
+
     snapshot = {
         "schema_version": SCHEMA_VERSION,
         "snapshot_id": "local-" + NOW.strftime("%Y%m%d-%H%M%S"),
@@ -283,6 +297,7 @@ def main():
             "environment": "local private",
         },
     }
+    snapshot = _sanitize(snapshot)
     OUT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"ok": True, "output": str(OUT), "snapshot_id": snapshot["snapshot_id"],
                       "metric_count": len(metrics), "per_query_count": len(per_query)},

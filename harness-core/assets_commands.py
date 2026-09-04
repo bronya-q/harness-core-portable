@@ -135,12 +135,16 @@ def cmd_character(args):
             return 1
         ensure_dirs()
         if src.is_file() and src.suffix.lower() == ".zip":
+            issues = _validate_package(src, "any")
+            if issues:
+                print(json.dumps({"ok": False, "error": "package_validation_failed", "issues": issues}, ensure_ascii=False))
+                return 1
             with zipfile.ZipFile(src) as zf:
                 tmp = HARNESS_DIR / "tmp-install"
                 if tmp.exists():
                     shutil.rmtree(tmp)
                 tmp.mkdir(parents=True, exist_ok=True)
-                zf.extractall(tmp)
+                _safe_extract_zip(zf, tmp)
                 # find manifest
                 cand = [tmp / "package-manifest.json", tmp / "character.json"]
                 manifest_path = next((p for p in cand if p.exists()), None)
@@ -262,6 +266,24 @@ def cmd_character(args):
 def _has_abs_path(text):
     bs = chr(92)
     return ("C:" + bs + "Users") in text or ("C:" + bs * 2 + "Users") in text or "/Users/" in text
+
+
+def _safe_extract_zip(zf, dest):
+    """安全解压：拒绝路径穿越、绝对路径和符号链接。"""
+    dest = Path(dest).resolve()
+    for info in zf.infolist():
+        name = info.filename.replace(chr(92), "/")
+        target = (dest / name).resolve()
+        if not str(target).startswith(str(dest)):
+            raise ValueError("zip_path_traversal:" + name)
+        if name.startswith("/") or ".." in name.split("/"):
+            raise ValueError("zip_path_traversal:" + name)
+        if info.is_dir():
+            target.mkdir(parents=True, exist_ok=True)
+        else:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with zf.open(info) as src_f, open(target, "wb") as dst_f:
+                shutil.copyfileobj(src_f, dst_f)
 
 
 def _validate_package(src, target):
