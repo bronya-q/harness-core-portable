@@ -576,5 +576,5 @@ n baseline
 - ✅ sandbox preview（`character preview`：只读预览，不写入）
 - ✅ 事务化 activation（切换前备份，失败可回滚）
 - ✅ rollback（`character rollback`）
-- ⬜ Character Card 映射
-- ⬜ corpus-to-draft 审批
+- ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
+- ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）

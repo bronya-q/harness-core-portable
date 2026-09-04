@@ -198,6 +198,8 @@ python harness.py character validate --package <pkg> --target public  # 公共�
 python harness.py character preview <pkg>   # 沙盒预览（不写入）
 python harness.py character activate <id>   # 激活角色（事务化，可回滚）
 python harness.py character rollback        # 回滚到上一个激活角色
+python harness.py character card-import --package card.json --output out --yes  # Character Card 映射
+python harness.py character build --from corpus/ --output draft --approve       # 语料→角色草稿审批
 python harness.py knowledge list            # 知识域绑定
 python harness.py workspace create --name demo --role ux-engineer
 python harness.py schema list             # 查看统一 schema
