@@ -549,3 +549,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 22. 后续处理记录（2026-09-04 续 10）
 
 - **A/B / Evidence / Workspace 可视化**：Dashboard 新增「工程工作区 / Evidence」卡片，列出 workspace lease 与 evidence bundle 的关键状态；`test_dashboard_visualization` 增加对应断言。unittest 总数 24。
+
+## 23. 后续处理记录（2026-09-04 续 11）
+
+- **导出前预览**：`privacy export` 与 `feedback export --redacted` 增加预览 + 确认；支持 `--yes`；取消不写文件。
+- `tests/test_user_experience_flows.py` 增加 privacy export 预览/确认用例，unittest 总数 25。

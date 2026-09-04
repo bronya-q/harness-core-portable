@@ -44,6 +44,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - Dashboard 新增「工程工作区 / Evidence」卡片
   - 展示 Workspace lease（status / role / worktree / actual_execution）
   - 展示 Evidence Bundle（task_id / working_tree / checks / unverified / approval）
+- [x] **导出前预览**
+  - `privacy export`：先显示 data_dir / platform / aggregate_only / contains_pii，确认后写入
+  - `feedback export --redacted`：先显示 platform / model / included_content，确认后写入
+  - 均支持 `--yes` 跳过；取消返回 `status=cancelled`
 
 ## 尝试过 / 未通过
 
