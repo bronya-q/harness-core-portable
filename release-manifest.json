@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T10:54:09.901618+00:00",
+  "generated_at": "2026-09-04T10:56:14.574786+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 141,
   "files": {
@@ -32,7 +32,7 @@
     "README.md": "eff98242eac2e398806084d71ec6d98c6bdbf4b3f769f7a31b6c77c93065d3b9",
     "RELEASE_NOTES.md": "fc86bbf749e273898e042615aae764af5acece1e13ec8b9696ae9bad76153378",
     "RESEARCH.md": "ce5fd277fcc54d31ada92892b88d9300f71f0a2b8b377b7efbb56f59985fe842",
-    "ROADMAP.md": "7c4584929f3850cdd16fca0a6ab47bf0e9f725da13cd0bb4197df1077d1a956f",
+    "ROADMAP.md": "66b7cf08d0b35c3562f236eaf6501718d1f21678f7613c41b957e8589fa9ac80",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "d4f0c5ae7da500e9bb5e11747f00dfae230420defa059e378d3e58e5691ddb47",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
@@ -56,7 +56,7 @@
     "harness-core/control_commands.py": "20d2890567afe27fbabddbb1d7f78c44a1a16c635543403187baa721fd1e9de4",
     "harness-core/cross_character_consistency.py": "1367dbffffcb3c4179992c2308c7212ae33d09dc44ab134c70bbe8a5e54f199b",
     "harness-core/daily_report.py": "0f6d2c41dc4391ebd5b54e1a25890fc9082b898fe779b001d86898c9ffade774",
-    "harness-core/dashboard.py": "71749a630da94a902c314442436ee54eb0d96747fb709d71776a325cb5bfbf10",
+    "harness-core/dashboard.py": "ed66e11edfc4550404c1d63a6cfef16a4f2c1f7f9b464c659ddd39c049698333",
     "harness-core/deep_fusion_retriever.py": "23c3b12fe2bb9f8cd103623848e7fabb867b068919dc3f52e843a3103e5e9fdb",
     "harness-core/demo_experience.py": "66a71cbebf50d11e78c1e395026a4d2bcf1222e98701667bfeb240e5b739e1ba",
     "harness-core/docs/Herta-NEKO-升级方案-20260901.md": "c7c43894816bf9deda6bdfa5ebdbc825a981ac3e326c800d9f1324795e44c0c8",

@@ -567,8 +567,8 @@ n baseline
 - ✅ HTML 安全：CSP + HTML escaping + 无内联脚本
 - ✅ 交互式桥图（用 HTML <details> 实现点击下钻，无 JS，符合 CSP）
 - ✅ 点击节点下钻（details 展开详情）
-- ⬜ span 时间线
-- ⬜ 角色画廊完整页
+- ✅ span 时间线（结构示意图，真实耗时待采集；无 JS/CSP 安全）
+- ✅ 角色画廊完整页（角色卡：persona_id/display_name/scope/role_types/knowledge_bindings/distribution）
 
 ### P3：v0.3 角色资产化
 
