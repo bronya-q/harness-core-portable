@@ -117,7 +117,6 @@ See [Agent Compatibility](docs/AGENT_COMPATIBILITY.md). Compatibility varies by 
 - [效果与边界](#效果与边界)
 - [数据与隐私](#数据与隐私)
 - [如何贡献/帮忙](#如何贡献帮忙)
-- [需要大家一起来](#需要大家一起来)
 - [文档](#文档)
 - [License](#license)
 - [致谢](#致谢)
@@ -343,7 +342,8 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 
 见 `CONTRIBUTING.md` / `SECURITY.md` / `NATURAL_DATA_GAP.md`。
 
-## 需要大家一起来（真的，这些我一个人搞不定）
+<details>
+<summary><strong>需要大家一起来（真的，这些我一个人搞不定）</strong> <em>点击展开</em></summary>
 
 这项目做到现在，有些事不是我不想做，是真得有人有真实环境，或者拉上几个活人一起试。如果你愿意搭把手，随便挑一个，先谢了。
 
@@ -400,10 +400,10 @@ docs/mcp/verification.md
 
 哪个平台的 GitHub Actions、Windows/macOS/Linux 矩阵，欢迎来加。
 
----
-
 > 愿意做其中任何一项，直接开 Issue 或在 GitHub Discussions 回帖就行。我会把任务拆好、验收标准写清楚。
 > 最后，不管大家有没有装，都祝看到的朋友们用 AI 许愿工程一次就成，DSH 版本更新兼容性依旧稳定。
+
+</details>
 
 ## 文档
 
