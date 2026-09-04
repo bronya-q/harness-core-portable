@@ -10,8 +10,18 @@ License：MIT
 Python：3.13+
 ```
 
-**建议 GitHub Topics**（需要在仓库设置里添加）：
-`harness` `llm-agent` `memory` `persona` `roleplay` `long-term-memory` `multi-agent` `local-first` `sqlite` `ai-evaluation` `humanization`
+## Works around modern agent workflows
+
+Harness Core Portable focuses on portable project memory, context visibility, scoped state and auditable handoffs.
+
+Planned and experimental integration surfaces include:
+
+- AGENTS.md-based coding agents;
+- CLAUDE.md and hook-based workflows;
+- MCP-capable agent clients;
+- OpenAI-compatible and DeepSeek-powered model backends.
+
+See [Agent Compatibility](AGENT_COMPATIBILITY.md).
 
 ---
 
@@ -274,6 +284,10 @@ PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与�
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
 QUICKSTART.md           English quickstart
 RELEASE_NOTES.md        Release notes（v0.1.0-alpha.1 / alpha.2）
+AGENT_COMPATIBILITY.md  Agent 生态兼容矩阵（R0/R1/R2）
+docs/TASKS_INDEX.md     任务设计文档索引
+docs/DEPLOYMENTS_INDEX.md 部署记录索引
+docs/templates/         任务设计/部署记录模板
 QUICKSTART.zh-CN.md     中文快速开始
 开始体验.bat            Windows 双击入口
 demo_experience.py       离线可感知演示（合成数据，一键清理）
