@@ -65,6 +65,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - `character deactivate` / `character remove` 默认需要确认
   - `backup restore` 默认需要确认
   - 均支持 `--yes`；取消返回 `status=cancelled`
+- [x] **A/B 结果可视化**
+  - `ab role` / `ab retriever` 支持 `--save <name>`，写入 `docs/evidence/ab-*.json`
+  - Dashboard 新增「A/B 记录」卡片，列出保存的 A/B 结果
 
 ## 尝试过 / 未通过
 

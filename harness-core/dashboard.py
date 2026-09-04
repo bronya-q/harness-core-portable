@@ -286,7 +286,28 @@ def main():
     else:
         ev_html = "<p class='muted'>暂无 evidence 包。</p>"
 
-    web_html = "<p>Workspaces: %d · Evidence: %d</p>" % (len(workspaces), len(evidence))
+    ab_records = []
+    if ev_dir.exists():
+        for fp in sorted(ev_dir.glob("ab-*.json")):
+            try:
+                d = json.loads(fp.read_text(encoding="utf-8"))
+                ab_records.append({"source": fp.name, "mode": d.get("mode"),
+                                   "a": d.get("retriever_a", {}).get("name") or d.get("a", {}).get("file"),
+                                   "b": d.get("retriever_b", {}).get("name") or d.get("b", {}).get("file"),
+                                   "generated_at": d.get("generated_at", "")})
+            except Exception:
+                pass
+    ab_html = ""
+    if ab_records:
+        for r in ab_records[:10]:
+            ab_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:80%%'>%s</div>"
+                        "<span class='st-muted'>%s vs %s · %s</span></div>"
+                        % (_html(r.get("mode") or "ab"), _html(r.get("source")),
+                           _html(r.get("a") or "?"), _html(r.get("b") or "?"), _html(r.get("generated_at"))))
+    else:
+        ab_html = "<p class='muted'>暂无 A/B 记录（用 `ab role/retriever --save <name>` 可保存）。</p>"
+
+    web_html = "<p>Workspaces: %d · Evidence: %d · A/B: %d</p>" % (len(workspaces), len(evidence), len(ab_records))
 
     # 公共边界快照（粗略扫描，不替代人工审查）
     boundary_patterns = [
@@ -448,6 +469,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
 <div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
 <div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
+<div class="card"><h2>A/B 记录</h2>{ab_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>

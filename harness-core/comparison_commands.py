@@ -28,7 +28,7 @@ def _est_tokens(obj):
     return max(0, len(json.dumps(obj, ensure_ascii=False)) // 4)
 
 
-def cmd_role_ab(a, b):
+def cmd_role_ab(a, b, save=None):
     fa, fb = _load_json(a), _load_json(b)
     if not fa or not fb:
         print(json.dumps({"ok": False, "error": "file_not_found|invalid_json", "a": a, "b": b}, ensure_ascii=False))
@@ -53,11 +53,17 @@ def cmd_role_ab(a, b):
         },
         "note": "用途：角色版本/配置对照；不自动选择“更好”。",
     }
+    if save:
+        EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+        fp = EVIDENCE_DIR / ("ab-role-" + save + ".json")
+        fp.write_text(json.dumps({"mode": "role_ab", "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"), **out},
+                                 ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        out["saved"] = str(fp)
     print(json.dumps({"ok": True, "mode": "role_ab", **out}, ensure_ascii=False, indent=2))
     return 0
 
 
-def cmd_retriever_ab(a, b, top_k, per_query=False, save_failures=None, meta=None):
+def cmd_retriever_ab(a, b, top_k, per_query=False, save_failures=None, meta=None, save=None):
     def run_one(retriever):
         p = subprocess.run([sys.executable, str(SKILL / "measurement.py"), "recall-pool",
                             "--retriever", retriever, "--top-k", str(top_k)],
@@ -112,6 +118,12 @@ def cmd_retriever_ab(a, b, top_k, per_query=False, save_failures=None, meta=None
         fp.write_text(json.dumps({"mode": "retriever_ab_failures", "meta": meta or {}, "failures": failures},
                                  ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
         out["failures_file"] = str(fp)
+    if save:
+        EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+        fp = EVIDENCE_DIR / ("ab-retriever-" + save + ".json")
+        fp.write_text(json.dumps({"mode": "retriever_ab", "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"), **out},
+                                 ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        out["saved"] = str(fp)
     print(json.dumps({"ok": True, "mode": "retriever_ab", **out}, ensure_ascii=False, indent=2))
     return 0
 
@@ -200,21 +212,25 @@ def main():
     args = sys.argv[1:]
     if args[0] == "ab" and len(args) >= 2 and args[1] == "role":
         a = b = ""
+        save = None
         i = 2
         while i < len(args):
             if args[i] == "--a" and i + 1 < len(args):
                 a = args[i + 1]; i += 2
             elif args[i] == "--b" and i + 1 < len(args):
                 b = args[i + 1]; i += 2
+            elif args[i] == "--save" and i + 1 < len(args):
+                save = args[i + 1]; i += 2
             else:
                 i += 1
-        return cmd_role_ab(a, b)
+        return cmd_role_ab(a, b, save)
     if args[0] == "ab" and len(args) >= 2 and args[1] == "retriever":
         a = b = "keyword"
         top_k = 5
         per_query = False
         save_failures = None
         meta = None
+        save = None
         i = 2
         while i < len(args):
             if args[i] == "--retriever-a" and i + 1 < len(args):
@@ -227,12 +243,14 @@ def main():
                 per_query = True; i += 1
             elif args[i] == "--save-failures" and i + 1 < len(args):
                 save_failures = args[i + 1]; i += 2
+            elif args[i] == "--save" and i + 1 < len(args):
+                save = args[i + 1]; i += 2
             elif args[i] == "--meta" and i + 1 < len(args):
                 meta = json.loads(args[i + 1]) if args[i + 1].startswith("{") else {"note": args[i + 1]}
                 i += 2
             else:
                 i += 1
-        return cmd_retriever_ab(a, b, top_k, per_query, save_failures, meta)
+        return cmd_retriever_ab(a, b, top_k, per_query, save_failures, meta, save)
     if args[0] == "evidence" and len(args) >= 2 and args[1] == "create":
         task = workspace = ""
         i = 2
