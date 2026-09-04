@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T11:48:56.313862+00:00",
+  "generated_at": "2026-09-04T11:50:06.507298+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 167,
+  "count": 166,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -42,7 +42,7 @@
     "docs/AGENT_COMPATIBILITY.json": "2acec841a980c4b7f9d6c68075aeea540b6b7c47ae12aa1c7f1ed66eb918c24f",
     "docs/AGENT_COMPATIBILITY.md": "1722da2755c54a11142066245fe0cac3d3019d40fd0361cfd691998beacfa4a2",
     "docs/DEPLOYMENTS_INDEX.md": "52175c4f9b74c66cadf4007347e163120d6844c748de5253c016fd2c035780f6",
-    "docs/TASKS_INDEX.md": "2803469842c4285522fa93073ad4799bebbf8921a99e7833412b18966d145b2b",
+    "docs/TASKS_INDEX.md": "bc035fda8da971254de8f38c8394a9148cdd2f08bf9be35c11e290778ca3f281",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.2.md": "d71cd9843de22fc586c0542fcff7854867409da917cd4df9c39e2a522737a9d2",
     "docs/deployments/2026-09-04-situated-mode-and-readme-onboarding-deployment.md": "bcfbb6da8e6afc72badfd931da9b790b847a7d349b88f0e73f5fda5f4f39db3f",
     "docs/releases/v0.1.0-alpha.2.md": "aa12032cd2eaf5d0c502426ce5d13409c92f0a7a5361cce757ae98f5092a624c",
@@ -51,7 +51,6 @@
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md": "75b2aefdd6965d19b43dc67a6f1ac3acb2c03d8e72057bcc58906376e81f0bcb",
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
-    "docs/tasks/2026-09-04-roadmap-execution-verification.md": "e479bae5e316e90cb715a40219669979f41a8cb1317508fa67768897868aa39e",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
