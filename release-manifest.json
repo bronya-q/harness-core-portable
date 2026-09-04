@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T11:34:42.322531+00:00",
+  "generated_at": "2026-09-04T11:41:29.183363+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 157,
+  "count": 158,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -42,7 +42,7 @@
     "docs/AGENT_COMPATIBILITY.json": "2acec841a980c4b7f9d6c68075aeea540b6b7c47ae12aa1c7f1ed66eb918c24f",
     "docs/AGENT_COMPATIBILITY.md": "1722da2755c54a11142066245fe0cac3d3019d40fd0361cfd691998beacfa4a2",
     "docs/DEPLOYMENTS_INDEX.md": "4c397ad48ad5703f766c31bbdb30c258ae66b7196d9125374e529def21a0b3eb",
-    "docs/TASKS_INDEX.md": "bc035fda8da971254de8f38c8394a9148cdd2f08bf9be35c11e290778ca3f281",
+    "docs/TASKS_INDEX.md": "5a40f6b3665dac878ff22bc1cb07772fb1112e67718d67f69b5aa7c5c4ab5326",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.2.md": "5786f02ff1a682fff0a856e0ecaea9ba8abb13a436c1f8c5b8cfc70b1fc4cbfc",
     "docs/deployments/2026-09-04-situated-mode-and-readme-onboarding-deployment.md": "bcfbb6da8e6afc72badfd931da9b790b847a7d349b88f0e73f5fda5f4f39db3f",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
@@ -50,6 +50,7 @@
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md": "75b2aefdd6965d19b43dc67a6f1ac3acb2c03d8e72057bcc58906376e81f0bcb",
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
+    "docs/tasks/2026-09-04-roadmap-execution-verification.md": "e479bae5e316e90cb715a40219669979f41a8cb1317508fa67768897868aa39e",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
