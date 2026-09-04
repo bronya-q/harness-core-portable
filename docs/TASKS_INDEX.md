@@ -11,4 +11,3 @@
 | 2026-09-04 | [readme-single-path-and-nav-refactor-design.md](tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md) | designed | v0.2+ | README / navigation | 待合并段落、重构目录、命令分组 |
 | 2026-09-04 | [first-time-user-testing-design.md](tasks/2026-09-04-first-time-user-testing-design.md) | designed | v0.2+ | usability / testing | 待找 5 名首次用户 |
 | 2026-09-04 | [roadmap-execution-verification.md](tasks/2026-09-04-roadmap-execution-verification.md) | verified | v0.2-v0.5 | roadmap / audit / verification | 按报告整改漂移与工具闭环 |
-| 2026-09-04 | [roadmap-execution-verification.md](tasks/2026-09-04-roadmap-execution-verification.md) | verified | v0.2-v0.5 | roadmap / audit / evidence | 先修状态矛盾与 HCP 安装安全，再逐项补验证 |

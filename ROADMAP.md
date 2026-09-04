@@ -489,14 +489,15 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 明确 token baseline（`usage baseline set/check`）
 - ✅ 模型/参数/数据集固定（`ab retriever --meta '{"model":...,"dataset":...}'`）
 - 🚧 demo/directed/real 分离（event 已支持 session/content 来源，仍待 UI 分组）
-- ✅ 工程角色仅在 worktree 中实施（Workspace Lease + `workspace check`）
+- 🚧 Workspace Lease 元数据 + `workspace check` 已实现；真实 Git worktree 创建/命令约束/隔离执行未实现
 - ✅ 结构化 Evidence Bundle
 
 ### v0.5
 
 - ✅ 稳定 Python API 基础（`harness_core.MemoryClient/EventClient/UsageClient`）
 - ✅ OpenAI-compatible adapter 基础（`harness_core.adapters.openai_compatible`）
-- ✅ 兼容矩阵（`AGENT_COMPATIBILITY.md` + `ecosystem status`）
+- ✅ 兼容矩阵文件与 `ecosystem status` 基础
+- 🚧 R1 证据未满：暂无 AGENTS.md/CLAUDE.md/MCP fixture 或集成测试
 - ⬜ adapter 权限 manifest 完整版
 - ⬜ 跨前端 scope 保持一致
 - ⬜ 无密钥进入 trace 验证
@@ -567,14 +568,16 @@ telemetry 记录什么 / 返回码是什么
 - ✅ HTML 安全：CSP + HTML escaping + 无内联脚本
 - ✅ 交互式桥图（用 HTML <details> 实现点击下钻，无 JS，符合 CSP）
 - ✅ 点击节点下钻（details 展开详情）
-- ✅ span 时间线（结构示意图，真实耗时待采集；无 JS/CSP 安全）
+- ✅ span 结构示意（无 JS/CSP 安全）
+- 🚧 真实 span/耗时 telemetry 采集（当前为硬编码示意）
 - ✅ 角色画廊完整页（角色卡：persona_id/display_name/scope/role_types/knowledge_bindings/distribution）
 
 ### P3：v0.3 角色资产化
 
-- ✅ HCP 安全验证（`character validate --target public`：distribution / private memory / real person / license / absolute path / zip traversal）
+- ✅ `character validate` 基础（distribution/private/real person/license/abs path/zip traversal）
+- 🚧 安全安装未闭环：install 现在会先校验 + 安全解压，但仍有 symlink/ADS/压缩炸弹/脚本/MIME 等威胁未完整阻断
 - ✅ sandbox preview（`character preview`：只读预览，不写入）
-- ✅ 事务化 activation（切换前备份，失败可回滚）
+- 🚧 activation backup/rollback 基础已实现；完整事务状态机/并发恢复未实现
 - ✅ rollback（`character rollback`）
 - ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
 - ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）
