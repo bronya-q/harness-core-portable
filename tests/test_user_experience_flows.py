@@ -122,6 +122,30 @@ class UserExperienceFlowsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_memory_write_html_preview_does_not_write(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = _env(home)
+            p = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "write",
+                 "--scope", "character:demo-archivist", "--text", "预览内容", "--html"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            d = json.loads(p.stdout)
+            self.assertIn("memory-write-preview.html", d["html"])
+            self.assertTrue(Path(d["html"]).exists())
+            # 不应写入 notebook
+            lst = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "list", "--scope", "character:demo-archivist"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(json.loads(lst.stdout)["notes"], [])
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_character_remove_requires_confirmation(self):
         home = Path(tempfile.mkdtemp())
         try:
