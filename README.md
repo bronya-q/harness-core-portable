@@ -14,7 +14,8 @@ python production_gate.py
 
 ## 心智模型效果说明
 
-- [[MENTAL_MODEL_EFFECTS.md]]（请先读）
+- [[MENTAL_MODEL_EFFECTS.md]]（心智效果说明）
+- [[EFFECTS.md]]（场景效果与个性化边界）
 
 ## 目录
 
