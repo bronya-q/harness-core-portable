@@ -66,8 +66,13 @@ def main():
     print(f"Demo 数据目录: {demo_home}\n")
 
     if args.reset:
+        # 清理所有 history demo 临时目录
+        temp_root = Path(tempfile.gettempdir())
+        for d in temp_root.glob("harness-demo-*"):
+            if d.is_dir():
+                shutil.rmtree(d, ignore_errors=True)
         shutil.rmtree(demo_home, ignore_errors=True)
-        print("[reset] Demo 数据已删除。")
+        print("[reset] 所有 offline demo 临时数据已删除。")
         return 0
 
     # [1/6] 两个隔离角色

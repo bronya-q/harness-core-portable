@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T09:45:15.034753+00:00",
+  "generated_at": "2026-09-04T09:46:16.250771+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 108,
   "files": {
@@ -38,7 +38,7 @@
     "harness-core/cross_character_consistency.py": "1367dbffffcb3c4179992c2308c7212ae33d09dc44ab134c70bbe8a5e54f199b",
     "harness-core/daily_report.py": "0f6d2c41dc4391ebd5b54e1a25890fc9082b898fe779b001d86898c9ffade774",
     "harness-core/deep_fusion_retriever.py": "23c3b12fe2bb9f8cd103623848e7fabb867b068919dc3f52e843a3103e5e9fdb",
-    "harness-core/demo_experience.py": "dba034b20a5a94bff984abe347c78c79d2da55287930ee789a47a420017ae6dd",
+    "harness-core/demo_experience.py": "66a71cbebf50d11e78c1e395026a4d2bcf1222e98701667bfeb240e5b739e1ba",
     "harness-core/docs/Herta-NEKO-升级方案-20260901.md": "c7c43894816bf9deda6bdfa5ebdbc825a981ac3e326c800d9f1324795e44c0c8",
     "harness-core/docs/Kimi-Moonshot-研究学习-20260903.md": "b31bd1de804618c421e4a1ab6acf45026979d2226f1e7e6cd3549aa0442e03b6",
     "harness-core/docs/Kimi借鉴落地-强化-20260903.md": "aefa1a91bfaa03af785c618fd6a84568a68d3db580ffa8fd802cf37f63591554",
