@@ -10,6 +10,9 @@ License：MIT
 Python：3.13+
 ```
 
+**建议 GitHub Topics**（需要在仓库设置里添加）：
+`harness` `llm-agent` `memory` `persona` `roleplay` `long-term-memory` `multi-agent` `local-first` `sqlite` `ai-evaluation` `humanization`
+
 ---
 
 ## 目录
@@ -211,6 +214,8 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 AGENT_USAGE.md          给其他 agent 的使用指南
 EFFECTS.md              效果与个性化边界
 LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说明什么
+local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
+generate_local_records.py  本地记录快照生成脚本（需在原始环境运行）
 MENTAL_MODEL_EFFECTS.md 心智效果说明
 NOTICE.md               第三方许可证义务
 CREDITS.md              来源归属
