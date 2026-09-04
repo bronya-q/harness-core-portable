@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: project-progress-review
-source_commit: dc35830
+source_commit: 57f73ae
 target_version: v0.2-v0.5
 public: true
 contains_private_data: false
@@ -29,19 +29,15 @@ deployed/released
 
 报告的 `status: verified` 只表示本次盘点已完成，不表示整个项目完成。
 
-正式基线绑定：
+最终验证基线绑定：
 
 ```text
-HEAD: dc35830f62e6c5e6e60a466fa8c26825f07347a2
-origin/main: c3adf0ff8aeeb6ef49a38118cd37d2b59249c850
-HEAD ahead of origin/main: 1 commit
+HEAD: 57f73ae（审计结束时）
+origin/main: 57f73ae
+release tag: v0.1.0-alpha.3 → b3ad9fc
 ```
 
-审计期间 MCP/packaging 文件持续被并发修改。因此：
-
-- 已提交 HEAD 用于正式通过项；
-- 未提交工作区单列为 implementing；
-- 不把未提交代码算成已交付。
+审计期间仓库持续并发推进。MCP/packaging 在中途曾处于测试失败的未提交状态，随后已由 `d36f471` 完成、由 `b3ad9fc` 冻结 alpha.3，并在 `9b6c54e` 登记本报告。最终结论只采用完成后的重新验证结果；中途红灯不再作为当前状态。
 
 没有读取私人 overlay、私人语料、API key 或私人数据库正文。
 
@@ -58,14 +54,14 @@ HEAD ahead of origin/main: 1 commit
 HCP 角色资产：安全和事务基础明显增强，仍非完整沙箱/热挂载
 Workspace：真实 worktree 基础可运行，仍非完整隔离执行环境
 Dashboard：只读投影可用，真实读取耗时实现有计时边界问题
-测试：从几乎无测试提升到 5 文件/8 用例，但没有 CI workflow
-MCP：R1 原型；官方 SDK/打包正在施工，当前工作区测试失败
+测试：5 文件/8 用例，本机与 clean clone 通过；没有 CI workflow
+MCP：官方 FastMCP SDK + fallback + wheel 基础完成，仍是 R1，未做 Inspector/真实宿主
 测量：bootstrap CI 与 Cohen’s kappa 工具已实现，心理效度未建立
 知识桥：主要仍是配置/展示，实际 mount/delegation 未完成
 游戏：未发现可玩的卡牌游戏引擎
 n-gram fallback：未发现实现证据
 首次用户研究：只有 protocol/template，没有参与者结果
-发布：alpha.2 GitHub Pre-release 已发布；main 比 tag 领先 26 commits
+发布：alpha.2 GitHub Pre-release 已发布；alpha.3 tag 已推送但 Release API 尚为 404
 生产就绪：否
 ```
 
@@ -85,9 +81,9 @@ n-gram fallback：未发现实现证据
 | Token telemetry | 2.5/5 | storage/summary/estimate 基础；provider usage 全入口覆盖未证明 |
 | 数据 provenance/consent | 2/5 | 字段和部分 identity consent 存在；首次运行分项同意未完成 |
 | 测量学 | 2/5 | 工程指标、bootstrap、κ 工具存在；构念字典/效度研究缺失 |
-| 测试与 CI | 2.5/5 | 8 个 unittest；无 GitHub Actions、多 OS、Inspector |
-| MCP/Agent 生态 | 1.5/5 | MCP 原型与设计存在；未 Registry/host-tested，当前在途测试失败 |
-| Release 工程 | 3/5 | tag、Pre-release、manifest、自检存在；文档状态滞后，main 远超 tag |
+| 测试与 CI | 2.5/5 | 8 个 unittest 在本机/clean clone 通过；无 GitHub Actions、多 OS、Inspector |
+| MCP/Agent 生态 | 2/5 | FastMCP、fallback、wheel 和仓库测试存在；未 Inspector/Registry/host-tested |
+| Release 工程 | 3/5 | alpha.2 Pre-release 存在；alpha.3 tag/notes/manifest 已备，Release 页面尚未创建 |
 | 可玩卡牌游戏 | 0/5 | 未发现 game engine/game loop/规则/CLI |
 | n-gram fallback | 0/5 | 未发现实现或测试 |
 
@@ -95,13 +91,14 @@ n-gram fallback：未发现实现证据
 
 ### 4.1 已提交基线
 
-在正式 HEAD 和临时 clean clone 中：
+在最终 HEAD 和临时 clean clone 中：
 
 ```text
-python release_verify.py           PASS, 177 entries
+python release_verify.py           PASS, 183 entries
 python package_selfcheck.py        PASS
 python -m unittest discover        PASS, 8 tests
-python harness.py demo --offline   PASS
+python harness.py demo --offline   PASS（本次审计前段）
+pip wheel . --no-deps              PASS，生成 0.1.0 wheel
 ```
 
 离线 Demo 验证：
@@ -116,31 +113,30 @@ python harness.py demo --offline   PASS
 - 无网络上传；
 - 临时数据清理。
 
-### 4.2 alpha.2 冻结点
+### 4.2 发布冻结点
 
-`v0.1.0-alpha.2` 指向：
-
-```text
-d7f7de7e2fdfaecba43921c0e13016ebb7113c8b
-```
-
-对 tag 做本地 archive/ZIP 模拟：
+已验证的外部 alpha.2：
 
 ```text
-release_verify: PASS, 133 entries
-package_selfcheck: PASS
-```
-
-GitHub API 已回读到：
-
-```text
+v0.1.0-alpha.2 → d7f7de7e2fdfaecba43921c0e13016ebb7113c8b
 Release URL: https://github.com/bronya-q/harness-core-portable/releases/tag/v0.1.0-alpha.2
 draft: false
 prerelease: true
 published_at: 2026-09-04T11:53:58Z
+archive release_verify: PASS, 133 entries
+archive package_selfcheck: PASS
 ```
 
-`/releases/latest` 返回 404 是因为只有 pre-release，没有 stable/latest release，属于正常 GitHub 语义。
+最新 alpha.3：
+
+```text
+v0.1.0-alpha.3 → b3ad9fc4991c4282f0bfcc195b72066dd17d308c
+local tag: exists and annotated
+remote/main: contains the tag commit
+GitHub Release API: 404 at audit time
+```
+
+因此 alpha.3 的准确状态是“tag 已部署，Release 页面尚未外部可回读”，不能称 GitHub Pre-release 已完成。`/releases/latest` 404 仍属正常，因为没有 stable/latest Release。
 
 ### 4.3 测试增长
 
@@ -227,46 +223,30 @@ validator 增加了顶层 type/enum 检查。但发现 `--mode` 接线遗漏：�
 - `total_ms` 在 HTML render 之前记录，所以 HTML render span 不是真正完整渲染耗时；
 - 标题仍写“结构示意；真实耗时待采集”，下方又写真实读取耗时，文案冲突。
 
-## 5. 当前在途工作区
+## 5. MCP 与打包当前状态
 
-审计后段状态：
+审计中途曾出现 SDK migration 红灯；随后已由 `d36f471` 修复并提交。最终复测：
 
 ```text
-M ROADMAP.md
-M docs/AGENT_COMPATIBILITY.md
-A docs/mcp/server.json
-A docs/mcp/verification.md
-M harness_core/adapters/mcp_server.py
-A pyproject.toml
-M release-manifest.json
-M tests/test_mcp_server.py
+Official FastMCP SDK path: implemented
+stdlib fallback path: implemented
+valid initialize + initialized notification + tools/list unittest: PASS
+pyproject.toml / console entry point: implemented
+clean-clone wheel build: PASS
+wheel filename: harness_core_portable-0.1.0-py3-none-any.whl
 ```
 
-这是 MCP 官方 SDK/packaging 工作，不属于已提交基线。
-
-当前工作区实际结果：
+仍需准确限制声明：
 
 ```text
-unittest: FAIL, 1/8 failed
-MCP initialize fixture: invalid request parameters
-package_selfcheck: FAIL
-release_verify: manifest/hash mismatch during in-progress edits
-```
-
-失败原因之一是测试仍发送空 initialize params，而官方 SDK 要求 protocolVersion/capabilities/clientInfo。
-
-判断：
-
-```text
-MCP official SDK migration: implementing
-PyPI packaging: implementing
-MCP protocol verified: no
+MCP compatibility: R1 prototype
 MCP Inspector: not run
 Official Registry: not listed
 Claude/Codex/Copilot host test: not run
+PyPI publication: not externally verified
 ```
 
-不要在修复并重新提交前把当前 MCP 状态升级成 R2。
+`docs/mcp/server.json` 是仓库内 integration manifest，不等于 Official MCP Registry 的规范发布证据。wheel project version 仍为 `0.1.0`，而 Git tag 为 `v0.1.0-alpha.3`；正式 PyPI 发布前必须统一 PEP 440 版本策略。
 
 ## 6. 外部生态状态
 
@@ -278,8 +258,9 @@ Claude/Codex/Copilot host test: not run
 - forks：0；
 - open issues：0；
 - discussions：关闭；
-- alpha.1/alpha.2 tags：存在；
+- alpha.1/alpha.2/alpha.3 annotated tags：存在；
 - alpha.2 Pre-release：存在；
+- alpha.3 GitHub Release：审计时 API 404，尚未外部验证；
 - stable latest release：不存在。
 
 ### Topics
@@ -342,23 +323,23 @@ io.github.bronya-q/harness-core-portable
 
 ## 8. 明确缺口
 
-### P0：恢复当前绿灯
+### P0：保持绿灯并补自动化
 
-1. 完成或回退未提交 MCP 改动；
-2. 用合法 initialize fixture 修复 MCP test；
-3. 更新 release manifest；
-4. 保证 `unittest`、`release_verify`、`package_selfcheck` 同时 rc=0；
-5. 再提交和推送。
+1. 当前 `unittest`、`release_verify`、`package_selfcheck` 已恢复 rc=0；
+2. 将这些检查加入 CI，防止只在本机发现回归；
+3. 给 MCP 增加 malformed JSON、unknown method、shutdown 与 tool error 测试；
+4. 补 alpha.3 Download ZIP/外部 clone 证据，而不只依赖本地 clone。
 
 ### P0：状态一致性
 
-1. 兼容矩阵 JSON 仍写 MCP R0/no server，与代码不一致；
+1. 兼容矩阵 Markdown 已更新为 MCP R1，但 JSON 仍写 R0/no server；
 2. `mcpREADME.md` 仍写没有 MCP server；
-3. GitHub Release 部署记录仍写“页面待创建”，与外部 API 不一致；
-4. ROADMAP 仍写 alpha.2 是 next Pre-release；
-5. ROADMAP 仍写工作区 clean/synced；
+3. alpha.2 部署记录仍写 Release 页面待创建，与外部 API 不一致；
+4. ROADMAP 把 alpha.3 写成 next Pre-release，但外部 Release 尚未创建，应明确 tag-only；
+5. ROADMAP 工作区状态必须随实际 commit 更新，避免静态“clean/synced”谎报；
 6. ROADMAP 第 303 行仍说 bridge/span 未实现，与 P2 勾选冲突；
-7. v0.3 task 仍写 ADS/MIME 未完成，与后续代码冲突。
+7. v0.3 task 仍写 ADS/MIME 未完成，与后续代码冲突；
+8. pyproject version `0.1.0` 与 tag `v0.1.0-alpha.3` 需要 PEP 440 对齐。
 
 ### P1：公开边界
 
@@ -425,19 +406,18 @@ io.github.bronya-q/harness-core-portable
 ## 9. 推荐下一轮顺序
 
 ```text
-1. 先让当前 MCP 分支恢复全绿
-2. 修所有状态漂移和 Release 部署记录
-3. 修 --help、schema --mode、Dashboard timing
-4. 增加 GitHub Actions Windows/Linux CI
-5. 完成 public identifier 清理
-6. 真正统一 resolver/runtime policy 全入口
-7. session/content provenance + vector telemetry
-8. 首次运行分项 consent
-9. 构念字典与 measurement schema
-10. 首次用户测试
-11. MCP Inspector → TestPyPI/PyPI → Registry → Host tests
-12. 再决定 v0.3 tag；不移动 alpha.2
-13. 单独设计并实现 n-gram fallback 和可玩卡牌游戏
+1. 修所有状态漂移和 alpha.2/alpha.3 部署记录
+2. 修 --help、schema --mode、Dashboard timing
+3. 增加 GitHub Actions Windows/Linux CI
+4. 完成 public identifier 清理
+5. 真正统一 resolver/runtime policy 全入口
+6. session/content provenance + vector telemetry
+7. 首次运行分项 consent
+8. 构念字典与 measurement schema
+9. 首次用户测试
+10. MCP Inspector → TestPyPI/PyPI → Registry → Host tests
+11. alpha.3 Release 页面经授权创建后做 API/ZIP 回读；不移动现有 tags
+12. 单独设计并实现 n-gram fallback 和可玩卡牌游戏
 ```
 
 ## 10. 发布建议
