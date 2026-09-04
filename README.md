@@ -50,17 +50,52 @@ production_gate / mind_review / rating_snapshot
 - **有边界**：不自动上传、不写 PII、安全在 harness 代码；
 - **不造轮子**：多角色协作用 notebook + story core，而不是让每个角色各写一套记忆。
 
-## 对下游工程的作用（0.1 草稿，未验证）
+## 对下游工程的作用（v0.1，基于长期运行与大量下游记录）
 
-这里的“工程”指**在增强心智模型下，agent 做的其他项目**：
+这里的“工程”指**在增强心智模型下，agent 做的其他项目**。这套系统已在多个对话/项目中长期运行，并在本地留下了大量下游工程记录（DeepSeek 导出 289 会话 / 2132 条用户消息、AutoMM 省赛、马克斯/布兰奇人格研究、COC/TRPG 人物卡、角色扮演、文档/网页/方案整理等）。
 
-- 制作游戏（世界观/角色一致性/剧情连续性）
-- 撰写论文/报告（记忆检索/目标分层/证据可追溯）
-- 公司/产品网页（用户偏好记忆/多轮需求一致性）
-- 文书工作（长文档受控注入/关键信息不丢）
-- 角色扮演（一致性/边界/自然流/关系阶段）
+### 作用分类（详细）
 
-> 本版本为 0.1 粗糙草稿：**这些作用目前只是设计意图和初步工程代理，尚未经过真实下游项目验收。**
+#### 1. 制作游戏 / 交互叙事
+- 世界观与角色一致性：通过 Perspective Card + story core 保持同一世界设定；
+- 剧情连续性：跨会话记忆 + notebook 记录角色经历；
+- 防人设漂移：cross_character_consistency + expression DNA；
+- 已在 COC/TRPG 人物卡、角色扮演、桌宠/galgame 类场景中使用。
+
+#### 2. 撰写论文 / 研究报告
+- 研究主线不丢失：mind_evolution 分目标 + master_tasks；
+- 证据可追溯：recall-pool / 记忆检索 / 盲标 gold；
+- 多轮材料沉淀：notebook（每研究主题）、deepseek 语料信号；
+- 已在马克斯/布兰奇、神经与认知、AutoMM 省赛等研究中产生大量记录。
+
+#### 3. 公司 / 产品网页
+- 用户偏好记忆：user_confirmed + user_model signals；
+- 多轮需求一致性：story core + notebook 记录需求；
+- 成本/资源记录：rating_snapshot / daily_report；
+- 可回滚：policy + all-shadow。
+
+#### 4. 文书 / 文档工作
+- 长文档注入受控：max_recall_items / max_recall_chars / collab budget；
+- 关键信息不丢：事实层（facts）+ 记忆检索；
+- 格式稳定：Perspective Card / output discipline。
+
+#### 5. 角色扮演
+- 一致性：第一人称自传 + 关系阶段 + 矛盾公式；
+- 边界安全：anti_prompt_injection / no_self_reveal / 不主动恋爱化；
+- 自然流：natural_session / flow-split；
+- 跨角色协作：notebook + story core。
+
+### 证据来源（本地，不随仓库公开原文）
+```text
+DeepSeek 导出语料（289 会话 / 2132 用户消息）
+AutoMM 省赛工程记录
+马克斯 / 布兰奇人格研究
+COC / TRPG / 角色卡
+Obsidian 学习强化库等
+```
+
+> 说明：这些是**工程/体验层面的作用**，基于长期运行与大量下游记录；
+> 不代表“AI 真的理解或在乎”；心理效度仍需正式研究。
 > 详细边界见 `EFFECTS.md`。
 
 ## 快速开始
