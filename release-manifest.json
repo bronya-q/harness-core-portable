@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T08:42:02.136394+00:00",
+  "generated_at": "2026-09-04T08:48:29.240782+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 98,
   "files": {
@@ -11,7 +11,7 @@
     "CREDITS.md": "1ba5ee17aa52fd1a702941654c2bc508df976345b1a4845bc69d91f18d96477f",
     "EFFECTS.md": "44634eb27301e084659a0b28eaf7a30618ea9b8fbca449e552c13532de22814b",
     "LICENSE": "729c2493b3c518c8e245946cdc761e04eadbae1bd7e9699a68f3c1fc942937c9",
-    "LOCAL_RECORDS.md": "03b990df246e0203be7b541a3bc9752c5133fd4d5576a2c52c085a7a062b35a9",
+    "LOCAL_RECORDS.md": "b46e3071e54ec6e611aeca864bc4edaa98a004a8913d6a678a904a00141a0fed",
     "MENTAL_MODEL_EFFECTS.md": "b694d30453a6a3a3e5ce9a319a66abc393fd15aa26a150bbedad6e0499b83abc",
     "NATURAL_DATA_GAP.md": "2321b1f129ae780a0c7c7500c9b72d3236bcebeeac1332c9f244a2c22ac151a7",
     "NOTICE.md": "c44fcc6f491d57b7913e113c0407b55c6298eba0418faab2b6a5425f334a6c53",
