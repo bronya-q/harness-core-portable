@@ -24,10 +24,11 @@ DB = Path.home() / ".dsh" / "memory-emotion" / "notebooks.db"
 def connect():
     DB.parent.mkdir(parents=True, exist_ok=True)
     c = sqlite3.connect(str(DB))
+    c.execute("PRAGMA busy_timeout=5000")
     c.row_factory = sqlite3.Row
     c.execute("""CREATE TABLE IF NOT EXISTS notebooks(
-      id TEXT PRIMARY KEY, scope TEXT, kind TEXT, content TEXT, version INTEGER,
-      created_at REAL, updated_at REAL, prev_id TEXT)""")
+      id TEXT PRIMARY KEY, scope TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN ('auto','manual','restored')),
+      content TEXT NOT NULL, version INTEGER NOT NULL, created_at REAL NOT NULL, updated_at REAL NOT NULL, prev_id TEXT)""")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_notebooks_scope_version ON notebooks(scope, version)")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_notebooks_scope_kind ON notebooks(scope, kind, version)")
     return c

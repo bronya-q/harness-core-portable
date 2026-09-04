@@ -22,7 +22,12 @@ try:
 except Exception:
     pass
 
-SKILL = Path.home() / ".agents" / "skills" / "long-term-memory-emotion"
+# 优先使用便携包本目录（若含核心脚本），否则回退到 live skill
+_self_dir = Path(__file__).resolve().parent
+if (_self_dir / "notebook.py").exists():
+    SKILL = _self_dir
+else:
+    SKILL = Path.home() / ".agents" / "skills" / "long-term-memory-emotion"
 OLLAMA = "http://127.0.0.1:11434"
 sys.path.insert(0, str(SKILL))
 from runtime_resolver import resolve
@@ -145,13 +150,17 @@ def _collab_block(scope, namespace=None):
     max_nb_chars = int(collab_cfg.get("max_notebook_chars", 600))
     max_story_chars = int(collab_cfg.get("max_story_core_chars", 1200))
     max_collab = int(collab_cfg.get("max_collab_chars", 1600))
-    if stage == "disabled" or (allowed and scope not in allowed):
-        COLLAB_TELEMETRY["notebook_status"] = "disabled"
-        COLLAB_TELEMETRY["story_status"] = "disabled"
+    if stage not in ("canary", "production") or not allowed or scope not in allowed:
+        COLLAB_TELEMETRY["notebook_status"] = "policy_block"
+        COLLAB_TELEMETRY["story_status"] = "policy_block"
         return ""
     lines = []
     try:
         p = sp.run([sys.executable, str(SKILL / "notebook.py"), "summary", "--scope", scope, "--limit", str(max_items)], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
+        if p.returncode != 0:
+            COLLAB_TELEMETRY["notebook_status"] = "fail"
+            COLLAB_TELEMETRY["error_type"] = "rc=%s" % p.returncode
+            raise RuntimeError("notebook rc=%s" % p.returncode)
         d = json.loads(p.stdout)
         if d.get("ok") and d.get("summary"):
             summ = d["summary"]
@@ -168,6 +177,10 @@ def _collab_block(scope, namespace=None):
     if namespace:
         try:
             p = sp.run([sys.executable, str(SKILL / "story_core.py"), "get", "--namespace", namespace], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
+            if p.returncode != 0:
+                COLLAB_TELEMETRY["story_status"] = "fail"
+                COLLAB_TELEMETRY["error_type"] = "rc=%s" % p.returncode
+                raise RuntimeError("story rc=%s" % p.returncode)
             d = json.loads(p.stdout)
             if d.get("ok") and d.get("core"):
                 core = d["core"]["content"]
