@@ -4,19 +4,16 @@
 
 ## 你能贡献什么
 
-1. **自然流样本**：脱敏后提供，或使用 `natural_session_*.bat`。
+想帮哪个都行，不用全做，能来一个就很好：
+
+1. **自然流样本**：脱敏后给我，或者用 `natural_session_*.bat`。
 2. **gold 标注**：看 `recall_gold_independent_blind.csv`。
-3. **下游任务反馈**：游戏/论文/网页/文书的真实验收结果。
-4. **代码/文档**：提交前先跑 `python package_selfcheck.py` + `python -m unittest discover`。
+3. **下游任务反馈**：游戏/论文/网页/文书，跑完说一句“行不行”都算数。
+4. **代码/文档**：提交前跑 `python package_selfcheck.py` + `python -m unittest discover`。
 5. **安全/许可证核验**：见 `SECURITY.md` / `NOTICE.md`。
-6. **外部协作任务**：见 README「需要大家一起来」，包括：
-   - MCP Inspector 实跑
-   - Official MCP Registry PR
-   - Claude Code / Codex / Copilot 真实宿主验证
-   - 首次用户测试
-   - 双人标注 Cohen’s κ
-   - 真实截图 / GIF
-   - GitHub Actions CI / 跨平台矩阵
+6. **外部协作任务**：见 README「需要大家一起来」，包括 MCP Inspector、Registry PR、真实宿主验证、首次用户测试、双人标注、截图/GIF、CI。
+
+> 特别说一句：项目目前最缺的是“真人在真实环境里跑一遍”，不是缺新功能。你愿意花十分钟跑个 demo 或者帮测一个环境，就已经是很大的帮助。
 
 ## 规则
 
