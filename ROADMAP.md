@@ -34,6 +34,7 @@
 - ✅ 角色资产基础：`character list/install/activate/deactivate/remove/show`
 - ✅ 知识域基础：`knowledge list`（读取角色包 knowledge-bindings）+ `knowledge sources`（读取知识源清单/示例）
 - ✅ 工程工作区基础：`workspace create/list/status/release`（Workspace Lease / worktree 抽象）
+- ✅ 公共边界整改（P0/P1 基础）：`runtime_resolver.py` 去私人角色路由、`personas.example.json` 公开合成角色、`personas.local.example.json`、`knowledge-sources.example.json` 中性化、`private-identifiers.example.txt`、`.gitignore` 排除本机 overlay
 
 ### 发布时仍要保留的边界
 

@@ -5,3 +5,11 @@ __pycache__/
 *.log
 .DS_Store
 Thumbs.db
+
+# Local private overlay (never commit)
+personas.local.json
+knowledge-sources.local.json
+integrations.local.json
+review-profiles.local.json
+private-identifiers.txt
+.dsh/harness-local/
