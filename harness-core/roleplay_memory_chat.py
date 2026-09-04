@@ -30,12 +30,11 @@ else:
     SKILL = Path.home() / ".agents" / "skills" / "long-term-memory-emotion"
 OLLAMA = "http://127.0.0.1:11434"
 sys.path.insert(0, str(SKILL))
-from runtime_resolver import resolve
+from runtime_resolver import resolve, ENTRIES
 from runtime_policy import load as load_policy
 MODELS = {
-    "jingyuaniang": ("whale-sister", "character:demo-bob"),
-    "demo-alice": ("paipai", "character:demo-alice"),
-    "demo-storykeeper": ("saoxing", "character:demo-storykeeper"),
+    pid: (e.get("model") or "demo", e.get("scope", "character:" + pid))
+    for pid, e in ENTRIES.items()
 }
 
 # H3 表达增强：不是压缩，而是“保持信息量 + 人格化”。

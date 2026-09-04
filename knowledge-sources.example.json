@@ -3,26 +3,26 @@
   "note": "示例知识源清单；公开仓库不包含私有知识正文。",
   "sources": [
     {
-      "source_id": "local:feminism-kb",
-      "display_name": "Blanche 女性主义知识库",
+      "source_id": "local:knowledge-source-a",
+      "display_name": "Private Knowledge Source A",
       "kind": "directory",
       "root": "~/feminism_kb",
       "portable": false,
       "private": true,
       "default_access": "deny",
       "content_types": ["theory", "timeline", "bibliography", "ethics", "persona_material"],
-      "stewards": ["blanche"]
+      "stewards": ["local-persona"]
     },
     {
-      "source_id": "local:markos-kb",
-      "display_name": "Markos 研究知识库",
+      "source_id": "local:knowledge-source-b",
+      "display_name": "Private Knowledge Source B",
       "kind": "directory",
-      "root": "~/.dsh/skills/celebrity-markus/knowledge",
+      "root": "~/.dsh/harness-local/knowledge-source-b",
       "portable": false,
       "private": true,
       "default_access": "deny",
       "content_types": ["economic_theory", "school_debate", "research_diary", "letters", "cognitive_notes"],
-      "stewards": ["markos"]
+      "stewards": ["local-persona"]
     }
   ]
 }

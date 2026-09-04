@@ -26,13 +26,13 @@
 | DeepSeek 导出语料（289 会话 / 2132 用户消息） | user_model 信号分析 | **不随仓库分发**；仅派生信号文档 |
 | 盲标独立 gold（2160 条 human_relevance） | 记忆检索评测 | 仅仓库内 `demo_gold.json`；真实 gold 不公开 |
 | 自然流 roleplay 会话 | 自然/定向分离验证 | 不随仓库分发（脱敏后可提供） |
-| 本地知识库（Obsidian / Markos / Blanche） | 个性化/知识库参考 | 仅引用思路，不打包 |
+| 本地知识库（Obsidian / 本机私人角色研究） | 个性化/知识库参考 | 仅引用思路，不打包 |
 
 ## 4. 外部材料/来源提供
 
 - 提供 `w-doctor-perspective.zip`、爱灵素材包、iterationRP 等研究材料；
 - 提供 Herta / N.E.K.O. / Mem0 / Kimi / DeepSeek Harness 等来源；
-- 提供下载区/本地系统（Markos、Blanche）供研究借鉴。
+- 提供下载区/本地私人角色与知识系统供研究借鉴。
 
 ## 5. 质量与审计
 

@@ -38,7 +38,7 @@
 - 盲标 gold：2160 条 human_relevance（36 query × 60 items）
 - H2 review：398 行
 - 自然流 roleplay：本地会话
-- AutoMM / Markus / Blanche：下游工程记录
+- AutoMM / 本机私人角色/研究案例：下游工程记录
 
 ### 3.2 早期记忆基线
 

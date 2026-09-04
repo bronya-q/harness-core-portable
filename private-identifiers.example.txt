@@ -1,0 +1,11 @@
+# Example local private-identifier denylist.
+# Put real local persona names / paths / directories here in the local
+# ~/.dsh/harness/private-identifiers.txt file. This example file is safe to commit.
+# One identifier per line; lines starting with # are comments.
+# e.g.
+# local_persona_a
+# private_knowledge_source_a
+# local_integration_a
+# absolute_windows_path_prefix
+# absolute_unix_path_prefix
+# desktop_bat_entry

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "note": "Local overlay example. Do NOT commit real persona names/paths here.",
+  "personas": {
+    "local-persona-001": {
+      "display_name": "本机角色名称",
+      "scope": "character:local-persona-001",
+      "persona_source": "~/private-personas/persona.md",
+      "knowledge_bindings": ["local:knowledge-source-001"],
+      "visibility": "private_local"
+    }
+  }
+}

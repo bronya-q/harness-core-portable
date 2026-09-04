@@ -178,7 +178,7 @@ python harness.py audit             # 汇总
 
 ```text
 AutoMM 省赛（题目/多轮方案/主动话题）
-马克斯 / 布兰奇人格研究
+本机私人角色/研究案例
 COC / TRPG / 人物卡
 DeepSeek 导出语料（289 会话 / 2132 用户消息）
 Obsidian 学习强化库

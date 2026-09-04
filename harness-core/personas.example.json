@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "note": "Public synthetic personas. Not based on any real person.",
+  "personas": {
+    "demo-archivist": {
+      "persona_id": "demo-archivist",
+      "model": null,
+      "scope": "character:demo-archivist",
+      "source": "personas/demo-archivist.md",
+      "entrypoint": "roleplay_memory_chat.py"
+    },
+    "demo-storykeeper": {
+      "persona_id": "demo-storykeeper",
+      "model": null,
+      "scope": "character:demo-storykeeper",
+      "source": "personas/demo-storykeeper.md",
+      "entrypoint": "roleplay_memory_chat.py"
+    }
+  }
+}
