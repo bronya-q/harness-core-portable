@@ -540,3 +540,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 - **n-gram fallback 接入 `memory search`**：`harness.py memory search --query <q>` 在精确子串无结果时自动调用 `ngram_fallback.py`，返回 `source=ngram_fallback`。
 - **alpha.4 实现推进记录**：新增 `docs/tasks/2026-09-04-alpha4-implementation-progress.md`，记录已完成/尝试/下一步。
 - unittest 总数 23。
+
+## 21. 后续处理记录（2026-09-04 续 9）
+
+- **高风险操作二次确认**：为 `memory forget`、`privacy reset-demo`、`workspace worktree remove`、`workspace release` 增加二次确认；支持 `--yes` 跳过；取消返回 `status=cancelled`。
+- `tests/test_user_experience_flows.py` 增加确认/取消用例，unittest 总数 24。

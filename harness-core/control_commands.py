@@ -37,6 +37,19 @@ def _run(script, *args):
         return {"ok": False, "raw": p.stdout[-300:], "stderr": p.stderr[-300:]}
 
 
+def _confirm_risk(action, detail, yes=False):
+    if yes:
+        return True
+    print("[高危操作] %s" % action)
+    print("  %s" % detail)
+    print("  如你确认继续，请重新输入 y / yes；否则输 n 取消。")
+    try:
+        ans = input("确认继续？[y/N] ").strip().lower()
+    except EOFError:
+        ans = ""
+    return ans in ("y", "yes", "是", "1")
+
+
 def cmd_memory(args):
     if not args:
         print("用法：harness.py memory list|explain|search|write|undo|correct|restore|forget ...")
@@ -106,7 +119,10 @@ def cmd_memory(args):
             if a == "--id" and i + 1 < len(rest):
                 nid = rest[i + 1]
         if not nid:
-            print("用法：harness.py memory forget --id <id>")
+            print("用法：harness.py memory forget --id <id> [--yes]")
+            return 1
+        if not _confirm_risk("memory forget", "该笔记将被归档（status=archived）。", yes="--yes" in rest):
+            print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
             return 1
         r = _run("notebook.py", "forget", "--id", nid)
         print(json.dumps(r, ensure_ascii=False, indent=2))
@@ -250,6 +266,9 @@ def cmd_privacy(args):
         print(json.dumps({"ok": True, "output": str(out)}, ensure_ascii=False, indent=2))
         return 0
     if sub == "reset-demo":
+        if not _confirm_risk("privacy reset-demo", "删除所有 offline demo 临时数据。", yes="--yes" in args):
+            print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
+            return 1
         return subprocess.call([sys.executable, str(SKILL / "demo_experience.py"), "--reset"])
     print("未知 privacy 子命令：" + sub)
     return 1
