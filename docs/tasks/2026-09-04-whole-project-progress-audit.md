@@ -575,3 +575,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 28. 后续处理记录（2026-09-04 续 16）
 
 - **高风险二次确认再扩展**：`character deactivate`、`character remove`、`backup restore` 增加二次确认；`--yes` 可跳过；取消返回 `status=cancelled`。unittest 总数 26。
+
+## 29. 后续处理记录（2026-09-04 续 17）
+
+- **A/B 结果可视化**：`ab role` / `ab retriever` 支持 `--save <name>` 写入 `docs/evidence/ab-*.json`；Dashboard 新增「A/B 记录」卡片；`test_dashboard_visualization` 增加断言。
