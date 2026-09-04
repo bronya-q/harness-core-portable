@@ -48,6 +48,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - `privacy export`：先显示 data_dir / platform / aggregate_only / contains_pii，确认后写入
   - `feedback export --redacted`：先显示 platform / model / included_content，确认后写入
   - 均支持 `--yes` 跳过；取消返回 `status=cancelled`
+- [x] **知识桥受控返回预算**
+  - `knowledge access` / `knowledge suggest` 支持 `--max-chars`（默认 200）
+  - 返回片段按预算截断，并注明 `max_chars`
 
 ## 尝试过 / 未通过
 
