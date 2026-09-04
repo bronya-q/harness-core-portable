@@ -10,3 +10,5 @@
 | 2026-09-04 | [readme-screenshots-and-demo-gif-design.md](tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md) | designed | v0.2+ | README / media / demo | 待生成截图/GIF |
 | 2026-09-04 | [readme-single-path-and-nav-refactor-design.md](tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md) | designed | v0.2+ | README / navigation | 待合并段落、重构目录、命令分组 |
 | 2026-09-04 | [first-time-user-testing-design.md](tasks/2026-09-04-first-time-user-testing-design.md) | designed | v0.2+ | usability / testing | 待找 5 名首次用户 |
+
+| 2026-09-04 | [v0.3-release-preparation-design.md](tasks/2026-09-04-v0.3-release-preparation-design.md) | designed | v0.3 | release / hcp / activation | 补安全/失败测试/发布记录 |

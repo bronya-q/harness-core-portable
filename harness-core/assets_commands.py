@@ -292,6 +292,8 @@ def _safe_extract_zip(zf, dest):
             raise ValueError("zip_path_traversal:" + name)
         if name.startswith("/") or ".." in name.split("/"):
             raise ValueError("zip_path_traversal:" + name)
+        if (info.external_attr >> 16) & 0o170000 == 0o120000:
+            raise ValueError("zip_symlink:" + name)
         if info.is_dir():
             target.mkdir(parents=True, exist_ok=True)
         else:
@@ -308,9 +310,29 @@ def _validate_package(src, target):
     if src.is_file() and src.suffix.lower() == ".zip":
         with zipfile.ZipFile(src) as zf:
             names = zf.namelist()
-            for n in names:
-                if n.startswith("../") or "\\" in n or n.startswith("/"):
+            if len(names) > 5000:
+                issues.append("zip_too_many_files:" + str(len(names)))
+            total_size = 0
+            for info in zf.infolist():
+                n = info.filename.replace(chr(92), "/")
+                if n.startswith("../") or "\\" in n or n.startswith("/") or ".." in n.split("/"):
                     issues.append("zip_path_traversal:" + n)
+                if (info.external_attr >> 16) & 0o170000 == 0o120000:
+                    issues.append("zip_symlink:" + n)
+                if n.lower().endswith(".zip"):
+                    issues.append("nested_zip:" + n)
+                total_size += info.file_size
+                if target == "public" and n.rsplit(".", 1)[-1].lower() in ("exe", "bat", "cmd", "sh", "ps1", "com"):
+                    issues.append("executable_script:" + n)
+            if total_size > 200 * 1024 * 1024:
+                issues.append("zip_too_large:" + str(total_size))
+            with zipfile.ZipFile(src) as zf2:
+                try:
+                    compressed = sum(i.compress_size for i in zf2.infolist())
+                    if compressed > 0 and total_size / compressed > 100:
+                        issues.append("zip_compression_ratio_too_high:" + str(round(total_size / compressed, 2)))
+                except Exception:
+                    pass
             for n in ("package-manifest.json", "character.json"):
                 if n in names:
                     manifest_path = "virtual:" + n
