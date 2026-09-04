@@ -214,6 +214,7 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 AGENT_USAGE.md          给其他 agent 的使用指南
 EFFECTS.md              效果与个性化边界
 LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说明什么
+RESEARCH.md             研究动机、范式、数据与效果
 PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与研究建议
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
 generate_local_records.py  本地记录快照生成脚本（需在原始环境运行）
