@@ -8,6 +8,7 @@
 - backup 复制本地 SQLite 文件
 - feedback 生成自愿导出的脱敏反馈模板
 """
+import html
 import json
 import os
 import shutil
@@ -130,6 +131,7 @@ def cmd_memory(args):
     if sub == "write":
         scope = txt = ""
         yes = "--yes" in rest
+        html_preview = "--html" in rest
         i = 0
         while i < len(rest):
             if rest[i] == "--scope" and i + 1 < len(rest):
@@ -139,8 +141,29 @@ def cmd_memory(args):
             else:
                 i += 1
         if not scope or not txt:
-            print("用法：harness.py memory write --scope <scope> --text <内容> [--yes]")
+            print("用法：harness.py memory write --scope <scope> --text <内容> [--yes] [--html]")
             return 1
+        if html_preview:
+            PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
+            out = PRIVACY_DIR / "memory-write-preview.html"
+            page = '''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>Memory Write Preview</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'none'">
+<style>body{font-family:system-ui;margin:2rem;max-width:720px;color:#222}
+.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:1rem;margin:1rem 0}
+code{background:#f0f0f0;padding:.1rem .3rem;border-radius:3px}</style></head><body>
+<h1>写操作预览（未写入）</h1>
+<div class="card"><h2>Scope</h2><p>%s</p></div>
+<div class="card"><h2>内容</h2><p>%s</p></div>
+<div class="card"><h2>确认写入</h2><p>运行：<code>python harness.py memory write --scope %s --text "..." --yes</code></p>
+<p>撤销：<code>python harness.py memory undo --id &lt;id&gt;</code></p></div>
+<p class="muted">当前只是 HTML 预览，没有写入任何数据。</p>
+</body></html>''' % (html.escape(scope), html.escape(txt), html.escape(scope))
+            out.write_text(page, encoding="utf-8")
+            print(json.dumps({"ok": True, "html": str(out),
+                              "note": "已生成写操作预览页；未写入任何数据"}, ensure_ascii=False, indent=2))
+            return 0
+
         print("写入预览：")
         print("  scope: %s" % scope)
         print("  内容: %s" % txt)

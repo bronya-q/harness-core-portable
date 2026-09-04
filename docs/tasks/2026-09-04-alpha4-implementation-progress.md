@@ -71,6 +71,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **知识桥 Suggest 历史可视化**
   - `knowledge suggest` 写入 `~/.dsh/harness/knowledge-suggest-history.json`
   - Dashboard 新增「知识桥 Suggest 历史」卡片
+- [x] **写操作 GUI 预览**
+  - `memory write --html` 生成 `memory-write-preview.html` 预览页
+  - 页面明确标注“未写入任何数据”；不触发 notebook 写入
 
 ## 尝试过 / 未通过
 

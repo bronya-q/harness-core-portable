@@ -583,3 +583,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 30. 后续处理记录（2026-09-04 续 18）
 
 - **知识桥 Suggest 历史可视化**：`knowledge suggest` 写入 `~/.dsh/harness/knowledge-suggest-history.json`；Dashboard 新增「知识桥 Suggest 历史」卡片；`test_dashboard_visualization` 增加断言。
+
+## 31. 后续处理记录（2026-09-04 续 19）
+
+- **写操作 GUI 预览**：`memory write --html` 生成 `memory-write-preview.html`，在浏览器查看预览，不写入 notebook；`test_user_experience_flows` 新增用例，unittest 总数 27。
