@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T14:13:51.026740+00:00",
+  "generated_at": "2026-09-04T14:16:11.435732+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 201,
+  "count": 202,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -60,6 +60,7 @@
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
     "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "f9b44cb2eaa186813e181dbecae2fba7743c836c3b6942c769605bb49559a54b",
     "docs/tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md": "99fbca62f8be13f43e313741624f8ab9db697b6037f288f72709874ce8c486b2",
+    "docs/tasks/2026-09-04-partial-implementation-inventory.md": "8a5a7d45e28ace16a53d251e6bf10b130880ff0aa713cefaba4a189fc255a2b3",
     "docs/tasks/2026-09-04-public-release-alpha2-design.md": "ad3c0e5e553c830c667b7e2fd224e11f67dd8f1d11ad3826bc41e354b00ccf2d",
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md": "75b2aefdd6965d19b43dc67a6f1ac3acb2c03d8e72057bcc58906376e81f0bcb",
