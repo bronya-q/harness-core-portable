@@ -112,7 +112,7 @@ Obsidian 学习强化库等
 
 > 这些是**工程/体验层面的作用**，基于长期运行与大量下游记录；
 > 不代表“AI 真的理解或在乎”；心理效度仍需正式研究。
-> 详细边界见 `EFFECTS.md`。
+> 详细边界见 `EFFECTS.md`；本地记录清单与“不能证明什么”见 `LOCAL_RECORDS.md`。
 
 ## 快速开始
 
@@ -210,6 +210,7 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 ```text
 AGENT_USAGE.md          给其他 agent 的使用指南
 EFFECTS.md              效果与个性化边界
+LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说明什么
 MENTAL_MODEL_EFFECTS.md 心智效果说明
 NOTICE.md               第三方许可证义务
 CREDITS.md              来源归属
