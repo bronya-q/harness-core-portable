@@ -59,6 +59,7 @@ PASSTHROUGH = {
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],
     "evidence": ["comparison_commands.py", ["evidence"]],
+    "ecosystem": ["ecosystem_status.py", ["ecosystem"]],
 }
 
 # Fine-grained subcommands

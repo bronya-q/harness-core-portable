@@ -57,7 +57,7 @@ def cmd_role_ab(a, b):
     return 0
 
 
-def cmd_retriever_ab(a, b, top_k, per_query=False):
+def cmd_retriever_ab(a, b, top_k, per_query=False, save_failures=None, meta=None):
     def run_one(retriever):
         p = subprocess.run([sys.executable, str(SKILL / "measurement.py"), "recall-pool",
                             "--retriever", retriever, "--top-k", str(top_k)],
@@ -100,8 +100,18 @@ def cmd_retriever_ab(a, b, top_k, per_query=False):
         "retriever_b": {"name": b, "p_at_5": rb.get("avg_precision_at_k"), "recall": rb.get("avg_recall"),
                         "hit_rate": rb.get("hit_rate")},
         "per_query": per_query_rows,
+        "meta": meta or {},
         "note": "基于同一独立 relevance 池；结果仅用于本地对照，不视为第三方认证。",
     }
+    if save_failures:
+        EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+        failures = [r for r in per_query_rows if (r.get("precision_delta") is not None and r["precision_delta"] < 0)
+                    or (r.get("recall_delta") is not None and r["recall_delta"] < 0)
+                    or (r.get("precision_b") is not None and r["precision_b"] < 0.5)]
+        fp = EVIDENCE_DIR / save_failures
+        fp.write_text(json.dumps({"mode": "retriever_ab_failures", "meta": meta or {}, "failures": failures},
+                                 ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        out["failures_file"] = str(fp)
     print(json.dumps({"ok": True, "mode": "retriever_ab", **out}, ensure_ascii=False, indent=2))
     return 0
 
@@ -203,6 +213,8 @@ def main():
         a = b = "keyword"
         top_k = 5
         per_query = False
+        save_failures = None
+        meta = None
         i = 2
         while i < len(args):
             if args[i] == "--retriever-a" and i + 1 < len(args):
@@ -213,9 +225,14 @@ def main():
                 top_k = int(args[i + 1]); i += 2
             elif args[i] == "--per-query":
                 per_query = True; i += 1
+            elif args[i] == "--save-failures" and i + 1 < len(args):
+                save_failures = args[i + 1]; i += 2
+            elif args[i] == "--meta" and i + 1 < len(args):
+                meta = json.loads(args[i + 1]) if args[i + 1].startswith("{") else {"note": args[i + 1]}
+                i += 2
             else:
                 i += 1
-        return cmd_retriever_ab(a, b, top_k, per_query)
+        return cmd_retriever_ab(a, b, top_k, per_query, save_failures, meta)
     if args[0] == "evidence" and len(args) >= 2 and args[1] == "create":
         task = workspace = ""
         i = 2
