@@ -52,7 +52,7 @@ topics: [release, alpha, github, mcp, character, workspace]
 - MCP Inspector / Official Registry / Claude Code / Codex / Copilot
 - 首次用户真实测试
 - GitHub Download ZIP 实际下载回读（本地 tag archive 已通过）
-- Release body 中 manifest count 与 `schema validate --mode` 需勘误；见外部验证记录
+- Release body 中 manifest count 与 `schema validate --mode` 勘误已同步；见外部验证记录
 
 ## 7. 回滚方法
 
