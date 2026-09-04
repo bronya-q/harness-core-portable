@@ -397,8 +397,17 @@ license scan 报告
 
 ## 13. Kimi / Moonshot AI（理论与产品方法参考）
 
-- 来源：arXiv 2507.20534 / Kimi K2 Thinking / Kimi Agent Swarm / kimi-cli memory issue
+- 来源：arXiv 2507.20534 / Kimi K2 Thinking / Kimi Agent Swarm / kimi-cli session.py / issue #1283
 - 性质：**外部研究成果/产品方法参考**
-- 借鉴：lossless long-context、agentic + tool use、multi-agent notebook 分工、自动+手动 memory、memory versioning
+- 借鉴：agentic + tool use、multi-agent notebook 分工、session 持久化思路、自动+手动 memory 提案、memory versioning 提案
 - 我们落地：`facts.py` / `mind_precipitate.py` / `perspective_card.py` / `proactive_pipeline.py`
+- 许可证（务必区分）：
+  - Kimi K2 / K2 Thinking 模型：**Modified MIT**（非普通 MIT）
+  - kimi-cli 代码：**Apache-2.0**
 - 边界：未复制其模型/代码/私有内容；仅将公开方法作为设计参考。
+- 重要边界：
+  - K2 Thinking context=256K，超过会隐藏工具输出；
+  - “lossless”主要指 INT4 量化结果，不等同无限无损上下文/永久记忆；
+  - kimi-cli session 持久化 ≠ 完整自动长期记忆；
+  - issue #1283 是功能请求，不是完成证明。
+
