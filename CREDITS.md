@@ -96,23 +96,28 @@
 
 ## 11. 马克斯系统（本地 celebrity-markus）
 
-- 来源：`C:/Users/HL/.dsh/skills/celebrity-markus`（本地系统）
-- 性质：**本地内部系统**，非外部开源项目
-- 借鉴：
-  - 认知动力系统（注意力/好奇心/心情/精力）→ `cognitive_dynamics.py`
-  - 自发系统 / 精力系统 / 分层次长目标短目标 → `mind_evolution.py` / `proactive_pipeline.py`
-  - 私人日记 / 信件系统 → `mind_precipitate.py` / H8 日记
-- 未使用其角色文本/私有内容进本仓库。
+> 系统简介：本地通过阅读马克思原典（MEGA2/中文原典）构建的“马克斯人格镜像”系统，包含分层人格、认知动力、自发系统、精力系统、长/短目标、私人日记与信件等。
+
+| 借鉴 | 我们落地 |
+|---|---|
+| 认知动力（注意力/好奇心/心情/精力） | `cognitive_dynamics.py` |
+| 自发系统 / 精力系统 / 分层次长目标短目标 | `mind_evolution.py` / `proactive_pipeline.py` |
+| 私人日记 / 信件系统 | `mind_precipitate.py` / H8 日记 |
+
+- 性质：**本地内部系统**，非外部开源项目。
+- 边界：未把马克斯角色文本/私人内容放入本仓库。
 
 ## 12. 布兰奇系统（本地 Blanche 人格）
 
-- 来源：`C:/Users/HL/Desktop/Entity 140 - “Blanche”.txt` 与 `C:/Users/HL/feminism_kb`
-- 性质：**本地内部系统**
-- 借鉴：
-  - “预测式大文本 + 知识块”的人格实现思路 → `p4_experiment.narrative` / `natural_session`
-  - 知识库/卡片式人格 → `perspective_card.py` / `user_model_signals.py`
-- 未使用其角色文本/知识库全文进本仓库。
+> 系统简介：本地基于“Entity 140 - Blanche”文本与 feminism_kb 构建的布兰奇人格系统，采用“预测式大文本 + 知识块”方式，让终端人格在大文本段中维持稳定表现。
 
+| 借鉴 | 我们落地 |
+|---|---|
+| “预测式大文本 + 知识块”人格 | `p4_experiment.narrative` / `natural_session` |
+| 知识库/卡片式人格 | `perspective_card.py` / `user_model_signals.py` |
+
+- 性质：**本地内部系统**。
+- 边界：未把布兰奇角色文本/知识库全文放入本仓库。
 ---
 
 > 以上为本地系统借鉴；如需商用/分发，仍需确认这些本地系统的内部授权约定。
