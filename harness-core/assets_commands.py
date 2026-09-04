@@ -729,13 +729,14 @@ def _knowledge_delegate(question, current_role=None):
                                "hits": sorted(set(hits)), "responsible_roles": sorted(set(stewards + bound))})
     if not candidates:
         return {"ok": True, "matched": False, "responsible_roles": [],
-                "allowed": False, "note": "未匹配到知识域；当前角色可直接回答，不调用知识桥。"}
+                "allowed": False, "candidates": [], "note": "未匹配到知识域；当前角色可直接回答，不调用知识桥。"}
     best = max(candidates, key=lambda c: len(c.get("hits", [])))
     roles = best.get("responsible_roles", [])
     allowed = not roles or (current_role is not None and current_role in roles)
     return {"ok": True, "matched": True, "source_id": best["source_id"],
             "display_name": best["display_name"], "hits": best.get("hits", []),
             "responsible_roles": roles, "allowed": allowed,
+            "candidates": sorted(candidates, key=lambda c: (-len(c.get("hits", [])), c.get("source_id", ""))),
             "current_role": current_role,
             "note": "这是最小委派冒烟，不是真实知识检索；不会把知识正文传给当前角色。"}
 
@@ -877,6 +878,7 @@ def cmd_knowledge(args):
         role = ""
         limit = 3
         max_chars = 200
+        max_sources = 2
         args1 = args[1:]
         for i, a in enumerate(args1):
             if a == "--question" and i + 1 < len(args1):
@@ -887,8 +889,10 @@ def cmd_knowledge(args):
                 limit = int(args1[i + 1])
             if a == "--max-chars" and i + 1 < len(args1):
                 max_chars = int(args1[i + 1])
+            if a == "--sources" and i + 1 < len(args1):
+                max_sources = int(args1[i + 1])
         if not question or not role:
-            print("用法：python harness.py knowledge suggest --question <问题> --role <persona_id> [--limit 3] [--max-chars 200]")
+            print("用法：python harness.py knowledge suggest --question <问题> --role <persona_id> [--limit 3] [--max-chars 200] [--sources 2]")
             return 1
         d = _knowledge_delegate(question, role)
         if not d.get("matched") or not d.get("allowed"):
@@ -896,11 +900,24 @@ def cmd_knowledge(args):
             result["note"] = d.get("note", "") + " 未执行只读访问。"
             print(json.dumps(result, ensure_ascii=False, indent=2))
             return 0
-        hits = d.get("hits") or []
-        access_query = hits[0] if hits else question
-        acc = _knowledge_access(role, d["source_id"], access_query, limit, max_chars)
-        acc["delegate"] = d
-        acc["note"] = "委派匹配 + 只读访问返回有限上下文；不会修改/上传知识源。"
+        accs = []
+        seen_snippets = set()
+        merged_matches = []
+        candidates = d.get("candidates") or [{"source_id": d["source_id"], "hits": d.get("hits") or []}]
+        for cand in candidates[:max_sources]:
+            sid = cand.get("source_id")
+            chits = cand.get("hits") or []
+            access_query = chits[0] if chits else question
+            a = _knowledge_access(role, sid, access_query, limit, max_chars)
+            for m in a.get("matches", []):
+                key = (m.get("file"), m.get("snippet"))
+                if key not in seen_snippets:
+                    seen_snippets.add(key)
+                    merged_matches.append({**m, "source_id": sid})
+            accs.append({"source_id": sid, "ok": a.get("ok"), "allowed": a.get("allowed")})
+        acc = {"ok": True, "role": role, "allowed": True, "matches": merged_matches,
+               "delegate": d, "sources": accs, "max_chars": max_chars,
+               "note": "委派匹配 + 多源只读访问（%d 个 source）返回去重上下文；不会修改/上传知识源。" % len(accs)}
         print(json.dumps(acc, ensure_ascii=False, indent=2))
         return 0 if acc.get("ok") else 1
     print("未知 knowledge 子命令：" + sub)
