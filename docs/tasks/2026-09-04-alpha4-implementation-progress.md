@@ -58,6 +58,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **首次使用向导细化**
   - `start` 首次同意后显示「首次使用提示」
   - 选择 Demo 前提示临时合成数据/自动清理/--keep
+- [x] **知识桥多源合并去重**
+  - `knowledge suggest` 支持 `--sources`（默认 2）
+  - 会访问多个匹配知识源，合并去重片段，并在 `sources` 中列出每个源
 
 ## 尝试过 / 未通过
 
