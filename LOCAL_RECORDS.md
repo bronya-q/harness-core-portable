@@ -109,6 +109,17 @@
 - **限制**：没有受控 A/B、没有独立评价者、没有公开原始数据；
 - **可复现性**：只提供命令和脚本，不提供原始数据。
 
+### 5.1 借鉴的公开模板/惯例
+
+- Hugging Face Model Cards（记录模型/数据集来源、用途、限制、量化指标）：
+  https://raw.githubusercontent.com/huggingface/blog/fix_more_llm_3/model-cards.md
+- GEM Data Card（数据集的构成、动机、语言、拆分、许可、伦理）：
+  https://arxiv.org/abs/2108.07374
+- Hugging Face modelcard 模板本身：
+  https://github.com/huggingface/hub-docs/blob/main/modelcard.md
+
+> 本文件不是完整数据集卡，只在“能公开什么 / 量化到什么程度 / 不能声称什么”上采用它们的字段思路。
+
 ## 6. 这些数据能说明什么
 
 - 本地系统确实积累了跨会话记忆、人格条目、叙事片段、主动候选、评测记录；
