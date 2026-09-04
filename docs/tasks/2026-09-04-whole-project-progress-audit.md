@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: project-progress-review
-source_commit: 57f73ae
+source_commit: 9b6c54e
 target_version: v0.2-v0.5
 public: true
 contains_private_data: false
@@ -422,15 +422,15 @@ io.github.bronya-q/harness-core-portable
 
 ## 10. 发布建议
 
-当前不适合立刻打新 tag，原因：
+alpha.3 tag 已经创建并推送，但不应自动创建外部 Release 页面；该动作仍需明确授权。当前也不适合继续追加新 tag，原因：
 
-- 工作区正在施工且测试失败；
-- main 比 alpha.2 领先 26 commits、64 文件；
-- 文档状态和代码状态有漂移；
+- alpha.3 GitHub Release API 尚为 404；
+- 文档状态和代码状态仍有漂移；
 - v0.3 task 的验收框尚未按证据更新；
-- 无 CI。
+- 无 CI；
+- root help 与 schema mode 仍失败。
 
-满足以下条件后再准备 v0.3 pre-release：
+下一次发布动作前应满足：
 
 ```text
 clean worktree
@@ -449,9 +449,8 @@ GitHub Release deployment record prepared
 
 ## 11. 后辈接手说明
 
-- 开始前先运行 `git status`，当前有并发 MCP 修改；
-- 不要覆盖未提交 `pyproject.toml`、MCP server/tests/docs；
-- 正式结论绑定 `dc35830`，在途结论绑定工作区快照；
+- 开始前先运行 `git status`；仓库有并发推进，不能依赖旧 HEAD；
+- 本报告最终复测基线为 `57f73ae`，release tag 为 `b3ad9fc`；
 - 不要把 Registry listing 称为认证；
 - 不要把 worktree runner 称为沙箱；
 - 不要把读取 timing 称为模型推理 span；
@@ -467,12 +466,12 @@ GitHub Release deployment record prepared
 项目阶段：快速发展的 alpha 工程原型
 公开可体验性：已建立
 基础可靠性：明显提升
-当前工作区健康：红灯（MCP 在途导致 tests/selfcheck 失败）
-已提交基线健康：绿灯
-外部发布：alpha.2 Pre-release 已发布
-主线发布准备：尚未
-MCP 外部生态：尚未
+当前 HEAD 健康：绿灯（tests/selfcheck/release_verify/clean-clone wheel）
+外部发布：alpha.2 Pre-release 已发布；alpha.3 只有 tag，Release API 404
+主线发布准备：部分完成，仍缺 CI/ZIP/文档一致性
+MCP 仓库内状态：R1，可测试、可构建 wheel
+MCP 外部生态：尚未 Inspector/Registry/host-tested
 可玩游戏：尚未
 生产就绪：否
-下一关键目标：恢复全绿 + 状态一致性 + CI + 数据/测量闭环
+下一关键目标：状态一致性 + CI + resolver/policy 全入口 + 数据/测量闭环
 ```
