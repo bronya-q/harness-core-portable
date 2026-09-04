@@ -62,6 +62,19 @@ def _est_tokens(text):
     return max(0, int(len(str(text)) / 4))
 
 
+def _display_data_dir():
+    try:
+        home = str(Path.home()).lower()
+        dd = str(DATA_DIR)
+        if dd.lower().startswith(home):
+            return "~" + dd[len(str(Path.home())):]
+        if "harness-demo-" in dd.lower():
+            return "<demo>/.dsh/memory-emotion"
+        return dd
+    except Exception:
+        return str(DATA_DIR)
+
+
 def main():
     if len(sys.argv) < 2 or sys.argv[1] not in ("build", "open"):
         print(__doc__)
@@ -358,7 +371,7 @@ HTML Dashboard    本地文件
 外部网络          无连接
 </pre></div>
 </div>
-<p class="muted">生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')} · 数据目录：{_html(DATA_DIR)}</p>
+<p class="muted">生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')} · 数据目录：{_html(_display_data_dir())}</p>
 </body></html>"""
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)

@@ -137,12 +137,12 @@ def draw_frame(highlight=0):
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    png = OUT_DIR / "harness-dashboard-preview.png"
+    png = OUT_DIR / "harness-dashboard-mockup.png"
     draw_frame(highlight=0).save(png)
     print("saved", png)
 
     frames = [draw_frame(i) for i in range(6)]
-    gif = OUT_DIR / "harness-dashboard-demo.gif"
+    gif = OUT_DIR / "harness-dashboard-mockup.gif"
     frames[0].save(
         gif,
         save_all=True,

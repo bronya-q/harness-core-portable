@@ -85,7 +85,7 @@ python harness.py demo --offline
 
 ![Harness Core Portable 本地控制台预览](docs/images/harness-dashboard-preview.png)
 
-本地只读 HTML 控制台（合成示例图，非真实用户数据）。运行：
+本地只读 HTML 控制台（由 `demo --offline --keep` + `dashboard build` + 无头浏览器生成的**真实合成数据截图**，不包含任何真实用户数据）。运行：
 
 ```bash
 python harness.py dashboard build
@@ -96,11 +96,11 @@ python harness.py dashboard build
 - 知识域关系网格（角色 ↔ 知识域 ↔ 权限）
 - 事件来源分组、向量队列、Token Provider 可视化
 
-动画版（合成演示，非真实录制）：
+滚动预览动画（同一张真实 Dashboard 截图自动滚动）：
 
-![Harness Core Portable Dashboard 动画演示](docs/images/harness-dashboard-demo.gif)
+![Harness Core Portable Dashboard 滚动预览](docs/images/harness-dashboard-demo.gif)
 
-> 图片是刻意做的“外观预览”，不是浏览器截图；真实运行效果以 `python harness.py dashboard build` 生成为准。
+> 图片来自合成 demo 数据与本地只读 Dashboard，不是屏幕录制；如果你想看真实交互，运行 `python harness.py dashboard build` 后打开生成的文件。
 
 ## 角色不应该只是“口癖包”
 

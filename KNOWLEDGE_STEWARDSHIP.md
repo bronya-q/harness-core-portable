@@ -7,6 +7,7 @@
 > - `knowledge health`：检查知识源目录是否存在、是否可读、steward 绑定是否匹配
 > - `knowledge mount`：把某个角色对某个知识域登记为“只读挂载状态”（写入 `knowledge-mounts.json`，不访问正文）
 > - `knowledge delegate`：根据问题关键词匹配负责知识域，返回负责角色与是否允许，不传递知识正文
+> - `knowledge access`：只读目录清单 + 有限文本摘要，进行授权校验，不修改/不上传知识源
 
 ---
 

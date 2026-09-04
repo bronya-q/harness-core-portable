@@ -20,7 +20,7 @@ Passes initialize + tools/list.
 
 | Item | Status |
 |---|---|
-| MCP Inspector | ⬜ 未跑（需 headless/GUI 环境） |
+| MCP Inspector | ⚠️ 已尝试 CLI（`npx @modelcontextprotocol/inspector --cli --method tools/list -- python -m harness_core.adapters.mcp_server`），本机 Windows 超时（rc=124），未取得成功输出；需后续排查或在 Linux/容器环境重试 |
 | Official MCP Registry | ⬜ 未提交 |
 | Claude Code | ⬜ 未验证 |
 | Codex CLI | ⬜ 未验证 |
