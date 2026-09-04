@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T13:04:57.931883+00:00",
+  "generated_at": "2026-09-04T13:05:56.273390+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 183,
   "files": {
@@ -58,7 +58,7 @@
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "01ca0b9ae52fea97734f0c51e68995c4d8c71a46fa1b1d975002e3f3d6196fa8",
-    "docs/tasks/2026-09-04-whole-project-progress-audit.md": "6d90bd7634a410364374d7092767ea6a18377a3cf3d90ece8733faa7760761cb",
+    "docs/tasks/2026-09-04-whole-project-progress-audit.md": "013b26f3af830f91a1cb43206002acbe701a255bc8420983dd44f409efa990af",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
     "docs/user-testing/PROTOCOL.md": "2a4afc7766bb43de61ac96d21cb3b816979de7997e5d5f7a224871b87e07334e",
