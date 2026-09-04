@@ -31,6 +31,9 @@ def connect():
       content TEXT NOT NULL, version INTEGER NOT NULL, created_at REAL NOT NULL, updated_at REAL NOT NULL, prev_id TEXT)""")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_notebooks_scope_version ON notebooks(scope, version)")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_notebooks_scope_kind ON notebooks(scope, kind, version)")
+    cols = [r[1] for r in c.execute("PRAGMA table_info(notebooks)").fetchall()]
+    if "status" not in cols:
+        c.execute("ALTER TABLE notebooks ADD COLUMN status TEXT DEFAULT 'active'")
     return c
 
 def _version(c, scope):
@@ -51,7 +54,10 @@ def note(args):
 
 def list_notes(args):
     c = connect()
-    rows = c.execute("SELECT * FROM notebooks WHERE scope=? ORDER BY version DESC LIMIT ?", (args.scope, args.limit)).fetchall()
+    if getattr(args, 'all', False):
+        rows = c.execute("SELECT * FROM notebooks WHERE scope=? ORDER BY version DESC LIMIT ?", (args.scope, args.limit)).fetchall()
+    else:
+        rows = c.execute("SELECT * FROM notebooks WHERE scope=? AND status='active' ORDER BY version DESC LIMIT ?", (args.scope, args.limit)).fetchall()
     c.close()
     print(json.dumps({"ok": True, "scope": args.scope, "notes": [dict(r) for r in rows]}, ensure_ascii=False, indent=2))
     return 0
@@ -96,6 +102,19 @@ def timeline(args):
 
 
 
+def forget(args):
+    c = connect()
+    r = c.execute("SELECT * FROM notebooks WHERE id=?", (args.id,)).fetchone()
+    if not r:
+        c.close()
+        print(json.dumps({"ok": False, "error": "not_found"}, ensure_ascii=False))
+        return 1
+    c.execute("UPDATE notebooks SET status='archived' WHERE id=?", (args.id,))
+    c.commit(); c.close()
+    print(json.dumps({"ok": True, "id": args.id, "status": "archived"}, ensure_ascii=False))
+    return 0
+
+
 def restore(args):
     c = connect()
     target = c.execute("SELECT * FROM notebooks WHERE scope=? AND version=?", (args.scope, args.version)).fetchone()
@@ -118,7 +137,8 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("note"); p.add_argument("--scope", required=True); p.add_argument("--text", required=True); p.add_argument("--kind", default="auto", choices=("auto","manual")); p.set_defaults(fn=note)
-    p = sub.add_parser("list"); p.add_argument("--scope", required=True); p.add_argument("--limit", type=int, default=20); p.set_defaults(fn=list_notes)
+    p = sub.add_parser("list"); p.add_argument("--scope", required=True); p.add_argument("--limit", type=int, default=20); p.add_argument("--all", action="store_true"); p.set_defaults(fn=list_notes)
+    p = sub.add_parser("forget"); p.add_argument("--id", required=True); p.set_defaults(fn=forget)
     p = sub.add_parser("versions"); p.add_argument("--scope", required=True); p.set_defaults(fn=versions)
     p = sub.add_parser("summary"); p.add_argument("--scope", required=True); p.add_argument("--limit", type=int, default=5); p.set_defaults(fn=summary)
     p = sub.add_parser("quote"); p.add_argument("--id", required=True); p.set_defaults(fn=quote)

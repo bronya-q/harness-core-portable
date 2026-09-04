@@ -28,6 +28,8 @@
 - ✅ production gate fail-closed（clean clone 预期 rc=1）
 - ✅ 文档：README / QUICKSTART / LOCAL_RECORDS / RESEARCH / PRE_MODEL_BASELINE / ROADMAP / KNOWLEDGE_STEWARDSHIP
 - ✅ 远端与本地同步
+- ✅ 用户控制入口：`memory list/explain/correct/restore/forget`、`privacy status/export/reset-demo`、`backup create/list/restore`、`feedback export --redacted`
+- ✅ Notebook 支持 `forget`（归档）与 `list --all`，默认只显示 active
 
 ### 发布时仍要保留的边界
 
@@ -46,8 +48,8 @@
 - 完整上下文成本可视化
 - 日志-日记-内省-整理系统
 - 知识域治理与知识桥
-- 记忆统一入口 `memory correct/forget/restore`
-- `backup / privacy / feedback` 完整闭环
+- 更完整的记忆/会话级 `memory explain` 与 `restore` 高级视图（基础版已上线）
+- `privacy / backup / feedback` 的 GUI 化与策略化（CLI 基础版已上线）
 
 ---
 
