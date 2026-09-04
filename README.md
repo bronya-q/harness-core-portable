@@ -218,6 +218,10 @@ python harness.py event add --scope demo --event-type user_correction
 python harness.py event list --limit 5
 python harness.py usage record --actual 640 --baseline 18420 --avoided 17780
 python harness.py usage list
+python harness.py usage summary
+python harness.py ab role --a unified-object-model.example.json --b knowledge-sources.example.json
+python harness.py ab retriever --retriever-a keyword --retriever-b atomic --top-k 5
+python harness.py evidence create --task example-task [--workspace <ws>]
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -297,6 +301,7 @@ assets_commands.py      character/knowledge/workspace 资产与工程工作区�
 schema_commands.py      schema list/validate 统一 schema 校验
 event_store.py          统一事件信封 / token usage 存储
 event_commands.py       event/usage CLI 入口
+comparison_commands.py  ab role/retriever + evidence bundle
 schemas/                统一角色/事件/token schema
 unified-object-model.example.json  统一对象模型示例
 knowledge-sources.example.json  知识源 schema 示例（不含私有正文）
