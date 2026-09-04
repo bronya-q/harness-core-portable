@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "title": "Token / Context Usage Schema",
+  "required": ["usage_source", "model_id", "context_window", "components", "actual_tokens"],
+  "properties": {
+    "usage_source": { "enum": ["provider_reported", "tokenizer", "character_estimate"] },
+    "model_id": { "type": "string" },
+    "tokenizer_id": { "type": "string" },
+    "context_window": { "type": "integer" },
+    "components": {
+      "type": "object",
+      "properties": {
+        "system": { "type": "integer" },
+        "persona": { "type": "integer" },
+        "memory": { "type": "integer" },
+        "notebook": { "type": "integer" },
+        "story": { "type": "integer" },
+        "tools": { "type": "integer" },
+        "conversation": { "type": "integer" }
+      }
+    },
+    "cached_input_tokens": { "type": ["integer", "null"] },
+    "output_tokens": { "type": ["integer", "null"] },
+    "baseline_id": { "type": "string" },
+    "baseline_tokens": { "type": "integer" },
+    "actual_tokens": { "type": "integer" },
+    "estimated_avoided_tokens": { "type": "integer" }
+  }
+}
