@@ -12,6 +12,7 @@
 
 > 关于“角色化知识治理 / Knowledge Stewardship”的完整方向见 `KNOWLEDGE_STEWARDSHIP.md`。
 > 关于“工程角色体系 / Engineering Roles”的完整方向见 `ENGINEERING_ROLES.md`。
+> 关于“人格化职能角色 / Hybrid Functional Persona”的完整方向见 `HYBRID_FUNCTIONAL_PERSONA.md`。
 
 ---
 
