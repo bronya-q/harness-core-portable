@@ -2,7 +2,7 @@
 
 > 结论先写：这些是**作者自己的本地观察记录**，不是受控实验，不是可公开复现的证据。
 > 本文件参照 Hugging Face Model Card / GEM Data Card 的做法，用“可量化字段 + 来源 + 限制”来记录，而不是只列名字。
-> 机器可读快照：`local-records-snapshot.public.json`，由 `generate_local_records.py` 在本机生成，避免手抄漂移。
+> 机器可读快照：`local-records-snapshot.public.json`，由 `local_records_export.py` 在本机生成，`local_records_verify.py` 校验口径，避免手抄漂移。
 
 ---
 
