@@ -107,27 +107,6 @@ See [Agent Compatibility](docs/AGENT_COMPATIBILITY.md). Compatibility varies by 
 
 ---
 
-## 5 分钟逐项检查什么
-
-```bash
-git clone https://github.com/bronya-q/harness-core-portable.git
-cd harness-core-portable
-python harness.py demo --offline
-```
-
-用完全合成的数据，一次展示：
-
-- 跨会话记忆：Alice 记住“蓝色钥匙在旧港钟楼下”；
-- 角色隔离：Bob 读不到 Alice 的私人记忆；
-- 共享 Story Core：Alice/Bob 都知道“旧港终年有雾”，但私人记忆仍隔离；
-- 纠错：蓝色钥匙 → 银色钥匙；
-- 版本恢复：v1 → v2 → restore 出 v3；
-- 一键清理：临时 demo 数据自动删除。
-
-不需要 Ollama、不需要 API key、不需要真实用户数据。
-
----
-
 ## 目录
 
 - [这是什么](#这是什么)
