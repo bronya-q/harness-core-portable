@@ -392,3 +392,13 @@ license scan 报告
 ```
 
 确认后应在下一提交中补充 attribution、保留必要 notice，或删除不具备分发权的内容。
+
+---
+
+## 13. Kimi / Moonshot AI（理论与产品方法参考）
+
+- 来源：arXiv 2507.20534 / Kimi K2 Thinking / Kimi Agent Swarm / kimi-cli memory issue
+- 性质：**外部研究成果/产品方法参考**
+- 借鉴：lossless long-context、agentic + tool use、multi-agent notebook 分工、自动+手动 memory、memory versioning
+- 我们落地：`facts.py` / `mind_precipitate.py` / `perspective_card.py` / `proactive_pipeline.py`
+- 边界：未复制其模型/代码/私有内容；仅将公开方法作为设计参考。
