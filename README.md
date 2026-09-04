@@ -1,5 +1,7 @@
 # Harness Core Portable
 
+> **让 AI 记得该记得的，隔离不该串的；你随时看得见、改得动、删得掉。**
+
 > 这套本地“心智 / 记忆 / 情感”核心可以**迁移、审计、回滚**，给 agent、桌宠、角色扮演和长程任务用。
 > 它做的是让“关系型 AI 界面”**更稳定、更连续、更可信任**。
 
@@ -9,6 +11,86 @@
 License：MIT
 Python：3.13+
 ```
+
+## 先别研究架构：一分钟确认它有没有用
+
+**它只解决一件很具体的事：让长期使用的 AI 不再每次都像失忆，同时不把所有角色和项目的记忆搅在一起。**
+
+```bash
+python harness.py demo --offline
+```
+
+没有模型、没有 API key 也能运行。你会看到一条完整而可验证的过程：
+
+```text
+Alice 记住“蓝色钥匙在旧港钟楼下”
+  → 重新打开会话，仍能召回
+  → Bob 无法读取 Alice 的私人记忆
+  → 两个角色可以共享世界设定，但不共享全部私事
+  → 用户把“蓝色”纠正为“银色”
+  → 可以查看版本并恢复
+  → 临时 Demo 数据自动删除
+```
+
+运行结束会明确告诉你：
+
+```text
+自动执行：DISABLED
+网络上传：NONE
+Demo 数据：已自动清理
+```
+
+还没下载？选最省事的一种：
+
+- **Windows**：下载 ZIP，解压，双击 `开始体验.bat`；
+- **命令行**：复制下面三行；
+- **只想看代码是否可信**：先运行 `python package_selfcheck.py`。
+
+```bash
+git clone https://github.com/bronya-q/harness-core-portable.git
+cd harness-core-portable
+python harness.py demo --offline
+```
+
+> 当前是 alpha，不假装生产就绪；但离线 Demo、失败返回码、数据清理和发布物校验都可以亲自运行。
+
+## 你是不是正在烦这些事？
+
+| 你看到的问题 | 这里给你的东西 |
+|---|---|
+| 每次开新会话都要重新解释背景 | 分 scope 的跨会话长期记忆 |
+| 两个角色互相知道了不该知道的事 | 私有记忆隔离；共享 Story Core 单独管理 |
+| AI 记错以后反复引用 | 纠错、版本链、忘记、恢复 |
+| 角色只有口癖，没有共同经历 | 处境、关系、共同事件与当前状态的结构化方向 |
+| 不知道 AI 为什么提起某段过去 | 来源、召回、策略和事件审计 |
+| Agent 做完任务，下次又从头读项目 | 项目记忆、上下文预算和工程交接基础 |
+| 害怕 Agent 自动乱改、乱发、乱执行 | fail-closed；高影响自动执行持续禁用 |
+| 不知道自己的数据在哪里 | 本地 SQLite、隐私摘要、备份、导出和清理入口 |
+
+## 我现在该点哪里？
+
+| 你的目标 | 只做这一步 | 然后你会得到 |
+|---|---|---|
+| **先看效果** | `python harness.py demo --offline` | 记忆、隔离、纠错、恢复和自动清理 |
+| **看图形化结果** | `python harness.py dashboard build` | 本地只读 HTML 控制台 |
+| **管理记忆** | `python harness.py memory list --scope demo` | 可查看、纠正和忘记的记录 |
+| **做角色/互动叙事** | 先跑离线 Demo | 再进入 Character、Story Core、Notebook |
+| **接现代 Coding Agent** | `python harness.py ecosystem status` | 真实兼容等级；计划项不会冒充已支持 |
+| **审计仓库** | `python package_selfcheck.py` | 离线静态检查和明确返回码 |
+| **准备贡献** | 阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md) | 测试、UX、安全、评测等贡献入口 |
+
+第一次不用理解所有术语和命令。**先跑 Demo，再按自己的目标只选一条路。**
+
+## 角色不应该只是“口癖包”
+
+这里追求的不是让角色多说几句特色台词，而是让用户能够理解：角色**此刻处在什么处境、与用户共同经历过什么、为什么作出当前选择，以及理解错了以后在哪里纠正**。
+
+```text
+处境 → 关系 → 共同经历 → 当前状态 → 责任与张力 → 可解释选择 → 表达
+```
+
+口癖只在最后一层。记忆、关系与推断应当可见、可质疑、可撤销；“像真人”不等于系统真的理解或具有意识。完整设计见 [`Topics 对齐与切身化角色设计`](docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md)。
+
 
 ## Works around modern agent workflows
 
@@ -21,11 +103,11 @@ Planned and experimental integration surfaces include:
 - MCP-capable agent clients;
 - OpenAI-compatible and DeepSeek-powered model backends.
 
-See [Agent Compatibility](AGENT_COMPATIBILITY.md).
+See [Agent Compatibility](docs/AGENT_COMPATIBILITY.md). Compatibility varies by platform; planned adapters are not presented as verified support.
 
 ---
 
-## 5 分钟看到什么
+## 5 分钟逐项检查什么
 
 ```bash
 git clone https://github.com/bronya-q/harness-core-portable.git
