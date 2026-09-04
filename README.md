@@ -147,6 +147,9 @@ cd harness-core-portable
 # 2. 发布前离线自检（不依赖 Ollama / 私有卡，干净 clone 应通过）
 python package_selfcheck.py
 
+# 2b. Windows 用户可直接双击“开始体验.bat”，或运行：
+python harness.py start
+
 # 3. 5 分钟离线演示（合成数据，自动清理）
 python harness.py demo --offline
 
@@ -242,6 +245,9 @@ LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说�
 RESEARCH.md             研究动机、范式、数据与效果
 PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与研究建议
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
+QUICKSTART.md           English quickstart
+QUICKSTART.zh-CN.md     中文快速开始
+开始体验.bat            Windows 双击入口
 demo_experience.py       离线可感知演示（合成数据，一键清理）
 local_records_export.py   本地记录快照生成脚本（需在原始环境运行）
 local_records_verify.py  本地记录快照校验脚本

@@ -42,6 +42,10 @@ PASSTHROUGH = {
     "story": ["story_core.py", []],
     "roleplay": ["roleplay_memory_chat.py", []],
     "demo": ["demo_experience.py", []],
+    "start": ["ux_commands.py", ["start"]],
+    "doctor": ["ux_commands.py", ["doctor"]],
+    "inspect": ["ux_commands.py", ["inspect"]],
+    "data": ["ux_commands.py", ["data"]],
 }
 
 # Fine-grained subcommands

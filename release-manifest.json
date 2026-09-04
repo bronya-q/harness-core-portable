@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T09:42:51.205514+00:00",
+  "generated_at": "2026-09-04T09:45:15.034753+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 104,
+  "count": 108,
   "files": {
     ".gitignore": "ccff9e3800c5d8892d7ee8ad43f3123b6c7c1ae79fc817e25d77c497b5289edb",
     "AGENT_USAGE.md": "46101eb47e8e762bb8acec6e1cb7baf0086179b6ae3a722c05696124d794bc57",
@@ -20,7 +20,9 @@
     "PORTABLE_README.md": "16dc9672961f7411fdbdd0eb140e40b174873869d44b5789f5459ad9a1d96b6c",
     "PORTABLE_REQUIREMENTS.txt": "50909b9eea04850fd89d918b832f458ddbf8dc45dea5954720c64b551468ddee",
     "PRE_MODEL_BASELINE.md": "02b41700e40f840cbbad7abed99818984d60a548a86df5c9db2699da0be73a06",
-    "README.md": "75bf3200dd825ba03accd33b808fa868e8794b37032192efd0150e8a4a40ea84",
+    "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
+    "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
+    "README.md": "7a516e07a2d866144345992f73aa8d4681b5be327a134e6402325de62166f5af",
     "RESEARCH.md": "3ec2f445d4e09fe8bf91c8bb09a93f4226c81da148c7245402b190d6803f8377",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "10664d415e1ef074d3be7eaaff97fb5479e32dd9547ddb38f44204d05f18e0ef",
@@ -53,7 +55,7 @@
     "harness-core/gold_human_label_import.py": "cdedc2c351c16e00ddd7a85b3b520b980a24866becc4bbbfa299f311356c9cd7",
     "harness-core/gold_labeler.py": "c88715c830e1175f1a0144af733cce2521986e8d1f2108b0ce1bf8ba55fe153e",
     "harness-core/gold_sampler.py": "9ba72e0d8306656ab7d6faba188fc4c6b86e793f252caaea87722aa735912b38",
-    "harness-core/harness.py": "00a01083c861d55307676e960187244ac747f1d59a199faac1247dab91a6d360",
+    "harness-core/harness.py": "2bf2f6e2547341a85ca6f3eb213e2a835c514a4ed2d49f52feda7d70e3edb610",
     "harness-core/harness_selfcheck.py": "59fbb27b5282ca12b75e146cb2088bd0d1424617a9cc4cb0a19ad1371b54b14e",
     "harness-core/history_backfill.py": "5e1b108d9c7424ff55ba1b60b9ae2dfcc8e111d864664787d42bfdc88cfbd932",
     "harness-core/humanization.py": "a3a6073c0c9fc733fc62191eb5ff34e105ab5b2e7fc7b0dcb447307f81cfcb06",
@@ -99,6 +101,7 @@
     "harness-core/user_confirmed_intake.py": "6ecae13137a5f576f524b66d1cc4424fc9e653e067c9c49aa887e365a34df557",
     "harness-core/user_model.py": "06f6ce8ee9af3c9ee59d01188f30d0281a2428deb45464ed629d7da45a5bb91e",
     "harness-core/user_model_signals.py": "861d66a2d34ad6ee40c534609e7ed9688d1f4f0cd17e496211b70b16163c37c3",
+    "harness-core/ux_commands.py": "1e5ac689ea12da4c29298225d89678e0d562c2ce8c6109d6cd0fa743c7882f83",
     "harness-core/vector_queue.py": "38f9029d57809a22465bc69302ef83c751d5fbd8b6b07f0acebbc1f688fe1072",
     "harness-core/vector_worker.py": "06092961fd1aa9302bf6094f12a20400568e9c4a64a5b3e456a712f692ea55c6",
     "harness-core/wechat_adapter.py": "7ee9a43bb04724da7fd79ef4f1556d9f8c7cd983232cbe46828edea6d4ee1bbb",
@@ -108,6 +111,7 @@
     "local_records_verify.py": "34b7c8645b9c354c90ba25e35a3b6e2cf08ecf5f1d73ca0e46579084cf6866a1",
     "package_selfcheck.py": "3a1e9b6288920ee06e8b558e321a533756331e296bf6edf1790fe3ab915db946",
     "provenance_audit_report.json": "521b3abaa50967d4d628ade3d477b62796b26de6f3503dba26530005b4579f4b",
-    "release_verify.py": "e47c621dd21a6be988bd4078805f05bc4c2c90333494a8ab2ed74d7f392628bc"
+    "release_verify.py": "e47c621dd21a6be988bd4078805f05bc4c2c90333494a8ab2ed74d7f392628bc",
+    "开始体验.bat": "f91507f84ed67d819bcb6f5ffe3430c7878a8d8c3f8f4fec4d20df1b229dac19"
   }
 }
