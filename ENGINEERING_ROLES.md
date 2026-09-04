@@ -30,16 +30,16 @@
 
 | 主族 | 例子 |
 |---|---|
-| 知识型 | Blanche、Markos、法律/医学/历史专家、文献校勘者、世界观管理员 |
+| 知识型 | 本机知识管理员 A、本机知识管理员 B、法律/医学/历史专家、文献校勘者、世界观管理员 |
 | 工程型 | 架构师、Python 工程师、数据工程师、测试工程师、发布工程师、安全工程师、可观测性工程师、UX 工程师、迁移工程师、Incident Responder |
-| 审查型 | Evil Review profiles（Code / Data / Security / Release / Measurement / UX） |
+| 审查型 | Adversarial Review profiles（Code / Data / Security / Release / Measurement / UX） |
 
 两者不隔离。例如：
 
 ```text
-Markos：负责经济理论
+本机知识管理员 B：负责经济理论
 研究工程师：把资料索引进知识库
-Evil Review：检查结论是否夸大
+Adversarial Review：检查结论是否夸大
 发布工程师：决定哪些聚合结果进入公共包
 ```
 
@@ -64,7 +64,7 @@ engineering_function = release
 | UX Engineer | 新用户流程、HTML 控制台、可访问性 | UI 范围写入 |
 | Incident Responder | 故障诊断、备份与恢复 | 紧急但需审批 |
 | Documentation Engineer | 文档、示例、命令一致性 | 文档范围写入 |
-| Integration Engineer | Blanche/Markos/Ollama 等桥接 | 适配器范围写入 |
+| Integration Engineer | 本机知识管理员 A/本机知识管理员 B/Ollama 等桥接 | 适配器范围写入 |
 | Measurement Engineer | 指标定义、评测、CI、失败样本 | 评测范围写入 |
 
 ## 4. Engineering Steward
@@ -175,7 +175,7 @@ main working tree
 ├── worktree/ux-dashboard
 ├── worktree/release-alpha
 ├── worktree/vector-repair
-└── worktree/integration-blanche
+└── worktree/integration-local-persona
 ```
 
 每个任务记录：task_id、role_id、base_commit、worktree、allowed_paths、changed_files、tests、approval、merge_status。
@@ -226,19 +226,19 @@ main working tree
 ```text
 Architect → Implementer：设计目标、接口约束、不变量、受影响文件、迁移计划、验收标准、禁止事项
 Implementer → Test Engineer：base commit、patch、变更说明、已知风险、重点攻击路径
-Test Engineer → Security/Evil：测试矩阵、未覆盖路径、失败样本、异常行为、权限变化
-Security/Evil → Implementer：严重级别、复现步骤、证据、修复建议、是否阻断合并
+Test Engineer → Security/Adversarial Review：测试矩阵、未覆盖路径、失败样本、异常行为、权限变化
+Security/Adversarial Review → Implementer：严重级别、复现步骤、证据、修复建议、是否阻断合并
 Release Engineer → 用户：候选版本、manifest、clean clone、ZIP、已知限制、发布边界
 ```
 
-## 12. Evil Review 工程专业化
+## 12. Adversarial Review 工程专业化
 
 ```text
-Evil-Code：异常是否被吞、返回码、portable path、部分写入、timeout fail-closed、并发一致性
-Evil-Data：real/demo/smoke 混淆、derived 循环强化、schema 迁移可回滚、orphan/duplicate、删除是否生效
-Evil-Security：API key、路径穿越、shell injection、dashboard bind、CORS、插件权限、私有导出
-Evil-Release：manifest、Git/ZIP、tracked file equality、许可证、文档命令、公共包是否引用私有文件
-Evil-Measurement：指标标签与实际 k、分母/排除项、A/B 口径、demo 冒充 real、内部 PASS 冒充认证
+Adversarial Review-Code：异常是否被吞、返回码、portable path、部分写入、timeout fail-closed、并发一致性
+Adversarial Review-Data：real/demo/smoke 混淆、derived 循环强化、schema 迁移可回滚、orphan/duplicate、删除是否生效
+Adversarial Review-Security：API key、路径穿越、shell injection、dashboard bind、CORS、插件权限、私有导出
+Adversarial Review-Release：manifest、Git/ZIP、tracked file equality、许可证、文档命令、公共包是否引用私有文件
+Adversarial Review-Measurement：指标标签与实际 k、分母/排除项、A/B 口径、demo 冒充 real、内部 PASS 冒充认证
 ```
 
 ## 13. 典型工程角色方案摘要
@@ -247,7 +247,7 @@ Evil-Measurement：指标标签与实际 k、分母/排除项、A/B 口径、dem
 |---|---|---|
 | Runtime Engineer | resolver、policy、scope、collaboration、provider routing、fail-closed | 检查路径展开、alias 统一 |
 | Memory/Data Engineer | SQLite schema、memory lifecycle、vector queue、dedup、provenance、migration、backup | 诊断 9 条缺向量需先副本测试 |
-| Persona Integration Engineer | Character Card 导入、HCP、Blanche/Markos adapter、热插拔、legacy alias | 不判断内容正确性，只负责格式/边界/兼容 |
+| Persona Integration Engineer | Character Card 导入、HCP、本机知识管理员 A/本机知识管理员 B adapter、热插拔、legacy alias | 不判断内容正确性，只负责格式/边界/兼容 |
 | Dashboard/UX Engineer | HTML 控制台、时间线、角色画廊、桥图、token 图、可访问性 | 不直接查询全部私有正文 |
 | Observability Engineer | trace/span、token、latency、fallback、errors、report | 不默认保存完整 prompt、不记录密钥 |
 | Release Engineer | manifest、selfcheck、clone/ZIP、版本、Release Notes | 不能仅凭角色权限自动 push |
@@ -335,22 +335,22 @@ Evil-Measurement：指标标签与实际 k、分母/排除项、A/B 口径、dem
 
 1. **Core Runtime Engineer**：resolver / policy / scope / 入口一致性
 2. **Memory & Data Engineer**：SQLite / vector queue / provenance / 迁移清理
-3. **Persona Integration Engineer**：Blanche / Markos / HCP / 热插拔 / 知识域挂载
+3. **Persona Integration Engineer**：本机知识管理员 A / 本机知识管理员 B / HCP / 热插拔 / 知识域挂载
 4. **UX & Observability Engineer**：HTML 控制台 / 时间线 / 桥图 / token 图 / 用户友好度
-5. **Release & Audit Engineer**：公开包 / manifest / clone/ZIP / 文档一致性 / Evil Review
+5. **Release & Audit Engineer**：公开包 / manifest / clone/ZIP / 文档一致性 / Adversarial Review
 
 Security 和 Measurement 可以先作为 Release & Audit Engineer 的审查 profile。
 
 ## 19. 完整工程任务体验
 
 ```text
-用户：把 Blanche 终端接入统一角色启动器
+用户：把 本机知识管理员 A 终端接入统一角色启动器
 
 1. Persona Integration Engineer：创建 integration manifest，不修改原知识库
 2. Runtime Engineer：检查路径展开和 scope，设计 alias / healthcheck
-3. UX Engineer：创建 Blanche 状态卡
+3. UX Engineer：创建 本机知识管理员 A 状态卡
 4. Test Engineer：临时配置测试存在/缺失路径、启动失败提示、不泄漏本机路径
-5. Evil/Security Review：命令注入、私有文件暴露、权限扩大
+5. Adversarial Review/Security Review：命令注入、私有文件暴露、权限扩大
 6. Human Approval：决定是否替换桌面 .bat
 
 最终状态卡：
@@ -402,9 +402,9 @@ Security 和 Measurement 可以先作为 Release & Audit Engineer 的审查 prof
 核心结构：
 
 ```text
-知识型角色     Blanche / Markos
+知识型角色     本机知识管理员 A / 本机知识管理员 B
 工程型角色     Runtime / Memory / Integration / UX / Release
-审查型角色     Evil Review Profiles
+审查型角色     Adversarial Review Profiles
 宿主治理层     Policy / Scope / Workspace Lease / Human Approval / Audit Log / Rollback
 ```
 
@@ -414,7 +414,7 @@ Security 和 Measurement 可以先作为 Release & Audit Engineer 的审查 prof
 |---|---|
 | v0.2 | 统一可视化：角色类型、职责卡、知识域地图、工程资产地图、Runtime Bridge、日志/日记/工程日志、Token |
 | v0.3 | 角色化工程工作台：工程任务 manifest、worktree 隔离、路径 allowlist、diff、测试证据包、结构化 handoff、人工审批 |
-| v0.4 | 跨角色协作：知识专家→工程需求→架构→实现→测试→Evil/Security→Release→用户批准 |
+| v0.4 | 跨角色协作：知识专家→工程需求→架构→实现→测试→Adversarial Review/Security→Release→用户批准 |
 
 仍不启用：
 

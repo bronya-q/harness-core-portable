@@ -1,7 +1,7 @@
 # 角色化知识治理（Knowledge Stewardship）
 
 > 本文档记录一个方向：角色不只是“说话的人”，而是某些**知识域、工作流、日志、日记和解释方式的责任主体 / 知识管理员**。
-> 状态：**方向 / 未实现**；本机已有 Blanche、Markos、Evil Review 三种原型。
+> 状态：**方向 / 未实现**；本机已有 本机知识管理员 A、本机知识管理员 B、Adversarial Review 三种原型。
 
 ---
 
@@ -19,11 +19,11 @@
 
 | 角色 | 负责的认知职责 |
 |---|---|
-| Blanche | 女性主义理论、术语、流派、伦理、舆情、研究方法 |
-| Markos | 马克思主义政治经济学、价值理论、经济结构、派别辩论、研究日志、日记信件 |
-| Evil Review | 跨角色对抗审查：草稿→攻击→反驳→修订→记忆 |
+| 本机知识管理员 A | 女性主义理论、术语、流派、伦理、舆情、研究方法 |
+| 本机知识管理员 B | 马克思主义政治经济学、价值理论、经济结构、派别辩论、研究日志、日记信件 |
+| Adversarial Review | 跨角色对抗审查：草稿→攻击→反驳→修订→记忆 |
 
-**Evil 的特殊性**：它不应作为“知识所有者”，而应作为 Review Provider / Critic Role / Adversarial Bridge。
+**Adversarial Review 的特殊性**：它不应作为“知识所有者”，而应作为 Review Provider / Critic Role / Adversarial Bridge。
 
 ## 3. 五层分离
 
@@ -55,28 +55,28 @@
 示例：
 
 ```text
-domain:feminism
-  Blanche       steward + expert
-  Markos        reader + contributor
-  Evil Review   critic
+domain:local-knowledge-source-a
+  本机知识管理员 A       steward + expert
+  本机知识管理员 B        reader + contributor
+  Adversarial Review   critic
   其他角色       blocked / guest
 
-domain:marxian-economics
-  Markos        steward + expert
-  Blanche       reader + critic
-  Evil Review   critic
+domain:local-knowledge-source-b
+  本机知识管理员 B        steward + expert
+  本机知识管理员 A       reader + critic
+  Adversarial Review   critic
 
 domain:user-private
   当前指定角色   reader
   其他角色       blocked
 ```
 
-> Evil Review 不应因负责审查就默认可读取全部私人数据。
+> Adversarial Review 不应因负责审查就默认可读取全部私人数据。
 
 ## 5. 角色包扩展
 
 ```text
-blanche.hcp/
+local-persona.hcp/
 ├── character.json
 ├── perspective-card.json
 ├── knowledge-bindings.json
@@ -94,15 +94,15 @@ blanche.hcp/
 ```json
 {
   "schema_version": 1,
-  "persona_id": "blanche",
-  "scope": "character:blanche",
+  "persona_id": "local-persona",
+  "scope": "character:local-persona",
   "domains": [
     {
-      "domain_id": "domain:feminism",
+      "domain_id": "domain:local-knowledge-source-a",
       "role": "steward",
       "priority": 100,
       "mount_mode": "read_only",
-      "source_ref": "local:feminism-kb",
+      "source_ref": "local:local-knowledge-source-a-kb",
       "allowed_operations": ["search", "read", "quote", "summarize", "propose_annotation"],
       "forbidden_operations": ["overwrite_source", "publish_without_review", "cross_scope_export"]
     }
@@ -116,14 +116,14 @@ blanche.hcp/
 
 ```json
 {
-  "source_id": "local:feminism-kb",
-  "display_name": "Blanche 女性主义知识库",
+  "source_id": "local:local-knowledge-source-a-kb",
+  "display_name": "本机知识管理员 A 女性主义知识库",
   "kind": "directory",
-  "root": "~/feminism_kb",
+  "root": "~/local-knowledge-source-a",
   "portable": false,
   "private": true,
   "default_access": "deny",
-  "stewards": ["blanche"]
+  "stewards": ["local-persona"]
 }
 ```
 
@@ -139,7 +139,7 @@ blanche.hcp/
 切换示例：
 
 ```text
-正在激活 Blanche
+正在激活 本机知识管理员 A
 ✓ Perspective Card 已加载
 ✓ 私人记忆 scope 已切换
 ✓ 女性主义知识域已挂载（只读）
@@ -160,11 +160,11 @@ blanche.hcp/
 
 系统提示：
 该问题匹配知识域：女性主义
-负责角色：Blanche
+负责角色：本机知识管理员 A
 
 请选择：
-1. 切换到 Blanche
-2. 让 Blanche 提供后台知识摘要
+1. 切换到 本机知识管理员 A
+2. 让 本机知识管理员 A 提供后台知识摘要
 3. 当前角色不调用该知识域，自行回答
 4. 取消
 ```
@@ -181,14 +181,14 @@ blanche.hcp/
 
 ```text
 回答角色：排队姬
-知识支持：Markos · 政治经济学
-审查：Evil Review
+知识支持：本机知识管理员 B · 政治经济学
+审查：Adversarial Review
 来源：3 条
 ```
 
-用户不会误以为排队姬“拥有”Markos 的全部研究经历。
+用户不会误以为排队姬“拥有”本机知识管理员 B 的全部研究经历。
 
-## 10. Evil Review 作为 Review Bridge
+## 10. Adversarial Review 作为 Review Bridge
 
 工作流：
 
@@ -197,28 +197,28 @@ blanche.hcp/
 → 反驳 → 修订建议 → 由原角色重新表达
 ```
 
-Evil 不应：
+Adversarial Review 不应：
 - 直接覆盖主角色人格
 - 自动把攻击意见写入事实库
 - 读取所有私人 scope
 - 因为风格更苛刻就被当成“更真实”
 - 通过审查权限获得 Autonomous 权限
 
-Evil Review 可按知识域加载不同攻击清单：
+Adversarial Review 可按知识域加载不同攻击清单：
 
-| 角色 | Evil Review 关注点 |
+| 角色 | Adversarial Review 关注点 |
 |---|---|
-| Blanche | 来源准确性、理论流派混淆、代表性偏差、访谈伦理、刻板印象 |
-| Markos | 概念年代错置、价值/价格混淆、流派立场、引用版本、数据与理论混用 |
+| 本机知识管理员 A | 来源准确性、理论流派混淆、代表性偏差、访谈伦理、刻板印象 |
+| 本机知识管理员 B | 概念年代错置、价值/价格混淆、流派立场、引用版本、数据与理论混用 |
 | 角色生成 | 单一语料过拟合、生成循环自证、一次 state 固化为 trait、反证缺失 |
 | Production | 指标标签错位、门控与公开实现不一致、demo 冒充 real、本地快照冒充第三方验证 |
 
 ## 11. 知识控制台：“知识领地地图”
 
 ```text
-Blanche ── steward ──> Feminism KB
-Markos  ── steward ──> Marxian Economics KB
-Evil    ── critic  ──> Approved Review Inputs
+本机知识管理员 A ── steward ──> Feminism KB
+本机知识管理员 B  ── steward ──> Marxian Economics KB
+Adversarial Review    ── critic  ──> Approved Review Inputs
 ```
 
 节点显示：关系、权限、可写原始资料、跨角色共享、网络访问。
@@ -258,15 +258,15 @@ Evil    ── critic  ──> Approved Review Inputs
 
 ## 13. 统一命名与 Resolver 修正
 
-当前存在 `Markos / Markus / character:markus / celebrity-markus` 混乱。
+当前存在 `本机知识管理员 B / 本机知识管理员 B / character:local-persona / celebrity-local-persona` 混乱。
 
 建议：
 
 ```text
-display_name = Markos
-persona_id = markos
-scope = character:markos
-legacy_aliases = ["markus"]
+display_name = 本机知识管理员 B
+persona_id = local-persona
+scope = character:local-persona
+legacy_aliases = ["local-persona"]
 ```
 
 Resolver 修正：
@@ -279,17 +279,17 @@ Resolver 修正：
 
 ```json
 {
-  "persona_id": "blanche",
-  "display_name": "Blanche",
+  "persona_id": "local-persona",
+  "display_name": "本机知识管理员 A",
   "aliases": ["布兰奇"],
-  "scope": "character:blanche",
-  "persona_source": { "ref": "local:blanche-persona", "private": true },
+  "scope": "character:local-persona",
+  "persona_source": { "ref": "local:local-persona-persona", "private": true },
   "knowledge_bindings": [
-    { "source_id": "local:feminism-kb", "domain_id": "domain:feminism", "role": "steward", "mount_mode": "read_only" }
+    { "source_id": "local:local-knowledge-source-a-kb", "domain_id": "domain:local-knowledge-source-a", "role": "steward", "mount_mode": "read_only" }
   ],
-  "notebook_scope": "character:blanche",
+  "notebook_scope": "character:local-persona",
   "story_access": [ { "namespace": "story:shared", "permission": "read" } ],
-  "review_profiles": ["evil-review:feminism"],
+  "review_profiles": ["evil-review:local-knowledge-source-a"],
   "permissions_requested": {
     "network": false,
     "external_commands": false,
@@ -305,8 +305,8 @@ Resolver 修正：
 
 ```text
 local-integrations/
-├── blanche.json
-├── markos.json
+├── local-persona.json
+├── local-persona.json
 └── evil-review.json
 ```
 
@@ -314,26 +314,26 @@ local-integrations/
 
 ```bash
 python harness.py integrations list
-python harness.py integrations inspect blanche
-python harness.py integrations launch blanche
+python harness.py integrations inspect local-persona
+python harness.py integrations launch local-persona
 ```
 
 集成 manifest 示例：
 
 ```json
 {
-  "integration_id": "blanche-local",
-  "display_name": "Blanche 终端",
+  "integration_id": "local-persona-local",
+  "display_name": "本机知识管理员 A 终端",
   "kind": "persona_knowledge_terminal",
-  "persona_id": "blanche",
-  "scope": "character:blanche",
+  "persona_id": "local-persona",
+  "scope": "character:local-persona",
   "private": true,
   "portable": false,
-  "working_directory": "~/feminism_kb",
-  "launcher": { "kind": "python_script", "path": "~/feminism_kb/blanche_persona.py" },
-  "knowledge_sources": [ { "path": "~/feminism_kb", "domain": "feminism", "mode": "read_only" } ],
+  "working_directory": "~/local-knowledge-source-a",
+  "launcher": { "kind": "python_script", "path": "~/local-knowledge-source-a/local-persona_persona.py" },
+  "knowledge_sources": [ { "path": "~/local-knowledge-source-a", "domain": "local-knowledge-source-a", "mode": "read_only" } ],
   "requested_permissions": { "network": false, "process_spawn": true, "knowledge_write": false, "cross_scope_memory": false },
-  "review_profile": "evil-review:feminism"
+  "review_profile": "evil-review:local-knowledge-source-a"
 }
 ```
 
@@ -343,15 +343,15 @@ python harness.py integrations launch blanche
 
 | 角色 | 优先保留 | 减少 |
 |---|---|---|
-| Blanche | 术语定义、流派差异、争议状态、伦理约束、精确来源 | 重复舆情、未核验情绪化摘要 |
-| Markos | 概念定义、版本、论证链、流派立场、历史语境、反对意见 | 重复派别、低来源草稿 |
-| Evil | 待审主张、证据、反证、指标定义、边界 | 完整文学日记、无关关系状态 |
+| 本机知识管理员 A | 术语定义、流派差异、争议状态、伦理约束、精确来源 | 重复舆情、未核验情绪化摘要 |
+| 本机知识管理员 B | 概念定义、版本、论证链、流派立场、历史语境、反对意见 | 重复派别、低来源草稿 |
+| Adversarial Review | 待审主张、证据、反证、指标定义、边界 | 完整文学日记、无关关系状态 |
 
 ## 17. 完整信息流
 
 ```text
 用户请求 → 角色选择 → 知识域路由 → 知识来源检索 → 角色解释
-→ 可选 Evil Review → 最终输出
+→ 可选 Adversarial Review → 最终输出
 → 系统日志 → 角色经历 → 日记草稿 → 内省候选 → 人工确认
 ```
 
@@ -364,22 +364,22 @@ review_id / episode_id / diary_id / reflection_id
 
 ## 18. 第一垂直切片：Persona Knowledge Control Center
 
-只支持本机三个现有对象：Blanche、Markos、Evil Review。
+只支持本机三个现有对象：本机知识管理员 A、本机知识管理员 B、Adversarial Review。
 
 第一版页面：
 
 ```text
 角色卡片
-Blanche
+本机知识管理员 A
 知识域：女性主义
 启动器：可用
 人格源：可用
 私有：本地私有
 
 知识桥
-Blanche ── steward ──> Feminism KB
-Markos  ── steward ──> Marxian Economics KB
-Evil    ── critic  ──> Approved Review Inputs
+本机知识管理员 A ── steward ──> Feminism KB
+本机知识管理员 B  ── steward ──> Marxian Economics KB
+Adversarial Review    ── critic  ──> Approved Review Inputs
 
 权限
 读取专业知识：允许
@@ -395,9 +395,9 @@ Evil    ── critic  ──> Approved Review Inputs
 
 | 阶段 | 内容 |
 |---|---|
-| P0 | 本机集成登记；统一 markos/markus；修 resolver expanduser；knowledge-sources.local.json |
+| P0 | 本机集成登记；统一 local-persona/local-persona；修 resolver expanduser；knowledge-sources.local.json |
 | P1 | 只读 HTML 知识控制台：角色列表、知识域地图、权限卡、健康检查 |
-| P2 | 统一启动与热插拔：character activate blanche/markos，自动挂载/卸载知识域 |
+| P2 | 统一启动与热插拔：character activate local-persona/local-persona，自动挂载/卸载知识域 |
 | P3 | 角色间委派：知识桥、有限摘要、不共享私人日记 |
 | P4 | 知识维护与内省：来源核验队列、研究笔记整理、日记与理论分区、审批/回滚 |
 
@@ -412,7 +412,7 @@ Evil    ── critic  ──> Approved Review Inputs
 + 角色专属知识域
 + 跨角色受控委派
 + 日志/日记/内省分层
-+ Evil 对抗审查
++ Adversarial Review 对抗审查
 + 运行桥和权限可视化
 + Token 成本可视化
 + 本地隐私
@@ -423,4 +423,4 @@ Evil    ── critic  ──> Approved Review Inputs
 
 角色可以负责组织与解释知识，但不能因“控制”知识域而垄断事实、绕过来源核验或自动获得更高权限。
 
-Blanche、Markos 和 Evil 最
+本机知识管理员 A、本机知识管理员 B 和 Adversarial Review 最
