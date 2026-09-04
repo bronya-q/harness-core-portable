@@ -122,6 +122,33 @@ class UserExperienceFlowsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_character_remove_requires_confirmation(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = _env(home)
+            char_dir = home / "harness" / "characters" / "demo-archivist"
+            char_dir.mkdir(parents=True, exist_ok=True)
+            (char_dir / "package-manifest.json").write_text(
+                json.dumps({"persona_id": "demo-archivist", "display_name": "档案管理员"},
+                           ensure_ascii=False), encoding="utf-8")
+            p = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "character", "remove", "demo-archivist"],
+                input="n" + chr(10), capture_output=True, text=True, encoding="utf-8",
+                errors="replace", env=env, timeout=30,
+            )
+            self.assertEqual(p.returncode, 1, p.stderr + p.stdout[-300:])
+            self.assertIn("cancelled", p.stdout)
+            self.assertTrue(char_dir.exists())
+            p2 = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "character", "remove", "demo-archivist", "--yes"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(p2.returncode, 0, p2.stderr + p2.stdout[-300:])
+            self.assertFalse(char_dir.exists())
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_knowledge_access_read_only_snippet(self):
         home = Path(tempfile.mkdtemp())
         try:

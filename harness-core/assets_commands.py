@@ -267,18 +267,24 @@ def cmd_character(args):
                           "rollback_available": ACTIVE_BACKUP.exists()}, ensure_ascii=False))
         return 0
     if sub == "deactivate":
+        if not _confirm_risk("character deactivate", "清除当前激活角色标记。", yes="--yes" in rest):
+            print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
+            return 1
         if ACTIVE_FILE.exists():
             ACTIVE_FILE.unlink()
         print(json.dumps({"ok": True, "active": None}, ensure_ascii=False))
         return 0
     if sub == "remove":
         if not rest:
-            print("用法：harness.py character remove <persona_id>")
+            print("用法：harness.py character remove <persona_id> [--yes]")
             return 1
         pid = rest[0]
         dest = CHARACTERS_DIR / pid
         if not dest.exists():
             print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
+            return 1
+        if not _confirm_risk("character remove", "删除角色资产目录：%s" % pid, yes="--yes" in rest):
+            print(json.dumps({"ok": False, "status": "cancelled", "persona_id": pid}, ensure_ascii=False))
             return 1
         shutil.rmtree(dest)
         if read_json(ACTIVE_FILE).get("persona_id") == pid:
