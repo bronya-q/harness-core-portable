@@ -545,3 +545,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **高风险操作二次确认**：为 `memory forget`、`privacy reset-demo`、`workspace worktree remove`、`workspace release` 增加二次确认；支持 `--yes` 跳过；取消返回 `status=cancelled`。
 - `tests/test_user_experience_flows.py` 增加确认/取消用例，unittest 总数 24。
+
+## 22. 后续处理记录（2026-09-04 续 10）
+
+- **A/B / Evidence / Workspace 可视化**：Dashboard 新增「工程工作区 / Evidence」卡片，列出 workspace lease 与 evidence bundle 的关键状态；`test_dashboard_visualization` 增加对应断言。unittest 总数 24。

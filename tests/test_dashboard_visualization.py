@@ -28,6 +28,9 @@ class DashboardVisualizationTest(unittest.TestCase):
             self.assertIn("知识域与挂载", s)
             self.assertIn("向量队列", s)
             self.assertIn("Token 来源 / Provider", s)
+            self.assertIn("工程工作区 / Evidence", s)
+            self.assertIn("Workspace", s)
+            self.assertIn("Evidence Bundle", s)
             self.assertIn("hb-row", s)
         finally:
             shutil.rmtree(home, ignore_errors=True)
