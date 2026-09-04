@@ -69,6 +69,36 @@ class UserExperienceFlowsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_high_risk_forget_requires_confirmation(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = _env(home)
+            w = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "write",
+                 "--scope", "character:demo-archivist", "--text", "要忘记的条目", "--yes"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            d = json.loads(w.stdout[w.stdout.index("{"):])
+            nid = d["id"]
+            # 不确认 → 取消
+            p = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "forget", "--id", nid],
+                input="n" + chr(10), capture_output=True, text=True, encoding="utf-8",
+                errors="replace", env=env, timeout=30,
+            )
+            self.assertEqual(p.returncode, 1, p.stderr + p.stdout[-300:])
+            self.assertIn("cancelled", p.stdout)
+            # 确认 → 归档
+            p2 = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "forget", "--id", nid, "--yes"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(p2.returncode, 0, p2.stderr + p2.stdout[-300:])
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_knowledge_access_read_only_snippet(self):
         home = Path(tempfile.mkdtemp())
         try:

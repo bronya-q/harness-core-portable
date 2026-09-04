@@ -897,6 +897,18 @@ def cmd_knowledge(args):
     return 1
 
 
+def _confirm_risk(action, detail, yes=False):
+    if yes:
+        return True
+    print("[高危操作] %s" % action)
+    print("  %s" % detail)
+    try:
+        ans = input("确认继续？[y/N] ").strip().lower()
+    except EOFError:
+        ans = ""
+    return ans in ("y", "yes", "是", "1")
+
+
 def cmd_workspace(args):
     if not args:
         print("用法：harness.py workspace create|list|status|release")
@@ -1041,6 +1053,9 @@ def cmd_workspace(args):
             print(json.dumps({"ok": True, "worktrees": out}, ensure_ascii=False, indent=2))
             return 0
         if wsub == "remove":
+            if not _confirm_risk("workspace worktree remove", "将尝试删除 worktree 目录并清理租约。", yes="--yes" in rest):
+                print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
+                return 1
             if (ROOT / ".git").exists() and wt_root.exists():
                 subprocess.run(["git", "-C", str(ROOT), "worktree", "remove", "--force", str(wt_root)],
                                capture_output=True, text=True, timeout=60)
@@ -1083,11 +1098,14 @@ def cmd_workspace(args):
     if sub == "release":
         name = rest[0] if rest else ""
         if not name:
-            print("用法：harness.py workspace release <name>")
+            print("用法：harness.py workspace release <name> [--yes]")
             return 1
         p = WORKSPACE_DIR / name
         if not p.exists():
             print(json.dumps({"ok": False, "error": "workspace_not_found", "name": name}, ensure_ascii=False))
+            return 1
+        if not _confirm_risk("workspace release", "删除该 workspace 目录及其申请。", yes="--yes" in rest):
+            print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
             return 1
         shutil.rmtree(p)
         print(json.dumps({"ok": True, "released": name}, ensure_ascii=False))

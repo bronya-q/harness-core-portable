@@ -35,6 +35,11 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - `memory search --query <q> [--scope <s>] [--limit 10]`
   - 精确子串无结果时自动调用 `ngram_fallback.py`
   - 输出 `source=exact_substring / ngram_fallback / none`
+- [x] **高风险操作二次确认**
+  - `memory forget --id <id>` 默认需要确认，`--yes` 可跳过
+  - `privacy reset-demo` 默认需要确认，`--yes` 可跳过
+  - `workspace worktree remove` / `workspace release` 默认需要确认，`--yes` 可跳过
+  - 取消时返回 `status=cancelled`，不执行破坏性操作
 
 ## 尝试过 / 未通过
 
