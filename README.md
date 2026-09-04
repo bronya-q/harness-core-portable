@@ -219,9 +219,12 @@ python harness.py event list --limit 5
 python harness.py usage record --actual 640 --baseline 18420 --avoided 17780
 python harness.py usage list
 python harness.py usage summary
+python harness.py usage baseline set --baseline-tokens 1000
+python harness.py usage baseline check
 python harness.py ab role --a unified-object-model.example.json --b knowledge-sources.example.json
-python harness.py ab retriever --retriever-a keyword --retriever-b atomic --top-k 5
+python harness.py ab retriever --retriever-a keyword --retriever-b atomic --top-k 5 [--per-query]
 python harness.py evidence create --task example-task [--workspace <ws>]
+python harness.py evidence handoff --task example-task
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
