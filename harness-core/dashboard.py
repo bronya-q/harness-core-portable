@@ -166,14 +166,14 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>估算上下文 token（按字符/4 估算）</h2>
 <p>日记 {_html(est['diary'])} · 经历摘要 {_html(est['episodes'])} · 笔记 {_html(est['notes'])} tokens</p>
 <p class="muted">估算值，不是模型真实 usage；真实 token 以 provider 为准。</p></div>
-<div class="card"><h2>运行桥（文本版）</h2>
-<pre>
-用户输入 → Scope Resolver → [Perspective Card / Memory Recall / Notebook / Story Core / Runtime Policy]
-              ↓ 跨 scope 记忆 BLOCK
-              ↓ Prompt Builder
-              ↓ Ollama / Qwen
-              ↓ 输出 → Session Telemetry → Auto-note
-</pre></div>
+<div class="card"><h2>运行桥（点击节点查看详情）</h2>
+<details><summary>① 用户输入 → Scope Resolver</summary><p>解析当前角色/项目 scope；跨角色记忆默认 BLOCK。</p></details>
+<details><summary>② Perspective Card</summary><p>{_html(roles[:80])} 已加载人格/边界。</p></details>
+<details><summary>③ Memory Recall</summary><p>候选 {_html(mem_active)} 条 active；实际注入比例见 Token 面板。</p></details>
+<details><summary>④ Notebook / Story Core</summary><p>经历笔记 {len(notes)} 条；Story Core 版本见上方。</p></details>
+<details><summary>⑤ Runtime Policy → Prompt Builder</summary><p>自动执行 <b>DISABLED</b>；网络上传 <b>NONE</b>。</p></details>
+<details><summary>⑥ Model → Output → Telemetry → Auto-note</summary><p>详见统一事件时间线。</p></details>
+</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>
