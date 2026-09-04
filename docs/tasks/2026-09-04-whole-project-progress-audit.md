@@ -466,7 +466,7 @@ GitHub Release deployment record prepared
 项目阶段：快速发展的 alpha 工程原型
 公开可体验性：已建立
 基础可靠性：明显提升
-当前 HEAD 健康：绿灯（tests/selfcheck/release_verify/clean-clone wheel）
+当前工作区健康：绿灯（tests/selfcheck/release_verify/clean-clone wheel）；提交态需连同最新 manifest 一起落库
 外部发布：alpha.2 Pre-release 已发布；alpha.3 只有 tag，Release API 404
 主线发布准备：部分完成，仍缺 CI/ZIP/文档一致性
 MCP 仓库内状态：R1，可测试、可构建 wheel
