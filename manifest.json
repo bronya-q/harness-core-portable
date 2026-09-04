@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "package_name": "harness-core-portable",
-  "generated_at": "2026-09-04T06:50:38.783328+00:00",
-  "file_count": 77,
-  "total_bytes": 503787,
+  "generated_at": "2026-09-04T07:28:06.890299+00:00",
+  "file_count": 85,
+  "total_bytes": 533489,
   "hash_algorithm": "sha256",
   "scope": "all repository files except .git/** and manifest.json itself",
   "files": [
@@ -13,9 +13,19 @@
       "sha256": "ccff9e3800c5d8892d7ee8ad43f3123b6c7c1ae79fc817e25d77c497b5289edb"
     },
     {
+      "path": "AGENT_USAGE.md",
+      "size": 2194,
+      "sha256": "a4ce146d303a39a7021a3aca71ef772bdd2eb3ebba2a317dd8e69b7cbc9a5ce4"
+    },
+    {
+      "path": "audit_provenance.py",
+      "size": 3060,
+      "sha256": "b3e4376d7bec1fe4399c327c2c838face18a2ccf4d5d751bda7f06f0d92f553e"
+    },
+    {
       "path": "CREDITS.md",
-      "size": 18083,
-      "sha256": "9372067693693f33326652fb4a6a7bc09d62a2294f20727232ecb6069bb4cde7"
+      "size": 18613,
+      "sha256": "fb66c326a735bbbfef8f5f53e6ce9d161c382e3983e4010ed366899bbc626e09"
     },
     {
       "path": "demo-perspective-card.json",
@@ -26,6 +36,11 @@
       "path": "demo_gold.json",
       "size": 560,
       "sha256": "465400188d324bd681283e5c30f77d0aa73be5364fc53b8e1fffbb1680ebba3f"
+    },
+    {
+      "path": "EFFECTS.md",
+      "size": 7461,
+      "sha256": "6c59a5a3b330f3130d31a347350d722bc76883ed41ce1c5b8af16eee7aaa7b9c"
     },
     {
       "path": "harness-core/atomic_fact_retriever.py",
@@ -76,6 +91,11 @@
       "path": "harness-core/docs/Herta-NEKO-升级方案-20260901.md",
       "size": 4650,
       "sha256": "7d340029936c0ae1861df32a97d384810ffdeeb4bee3f9e3e984294e6bec3952"
+    },
+    {
+      "path": "harness-core/docs/Kimi-Moonshot-研究学习-20260903.md",
+      "size": 10468,
+      "sha256": "b31bd1de804618c421e4a1ab6acf45026979d2226f1e7e6cd3549aa0442e03b6"
     },
     {
       "path": "harness-core/docs/原子事实-实体-时间-A-B实验-20260902.md",
@@ -368,6 +388,21 @@
       "sha256": "729c2493b3c518c8e245946cdc761e04eadbae1bd7e9699a68f3c1fc942937c9"
     },
     {
+      "path": "MENTAL_MODEL_EFFECTS.md",
+      "size": 2268,
+      "sha256": "3817f70f806ee7baa557a6eec62fe598b78090aa8b45961070b0d8c2294493c1"
+    },
+    {
+      "path": "NATURAL_DATA_GAP.md",
+      "size": 1835,
+      "sha256": "89f0f1a55ca44eb8bad292f81ee5efe24f9aeb0ebefbbd8add79d5dda0606587"
+    },
+    {
+      "path": "NOTICE.md",
+      "size": 1400,
+      "sha256": "26e20ec9fa4465f57b3692c976a7e3bbecdef2035e11afd0262d1c2cbb02cc95"
+    },
+    {
       "path": "PORTABLE_AGENTS.md",
       "size": 534,
       "sha256": "3a1b2bb0ec087dc8b74cc5a499ad09b3f61a1dddaa31e40d6f5d40495f268cf5"
@@ -388,9 +423,14 @@
       "sha256": "50909b9eea04850fd89d918b832f458ddbf8dc45dea5954720c64b551468ddee"
     },
     {
+      "path": "provenance_audit_report.json",
+      "size": 228,
+      "sha256": "1e2a87df578d41ed9a3e70a5eed62b5c36e3a848b50f2b1ccd5461f2f1250c2d"
+    },
+    {
       "path": "README.md",
-      "size": 895,
-      "sha256": "d228e6dd78563f54a1af44f168d91e8991fc44a028cfbf04180e25bd572fe29b"
+      "size": 1153,
+      "sha256": "0ef008f0625c5889f1fbecee1a6c283a546f291f041974f75c68508073b3cf49"
     }
   ]
 }
