@@ -1,436 +1,90 @@
 {
   "schema_version": 2,
-  "package_name": "harness-core-portable",
-  "generated_at": "2026-09-04T07:28:06.890299+00:00",
-  "file_count": 85,
-  "total_bytes": 533489,
-  "hash_algorithm": "sha256",
-  "scope": "all repository files except .git/** and manifest.json itself",
-  "files": [
-    {
-      "path": ".gitignore",
-      "size": 58,
-      "sha256": "ccff9e3800c5d8892d7ee8ad43f3123b6c7c1ae79fc817e25d77c497b5289edb"
-    },
-    {
-      "path": "AGENT_USAGE.md",
-      "size": 2194,
-      "sha256": "a4ce146d303a39a7021a3aca71ef772bdd2eb3ebba2a317dd8e69b7cbc9a5ce4"
-    },
-    {
-      "path": "audit_provenance.py",
-      "size": 3060,
-      "sha256": "b3e4376d7bec1fe4399c327c2c838face18a2ccf4d5d751bda7f06f0d92f553e"
-    },
-    {
-      "path": "CREDITS.md",
-      "size": 18613,
-      "sha256": "fb66c326a735bbbfef8f5f53e6ce9d161c382e3983e4010ed366899bbc626e09"
-    },
-    {
-      "path": "demo-perspective-card.json",
-      "size": 1012,
-      "sha256": "6577a7a80f9db48d87583bb3bab8967c6121a4e954d6295bbbe1b62143150458"
-    },
-    {
-      "path": "demo_gold.json",
-      "size": 560,
-      "sha256": "465400188d324bd681283e5c30f77d0aa73be5364fc53b8e1fffbb1680ebba3f"
-    },
-    {
-      "path": "EFFECTS.md",
-      "size": 7461,
-      "sha256": "6c59a5a3b330f3130d31a347350d722bc76883ed41ce1c5b8af16eee7aaa7b9c"
-    },
-    {
-      "path": "harness-core/atomic_fact_retriever.py",
-      "size": 3439,
-      "sha256": "12a657adb7a5cfe97170a22f26a478ca99342bee69ef0610ee3e3f9729b63d2d"
-    },
-    {
-      "path": "harness-core/atomic_facts_build.py",
-      "size": 2129,
-      "sha256": "ea6a38f5a956efc37d3bc24863ed9f53a8abdedaa5946533cc61f3ca56d400be"
-    },
-    {
-      "path": "harness-core/cognitive_dynamics.py",
-      "size": 2334,
-      "sha256": "38072f483691188e09ab963304b8c0aca1d4ffcfcc4cba2ed0bf4a29acb0f376"
-    },
-    {
-      "path": "harness-core/continuity_store.py",
-      "size": 6049,
-      "sha256": "9e303a7923091fc5fd171891732543402c13101e5b1d19cf887a4345a4c7019c"
-    },
-    {
-      "path": "harness-core/cross_character_consistency.py",
-      "size": 1878,
-      "sha256": "00eaef720be82928be85cde3a12936be49117a1ebcae9c95dbe29b247334829e"
-    },
-    {
-      "path": "harness-core/daily_report.py",
-      "size": 2403,
-      "sha256": "d22984dc7608a9df5f883af58544b600811678fb6a428fff8f41fbf03e28e0f3"
-    },
-    {
-      "path": "harness-core/deep_fusion_retriever.py",
-      "size": 4848,
-      "sha256": "1ab63fc0095a789d41996cd0c3156dbbb07cac2cd90fe1b8703ae51166cfcc7c"
-    },
-    {
-      "path": "harness-core/docs/harness-系统复盘自传-20260901.md",
-      "size": 1097,
-      "sha256": "a3158a50d9a1b82fe540bfb78944b5b8bf07e699bb1ba02833daf88eefc4e7fd"
-    },
-    {
-      "path": "harness-core/docs/harness-自我哲学与自传-20260901.md",
-      "size": 2936,
-      "sha256": "7c7529e50033bf2197d1f2a4a248786cf4b9fd94bf64f93d8c4247dd713ec0d6"
-    },
-    {
-      "path": "harness-core/docs/Herta-NEKO-升级方案-20260901.md",
-      "size": 4650,
-      "sha256": "7d340029936c0ae1861df32a97d384810ffdeeb4bee3f9e3e984294e6bec3952"
-    },
-    {
-      "path": "harness-core/docs/Kimi-Moonshot-研究学习-20260903.md",
-      "size": 10468,
-      "sha256": "b31bd1de804618c421e4a1ab6acf45026979d2226f1e7e6cd3549aa0442e03b6"
-    },
-    {
-      "path": "harness-core/docs/原子事实-实体-时间-A-B实验-20260902.md",
-      "size": 2211,
-      "sha256": "be76e30f72f97507c2ba3360288794172338f408ee74e97e1f21290a4489ffa4"
-    },
-    {
-      "path": "harness-core/docs/工具清单与依赖图-20260901.md",
-      "size": 2487,
-      "sha256": "0c6a2b34a2af9f34fe1e98f791dfe115dbb4101a134bb51c796a420c1873287f"
-    },
-    {
-      "path": "harness-core/docs/记忆召回调研-方案-20260901.md",
-      "size": 5190,
-      "sha256": "719a2ac8bc3187e2108e7a6d52067e35a1194fdec1137a1adc53a7251b76eaf3"
-    },
-    {
-      "path": "harness-core/emotion_projection.py",
-      "size": 4186,
-      "sha256": "91a500fdbac3676910cd1f333d401e37adcc8001aab24a8e1fbb1b94190e746f"
-    },
-    {
-      "path": "harness-core/facts.py",
-      "size": 5085,
-      "sha256": "839d45680b5ad758618da44fac419972fc6217fb1d8099447ef74001e503c2bd"
-    },
-    {
-      "path": "harness-core/fill_vec.py",
-      "size": 2798,
-      "sha256": "516d5897c9f2c38389d9a6494e15c85e652856675ad264d2e4e52b077a5a9037"
-    },
-    {
-      "path": "harness-core/generate_manifest.py",
-      "size": 5415,
-      "sha256": "af4cfad5660a78993a556e2609d19235afaf32a2d51e63996a2c80b9b2b23129"
-    },
-    {
-      "path": "harness-core/gold_human_label_export.py",
-      "size": 2340,
-      "sha256": "7b2fd58026f2987c8c6fa3750484bef55e32690a4caa37c7ce95308879eefa86"
-    },
-    {
-      "path": "harness-core/gold_human_label_import.py",
-      "size": 2919,
-      "sha256": "fb83f982eb6f69773d995d2bd4a8e2ebcdfbb87efef8fa27153eef1017dd0152"
-    },
-    {
-      "path": "harness-core/gold_labeler.py",
-      "size": 3506,
-      "sha256": "f24dd714ca60f5a627833f3b4caab18fc0a32da5648b678679daa2b74eea8148"
-    },
-    {
-      "path": "harness-core/gold_sampler.py",
-      "size": 3078,
-      "sha256": "908e4b0bfd2c14820a2036ccf14fe77a69ecceb21b0c97d209b80571a3e63611"
-    },
-    {
-      "path": "harness-core/harness.py",
-      "size": 5345,
-      "sha256": "ea2673d76cdafbb37d70f2b81fb5fe4e539743e5a4540e70f77b5746b4b37148"
-    },
-    {
-      "path": "harness-core/harness_selfcheck.py",
-      "size": 2314,
-      "sha256": "03063da1a8f2899174288985ebb4a85363b189c068fd98cea43435d102c99a9e"
-    },
-    {
-      "path": "harness-core/history_backfill.py",
-      "size": 7021,
-      "sha256": "30bffaabd76713a3bf88bfa8a1c5805393ed162e39cabd302287f825b2d7c945"
-    },
-    {
-      "path": "harness-core/humanization.py",
-      "size": 73462,
-      "sha256": "3f2f318b2c05b0fda7569a81ea58f2315124b5470873dd3314bd679e4385e1a1"
-    },
-    {
-      "path": "harness-core/identity_store.py",
-      "size": 4392,
-      "sha256": "7cd3c52467affa74ecb926383326e31d6903415dd8b54182af122da601aba692"
-    },
-    {
-      "path": "harness-core/llm_expand.py",
-      "size": 2580,
-      "sha256": "5a88fc8c6536d159b851bba36408e1267aa0703485bd0e528f94794c13270156"
-    },
-    {
-      "path": "harness-core/llm_rerank.py",
-      "size": 3285,
-      "sha256": "b26b3f09108dc1af407ada70722cebc27151671a2ad044eb74c02b651d9fff17"
-    },
-    {
-      "path": "harness-core/manifest_check.py",
-      "size": 3033,
-      "sha256": "9a546c5003fd47c3251f907770531f8a1f67f7fa5eb4340a93f93f0d15ce1d77"
-    },
-    {
-      "path": "harness-core/measurement.py",
-      "size": 20558,
-      "sha256": "04d6dde8a348f6273078ebe73335cb9af2d83f58a702240de92eb67fe793265f"
-    },
-    {
-      "path": "harness-core/memory_store.py",
-      "size": 29348,
-      "sha256": "1b2efc1dbfd9f020e994757af211afad930588f7d0d38660b23aa7a0c7ff71f7"
-    },
-    {
-      "path": "harness-core/mind_evolution.py",
-      "size": 22785,
-      "sha256": "42177905a2c60acacd864b7ff1eae201fd8a8bfce3f4d603e2cb11946ddc31d1"
-    },
-    {
-      "path": "harness-core/mind_precipitate.py",
-      "size": 9093,
-      "sha256": "ec4db086c7b40ec6e876dc9288c884968daba961c6b65871bf9cf8efa0fc3495"
-    },
-    {
-      "path": "harness-core/mind_review.py",
-      "size": 5113,
-      "sha256": "bed45182ce8a8e34e66d6ec27196b4db0d2825676e2737314ebf2cd42f8d4e77"
-    },
-    {
-      "path": "harness-core/multi_signal_retriever.py",
-      "size": 3005,
-      "sha256": "5555679f5180b5502282d87cf77b4354e256f93c01144063d67588c65a66af63"
-    },
-    {
-      "path": "harness-core/natural_session.py",
-      "size": 2146,
-      "sha256": "f6b51034020b19c897baf602c15cc0c68dfc09a2623c39fb94c3269777e199de"
-    },
-    {
-      "path": "harness-core/need_projection.py",
-      "size": 6115,
-      "sha256": "f2f16c009b85a73ce989ad9218948ca7eb28bdafa919aae96f9ade81d854c5da"
-    },
-    {
-      "path": "harness-core/nine_dim.py",
-      "size": 17480,
-      "sha256": "4b0a1ec0498e9bf6820384211d43328b1cd31a0e3a8aebc1d86ff128e997eeae"
-    },
-    {
-      "path": "harness-core/nine_dim_revision.py",
-      "size": 12464,
-      "sha256": "1164c36966b1c73503313a6762ac14a80258ab83437ef49f7ea526e38b09f85f"
-    },
-    {
-      "path": "harness-core/p4_experiment.py",
-      "size": 4832,
-      "sha256": "7f614aa17cf68fc50dc471f7d355f2211c8fe9351180deadd2280222459d63c8"
-    },
-    {
-      "path": "harness-core/perspective_card.py",
-      "size": 6738,
-      "sha256": "46104468843a069e5b170db8353a7859a442633196d799731de75e5953688624"
-    },
-    {
-      "path": "harness-core/perspective_card_schema.json",
-      "size": 3464,
-      "sha256": "49df04feff4598ca56bf637744fb857ea4937c739ef134e249eb7696cdae42cb"
-    },
-    {
-      "path": "harness-core/phenomenological_review.py",
-      "size": 4637,
-      "sha256": "e7adf5e3f6b7346e021319139a48cccc3dc6034a907cf1c37152804ca0fffd2c"
-    },
-    {
-      "path": "harness-core/plugin_audit.py",
-      "size": 3336,
-      "sha256": "ddb5dbf7835332c893e7f2965885ed79a2d3a24b58787fe2a80707b184d5f842"
-    },
-    {
-      "path": "harness-core/plugin_sandbox.py",
-      "size": 5366,
-      "sha256": "2cede075ce7f6012fa53b0d135a728b42932813c9926813dffe208747aaa9e96"
-    },
-    {
-      "path": "harness-core/proactive_pipeline.py",
-      "size": 4252,
-      "sha256": "d2b63c0daf88e182cfcc304c70f500596a3fa50a36b65b2cbc22a575f740569d"
-    },
-    {
-      "path": "harness-core/production_gate.py",
-      "size": 10563,
-      "sha256": "c276494a3154981eb9d183a2f3886cc84e2a8c37affa3755129878ceb8f81fef"
-    },
-    {
-      "path": "harness-core/psych_validity_probe.py",
-      "size": 2179,
-      "sha256": "6e7155e328c7a509f125162bb040d783db5d4afa1a54f486794ace7ee526896f"
-    },
-    {
-      "path": "harness-core/quarterly_audit.py",
-      "size": 8334,
-      "sha256": "5922d52c2f0940744bb0cbd0cac99b68b1da9ef868411d59d09bfa29ab8bd426"
-    },
-    {
-      "path": "harness-core/rating_snapshot.py",
-      "size": 3469,
-      "sha256": "a2470b9b0fcb22d704963d5580f45ec0e6ccf15185098faf35339d96ab3d4a2d"
-    },
-    {
-      "path": "harness-core/recall_context.py",
-      "size": 6834,
-      "sha256": "d794aa0dd6290b1eb5131f750c42af4018b5828da0552b141ce75c83f52f2ad9"
-    },
-    {
-      "path": "harness-core/retrieval_reranker.py",
-      "size": 2605,
-      "sha256": "772cdd22639afcfb79c94baea6de03e8207b8bc4c7e5ed5bb6b3f70c8bc17961"
-    },
-    {
-      "path": "harness-core/runtime_policy.py",
-      "size": 1717,
-      "sha256": "86e3db883f446372d0df5385f51d44b01a68f447db66b8d6cd75cddcdb105872"
-    },
-    {
-      "path": "harness-core/runtime_preflight.py",
-      "size": 3648,
-      "sha256": "43894d418c1b96485213095544004db0d6360f84effc7b52dfabc070e7bf0592"
-    },
-    {
-      "path": "harness-core/runtime_resolver.py",
-      "size": 3409,
-      "sha256": "87f80588821c574d0be0d4bc26fd7874aedb44be7ac49c4d8cebebe5d32c867d"
-    },
-    {
-      "path": "harness-core/semantic_search.py",
-      "size": 3859,
-      "sha256": "c9f8e4ba8efe07e03f4f8966791fa02ee9885f7bc773ff6c9da6645323e70c2e"
-    },
-    {
-      "path": "harness-core/session_ingest.py",
-      "size": 5598,
-      "sha256": "1128a7a2e45921a38ec75d7e44308679bc28223ad4bd5f1f98a2105b90691a26"
-    },
-    {
-      "path": "harness-core/SKILL.md",
-      "size": 36236,
-      "sha256": "da2adbb2337a268ca929ce26c3d921b9a68c61c1272a0868cd09c8e64aeca279"
-    },
-    {
-      "path": "harness-core/tools_inventory.json",
-      "size": 18228,
-      "sha256": "d46d628cb18dae997225ff947d4a46fdf1ae7b512eeeebf62c4bd81f3fa6f445"
-    },
-    {
-      "path": "harness-core/tools_inventory.py",
-      "size": 4443,
-      "sha256": "c61eee2f3235a6102bb313d78753fb5c6f7124fc271b203fa0c69f5e6f8df5fe"
-    },
-    {
-      "path": "harness-core/tools_legacy.json",
-      "size": 1751,
-      "sha256": "0c10c40b8038b28423157e4419de5639b0baf65d6053ec291e5db5b8985a9b74"
-    },
-    {
-      "path": "harness-core/user_confirmed_intake.py",
-      "size": 1968,
-      "sha256": "453ff1b84ce10a1dc96d03ac8dd29bb7403c925741396f800d352555343e0c1e"
-    },
-    {
-      "path": "harness-core/user_model.py",
-      "size": 23695,
-      "sha256": "286b5a1b07b201078edd6d06228b0ebc024fcd3a4729dfc067988e3e7b9a64ca"
-    },
-    {
-      "path": "harness-core/user_model_signals.py",
-      "size": 2119,
-      "sha256": "2ceb03c612b218a9849da606984c7e42ba85a2459905091c7846e37b5fb542c4"
-    },
-    {
-      "path": "harness-core/vector_queue.py",
-      "size": 1587,
-      "sha256": "92a0c1ba669a980f4f74c5becb197b2fed8d5b173197f31359bdbcc3927118b2"
-    },
-    {
-      "path": "harness-core/vector_worker.py",
-      "size": 3812,
-      "sha256": "2a9502b9eed7d7cf4601785ee81abbdcb2e5fd12d8bce12680674ff9c4215cfb"
-    },
-    {
-      "path": "harness-core/wechat_adapter.py",
-      "size": 1315,
-      "sha256": "752f3efd45947606081d92c20cf0c68ae82b7f579d810e0c111872a3cf5142c1"
-    },
-    {
-      "path": "LICENSE",
-      "size": 1059,
-      "sha256": "729c2493b3c518c8e245946cdc761e04eadbae1bd7e9699a68f3c1fc942937c9"
-    },
-    {
-      "path": "MENTAL_MODEL_EFFECTS.md",
-      "size": 2268,
-      "sha256": "3817f70f806ee7baa557a6eec62fe598b78090aa8b45961070b0d8c2294493c1"
-    },
-    {
-      "path": "NATURAL_DATA_GAP.md",
-      "size": 1835,
-      "sha256": "89f0f1a55ca44eb8bad292f81ee5efe24f9aeb0ebefbbd8add79d5dda0606587"
-    },
-    {
-      "path": "NOTICE.md",
-      "size": 1400,
-      "sha256": "26e20ec9fa4465f57b3692c976a7e3bbecdef2035e11afd0262d1c2cbb02cc95"
-    },
-    {
-      "path": "PORTABLE_AGENTS.md",
-      "size": 534,
-      "sha256": "3a1b2bb0ec087dc8b74cc5a499ad09b3f61a1dddaa31e40d6f5d40495f268cf5"
-    },
-    {
-      "path": "PORTABLE_EVAL.md",
-      "size": 272,
-      "sha256": "d21621dd9349d04df8ebfea765034fd9a560354b59e6a38cac8c3ed3770f0d1e"
-    },
-    {
-      "path": "PORTABLE_README.md",
-      "size": 466,
-      "sha256": "6f76068cf46e633524048e589516c9be456f7621b69e93b490f02bc513899cae"
-    },
-    {
-      "path": "PORTABLE_REQUIREMENTS.txt",
-      "size": 337,
-      "sha256": "50909b9eea04850fd89d918b832f458ddbf8dc45dea5954720c64b551468ddee"
-    },
-    {
-      "path": "provenance_audit_report.json",
-      "size": 228,
-      "sha256": "1e2a87df578d41ed9a3e70a5eed62b5c36e3a848b50f2b1ccd5461f2f1250c2d"
-    },
-    {
-      "path": "README.md",
-      "size": 1153,
-      "sha256": "0ef008f0625c5889f1fbecee1a6c283a546f291f041974f75c68508073b3cf49"
-    }
-  ]
+  "generated_at": 0,
+  "count": 83,
+  "hashes": {
+    ".gitignore": "ccff9e3800c5d889",
+    "AGENT_USAGE.md": "a4ce146d303a39a7",
+    "CREDITS.md": "5ecfd35e768aeb26",
+    "demo-perspective-card.json": "6577a7a80f9db48d",
+    "demo_gold.json": "465400188d324bd6",
+    "EFFECTS.md": "6c59a5a3b330f313",
+    "LICENSE": "729c2493b3c518c8",
+    "MENTAL_MODEL_EFFECTS.md": "3817f70f806ee7ba",
+    "NATURAL_DATA_GAP.md": "89f0f1a55ca44eb8",
+    "NOTICE.md": "26e20ec9fa4465f5",
+    "PORTABLE_AGENTS.md": "3a1b2bb0ec087dc8",
+    "PORTABLE_EVAL.md": "d21621dd9349d04d",
+    "PORTABLE_README.md": "6f76068cf46e6335",
+    "PORTABLE_REQUIREMENTS.txt": "50909b9eea04850f",
+    "README.md": "0ef008f0625c5889",
+    "harness-core/atomic_facts_build.py": "ea6a38f5a956efc3",
+    "harness-core/atomic_fact_retriever.py": "12a657adb7a5cfe9",
+    "harness-core/cognitive_dynamics.py": "38072f483691188e",
+    "harness-core/continuity_store.py": "9e303a7923091fc5",
+    "harness-core/cross_character_consistency.py": "00eaef720be82928",
+    "harness-core/daily_report.py": "d22984dc7608a9df",
+    "harness-core/deep_fusion_retriever.py": "1ab63fc0095a789d",
+    "harness-core/emotion_projection.py": "91a500fdbac36769",
+    "harness-core/facts.py": "839d45680b5ad758",
+    "harness-core/fill_vec.py": "516d5897c9f2c383",
+    "harness-core/generate_manifest.py": "af4cfad5660a7899",
+    "harness-core/gold_human_label_export.py": "7b2fd58026f2987c",
+    "harness-core/gold_human_label_import.py": "fb83f982eb6f6977",
+    "harness-core/gold_labeler.py": "f24dd714ca60f5a6",
+    "harness-core/gold_sampler.py": "908e4b0bfd2c1482",
+    "harness-core/harness.py": "ea2673d76cdafbb3",
+    "harness-core/harness_selfcheck.py": "03063da1a8f28991",
+    "harness-core/history_backfill.py": "30bffaabd76713a3",
+    "harness-core/humanization.py": "3f2f318b2c05b0fd",
+    "harness-core/identity_store.py": "7cd3c52467affa74",
+    "harness-core/llm_expand.py": "5a88fc8c6536d159",
+    "harness-core/llm_rerank.py": "b26b3f09108dc1af",
+    "harness-core/manifest_check.py": "9a546c5003fd47c3",
+    "harness-core/measurement.py": "04d6dde8a348f627",
+    "harness-core/memory_store.py": "1b2efc1dbfd9f020",
+    "harness-core/mind_evolution.py": "42177905a2c60aca",
+    "harness-core/mind_precipitate.py": "ec4db086c7b40ec6",
+    "harness-core/mind_review.py": "bed45182ce8a8e34",
+    "harness-core/multi_signal_retriever.py": "5555679f5180b550",
+    "harness-core/natural_session.py": "f6b51034020b19c8",
+    "harness-core/need_projection.py": "f2f16c009b85a73c",
+    "harness-core/nine_dim.py": "4b0a1ec0498e9bf6",
+    "harness-core/nine_dim_revision.py": "1164c36966b1c735",
+    "harness-core/p4_experiment.py": "7f614aa17cf68fc5",
+    "harness-core/perspective_card.py": "46104468843a069e",
+    "harness-core/perspective_card_schema.json": "49df04feff4598ca",
+    "harness-core/phenomenological_review.py": "e7adf5e3f6b7346e",
+    "harness-core/plugin_audit.py": "ddb5dbf7835332c8",
+    "harness-core/plugin_sandbox.py": "2cede075ce7f6012",
+    "harness-core/proactive_pipeline.py": "d2b63c0daf88e182",
+    "harness-core/production_gate.py": "c276494a3154981e",
+    "harness-core/psych_validity_probe.py": "6e7155e328c7a509",
+    "harness-core/quarterly_audit.py": "5922d52c2f094074",
+    "harness-core/rating_snapshot.py": "a2470b9b0fcb22d7",
+    "harness-core/recall_context.py": "d794aa0dd6290b1e",
+    "harness-core/retrieval_reranker.py": "772cdd22639afcfb",
+    "harness-core/runtime_policy.py": "86e3db883f446372",
+    "harness-core/runtime_preflight.py": "43894d418c1b9648",
+    "harness-core/runtime_resolver.py": "87f80588821c574d",
+    "harness-core/semantic_search.py": "c9f8e4ba8efe07e0",
+    "harness-core/session_ingest.py": "1128a7a2e45921a3",
+    "harness-core/SKILL.md": "da2adbb2337a268c",
+    "harness-core/tools_inventory.json": "d46d628cb18dae99",
+    "harness-core/tools_inventory.py": "c61eee2f3235a610",
+    "harness-core/tools_legacy.json": "0c10c40b8038b284",
+    "harness-core/user_confirmed_intake.py": "453ff1b84ce10a1d",
+    "harness-core/user_model.py": "286b5a1b07b20107",
+    "harness-core/user_model_signals.py": "2ceb03c612b218a9",
+    "harness-core/vector_queue.py": "92a0c1ba669a980f",
+    "harness-core/vector_worker.py": "2a9502b9eed7d7cf",
+    "harness-core/wechat_adapter.py": "752f3efd45947606",
+    "harness-core/docs/harness-系统复盘自传-20260901.md": "a3158a50d9a1b82f",
+    "harness-core/docs/harness-自我哲学与自传-20260901.md": "7c7529e50033bf21",
+    "harness-core/docs/Herta-NEKO-升级方案-20260901.md": "7d340029936c0ae1",
+    "harness-core/docs/Kimi-Moonshot-研究学习-20260903.md": "b31bd1de804618c4",
+    "harness-core/docs/原子事实-实体-时间-A-B实验-20260902.md": "be76e30f72f97507",
+    "harness-core/docs/工具清单与依赖图-20260901.md": "0c6a2b34a2af9f34",
+    "harness-core/docs/记忆召回调研-方案-20260901.md": "719a2ac8bc3187e2"
+  }
 }
