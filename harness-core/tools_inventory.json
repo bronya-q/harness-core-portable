@@ -1,0 +1,851 @@
+{
+  "schema_version": 1,
+  "count": 68,
+  "tools": {
+    "autonomous_tasks": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "belief_sidecar": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store",
+        "review_queue"
+      ]
+    },
+    "blind_review_export": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 measurement/gold",
+        "recommended": "harness.py gold export"
+      },
+      "imports": [
+        "humanization"
+      ]
+    },
+    "congruence_probe": {
+      "cat": "emotion",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 measurement",
+        "recommended": "harness.py measure congruence"
+      },
+      "imports": [
+        "emotion_projection",
+        "nine_dim"
+      ]
+    },
+    "continuity_report": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store",
+        "queue_health"
+      ]
+    },
+    "continuity_store": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "daily_report": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "与 harness_selfcheck/health 体系重叠",
+        "recommended": "harness.py audit"
+      },
+      "imports": []
+    },
+    "deepseek_key_rotation_check": {
+      "cat": "plugin",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "deepseek_regression": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "drift_matrix": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 persona_drift/measurement",
+        "recommended": "harness.py measure drift"
+      },
+      "imports": []
+    },
+    "emotion_projection": {
+      "cat": "emotion",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "fill_vec": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "g1_shadow_test": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "emotion_projection",
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "generate_manifest": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "runtime_resolver"
+      ]
+    },
+    "gold_human_label_export": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "与 gold_labeler 重叠",
+        "recommended": "harness.py gold export"
+      },
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "gold_human_label_import": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "与 gold_labeler 重叠",
+        "recommended": "harness.py gold import"
+      },
+      "imports": []
+    },
+    "gold_labeler": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "gold_sampler": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "与 gold_labeler 重叠",
+        "recommended": "harness.py gold sample"
+      },
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "harness": {
+      "cat": "other",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "harness_selfcheck": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "health_board": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization"
+      ]
+    },
+    "history_backfill": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization",
+        "memory_store"
+      ]
+    },
+    "humanization": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store",
+        "emotion_projection",
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "humanization_smoke_test": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "leakage_matrix": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 measurement",
+        "recommended": "harness.py measure leakage"
+      },
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "manifest_check": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "runtime_resolver"
+      ]
+    },
+    "measurement": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "emotion_projection",
+        "humanization",
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "measurement_store": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "review_queue"
+      ]
+    },
+    "memory-emotion-daemon": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "memory_health_report": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 health_board/quarterly",
+        "recommended": "harness.py audit"
+      },
+      "imports": []
+    },
+    "memory_ingest": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "memory_store": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "vector_queue"
+      ]
+    },
+    "mind_audit": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "mind_evolution": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization",
+        "memory_store",
+        "phenomenological_review"
+      ]
+    },
+    "mind_precipitate": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization"
+      ]
+    },
+    "narrative_audit": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization"
+      ]
+    },
+    "natural_session": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "need_projection": {
+      "cat": "emotion",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "nine_dim": {
+      "cat": "emotion",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "continuity_store",
+        "memory_store"
+      ]
+    },
+    "nine_dim_revision": {
+      "cat": "emotion",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store",
+        "need_projection",
+        "nine_dim"
+      ]
+    },
+    "persona_drift": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization"
+      ]
+    },
+    "perspective_card": {
+      "cat": "perspective",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "phenomenological_review": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "plugin_audit": {
+      "cat": "plugin",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "plugin_runtime_verify": {
+      "cat": "plugin",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 plugin_sandbox",
+        "recommended": "harness.py plugins verify"
+      },
+      "imports": []
+    },
+    "plugin_sandbox": {
+      "cat": "plugin",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "production_gate": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization",
+        "memory_store"
+      ]
+    },
+    "profile_layers": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 user_model/humanization",
+        "recommended": "harness.py persona"
+      },
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "quarterly_audit": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization",
+        "memory_store",
+        "vector_queue"
+      ]
+    },
+    "queue_health": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 health/quarterly",
+        "recommended": "harness.py audit"
+      },
+      "imports": [
+        "memory_store",
+        "vector_queue"
+      ]
+    },
+    "rating_snapshot": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 harness.py snapshot 子命令",
+        "recommended": "harness.py snapshot"
+      },
+      "imports": []
+    },
+    "recall_context": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "recall_labeling": {
+      "cat": "audit_measure",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 gold_labeler",
+        "recommended": "harness.py gold"
+      },
+      "imports": [
+        "memory_store"
+      ]
+    },
+    "review_queue": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": {
+        "reason": "并入 review/queue",
+        "recommended": "harness.py audit"
+      },
+      "imports": [
+        "continuity_store"
+      ]
+    },
+    "runtime_policy": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "runtime_preflight": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "runtime_resolver": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "seed_deepseek_insights": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "seed_initial_emotions": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "seed_philosophy_insights": {
+      "cat": "seed_test",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "semantic_search": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store",
+        "nine_dim"
+      ]
+    },
+    "session_ingest": {
+      "cat": "runtime",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization"
+      ]
+    },
+    "tools_inventory": {
+      "cat": "other",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "user_confirmed_intake": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "user_model": {
+      "cat": "persona",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "humanization",
+        "memory_store",
+        "need_projection",
+        "nine_dim",
+        "session_ingest"
+      ]
+    },
+    "vector_queue": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    },
+    "vector_worker": {
+      "cat": "memory",
+      "status": "active",
+      "deprecated": false,
+      "imports": [
+        "memory_store",
+        "nine_dim",
+        "vector_queue"
+      ]
+    },
+    "wechat_adapter": {
+      "cat": "other",
+      "status": "active",
+      "deprecated": false,
+      "imports": []
+    }
+  },
+  "edges": [
+    [
+      "autonomous_tasks",
+      "continuity_store"
+    ],
+    [
+      "belief_sidecar",
+      "continuity_store"
+    ],
+    [
+      "belief_sidecar",
+      "review_queue"
+    ],
+    [
+      "blind_review_export",
+      "humanization"
+    ],
+    [
+      "congruence_probe",
+      "emotion_projection"
+    ],
+    [
+      "congruence_probe",
+      "nine_dim"
+    ],
+    [
+      "continuity_report",
+      "continuity_store"
+    ],
+    [
+      "continuity_report",
+      "queue_health"
+    ],
+    [
+      "deepseek_key_rotation_check",
+      "continuity_store"
+    ],
+    [
+      "deepseek_regression",
+      "continuity_store"
+    ],
+    [
+      "fill_vec",
+      "memory_store"
+    ],
+    [
+      "fill_vec",
+      "nine_dim"
+    ],
+    [
+      "g1_shadow_test",
+      "emotion_projection"
+    ],
+    [
+      "g1_shadow_test",
+      "memory_store"
+    ],
+    [
+      "g1_shadow_test",
+      "nine_dim"
+    ],
+    [
+      "generate_manifest",
+      "runtime_resolver"
+    ],
+    [
+      "gold_human_label_export",
+      "memory_store"
+    ],
+    [
+      "gold_labeler",
+      "memory_store"
+    ],
+    [
+      "gold_sampler",
+      "memory_store"
+    ],
+    [
+      "health_board",
+      "humanization"
+    ],
+    [
+      "history_backfill",
+      "humanization"
+    ],
+    [
+      "history_backfill",
+      "memory_store"
+    ],
+    [
+      "humanization",
+      "continuity_store"
+    ],
+    [
+      "humanization",
+      "emotion_projection"
+    ],
+    [
+      "humanization",
+      "memory_store"
+    ],
+    [
+      "humanization",
+      "nine_dim"
+    ],
+    [
+      "leakage_matrix",
+      "memory_store"
+    ],
+    [
+      "manifest_check",
+      "runtime_resolver"
+    ],
+    [
+      "measurement",
+      "emotion_projection"
+    ],
+    [
+      "measurement",
+      "humanization"
+    ],
+    [
+      "measurement",
+      "memory_store"
+    ],
+    [
+      "measurement",
+      "nine_dim"
+    ],
+    [
+      "measurement_store",
+      "review_queue"
+    ],
+    [
+      "memory-emotion-daemon",
+      "memory_store"
+    ],
+    [
+      "memory_store",
+      "vector_queue"
+    ],
+    [
+      "mind_audit",
+      "continuity_store"
+    ],
+    [
+      "mind_evolution",
+      "humanization"
+    ],
+    [
+      "mind_evolution",
+      "memory_store"
+    ],
+    [
+      "mind_evolution",
+      "phenomenological_review"
+    ],
+    [
+      "mind_precipitate",
+      "humanization"
+    ],
+    [
+      "narrative_audit",
+      "humanization"
+    ],
+    [
+      "nine_dim",
+      "continuity_store"
+    ],
+    [
+      "nine_dim",
+      "memory_store"
+    ],
+    [
+      "nine_dim_revision",
+      "memory_store"
+    ],
+    [
+      "nine_dim_revision",
+      "need_projection"
+    ],
+    [
+      "nine_dim_revision",
+      "nine_dim"
+    ],
+    [
+      "persona_drift",
+      "humanization"
+    ],
+    [
+      "production_gate",
+      "humanization"
+    ],
+    [
+      "production_gate",
+      "memory_store"
+    ],
+    [
+      "profile_layers",
+      "continuity_store"
+    ],
+    [
+      "quarterly_audit",
+      "humanization"
+    ],
+    [
+      "quarterly_audit",
+      "memory_store"
+    ],
+    [
+      "quarterly_audit",
+      "vector_queue"
+    ],
+    [
+      "queue_health",
+      "memory_store"
+    ],
+    [
+      "queue_health",
+      "vector_queue"
+    ],
+    [
+      "recall_context",
+      "memory_store"
+    ],
+    [
+      "recall_context",
+      "nine_dim"
+    ],
+    [
+      "recall_labeling",
+      "memory_store"
+    ],
+    [
+      "review_queue",
+      "continuity_store"
+    ],
+    [
+      "semantic_search",
+      "memory_store"
+    ],
+    [
+      "semantic_search",
+      "nine_dim"
+    ],
+    [
+      "session_ingest",
+      "humanization"
+    ],
+    [
+      "user_model",
+      "humanization"
+    ],
+    [
+      "user_model",
+      "memory_store"
+    ],
+    [
+      "user_model",
+      "need_projection"
+    ],
+    [
+      "user_model",
+      "nine_dim"
+    ],
+    [
+      "user_model",
+      "session_ingest"
+    ],
+    [
+      "vector_worker",
+      "memory_store"
+    ],
+    [
+      "vector_worker",
+      "nine_dim"
+    ],
+    [
+      "vector_worker",
+      "vector_queue"
+    ]
+  ]
+}
