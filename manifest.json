@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "package_name": "harness-core-portable",
-  "generated_at": "2026-09-04T06:48:42.854416+00:00",
+  "generated_at": "2026-09-04T06:50:38.783328+00:00",
   "file_count": 77,
-  "total_bytes": 501349,
+  "total_bytes": 503787,
   "hash_algorithm": "sha256",
   "scope": "all repository files except .git/** and manifest.json itself",
   "files": [
@@ -14,8 +14,8 @@
     },
     {
       "path": "CREDITS.md",
-      "size": 15645,
-      "sha256": "8d6bee82820c9744ecaf53610b2a9694e8e8f4d4d78b3b66c1fe2d6fa4b5f7d8"
+      "size": 18083,
+      "sha256": "9372067693693f33326652fb4a6a7bc09d62a2294f20727232ecb6069bb4cde7"
     },
     {
       "path": "demo-perspective-card.json",
