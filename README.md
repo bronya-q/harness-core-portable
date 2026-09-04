@@ -12,6 +12,10 @@ python mind_review.py run
 python production_gate.py
 ```
 
+## 心智模型效果说明
+
+- [[MENTAL_MODEL_EFFECTS.md]]（请先读）
+
 ## 目录
 
 - `harness-core/`：核心脚本（humanization / memory_store / nine_dim / measurement / production_gate / mind_review / harness ...）
