@@ -117,6 +117,7 @@ See [Agent Compatibility](docs/AGENT_COMPATIBILITY.md). Compatibility varies by 
 - [效果与边界](#效果与边界)
 - [数据与隐私](#数据与隐私)
 - [如何贡献/帮忙](#如何贡献帮忙)
+- [需要大家一起来](#需要大家一起来)
 - [文档](#文档)
 - [License](#license)
 - [致谢](#致谢)
@@ -341,6 +342,51 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 - 安全/许可证核验
 
 见 `CONTRIBUTING.md` / `SECURITY.md` / `NATURAL_DATA_GAP.md`。
+
+## 需要大家一起来（外部协作任务）
+
+有些事我这边做不了，需要真实环境或外部流程，欢迎热心人士一起参与：
+
+### 1. MCP Inspector 实跑
+
+```bash
+python -m unittest tests.test_mcp_server  # 先确认协议 smoke 通过
+# 再在 MCP Inspector 中加载：
+python -m harness_core.adapters.mcp_server
+```
+
+需要：浏览器/交互式环境。
+
+### 2. Official MCP Registry 提交
+
+- 仓库已准备好：`docs/mcp/server.json`、`docs/mcp/verification.md`
+- 需要：提交到 [Official MCP Registry](https://github.com/modelcontextprotocol/servers) 的 PR + 审核
+
+### 3. 真实宿主验证
+
+在以下环境中跑通 `harness-core-mcp`，并记录版本与结论：
+
+- Claude Code
+- Codex CLI
+- GitHub Copilot（VS Code / JetBrains）
+
+### 4. 首次用户测试
+
+按 `docs/user-testing/PROTOCOL.md` 找 5 名首次用户，把结果填入 `docs/user-testing/results-template.md`。
+
+### 5. 双人标注
+
+对 recall gold 做小规模双人标注，计算 Cohen’s κ，贡献给测量学基础。
+
+### 6. 真实截图 / GIF
+
+为 README 和 Release 提供合成 Demo 截图、20–30 秒离线 Demo GIF。
+
+### 7. CI 与跨平台
+
+帮忙加 GitHub Actions、Windows/macOS/Linux 矩阵验证。
+
+如果你愿意做其中任何一项，请开 Issue 或在 GitHub Discussions 回帖，我会把对应任务拆好、补齐文档和验收标准。
 
 ## 文档
 
