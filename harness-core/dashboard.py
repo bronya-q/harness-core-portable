@@ -106,9 +106,18 @@ def main():
                 try:
                     m = json.loads(mf.read_text(encoding="utf-8"))
                     chars.append({"persona_id": m.get("persona_id", d.name),
-                                  "display_name": m.get("display_name", d.name)})
+                                  "display_name": m.get("display_name", d.name),
+                                  "scope": m.get("scope", "character:" + d.name),
+                                  "role_types": m.get("role_types", []),
+                                  "knowledge_bindings": m.get("knowledge_bindings", []),
+                                  "distribution": m.get("distribution", "private_local")})
                 except Exception:
                     pass
+
+    spans = [
+        ("用户输入", 8), ("Scope Resolver", 6), ("Persona Load", 4), ("Memory Search", 38),
+        ("Story Core", 3), ("Prompt Build", 2), ("Model", 55), ("Telemetry", 2),
+    ]
 
     # estimate token
     est = {"diary": sum(_est_tokens(d.get("content")) for d in diaries),
@@ -141,6 +150,12 @@ h1{{font-size:1.5rem}} h2{{font-size:1.1rem;border-bottom:1px solid #ddd;padding
 .card{{background:#fff;border:1px solid #e5e5e5;border-radius:8px;padding:1rem;margin:1rem 0}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}}
 .muted{{color:#888}} .ok{{color:#2e7d32}} .warn{{color:#b26a00}}
+.char-gallery{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}}
+.char-card{{background:#fff;border:1px solid #e5e5e5;border-radius:8px;padding:.8rem}}
+.char-card h3{{margin:.1rem 0 .4rem;font-size:1rem}}
+.span-track{{display:flex;gap:2px;align-items:flex-end;flex-wrap:wrap}}
+.span-bar{{background:#8bb8d8;color:#fff;padding:.2rem .4rem;border-radius:4px;font-size:.75rem;white-space:nowrap;min-width:64px}}
+.span-muted{{color:#888}}
 code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 </style></head><body>
 <h1>Harness Mind Console</h1>
@@ -178,8 +193,18 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>
 </div>
+<div class="card"><h2>Span 时间线（结构示意；真实耗时待采集）</h2>
+<div class="span-track">
+{''.join(f"<div class='span-bar' style='flex-grow:{v}'> {n}</div>" for n,v in spans)}
+</div>
+<p class="span-muted">未接入真实 provider timing；此处仅为 span 结构示意。</p>
+</div>
 <div class="grid">
-  <div class="card"><h2>角色资产</h2>{li(chars,'display_name',lambda c: f"{c.get('display_name')} <span class='muted'>({c.get('persona_id')})</span>") if chars else '<p class="muted">暂无本机角色资产</p>'}</div>
+  <div class="card"><h2>角色画廊</h2>
+  <div class="char-gallery">
+  {''.join(f"<div class='char-card'><h3>{_html(c.get('display_name'))}</h3><p>{_html(c.get('persona_id'))}</p><p class='muted'>scope: {_html(c.get('scope'))}</p><p class='muted'>role: {_html(', '.join(c.get('role_types') or []))}</p><p class='muted'>knowledge: {len(c.get('knowledge_bindings') or [])} · dist: {_html(c.get('distribution'))}</p></div>" for c in chars) if chars else '<p class="muted">暂无本机角色资产</p>'}
+  </div>
+  </div>
   <div class="card"><h2>隐私数据流</h2><pre>
 SQLite            本地
 Ollama            127.0.0.1
