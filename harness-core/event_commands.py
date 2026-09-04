@@ -98,6 +98,15 @@ def cmd_usage(args):
                 i += 1
         print(json.dumps({"ok": True, "usage": list_usage(limit)}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "summary":
+        rows = list_usage(limit=1000)
+        actual = sum(r.get("actual_tokens") or 0 for r in rows)
+        baseline = sum(r.get("baseline_tokens") or 0 for r in rows)
+        avoided = sum(r.get("estimated_avoided_tokens") or 0 for r in rows)
+        print(json.dumps({"ok": True, "mode": "usage_summary", "rows": len(rows),
+                          "actual_tokens": actual, "baseline_tokens": baseline,
+                          "avoided_tokens": avoided}, ensure_ascii=False, indent=2))
+        return 0
     print("未知 usage 子命令：" + sub)
     return 1
 

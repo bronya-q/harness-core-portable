@@ -579,6 +579,16 @@ n baseline
 - ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
 - ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）
 
+### P4：可组合与对照
+
+- ✅ 角色版本 A/B：`ab role --a <file> --b <file>`（对比 persona/role/knowledge/权限/token 估算）
+- ✅ 检索器 A/B：`ab retriever --retriever-a <a> --retriever-b <b> --top-k 5`（需私有 gold；公开 clean clone 返回 UNAVAILABLE）
+- ✅ Token 基线：`usage summary`（actual/baseline/avoided 汇总）
+- ✅ Evidence Bundle：`evidence create --task <name> [--workspace <ws>]`（task_id/base_commit/changed_files/checks/unverified/approval_required/rollback）
+- ⬜ 同一 query 配对 A/B 的逐条 diff
+- ⬜ token 基线固定版本 / CI
+- ⬜ 结构化 handoff 自动生成
+
 ---
 
 ## 21. 后辈交接文档规则（Successor Documentation Rule）
