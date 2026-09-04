@@ -43,6 +43,37 @@ class NgramFallbackTest(unittest.TestCase):
             import shutil
             shutil.rmtree(mem_dir, ignore_errors=True)
 
+    def test_memory_search_auto_fallback(self):
+        mem_dir = Path(tempfile.mkdtemp())
+        env = dict(os.environ)
+        env["HOME"] = str(mem_dir)
+        env["USERPROFILE"] = str(mem_dir)
+        env["MEMORY_EMOTION_DATA_DIR"] = str(mem_dir / ".dsh" / "memory-emotion")
+        env["DSH_HOME"] = str(mem_dir)
+        try:
+            add = subprocess.run(
+                [sys.executable, str(SKILL / "memory_store.py"), "add",
+                 "--scope", "character:demo-archivist",
+                 "--content", "今天在档案室整理了一本关于星空的旧书。",
+                 "--importance", "0.8"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(add.returncode, 0, add.stderr + add.stdout[-300:])
+            p = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "search",
+                 "--query", "星空 旧书", "--scope", "character:demo-archivist", "--limit", "5"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            d = json.loads(p.stdout)
+            self.assertEqual(d["source"], "ngram_fallback")
+            self.assertTrue(d["results"])
+        finally:
+            import shutil
+            shutil.rmtree(mem_dir, ignore_errors=True)
+
 
 if __name__ == "__main__":
     unittest.main()

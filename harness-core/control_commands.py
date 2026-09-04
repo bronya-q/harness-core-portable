@@ -39,7 +39,7 @@ def _run(script, *args):
 
 def cmd_memory(args):
     if not args:
-        print("用法：harness.py memory list|explain|write|undo|correct|restore|forget ...")
+        print("用法：harness.py memory list|explain|search|write|undo|correct|restore|forget ...")
         return 1
     sub = args[0]
     rest = args[1:]
@@ -154,6 +154,32 @@ def cmd_memory(args):
         print(json.dumps({"ok": r.get("ok"), "id": nid, "status": "archived" if r.get("ok") else "not_found",
                           "note": "把该条笔记归档；可用 restore 恢复"}, ensure_ascii=False, indent=2))
         return 0 if r.get("ok") else 1
+    if sub == "search":
+        q = scope = ""
+        limit = 10
+        for i, a in enumerate(rest):
+            if a == "--query" and i + 1 < len(rest):
+                q = rest[i + 1]
+            if a == "--scope" and i + 1 < len(rest):
+                scope = rest[i + 1]
+            if a == "--limit" and i + 1 < len(rest):
+                limit = int(rest[i + 1])
+        if not q:
+            print("用法：harness.py memory search --query <query> [--scope <scope>] [--limit 10]")
+            return 1
+        exact = _run("memory_store.py", "search", "--query", q, "--scope", scope or "default", "--limit", str(limit))
+        if isinstance(exact, list) and exact:
+            print(json.dumps({"ok": True, "source": "exact_substring", "results": exact,
+                              "note": "精确子串命中。"}, ensure_ascii=False, indent=2))
+            return 0
+        fb = _run("ngram_fallback.py", "--query", q, "--scope", scope or "default", "--limit", str(limit))
+        if isinstance(fb, list) and fb:
+            print(json.dumps({"ok": True, "source": "ngram_fallback", "results": fb,
+                              "note": "精确子串无结果，已使用字符 n-gram fallback。"}, ensure_ascii=False, indent=2))
+            return 0
+        print(json.dumps({"ok": True, "source": "none", "results": [],
+                          "note": "精确子串与 n-gram fallback 均无结果。"}, ensure_ascii=False, indent=2))
+        return 0
     print("未知 memory 子命令：" + sub)
     return 1
 
