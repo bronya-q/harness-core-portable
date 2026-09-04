@@ -60,6 +60,7 @@ PASSTHROUGH = {
     "ab": ["comparison_commands.py", ["ab"]],
     "evidence": ["comparison_commands.py", ["evidence"]],
     "ecosystem": ["ecosystem_status.py", ["ecosystem"]],
+    "mcp": ["mcp_server.py", ["mcp"]],
 }
 
 # Fine-grained subcommands
