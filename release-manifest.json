@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T09:46:16.250771+00:00",
+  "generated_at": "2026-09-04T09:47:07.271635+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 108,
   "files": {
@@ -22,7 +22,7 @@
     "PRE_MODEL_BASELINE.md": "02b41700e40f840cbbad7abed99818984d60a548a86df5c9db2699da0be73a06",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "7a516e07a2d866144345992f73aa8d4681b5be327a134e6402325de62166f5af",
+    "README.md": "3294910570cd0b6d5a10ba0dbfadb2bb4355a8ccc87d780fc7ca246aeaa41926",
     "RESEARCH.md": "3ec2f445d4e09fe8bf91c8bb09a93f4226c81da148c7245402b190d6803f8377",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "10664d415e1ef074d3be7eaaff97fb5479e32dd9547ddb38f44204d05f18e0ef",
