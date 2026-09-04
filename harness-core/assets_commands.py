@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 import shutil
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
@@ -28,6 +29,7 @@ ACTIVE_FILE = HARNESS_DIR / "active-character.json"
 ACTIVE_BACKUP = HARNESS_DIR / "active-character.json.bak"
 WORKSPACE_DIR = HARNESS_DIR / "workspaces"
 ACTIVE_MODE_FILE = HARNESS_DIR / "active-mode.json"
+STATE_FILE = HARNESS_DIR / "character-state.json"
 KNOWLEDGE_SOURCES_FILE = HARNESS_DIR / "knowledge-sources.json"
 EXAMPLE_SOURCES = ROOT / "knowledge-sources.example.json"
 
@@ -61,6 +63,14 @@ def cmd_character(args):
         return _cmd_character_preview(rest)
     if sub == "rollback":
         return _cmd_character_rollback()
+    if sub == "status":
+        return _cmd_character_status()
+    if sub == "preflight":
+        pid = rest[0] if rest else ""
+        if not pid:
+            print("用法：harness.py character preflight <persona_id>")
+            return 1
+        return _cmd_character_preflight(pid)
     if sub == "mode":
         return _cmd_character_mode(rest)
     if sub == "card-import":
@@ -211,15 +221,19 @@ def cmd_character(args):
             print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
             return 1
         manifest = read_json(manifest_path)
+        _write_state("preflight", pid, "validating package")
         # 事务化激活：先备份当前 active，再写入；失败可回滚
+        _write_state("activating", pid, "backing up current active")
         if ACTIVE_FILE.exists():
             shutil.copy2(ACTIVE_FILE, ACTIVE_BACKUP)
         try:
             write_json(ACTIVE_FILE, {"persona_id": pid, "scope": manifest.get("scope", "character:" + pid),
                                      "display_name": manifest.get("display_name", pid)})
+            _write_state("active", pid, "activation complete")
         except Exception as e:
             if ACTIVE_BACKUP.exists():
                 shutil.copy2(ACTIVE_BACKUP, ACTIVE_FILE)
+            _write_state("activation_failed", pid, str(e))
             print(json.dumps({"ok": False, "error": "activation_failed", "detail": str(e)}, ensure_ascii=False))
             return 1
         print(json.dumps({"ok": True, "active": pid, "scope": manifest.get("scope"),
@@ -415,6 +429,38 @@ def _cmd_character_rollback():
     return 0
 
 
+def _write_state(state, persona_id=None, note=None):
+    data = read_json(STATE_FILE) if STATE_FILE.exists() else {}
+    history = data.get("history", [])
+    history.append({"state": state, "persona_id": persona_id, "note": note,
+                    "ts": __import__("time").strftime("%Y-%m-%dT%H:%M:%S")})
+    write_json(STATE_FILE, {"state": state, "persona_id": persona_id, "note": note, "history": history[-20:]})
+    return data
+
+
+def _cmd_character_status():
+    data = read_json(STATE_FILE) if STATE_FILE.exists() else {}
+    cur = read_json(ACTIVE_FILE) if ACTIVE_FILE.exists() else {}
+    print(json.dumps({"ok": True, "state": data.get("state"), "note": data.get("note"),
+                      "active": cur}, ensure_ascii=False, indent=2))
+    return 0
+
+
+def _cmd_character_preflight(pid):
+    manifest_path = CHARACTERS_DIR / pid / "package-manifest.json"
+    if not manifest_path.exists():
+        print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
+        return 1
+    manifest = read_json(manifest_path)
+    issues = []
+    if not manifest.get("persona_id"):
+        issues.append("missing_persona_id")
+    if manifest.get("permissions_requested", {}).get("autonomous"):
+        issues.append("autonomous_requested")
+    print(json.dumps({"ok": not issues, "preflight": True, "persona_id": pid, "issues": issues}, ensure_ascii=False, indent=2))
+    return 0 if not issues else 1
+
+
 def _demo_modes(pid):
     candidates = [pid + "-modes.json", pid.replace("demo-", "") + "-modes.json"]
     for name in candidates:
@@ -556,6 +602,70 @@ def cmd_workspace(args):
             return 1
         print(json.dumps({"ok": True, "workspace": read_json(p)}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "worktree":
+        wsub = rest[0] if rest else ""
+        name = ""
+        base = "HEAD"
+        i = 1
+        while i < len(rest):
+            if rest[i] == "--name" and i + 1 < len(rest):
+                name = rest[i + 1]; i += 2
+            elif rest[i] == "--base" and i + 1 < len(rest):
+                base = rest[i + 1]; i += 2
+            else:
+                i += 1
+        if not name:
+            print("用法：harness.py workspace worktree create|list|remove --name <ws> [--base <commit>]")
+            return 1
+        ws_dir = WORKSPACE_DIR / name
+        lease_path = ws_dir / "workspace.json"
+        wt_root = ROOT / ".worktrees" / name
+        if wsub == "create":
+            if not (ROOT / ".git").exists():
+                print(json.dumps({"ok": False, "error": "not_git_repo"}, ensure_ascii=False))
+                return 1
+            try:
+                subprocess.run(["git", "-C", str(ROOT), "worktree", "add", str(wt_root), base],
+                               check=True, capture_output=True, text=True, timeout=60)
+            except Exception as e:
+                print(json.dumps({"ok": False, "error": "worktree_add_failed", "detail": str(e)}, ensure_ascii=False))
+                return 1
+            lease = read_json(lease_path) if lease_path.exists() else {}
+            lease["worktree_path"] = str(wt_root)
+            lease["worktree_base"] = base
+            lease["status"] = "active"
+            write_json(lease_path, lease)
+            print(json.dumps({"ok": True, "workspace": name, "worktree": str(wt_root), "base": base}, ensure_ascii=False))
+            return 0
+        if wsub == "list":
+            out = []
+            for d in sorted(WORKSPACE_DIR.iterdir()):
+                if d.is_dir() and (d / "workspace.json").exists():
+                    l = read_json(d / "workspace.json")
+                    out.append({"workspace": d.name, "worktree": l.get("worktree_path"), "base": l.get("worktree_base")})
+            print(json.dumps({"ok": True, "worktrees": out}, ensure_ascii=False, indent=2))
+            return 0
+        if wsub == "remove":
+            if (ROOT / ".git").exists() and wt_root.exists():
+                subprocess.run(["git", "-C", str(ROOT), "worktree", "remove", "--force", str(wt_root)],
+                               capture_output=True, text=True, timeout=60)
+                import shutil as _sh
+                if wt_root.exists():
+                    _sh.rmtree(wt_root, ignore_errors=True)
+            if lease_path.exists():
+                lease = read_json(lease_path)
+                lease.pop("worktree_path", None)
+                lease.pop("worktree_base", None)
+                write_json(lease_path, lease)
+            print(json.dumps({"ok": True, "workspace": name, "removed": True}, ensure_ascii=False))
+            return 0
+        print("未知 worktree 子命令：" + wsub)
+        return 1
+    if sub == "check":
+        name = rest[0] if rest else ""
+        if not name:
+            print("用法：harness.py workspace check <name>")
+            return 1
     if sub == "check":
         name = rest[0] if rest else ""
         if not name:

@@ -4,6 +4,8 @@
 
 > Alpha / WIP。不是 production-ready。
 
+完整 GitHub Pre-release 正文（含快速体验、限制、升级与回滚）见 [`docs/releases/v0.1.0-alpha.2.md`](docs/releases/v0.1.0-alpha.2.md)。
+
 ### 新增 / 变化
 
 - 离线可感知演示 `python harness.py demo --offline`

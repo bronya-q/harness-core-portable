@@ -489,7 +489,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 明确 token baseline（`usage baseline set/check`）
 - ✅ 模型/参数/数据集固定（`ab retriever --meta '{"model":...,"dataset":...}'`）
 - 🚧 demo/directed/real 分离（event 已支持 session/content 来源，仍待 UI 分组）
-- 🚧 Workspace Lease 元数据 + `workspace check` 已实现；真实 Git worktree 创建/命令约束/隔离执行未实现
+- 🚧 Workspace Lease 元数据 + `workspace check` + `workspace worktree create/remove/list` 已实现；命令约束/隔离执行仍未强制
 - ✅ 结构化 Evidence Bundle
 
 ### v0.5
@@ -497,7 +497,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 稳定 Python API 基础（`harness_core.MemoryClient/EventClient/UsageClient`）
 - ✅ OpenAI-compatible adapter 基础（`harness_core.adapters.openai_compatible`）
 - ✅ 兼容矩阵文件与 `ecosystem status` 基础
-- 🚧 R1 证据未满：暂无 AGENTS.md/CLAUDE.md/MCP fixture 或集成测试
+- 🚧 R1 证据未满：已有 `examples/agent-integrations/` fixtures；仍无 MCP server / 官方集成测试
 - ⬜ adapter 权限 manifest 完整版
 - ⬜ 跨前端 scope 保持一致
 - ⬜ 无密钥进入 trace 验证
@@ -577,7 +577,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ `character validate` 基础（distribution/private/real person/license/abs path/zip traversal）
 - 🚧 安全安装未闭环：install 现在会先校验 + 安全解压，但仍有 symlink/ADS/压缩炸弹/脚本/MIME 等威胁未完整阻断
 - ✅ sandbox preview（`character preview`：只读预览，不写入）
-- 🚧 activation backup/rollback 基础已实现；完整事务状态机/并发恢复未实现
+- 🚧 activation backup/rollback + preflight/status 状态机骨架已实现；完整崩溃恢复/并发锁未实现
 - ✅ rollback（`character rollback`）
 - ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
 - ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）
