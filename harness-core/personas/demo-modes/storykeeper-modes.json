@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "persona_id": "demo-storykeeper",
+  "modes": [
+    {"mode_id": "companion", "display_name": "陪伴", "capabilities": ["companion-expression"], "effect": "observation", "filesystem_write": false, "network": false, "autonomous": false},
+    {"mode_id": "world-review", "display_name": "世界审查", "capabilities": ["story-core-review", "consistency-check"], "effect": "proposal_only", "filesystem_write": false, "network": false, "autonomous": false}
+  ]
+}

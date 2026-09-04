@@ -21,11 +21,13 @@ except Exception:
     pass
 
 ROOT = Path(__file__).resolve().parent.parent
+SKILL = Path(__file__).resolve().parent
 HARNESS_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness"
 CHARACTERS_DIR = HARNESS_DIR / "characters"
 ACTIVE_FILE = HARNESS_DIR / "active-character.json"
 ACTIVE_BACKUP = HARNESS_DIR / "active-character.json.bak"
 WORKSPACE_DIR = HARNESS_DIR / "workspaces"
+ACTIVE_MODE_FILE = HARNESS_DIR / "active-mode.json"
 KNOWLEDGE_SOURCES_FILE = HARNESS_DIR / "knowledge-sources.json"
 EXAMPLE_SOURCES = ROOT / "knowledge-sources.example.json"
 
@@ -59,6 +61,8 @@ def cmd_character(args):
         return _cmd_character_preview(rest)
     if sub == "rollback":
         return _cmd_character_rollback()
+    if sub == "mode":
+        return _cmd_character_mode(rest)
     if sub == "card-import":
         path = output = ""
         yes = False
@@ -387,6 +391,70 @@ def _cmd_character_rollback():
     ACTIVE_BACKUP.unlink(missing_ok=True)
     print(json.dumps({"ok": True, "active": prev.get("persona_id")}, ensure_ascii=False))
     return 0
+
+
+def _demo_modes(pid):
+    candidates = [pid + "-modes.json", pid.replace("demo-", "") + "-modes.json"]
+    for name in candidates:
+        p = SKILL / "personas" / "demo-modes" / name
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8")).get("modes", [])
+            except Exception:
+                pass
+    return []
+
+
+def _modes_for(pid):
+    p = CHARACTERS_DIR / pid / "modes.json"
+    if p.exists():
+        return read_json(p).get("modes", [])
+    return _demo_modes(pid)
+
+
+def _cmd_character_mode(args):
+    if not args:
+        print("用法：harness.py character mode list|switch|current [--persona <id>] [--mode <id>]")
+        return 1
+    sub = args[0]
+    pid = ""
+    mode_id = ""
+    i = 1
+    while i < len(args):
+        if args[i] == "--persona" and i + 1 < len(args):
+            pid = args[i + 1]; i += 2
+        elif args[i] == "--mode" and i + 1 < len(args):
+            mode_id = args[i + 1]; i += 2
+        else:
+            i += 1
+    if sub == "list":
+        if not pid:
+            print("用法：harness.py character mode list --persona <id>")
+            return 1
+        modes = _modes_for(pid)
+        print(json.dumps({"ok": True, "persona_id": pid, "modes": modes}, ensure_ascii=False, indent=2))
+        return 0
+    if sub == "current":
+        cur = read_json(ACTIVE_MODE_FILE) if ACTIVE_MODE_FILE.exists() else {}
+        print(json.dumps({"ok": True, "active_mode": cur}, ensure_ascii=False, indent=2))
+        return 0
+    if sub == "switch":
+        if not pid or not mode_id:
+            print("用法：harness.py character mode switch --persona <id> --mode <id>")
+            return 1
+        modes = _modes_for(pid)
+        match = next((m for m in modes if m.get("mode_id") == mode_id), None)
+        if not match:
+            print(json.dumps({"ok": False, "error": "mode_not_found", "persona_id": pid, "mode": mode_id}, ensure_ascii=False))
+            return 1
+        # 事务化保存当前 mode
+        if ACTIVE_MODE_FILE.exists():
+            shutil.copy2(ACTIVE_MODE_FILE, HARNESS_DIR / "active-mode.json.bak")
+        write_json(ACTIVE_MODE_FILE, {"persona_id": pid, "mode_id": mode_id, "display_name": match.get("display_name")})
+        print(json.dumps({"ok": True, "persona_id": pid, "mode_id": mode_id, "effects": match.get("effect")}, ensure_ascii=False))
+        return 0
+    print("未知 character mode 子命令：" + sub)
+    return 1
 
 
 def cmd_knowledge(args):

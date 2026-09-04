@@ -210,6 +210,9 @@ python harness.py character activate <id>   # 激活角色（事务化，可回�
 python harness.py character rollback        # 回滚到上一个激活角色
 python harness.py character card-import --package card.json --output out --yes  # Character Card 映射
 python harness.py character build --from corpus/ --output draft --approve       # 语料→角色草稿审批
+python harness.py character mode list --persona demo-archivist  # 情境模式列表
+python harness.py character mode switch --persona demo-archivist --mode archival-research
+python harness.py character mode current
 python harness.py knowledge list            # 知识域绑定
 python harness.py workspace create --name demo --role ux-engineer
 python harness.py schema list             # 查看统一 schema
@@ -307,6 +310,8 @@ event_store.py          统一事件信封 / token usage 存储
 event_commands.py       event/usage CLI 入口
 comparison_commands.py  ab role/retriever + evidence bundle
 harness_core/           稳定 Python API（MemoryClient/EventClient/UsageClient）
+schemas/situated-mode.schema.json  情境模式 schema
+harness-core/personas/demo-modes/  合成角色模式示例
 harness_core/adapters/  OpenAI-compatible adapter
 ecosystem_status.py     生态兼容矩阵状态
 schemas/                统一角色/事件/token schema
