@@ -46,12 +46,39 @@ def _load_from_manifest(path):
         return None
 
 
+def _load_local_overlay():
+    """加载本机 overlay（~/.dsh/harness/personas.local.json），仅本机存在时生效。"""
+    p = Path.home() / ".dsh" / "harness" / "personas.local.json"
+    if not p.exists():
+        return {}
+    try:
+        data = json.loads(p.read_text(encoding='utf-8'))
+        out = {}
+        for pid, e in (data.get('personas', {}) or {}).items():
+            out[pid] = {
+                'persona_id': e.get('persona_id', pid),
+                'model': e.get('model'),
+                'scope': e.get('scope', 'character:' + pid),
+                'source': Path(str(e.get('persona_source', ''))),
+                'entrypoint': Path(str(e.get('entrypoint', 'roleplay_memory_chat.py'))),
+            }
+        return out
+    except Exception:
+        return {}
+
+
 def _load_entries():
+    merged = {}
     for name in ('manifest.json', 'personas.example.json'):
         data = _load_from_manifest(SKILL / name)
         if data:
-            return data
-    return dict(_FALLBACK)
+            merged.update(data)
+            break
+    if not merged:
+        merged.update(dict(_FALLBACK))
+    # 本机 overlay 最后加载，可覆盖/补充私有角色。
+    merged.update(_load_local_overlay())
+    return merged
 
 
 ENTRIES = _load_entries()

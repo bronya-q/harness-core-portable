@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "title": "Unified Role Object Schema",
+  "description": "Persona / Capability / Knowledge / Workspace / Permission / Mode combined model.",
+  "required": ["persona_id", "role_types", "visibility"],
+  "properties": {
+    "persona_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "role_types": { "type": "array", "items": { "enum": ["persona", "storyteller", "knowledge_method", "engineering", "reviewer", "coordinator", "hybrid_functional_persona"] } },
+    "active_mode": { "type": "string" },
+    "capability_bindings": { "type": "array", "items": { "type": "string" } },
+    "knowledge_bindings": { "type": "array", "items": { "type": "string" } },
+    "workspace_bindings": { "type": "array", "items": { "type": "string" } },
+    "permissions_requested": { "type": "object" },
+    "visibility": { "enum": ["public", "private_local", "internal_team"] }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "persona_id": "local:persona-001",
+  "display_name": "Local Persona A",
+  "role_types": ["persona", "engineering", "reviewer"],
+  "active_mode": "risk_review",
+  "capability_bindings": ["review:risk", "review:dependencies"],
+  "knowledge_bindings": ["local:knowledge-source-a"],
+  "workspace_bindings": ["worktree:release-check"],
+  "permissions_requested": {
+    "network": false,
+    "filesystem_write": false,
+    "process_execution": "sandbox_only",
+    "autonomous": false
+  },
+  "visibility": "private_local"
+}

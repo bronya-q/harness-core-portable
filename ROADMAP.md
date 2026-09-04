@@ -547,11 +547,13 @@ n baseline
 
 ### P1：统一 schema
 
-- ⬜ Persona/Capability/Knowledge/Workspace/Permission/Mode
-- ⬜ 统一 event envelope
-- ⬜ usage/token telemetry schema
-- ⬜ package schema version
-- ⬜ local overlay loading order
+- ✅ Persona/Capability/Knowledge/Workspace/Permission/Mode schema 文件 + 示例 + `schema validate`
+- ✅ 统一 event envelope schema 文件
+- ✅ usage/token telemetry schema 文件
+- ✅ local overlay loading order（runtime_resolver 读取 `~/.dsh/harness/personas.local.json`）
+- ⬜ package schema version 强制校验
+- ⬜ event envelope 实际写入底层
+- ⬜ token usage 实际采集
 
 ### P2：v0.2 可视运行台
 

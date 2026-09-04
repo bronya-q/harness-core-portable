@@ -54,6 +54,7 @@ PASSTHROUGH = {
     "character": ["assets_commands.py", ["character"]],
     "knowledge": ["assets_commands.py", ["knowledge"]],
     "workspace": ["assets_commands.py", ["workspace"]],
+    "schema": ["schema_commands.py", ["schema"]],
 }
 
 # Fine-grained subcommands

@@ -197,6 +197,8 @@ python harness.py character install <pkg>   # 安装角色包
 python harness.py character activate <id>   # 激活角色
 python harness.py knowledge list            # 知识域绑定
 python harness.py workspace create --name demo --role ux-engineer
+python harness.py schema list             # 查看统一 schema
+python harness.py schema validate --role unified-object-model.example.json
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -268,6 +270,9 @@ demo_experience.py       离线可感知演示（合成数据，一键清理）
 dashboard.py             本地只读 HTML 控制台生成器
 control_commands.py      memory/privacy/backup/feedback 用户控制入口
 assets_commands.py      character/knowledge/workspace 资产与工程工作区管理
+schema_commands.py      schema list/validate 统一 schema 校验
+schemas/                统一角色/事件/token schema
+unified-object-model.example.json  统一对象模型示例
 knowledge-sources.example.json  知识源 schema 示例（不含私有正文）
 local_records_export.py   本地记录快照生成脚本（需在原始环境运行）
 local_records_verify.py  本地记录快照校验脚本

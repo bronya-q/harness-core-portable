@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T10:31:33.308305+00:00",
+  "generated_at": "2026-09-04T10:34:35.937423+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 122,
+  "count": 127,
   "files": {
     ".gitignore": "34026ef212b4a31e367fa31ec0bc5a9ca754ac60b2a578268b873e5b3d2d1798",
     "AGENT_USAGE.md": "46101eb47e8e762bb8acec6e1cb7baf0086179b6ae3a722c05696124d794bc57",
@@ -26,9 +26,9 @@
     "PUBLIC_CONTENT_BOUNDARY.md": "5f679ea3f697e2c761a13004c75fad1355e3586a7835a8f90bea8d0a5e1739e7",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "35b44a1278130e6eddc1c7f64891b14088b6ab2ad8a490fd28828166e9839a32",
+    "README.md": "242508787eb2e3ab0f027079df9931ecedd2598305fab67e54000e1a847def7d",
     "RESEARCH.md": "ce5fd277fcc54d31ada92892b88d9300f71f0a2b8b377b7efbb56f59985fe842",
-    "ROADMAP.md": "9fbaa75c71b358ad830c47f515b201a2964c7fe07f4684408882d2345c7de95d",
+    "ROADMAP.md": "8f0c93efd7bd6f1a04809c0c6c7bb1ced333a5ac15aac3f2bee05cd9048a72af",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "d4f0c5ae7da500e9bb5e11747f00dfae230420defa059e378d3e58e5691ddb47",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
@@ -63,7 +63,7 @@
     "harness-core/gold_human_label_import.py": "cdedc2c351c16e00ddd7a85b3b520b980a24866becc4bbbfa299f311356c9cd7",
     "harness-core/gold_labeler.py": "c88715c830e1175f1a0144af733cce2521986e8d1f2108b0ce1bf8ba55fe153e",
     "harness-core/gold_sampler.py": "9ba72e0d8306656ab7d6faba188fc4c6b86e793f252caaea87722aa735912b38",
-    "harness-core/harness.py": "b4b22fa26e3e346476cb5c741c55ca4c8e3f99daac8106425f12df1f3ea035eb",
+    "harness-core/harness.py": "4eb1d523d8a34dbabc9217ad13b2943976d1104e6e1fd91bc35353f4e680aec2",
     "harness-core/harness_selfcheck.py": "59fbb27b5282ca12b75e146cb2088bd0d1424617a9cc4cb0a19ad1371b54b14e",
     "harness-core/history_backfill.py": "5e1b108d9c7424ff55ba1b60b9ae2dfcc8e111d864664787d42bfdc88cfbd932",
     "harness-core/humanization.py": "40f038f4b0f7b9bfc2a89b9b5b20136fe77e2a63b5e4a666aae579feb661d39b",
@@ -102,7 +102,8 @@
     "harness-core/runtime-policy.example.json": "2ed0654731533403b706935cb8f9817a1226bfeee1b2dec0463d7772653c8894",
     "harness-core/runtime_policy.py": "b77b31bdf51a2e51b60e7297db94c1a20073ff24d3c91c7753f8114b2f1888c3",
     "harness-core/runtime_preflight.py": "98533c0d7e2ae1c0b09c60a233474daf2ab240e464bdcd6075a885e1060fe005",
-    "harness-core/runtime_resolver.py": "b1e6c6630573286ad5d14fb8b46c37c5233190035e796bf398923c6e0e93a21e",
+    "harness-core/runtime_resolver.py": "94e09f6513b97c1c92f6d61022df632e96b0ac6cf74f14d1866ad9bf6dc8d807",
+    "harness-core/schema_commands.py": "a4767aa351a9eeba4cb21a949ca1e37e7226c4b03a279366354e69bfbff14f24",
     "harness-core/semantic_search.py": "0c40ffafb5193ffcea17477ea2b01fc794cc6926df86efc25f7b0a6236647ff0",
     "harness-core/session_ingest.py": "7e7c856cf88f752d85d7801dcd85611663fad1d9a3c10cdda40560bae09a5458",
     "harness-core/story_core.py": "9d8309ac21d8cac4899eaaaf515a565818fbafa2c84aaab8bab1f349da12e9ca",
@@ -126,6 +127,10 @@
     "private-identifiers.example.txt": "3ec527a12d5d669b3b847b51c6298c356247b689af27a204062d68aabf7fceec",
     "provenance_audit_report.json": "521b3abaa50967d4d628ade3d477b62796b26de6f3503dba26530005b4579f4b",
     "release_verify.py": "e47c621dd21a6be988bd4078805f05bc4c2c90333494a8ab2ed74d7f392628bc",
+    "schemas/event-envelope.schema.json": "d88a221d53a5a5f83d56fb2d5cd7cdf7ba93da468fd3db2eefeb88a4bd889a20",
+    "schemas/token-usage.schema.json": "e70757c57617f57c7d9785fb014e4670087d5b308bf13c40d37c75431ff671a7",
+    "schemas/unified-role.schema.json": "73201e04c03fe1ecc993a4080deaa4e0e4ec6447516057a022286cbb473d3239",
+    "unified-object-model.example.json": "7880eab0a3a687b19901953a311779628da68e1b91158d909354332dd796a726",
     "开始体验.bat": "f91507f84ed67d819bcb6f5ffe3430c7878a8d8c3f8f4fec4d20df1b229dac19"
   }
 }
