@@ -518,3 +518,12 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
   - 向量队列（pending / processing / deferred / done / failed 条形）
   - Token 来源 / Provider（按 provider 聚合 token 与记录数）
   - 新增 `tests/test_dashboard_visualization.py`（1 用例），unittest 总数 18。
+
+## 18. 后续处理记录（2026-09-04 续 6）
+
+- **真实 Dashboard 截图 / 滚动 GIF**：用 `demo --offline --keep` + `dashboard build` + 无头 Edge 生成真实合成数据全页截图，替换 README 合成图；`dashboard.py` 页脚改为 `~/.dsh/memory-emotion` 脱敏显示；新增 `tools/generate_real_dashboard_gif.py` 生成滚动 GIF。
+- **首次启动同意向导**：`python harness.py start` 首次运行会询问 `memory/story/notebook/telemetry` 分项同意并写入 `consent.json`。
+- **写操作预览 → 确认 → 撤销**：`memory write --scope <s> --text <t> [--yes]` 先预览再确认，写入后可用 `memory undo --id <id>` 归档撤销。
+- **知识桥真实只读访问最小步**：`knowledge access --role <r> --source <s> [--query <q>]` 校验授权后读取目录清单/有限文本摘要，不修改不上传。
+- **MCP Inspector**：CLI 已尝试，本机 Windows 超时（rc=124），记录为待继续，未伪造成功。
+- 新增 `tests/test_user_experience_flows.py`（3 用例），unittest 总数 21。

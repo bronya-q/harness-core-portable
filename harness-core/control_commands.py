@@ -39,7 +39,7 @@ def _run(script, *args):
 
 def cmd_memory(args):
     if not args:
-        print("用法：harness.py memory list|explain|correct|restore|forget ...")
+        print("用法：harness.py memory list|explain|write|undo|correct|restore|forget ...")
         return 1
     sub = args[0]
     rest = args[1:]
@@ -110,6 +110,49 @@ def cmd_memory(args):
             return 1
         r = _run("notebook.py", "forget", "--id", nid)
         print(json.dumps(r, ensure_ascii=False, indent=2))
+        return 0 if r.get("ok") else 1
+    if sub == "write":
+        scope = txt = ""
+        yes = "--yes" in rest
+        i = 0
+        while i < len(rest):
+            if rest[i] == "--scope" and i + 1 < len(rest):
+                scope = rest[i + 1]; i += 2
+            elif rest[i] == "--text" and i + 1 < len(rest):
+                txt = rest[i + 1]; i += 2
+            else:
+                i += 1
+        if not scope or not txt:
+            print("用法：harness.py memory write --scope <scope> --text <内容> [--yes]")
+            return 1
+        print("写入预览：")
+        print("  scope: %s" % scope)
+        print("  内容: %s" % txt)
+        print("  类型: manual（可撤销）")
+        if not yes:
+            try:
+                ans = input("确认写入？[y/N] ").strip().lower()
+            except EOFError:
+                ans = ""
+            if ans not in ("y", "yes", "是", "1"):
+                print(json.dumps({"ok": False, "status": "cancelled", "note": "用户取消写入"}, ensure_ascii=False))
+                return 1
+        r = _run("notebook.py", "note", "--scope", scope, "--text", txt, "--kind", "manual")
+        print(json.dumps({"ok": r.get("ok"), "id": r.get("id"), "scope": scope, "version": r.get("version"),
+                          "undo_hint": "python harness.py memory undo --id %s" % r.get("id"),
+                          "note": "已写入；可用 undo 撤销（归档）"}, ensure_ascii=False, indent=2))
+        return 0 if r.get("ok") else 1
+    if sub == "undo":
+        nid = ""
+        for i, a in enumerate(rest):
+            if a == "--id" and i + 1 < len(rest):
+                nid = rest[i + 1]
+        if not nid:
+            print("用法：harness.py memory undo --id <id>")
+            return 1
+        r = _run("notebook.py", "forget", "--id", nid)
+        print(json.dumps({"ok": r.get("ok"), "id": nid, "status": "archived" if r.get("ok") else "not_found",
+                          "note": "把该条笔记归档；可用 restore 恢复"}, ensure_ascii=False, indent=2))
         return 0 if r.get("ok") else 1
     print("未知 memory 子命令：" + sub)
     return 1

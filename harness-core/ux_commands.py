@@ -26,6 +26,7 @@ except Exception:
 SKILL = Path(__file__).resolve().parent
 ROOT = SKILL.parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
+CONSENT_FILE = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "consent.json"
 
 sys.path.insert(0, str(SKILL))
 import vector_queue  # noqa: E402
@@ -68,8 +69,37 @@ def _run(script, *args):
         return {"ok": False, "raw": p.stdout[-300:], "stderr": p.stderr[-300:]}
 
 
+def _ensure_first_run_consent():
+    """首次启动分项同意向导；已记录则直接返回 True。"""
+    if CONSENT_FILE.exists():
+        return True
+    print("\n[首次启动 · 分项同意]")
+    print("以下开关只影响本机功能，不等于上传授权；上传始终为 NONE。")
+    print("你可以随时用 `python harness.py privacy consent --status` 查看。\n")
+    items = ["memory", "story", "notebook", "telemetry"]
+    choice = {}
+    for item in items:
+        try:
+            ans = input("允许本机%s功能吗？[y/N] " % item).strip().lower()
+        except EOFError:
+            ans = ""
+        choice[item] = ans in ("y", "yes", "是", "1")
+    try:
+        from datetime import datetime
+        CONSENT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        data = {"schema_version": 1, "scope": "first-run", "items": choice,
+                "set_at": datetime.now().isoformat(),
+                "note": "这些是本机功能开关，不等于上传授权；上传仍为 NONE。"}
+        CONSENT_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        print("已记录你的选择。\n")
+    except Exception as exc:
+        print("未能写入同意文件：%s（不影响离线 Demo）" % exc)
+    return True
+
+
 def cmd_start():
     print("欢迎使用 Harness Core Portable")
+    _ensure_first_run_consent()
     print("这是一个本地 AI 记忆与人格系统。")
     print("你的数据默认只保存在本机，不会自动上传。\n")
     print("请选择：")

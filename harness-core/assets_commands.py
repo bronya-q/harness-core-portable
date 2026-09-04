@@ -740,6 +740,51 @@ def _knowledge_delegate(question, current_role=None):
             "note": "这是最小委派冒烟，不是真实知识检索；不会把知识正文传给当前角色。"}
 
 
+def _knowledge_access(role, source_id, query=None, limit=10):
+    sources = _load_sources()
+    src = next((s for s in sources if s.get("source_id") == source_id), None)
+    if not src:
+        return {"ok": False, "error": "unknown_domain", "domain": source_id}
+    root = _expand_root(src.get("root"))
+    if not root or not root.is_dir():
+        return {"ok": False, "error": "source_unreadable", "source_id": source_id,
+                "note": "知识源目录不存在或不可读。"}
+    stewards = src.get("stewards", []) or []
+    bindings = _role_bindings()
+    bound = [b.get("persona_id") for b in bindings
+             if b.get("source_ref") == source_id or b.get("domain_id") == source_id]
+    allowed = role in stewards or role in bound or src.get("default_access", "deny") != "deny"
+    if not allowed:
+        return {"ok": False, "error": "permission_denied", "role": role, "source_id": source_id,
+                "note": "default_access=deny 且该角色不是 steward/bound。"}
+    try:
+        files = sorted(p.name for p in root.iterdir() if p.is_file())[:limit]
+    except Exception as exc:
+        return {"ok": False, "error": "read_error", "detail": str(exc)}
+    matches = []
+    if query and query.strip():
+        q = query.strip().lower()
+        for p in sorted(root.iterdir()):
+            if not p.is_file():
+                continue
+            if p.suffix.lower() not in (".txt", ".md", ".json", ".csv", ".yml", ".yaml"):
+                continue
+            try:
+                content = p.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            idx = content.lower().find(q)
+            if idx >= 0:
+                start = max(0, idx - 40)
+                end = min(len(content), idx + len(q) + 40)
+                matches.append({"file": p.name, "snippet": content[start:end].replace("\n", " ")})
+                if len(matches) >= limit:
+                    break
+    return {"ok": True, "role": role, "source_id": source_id,
+            "allowed": allowed, "files": files, "matches": matches,
+            "note": "只读目录清单 + 有限文本摘要；不会修改或上传知识源。"}
+
+
 def cmd_knowledge(args):
     if not args:
         print("用法：harness.py knowledge list|sources|health|mount|delegate")
@@ -799,6 +844,25 @@ def cmd_knowledge(args):
             print("用法：python harness.py knowledge delegate --question <问题> [--role <persona_id>]")
             return 1
         result = _knowledge_delegate(question, role or None)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
+    if sub == "access":
+        role = source_id = query = ""
+        limit = 10
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--role" and i + 1 < len(args1):
+                role = args1[i + 1]
+            if a == "--source" and i + 1 < len(args1):
+                source_id = args1[i + 1]
+            if a == "--query" and i + 1 < len(args1):
+                query = args1[i + 1]
+            if a == "--limit" and i + 1 < len(args1):
+                limit = int(args1[i + 1])
+        if not role or not source_id:
+            print("用法：python harness.py knowledge access --role <persona_id> --source <source_id> [--query <text>] [--limit 10]")
+            return 1
+        result = _knowledge_access(role, source_id, query or None, limit)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
     print("未知 knowledge 子命令：" + sub)
