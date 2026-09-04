@@ -563,3 +563,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 25. 后续处理记录（2026-09-04 续 13）
 
 - **合规/公共边界快照**：Dashboard 新增「公共边界快照」卡片，扫描 README/CONTRIBUTING/SECURITY/LICENSE 中的私人标识、绝对路径与 overlay 引用；`test_dashboard_visualization` 增加断言。
+
+## 26. 后续处理记录（2026-09-04 续 14）
+
+- **首次使用向导细化**：`start` 在首次同意后显示「首次使用提示」；选择 Demo 前提示临时合成数据、自动清理与 `--keep`。unittest 总数不变（25）。

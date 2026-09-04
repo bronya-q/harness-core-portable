@@ -99,7 +99,12 @@ def _ensure_first_run_consent():
 
 def cmd_start():
     print("欢迎使用 Harness Core Portable")
+    first_time = not CONSENT_FILE.exists()
     _ensure_first_run_consent()
+    if first_time:
+        print("\n[首次使用提示]")
+        print("- 你刚记录的分项同意只影响本机功能，不影响任何上传。")
+        print("- 如果想先看效果，选 1 会运行离线 Demo，不会用模型、不会上传。")
     print("这是一个本地 AI 记忆与人格系统。")
     print("你的数据默认只保存在本机，不会自动上传。\n")
     print("请选择：")
@@ -113,6 +118,10 @@ def cmd_start():
     except EOFError:
         choice = "1"
     if choice == "1":
+        print("\n即将运行离线 Demo：")
+        print("- 会创建临时合成角色和记忆")
+        print("- 结束后自动清理（可用 --keep 保留）")
+        print()
         return subprocess.call([sys.executable, str(SKILL / "demo_experience.py"), "--offline"])
     if choice == "2":
         return cmd_doctor()
