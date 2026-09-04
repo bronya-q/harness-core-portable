@@ -554,6 +554,10 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 统一 event envelope schema 文件
 - ✅ usage/token telemetry schema 文件
 - ✅ local overlay loading order（runtime_resolver 读取 `~/.dsh/harness/personas.local.json`）
+- ✅ Notebook 写操作自动记 event（note/restore/forget）
+- ✅ roleplay 自动记 token 估算（character_estimate）
+- ✅ `memory correct` 自动归档旧记录
+- ✅ `package_selfcheck` 增加 `unittest discover`
 - ⬜ package schema version 强制校验
 - ✅ event envelope 实际写入底层（`event add/list`，events.db）
 - ✅ token usage 实际采集（`usage record/list`，events.db token_usage 表）

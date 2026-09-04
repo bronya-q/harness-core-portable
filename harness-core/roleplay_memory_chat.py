@@ -379,6 +379,16 @@ def main():
                     auto_note_status = "error:" + type(exc).__name__
         collab_telemetry["notebook_auto"] = auto_note_status
         try:
+            from event_store import record_usage
+            _est_actual = max(0, int((len(prompt) + len(response)) / 4))
+            _est_baseline = max(0, int(len(base_prompt) / 4))
+            record_usage({"usage_source": "character_estimate", "model_id": model,
+                          "actual_tokens": _est_actual, "baseline_id": "prompt_chars_estimate",
+                          "baseline_tokens": _est_baseline,
+                          "estimated_avoided_tokens": max(0, _est_baseline - _est_actual)})
+        except Exception:
+            pass
+        try:
             from continuity_store import record_session
             record_session({"scope": scope, "provider": "ollama-roleplay", "started_at": started,
                             "ended_at": time.time(), "recall_attempted": True,

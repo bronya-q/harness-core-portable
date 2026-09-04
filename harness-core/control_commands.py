@@ -77,8 +77,14 @@ def cmd_memory(args):
             print("用法：harness.py memory correct --scope <scope> --id <id> --text <新内容>")
             return 1
         r = _run("notebook.py", "note", "--scope", scope, "--text", "corrected: " + txt, "--kind", "manual")
+        # 自动归档旧记录
+        archived = False
+        if nid:
+            ar = _run("notebook.py", "forget", "--id", nid)
+            archived = ar.get("ok") is True
         print(json.dumps({"ok": r.get("ok"), "scope": scope, "new_id": r.get("id"),
-                          "note": "correction recorded; old id=%s" % nid}, ensure_ascii=False, indent=2))
+                          "old_archived": archived, "old_id": nid,
+                          "note": "correction recorded; old id=%s archived=%s" % (nid, archived)}, ensure_ascii=False, indent=2))
         return 0 if r.get("ok") else 1
     if sub == "restore":
         scope = ver = ""

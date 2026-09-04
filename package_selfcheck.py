@@ -55,6 +55,14 @@ def main():
         issues.append("local_records_verify failed")
         issues.extend(data_lr.get("issues", []))
 
+    # 1c) 标准库功能回归测试
+    p_ut = subprocess.run([sys.executable, "-m", "unittest", "discover"], cwd=str(ROOT),
+                          capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
+    checks["unittest"] = {"rc": p_ut.returncode, "tail": p_ut.stdout[-300:]}
+    if p_ut.returncode != 0:
+        issues.append("unittest failed")
+        issues.append(p_ut.stdout[-300:])
+
     # 2) 根 launcher 可导入/可打印帮助
     p = subprocess.run([sys.executable, str(ROOT / "harness.py")],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)

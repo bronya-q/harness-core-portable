@@ -13,6 +13,7 @@ import sys
 import time
 import uuid
 from pathlib import Path
+from event_store import record_event
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -49,6 +50,10 @@ def note(args):
     c.execute("INSERT INTO notebooks(id,scope,kind,content,version,created_at,updated_at,prev_id) VALUES(?,?,?,?,?,?,?,?)",
               (nid, args.scope, args.kind, args.text, ver, time.time(), time.time(), prev_id))
     c.commit(); c.close()
+    try:
+        record_event({"event_type": "notebook.note", "scope": args.scope, "content_type": "fact"})
+    except Exception:
+        pass
     print(json.dumps({"ok": True, "id": nid, "scope": args.scope, "version": ver, "kind": args.kind}, ensure_ascii=False))
     return 0
 
@@ -111,6 +116,10 @@ def forget(args):
         return 1
     c.execute("UPDATE notebooks SET status='archived' WHERE id=?", (args.id,))
     c.commit(); c.close()
+    try:
+        record_event({"event_type": "notebook.forget", "scope": "unknown", "content_type": "fact"})
+    except Exception:
+        pass
     print(json.dumps({"ok": True, "id": args.id, "status": "archived"}, ensure_ascii=False))
     return 0
 
@@ -129,6 +138,10 @@ def restore(args):
     c.execute("INSERT INTO notebooks(id,scope,kind,content,version,created_at,updated_at,prev_id) VALUES(?,?,?,?,?,?,?,?)",
               (nid, args.scope, "restored", target["content"], ver, time.time(), time.time(), prev_id))
     c.commit(); c.close()
+    try:
+        record_event({"event_type": "notebook.restore", "scope": args.scope, "content_type": "fact"})
+    except Exception:
+        pass
     print(json.dumps({"ok": True, "id": nid, "scope": args.scope, "version": ver, "restored_from": target["version"]}, ensure_ascii=False))
     return 0
 
