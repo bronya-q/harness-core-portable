@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""release_verify.py — 发布物一致性校验（无需 Ollama / 私有卡）。
+"""release_verify.py — 发布物一致性校验（无需 Ollama / 私有卡 / Git）。
 
 用法：
   python release_verify.py            # 校验 release-manifest.json 与当前工作区
-  python release_verify.py --generate # 依据 git ls-files 重新生成 release-manifest.json
+  python release_verify.py --generate # 需要 Git；依据 git ls-files 重新生成清单
 
+支持三种来源：
+  - Git clone：用 git ls-files 作为“应有文件”基准；
+  - GitHub Download ZIP / 普通复制目录（无 .git）：扫描实际文件，
+    并强制“实际文件集合 == release-manifest.json 集合”。
 只做离线/静态检查：文件清单、SHA-256、Python 语法编译、绝对路径残留。
 不启动 SQLite/模型/服务。
 """
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -36,7 +41,30 @@ def git_ls_files():
     )
     if p.returncode != 0:
         raise RuntimeError("git ls-files failed: " + p.stderr[-300:])
-    return [x for x in p.stdout.split("\0") if x]
+    return [x for x in p.stdout.split(chr(0)) if x]
+
+
+def try_git_ls_files():
+    try:
+        return git_ls_files()
+    except Exception:
+        return None
+
+
+def scan_files():
+    """递归扫描实际文件，排除 .git/__pycache__/pyc/release-manifest.json。"""
+    out = set()
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in (".git", "__pycache__")]
+        rel = Path(dirpath).relative_to(ROOT)
+        for fn in filenames:
+            relpath = ((rel / fn).as_posix() if str(rel) != "." else fn)
+            if relpath in SKIP_FROM_MANIFEST:
+                continue
+            if relpath.endswith(tuple(EXCLUDED_SUFFIXES)):
+                continue
+            out.add(relpath)
+    return sorted(out)
 
 
 def is_excluded(rel: str) -> bool:
@@ -54,7 +82,12 @@ def sha256_of(rel: str) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def build_manifest() -> None:
+def build_manifest() -> int:
+    if not Path(ROOT / ".git").exists():
+        print(json.dumps({"ok": False, "mode": "release_verify.generic",
+                          "issues": ["--generate requires a git clone (.git present)"]},
+                         ensure_ascii=False, indent=2))
+        return 1
     files = [f for f in git_ls_files() if f and not is_excluded(f) and f not in SKIP_FROM_MANIFEST]
     files.sort()
     entries = {f: sha256_of(f) for f in files}
@@ -69,20 +102,23 @@ def build_manifest() -> None:
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"ok": True, "manifest": str(MANIFEST), "count": len(files)},
                      ensure_ascii=False, indent=2))
+    return 0
 
 
 def verify() -> int:
     issues = []
     if not MANIFEST.exists():
-        issues.append("missing release-manifest.json; run `python release_verify.py --generate`")
-        print(json.dumps({"ok": False, "issues": issues}, ensure_ascii=False, indent=2))
+        issues.append("missing release-manifest.json; run `python release_verify.py --generate` in a git clone")
+        print(json.dumps({"ok": False, "mode": "release_verify", "issues": issues},
+                         ensure_ascii=False, indent=2))
         return 1
 
     try:
         m = json.loads(MANIFEST.read_text(encoding="utf-8"))
     except Exception as e:
         issues.append("invalid manifest json: %s" % e)
-        print(json.dumps({"ok": False, "issues": issues}, ensure_ascii=False, indent=2))
+        print(json.dumps({"ok": False, "mode": "release_verify", "issues": issues},
+                         ensure_ascii=False, indent=2))
         return 1
 
     if m.get("algorithm") != ALGO:
@@ -95,7 +131,7 @@ def verify() -> int:
         issues.append("files field is not an object")
         files_manifest = {}
 
-    # Every manifest entry must exist and hash-match
+    # 1) manifest 里的每个文件都必须存在且哈希一致
     for rel in sorted(files_manifest):
         p = ROOT / rel
         if not p.exists():
@@ -112,18 +148,34 @@ def verify() -> int:
         if actual != files_manifest[rel]:
             issues.append("hash_mismatch:%s" % rel)
 
-    # Every tracked file (except excluded/manifest itself) must appear
-    tracked = git_ls_files()
-    for rel in tracked:
-        if rel in SKIP_FROM_MANIFEST or rel == "":
-            continue
-        if is_excluded(rel):
-            issues.append("tracked_excluded:%s" % rel)
-            continue
-        if rel not in files_manifest:
-            issues.append("tracked_not_in_manifest:%s" % rel)
+    # 2) 判断来源：Git clone 用 git ls-files；无 .git ZIP/复制目录用目录扫描
+    git_list = try_git_ls_files()
+    if git_list is not None:
+        source = "git"
+        for rel in git_list:
+            rel = rel.strip()
+            if not rel or rel == "":
+                continue
+            if rel in SKIP_FROM_MANIFEST:
+                continue
+            if is_excluded(rel):
+                issues.append("tracked_excluded:%s" % rel)
+                continue
+            if rel not in files_manifest:
+                issues.append("tracked_not_in_manifest:%s" % rel)
+        file_list = git_list
+    else:
+        source = "zip_scan"
+        file_list = scan_files()
+        actual_set = set(file_list)
+        expected_set = set(files_manifest.keys())
+        for rel in sorted(actual_set - expected_set):
+            issues.append("unlisted_file:%s" % rel)
+        for rel in sorted(expected_set - actual_set):
+            if not (ROOT / rel).exists():
+                issues.append("missing:%s" % rel)
 
-    # Python syntax compile (in-memory, no .pyc side effects)
+    # 3) Python 语法编译（内存中，不写 .pyc）
     for rel in sorted(files_manifest):
         if not rel.endswith(".py"):
             continue
@@ -135,10 +187,10 @@ def verify() -> int:
         except Exception as e:
             issues.append("py_compile_fail:%s:%s" % (rel, e))
 
-    # No absolute Windows user paths in tracked text files
+    # 4) 绝对 Windows 用户路径残留
     bs = chr(92)
-    abs_pats = [("C:" + bs + "Users").encode(), ("C:" + bs * 2 + "Users").encode(),  b"C:/" + b"Users/"]
-    for rel in tracked:
+    abs_pats = [("C:" + bs + "Users").encode(), ("C:" + bs * 2 + "Users").encode(), b"C:/" + b"Users/"]
+    for rel in file_list:
         p = ROOT / rel
         if not p.exists():
             continue
@@ -149,7 +201,7 @@ def verify() -> int:
         if any(pat in data for pat in abs_pats):
             issues.append("absolute_user_path:%s" % rel)
 
-    # Required public files must exist
+    # 5) 必备公开文件
     for req in ["README.md", "LICENSE", "NOTICE.md", "SECURITY.md", "harness.py", "harness-core/harness.py"]:
         if not (ROOT / req).exists():
             issues.append("missing_required:%s" % req)
@@ -158,6 +210,7 @@ def verify() -> int:
     print(json.dumps({
         "ok": ok,
         "mode": "release_verify",
+        "source": source,
         "count": m.get("count"),
         "file_entries": len(files_manifest),
         "issues": issues,
@@ -167,8 +220,7 @@ def verify() -> int:
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--generate":
-        build_manifest()
-        return verify()
+        return build_manifest()
     return verify()
 
 

@@ -40,6 +40,7 @@ PASSTHROUGH = {
     "signals": ["user_model_signals.py", []],
     "notebook": ["notebook.py", []],
     "story": ["story_core.py", []],
+    "roleplay": ["roleplay_memory_chat.py", []],
 }
 
 # Fine-grained subcommands

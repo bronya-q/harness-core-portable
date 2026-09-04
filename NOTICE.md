@@ -7,11 +7,11 @@
 
 | 项目 | 许可证 | 义务 |
 |---|---|---|
-| Herta (PersonaCLI/Herta) | MIT | 保留版权声明；粉丝素材除外 |
-| Project N.E.K.O. / Xiao8 | Apache-2.0 | 保留 NOTICE；游戏素材受 fan-content 限制 |
-| Mem0 | Apache-2.0 | 保留版权声明 |
-| Letta / MemGPT | Apache-2.0（历史） | 保留版权声明 |
-| All-in-RAG | 开源学习资源 | 按项目许可证 |
+| Herta (PersonaCLI/Herta) | 待按实际参考 commit 核验 | 保留版权声明；粉丝素材除外 |
+| Project N.E.K.O. / Xiao8 | 待按实际参考仓库/commit 核验 | 保留 NOTICE；游戏素材受 fan-content 限制 |
+| Mem0 | 待绑定实际 commit/版本后固定表述 | 保留版权声明 |
+| Letta / MemGPT | 待绑定实际 commit/版本后固定表述 | 保留版权声明 |
+| All-in-RAG | 待核验 | 按项目许可证 |
 
 ## 理论/算法来源
 
