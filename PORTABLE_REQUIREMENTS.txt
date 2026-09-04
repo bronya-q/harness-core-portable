@@ -1,3 +1,7 @@
 python>=3.13
-# no external pip deps required for core scripts
-# optional: Ollama (for embeddings/LLM)
+
+# Core scripts are intended to run with the Python standard library.
+# Optional enhancement: jieba (user_model.py has a fallback when unavailable).
+# Optional external runtime: Ollama.
+# Optional model artifacts (not distributed here): qwen2.5:7b,
+# qwen3-embedding:0.6b, and/or bge-m3. Verify each artifact's own license.
