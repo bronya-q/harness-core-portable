@@ -865,6 +865,34 @@ def cmd_knowledge(args):
         result = _knowledge_access(role, source_id, query or None, limit)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
+    if sub == "suggest":
+        question = ""
+        role = ""
+        limit = 3
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--question" and i + 1 < len(args1):
+                question = args1[i + 1]
+            if a == "--role" and i + 1 < len(args1):
+                role = args1[i + 1]
+            if a == "--limit" and i + 1 < len(args1):
+                limit = int(args1[i + 1])
+        if not question or not role:
+            print("用法：python harness.py knowledge suggest --question <问题> --role <persona_id> [--limit 3]")
+            return 1
+        d = _knowledge_delegate(question, role)
+        if not d.get("matched") or not d.get("allowed"):
+            result = dict(d)
+            result["note"] = d.get("note", "") + " 未执行只读访问。"
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0
+        hits = d.get("hits") or []
+        access_query = hits[0] if hits else question
+        acc = _knowledge_access(role, d["source_id"], access_query, limit)
+        acc["delegate"] = d
+        acc["note"] = "委派匹配 + 只读访问返回有限上下文；不会修改/上传知识源。"
+        print(json.dumps(acc, ensure_ascii=False, indent=2))
+        return 0 if acc.get("ok") else 1
     print("未知 knowledge 子命令：" + sub)
     return 1
 

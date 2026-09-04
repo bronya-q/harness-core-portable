@@ -527,3 +527,10 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 - **知识桥真实只读访问最小步**：`knowledge access --role <r> --source <s> [--query <q>]` 校验授权后读取目录清单/有限文本摘要，不修改不上传。
 - **MCP Inspector**：CLI 已尝试，本机 Windows 超时（rc=124），记录为待继续，未伪造成功。
 - 新增 `tests/test_user_experience_flows.py`（3 用例），unittest 总数 21。
+
+## 19. 后续处理记录（2026-09-04 续 7）
+
+- **知识桥下一步**：新增 `knowledge suggest --question <q> --role <r> [--limit 3]`，把「委派匹配 + 授权 + 只读访问」连成一步，返回有限上下文片段；不改动知识源。
+- **Dashboard 写操作预览**：Dashboard 增加「最近写操作（可撤销预览）」卡片，列出最近 manual 笔记，并给出 `memory undo --id` 撤销命令；真实截图/GIF 已重新生成。
+- **MCP Inspector**：Windows/WSL 的 CLI 仍未拿到成功输出；后续需排查 npx/stdio 挂起，或换容器 CI 环境。
+- `tests/test_knowledge_stewardship.py` 增加 suggest 用例，unittest 总数 22。
