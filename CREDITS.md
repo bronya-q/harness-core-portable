@@ -207,6 +207,39 @@ PHENOMENOLOGY-OCR-SUMMARY.md
 - 当前缺口：CREDITS 尚无法确认这些文档分别是用户原创、AI 生成、OCR 摘录、外部文章摘要还是第三方作品。
 - 发布要求：逐份补 provenance。若含 OCR、书籍、论文或第三方原文，公开包只能保留允许分发的摘要/引用，并标注作者和来源；不得把本地存在误当作拥有公开许可。
 
+### 4.7 Markus / “马克斯”本地人格系统
+
+- 来源性质：用户本机的 `celebrity-markus` 人格系统；不是本仓库随附的外部开源依赖。
+- 系统描述：以马克思相关原典/研究材料构造的本地人格镜像，包含分层人格、认知动力、自发候选、精力状态、长短期目标、私人日记与信件等机制。
+- 对本仓库的设计影响：
+
+  | 借鉴方向 | 本仓库对应 |
+  |---|---|
+  | 注意力、好奇心、心情、精力等认知动力 | `cognitive_dynamics.py` |
+  | 自发候选、精力约束、长短目标 | `mind_evolution.py`、`proactive_pipeline.py` |
+  | 日记、信件与长期沉淀 | `mind_precipitate.py`、humanization diary/letter 功能 |
+  | 独立 persona/source/scope 路由 | `runtime_resolver.py` 中的 `markus` 条目 |
+
+- 未随仓库分发：Markus 人格正文、私人记忆、日记、信件、原始语料和本地数据库。
+- 权利边界：马克思原著的公版状态不自动覆盖现代译文、注释、整理本和数据库；任何译文或研究材料公开分发前必须按具体版本核验版权。
+- 当前结论：可以披露为本地内部设计来源，不能因“内部系统”而推定所有源材料均可按 MIT 发布。
+
+### 4.8 Blanche / 布兰奇本地人格系统
+
+- 来源性质：用户本机由 “Entity 140 - Blanche” 文本与本地 feminism knowledge base 构建的人格系统。
+- 对本仓库的设计影响：
+
+  | 借鉴方向 | 本仓库对应 |
+  |---|---|
+  | “预测式大文本 + 知识块”的人格维持方式 | `p4_experiment.py`、`natural_session.py` 的相关设计 |
+  | 知识库/卡片式人格组织 | `perspective_card.py`、`user_model_signals.py` |
+  | 独立 persona/source/scope/backend 路由 | `runtime_resolver.py` 的 `blanche` 条目、`mind_evolution.py` 的 predictive/blanche backend 提示 |
+
+- 未随仓库分发：Blanche 原始文本、人格正文、feminism knowledge base、私人记忆与本地启动器。
+- 当前缺口：“Entity 140 - Blanche”的作者、取得方式、原始 URL、版本、许可证与允许用途尚未写入仓库。
+- 发布要求：在来源未确认前，不得复制或发布原文/高度近似改写；如果本仓库 schema、demo 或文档含独特表达，必须先逐句比对并删除或取得许可。
+- 当前结论：属于必须披露的本地派生来源，不是可忽略的“私人内部实现”。
+
 ---
 
 ## 5. 生态调研对象（不代表代码借鉴或随仓库分发）
