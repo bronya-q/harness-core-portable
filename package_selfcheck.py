@@ -48,6 +48,13 @@ def main():
         issues.append("release_verify failed")
         issues.extend(data.get("issues", []))
 
+    # 1b) 本地记录机器可读快照的口径校验
+    data_lr, rc_lr = run("local_records_verify.py")
+    checks["local_records_verify"] = {"rc": rc_lr, "ok": data_lr.get("ok")}
+    if rc_lr != 0 or data_lr.get("ok") is not True:
+        issues.append("local_records_verify failed")
+        issues.extend(data_lr.get("issues", []))
+
     # 2) 根 launcher 可导入/可打印帮助
     p = subprocess.run([sys.executable, str(ROOT / "harness.py")],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)

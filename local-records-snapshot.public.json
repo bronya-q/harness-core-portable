@@ -1,10 +1,2243 @@
 {
   "schema_version": 1,
-  "snapshot_id": "d85ef35ea61fc965",
-  "generated_at": "2026-09-04T09:00:21.626930+00:00",
-  "generator": "generate_local_records.py",
-  "source_commit": "1b05568bfd9fc3da5e9b1ed293cfd5bcb0e5ed95",
-  "environment": "local_private",
+  "snapshot_id": "local-20260904-094002",
+  "generated_at": "2026-09-04T09:40:02.587309+00:00",
+  "generator_version": "1",
+  "generator": "local_records_export.py",
+  "source_commit": "ed8ad1912a4493e99c6a25eaa5e46666db77f049",
+  "environment": {
+    "python": "3.13.9",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "model_names_disclosed": false
+  },
+  "privacy": {
+    "aggregate_only": true,
+    "raw_data_public": false,
+    "contains_pii": false
+  },
+  "metrics": {
+    "memories_total": {
+      "metric_id": "memories_total",
+      "value": 6088,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "memory.db:memories",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "memories_active": {
+      "metric_id": "memories_active",
+      "value": 786,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "memory.db:memories",
+      "filter": "archived=0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "memories_archived": {
+      "metric_id": "memories_archived",
+      "value": 5302,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "memory.db:memories",
+      "filter": "archived=1",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:cognitive_states": {
+      "metric_id": "humanization_sidecar.db:cognitive_states",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:cognitive_states",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:diary_entries": {
+      "metric_id": "humanization_sidecar.db:diary_entries",
+      "value": 365,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:diary_entries",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:expression_pairs": {
+      "metric_id": "humanization_sidecar.db:expression_pairs",
+      "value": 154,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:expression_pairs",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:humanization_events": {
+      "metric_id": "humanization_sidecar.db:humanization_events",
+      "value": 349,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:humanization_events",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:identity_entries": {
+      "metric_id": "humanization_sidecar.db:identity_entries",
+      "value": 84,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:identity_entries",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:initiative_candidates": {
+      "metric_id": "humanization_sidecar.db:initiative_candidates",
+      "value": 340,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:initiative_candidates",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:letter_threads": {
+      "metric_id": "humanization_sidecar.db:letter_threads",
+      "value": 14,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:letter_threads",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:mind_change_log": {
+      "metric_id": "humanization_sidecar.db:mind_change_log",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:mind_change_log",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:mind_tensions": {
+      "metric_id": "humanization_sidecar.db:mind_tensions",
+      "value": 285,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:mind_tensions",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:narrative_episodes": {
+      "metric_id": "humanization_sidecar.db:narrative_episodes",
+      "value": 400,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:narrative_episodes",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:persona_variants": {
+      "metric_id": "humanization_sidecar.db:persona_variants",
+      "value": 26,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:persona_variants",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:policy_audit": {
+      "metric_id": "humanization_sidecar.db:policy_audit",
+      "value": 31,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:policy_audit",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:real_session_registry": {
+      "metric_id": "humanization_sidecar.db:real_session_registry",
+      "value": 17,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:real_session_registry",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:relationship_events": {
+      "metric_id": "humanization_sidecar.db:relationship_events",
+      "value": 4,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:relationship_events",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:self_upgrade_candidates": {
+      "metric_id": "humanization_sidecar.db:self_upgrade_candidates",
+      "value": 282,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:self_upgrade_candidates",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:situated_observations": {
+      "metric_id": "humanization_sidecar.db:situated_observations",
+      "value": 449,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:situated_observations",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "humanization_sidecar.db:tensions": {
+      "metric_id": "humanization_sidecar.db:tensions",
+      "value": 14,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "humanization_sidecar.db:tensions",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:approved_measurements": {
+      "metric_id": "continuity_sidecar.db:approved_measurements",
+      "value": 0,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:approved_measurements",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:beliefs": {
+      "metric_id": "continuity_sidecar.db:beliefs",
+      "value": 0,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:beliefs",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:emotion_events": {
+      "metric_id": "continuity_sidecar.db:emotion_events",
+      "value": 6,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:emotion_events",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:profile_layers": {
+      "metric_id": "continuity_sidecar.db:profile_layers",
+      "value": 5,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:profile_layers",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:report_history": {
+      "metric_id": "continuity_sidecar.db:report_history",
+      "value": 11,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:report_history",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:review_audit": {
+      "metric_id": "continuity_sidecar.db:review_audit",
+      "value": 0,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:review_audit",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:review_queue": {
+      "metric_id": "continuity_sidecar.db:review_queue",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:review_queue",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:round_metrics": {
+      "metric_id": "continuity_sidecar.db:round_metrics",
+      "value": 2,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:round_metrics",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "continuity_sidecar.db:session_metrics": {
+      "metric_id": "continuity_sidecar.db:session_metrics",
+      "value": 171,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "continuity_sidecar.db:session_metrics",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "atomic_facts_sidecar.db:atomic_facts": {
+      "metric_id": "atomic_facts_sidecar.db:atomic_facts",
+      "value": 2370,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "atomic_facts_sidecar.db:atomic_facts",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "identity_sidecar.db:accounts": {
+      "metric_id": "identity_sidecar.db:accounts",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "identity_sidecar.db:accounts",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "identity_sidecar.db:permission_log": {
+      "metric_id": "identity_sidecar.db:permission_log",
+      "value": 2,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "identity_sidecar.db:permission_log",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "proactive_sidecar.db:proactive_candidates": {
+      "metric_id": "proactive_sidecar.db:proactive_candidates",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "proactive_sidecar.db:proactive_candidates",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "proactive_sidecar.db:proactive_decisions": {
+      "metric_id": "proactive_sidecar.db:proactive_decisions",
+      "value": 0,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "proactive_sidecar.db:proactive_decisions",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "proactive_sidecar.db:proactive_deliveries": {
+      "metric_id": "proactive_sidecar.db:proactive_deliveries",
+      "value": 0,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "proactive_sidecar.db:proactive_deliveries",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "cognitive_dynamics.db:cognitive_dynamics": {
+      "metric_id": "cognitive_dynamics.db:cognitive_dynamics",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "cognitive_dynamics.db:cognitive_dynamics",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "nine_dim_revision.db:needs_state": {
+      "metric_id": "nine_dim_revision.db:needs_state",
+      "value": 1,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "nine_dim_revision.db:needs_state",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "nine_dim_revision.db:observations": {
+      "metric_id": "nine_dim_revision.db:observations",
+      "value": 5,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "nine_dim_revision.db:observations",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "notebooks.db:notebooks": {
+      "metric_id": "notebooks.db:notebooks",
+      "value": 3,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "notebooks.db:notebooks",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "mind_review.db:reviews": {
+      "metric_id": "mind_review.db:reviews",
+      "value": 85,
+      "unit": "rows",
+      "source_kind": "sqlite_count",
+      "source": "mind_review.db:reviews",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gold_labels_total": {
+      "metric_id": "gold_labels_total",
+      "value": 2160,
+      "unit": "count",
+      "source_kind": "csv_rows",
+      "source": "recall_gold_independent_blind.csv",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gold_query_count": {
+      "metric_id": "gold_query_count",
+      "value": 36,
+      "unit": "count",
+      "source_kind": "json",
+      "source": "recall_gold_independent_v2.json",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gold_candidates_per_query": {
+      "metric_id": "gold_candidates_per_query",
+      "value": 60,
+      "unit": "count",
+      "source_kind": "json",
+      "source": "recall_gold_independent_v2.json",
+      "filter": "per_query",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gold_expected_total": {
+      "metric_id": "gold_expected_total",
+      "value": 2160,
+      "unit": "count",
+      "source_kind": "json",
+      "source": "recall_gold_independent_v2.json",
+      "filter": "queries*items",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "production_gate_status": {
+      "metric_id": "production_gate_status",
+      "value": "PASS",
+      "unit": "enum",
+      "source_kind": "rating_snapshot_json",
+      "source": "rating-snapshots/latest",
+      "filter": "gate",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G1": {
+      "metric_id": "gate_G1",
+      "value": 17,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "real_sessions>=5",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G2": {
+      "metric_id": "gate_G2",
+      "value": 57,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "h3_rated>=30",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G3": {
+      "metric_id": "gate_G3",
+      "value": 0.702,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "enhanced_win>=0.6",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G4": {
+      "metric_id": "gate_G4",
+      "value": 1.0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "congruence>=0.9",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G5": {
+      "metric_id": "gate_G5",
+      "value": 3,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "multi_scope>=3",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G6": {
+      "metric_id": "gate_G6",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "narrative_unknown==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G7": {
+      "metric_id": "gate_G7",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "no_high_risk_narrative",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G8": {
+      "metric_id": "gate_G8",
+      "value": 0.0025,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "user_correction<=0.2",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G9": {
+      "metric_id": "gate_G9",
+      "value": 0.0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "leakage<=0.05",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G10": {
+      "metric_id": "gate_G10",
+      "value": 0.9444,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "hit_rate@10>=0.9",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G13": {
+      "metric_id": "gate_G13",
+      "value": 0.7944,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "independent_recall@5>=0.5",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G14": {
+      "metric_id": "gate_G14",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "over_anthropomorphism==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G15": {
+      "metric_id": "gate_G15",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "no_self_reveal_as_ai==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G16": {
+      "metric_id": "gate_G16",
+      "value": {
+        "db_ok": true,
+        "ollama_ok": true,
+        "db_missing": []
+      },
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "service_db_health",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G17": {
+      "metric_id": "gate_G17",
+      "value": 29,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "natural_flow_min>=1",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G18": {
+      "metric_id": "gate_G18",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "duplicate_groups_active==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G19": {
+      "metric_id": "gate_G19",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "relation_out_of_range==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G11": {
+      "metric_id": "gate_G11",
+      "value": 0,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "plugin_unknown==0",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "gate_G12": {
+      "metric_id": "gate_G12",
+      "value": true,
+      "unit": "mixed",
+      "source_kind": "rating_snapshot_json",
+      "source": "production_gate",
+      "filter": "explicit_production_approval",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "recall_pool_p_at_5": {
+      "metric_id": "recall_pool_p_at_5",
+      "value": 0.7944,
+      "unit": "ratio",
+      "source_kind": "measurement_json",
+      "source": "measurement.recall-pool",
+      "filter": "top_k=5",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "recall_pool_recall": {
+      "metric_id": "recall_pool_recall",
+      "value": 0.3422,
+      "unit": "ratio",
+      "source_kind": "measurement_json",
+      "source": "measurement.recall-pool",
+      "filter": "top_k=5",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "recall_pool_hit_rate_at_5": {
+      "metric_id": "recall_pool_hit_rate_at_5",
+      "value": 0.9444,
+      "unit": "ratio",
+      "source_kind": "measurement_json",
+      "source": "measurement.recall-pool",
+      "filter": "top_k=5",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "recall_pool_queries": {
+      "metric_id": "recall_pool_queries",
+      "value": 36,
+      "unit": "count",
+      "source_kind": "measurement_json",
+      "source": "measurement.recall-pool",
+      "filter": "all",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    },
+    "recall_pool_zero_relevant": {
+      "metric_id": "recall_pool_zero_relevant",
+      "value": 2,
+      "unit": "count",
+      "source_kind": "measurement_json",
+      "source": "measurement.recall-pool",
+      "filter": "query=zero_relevant",
+      "generated_at": "2026-09-04T09:40:02.587309+00:00",
+      "numerator": null,
+      "denominator": null,
+      "excluded_count": null,
+      "aggregation": null
+    }
+  },
+  "raw_commitments": {
+    "memory.db": "218fa7a015dc36786c642e7d335324c40bf80e368b65dcfda3486101fd00a772",
+    "humanization_sidecar.db": "b3da39495c8ed2f973b88e2f1ce982af27c2c86e8bc3efc288ecaa914ced78da",
+    "continuity_sidecar.db": "29eca95738eee667b0bbf339946fed6837be3a2c4355d9f9d7af827c15048d51",
+    "notebooks.db": "0ede458a4563eeca23434f7b51f9e753ccbb1a57a480278a4dfd8cdd05bac9b7",
+    "mind_review.db": "4b7d7803499ceb31b20e0d4ce3fd497c05b85e191476dea0d32a9e842d185e1a",
+    "recall_gold_independent_blind.csv": "0590026862597ddd1334a90c07ca18e1feaa084b260340806db3d115358144e9"
+  },
+  "per_query_metrics": [
+    {
+      "query": "马克斯",
+      "precision_at_k": 1.0,
+      "recall": 0.1087,
+      "hit": null,
+      "relevant_pool": 46,
+      "judged": 5
+    },
+    {
+      "query": "九维",
+      "precision_at_k": 1.0,
+      "recall": 0.125,
+      "hit": null,
+      "relevant_pool": 40,
+      "judged": 5
+    },
+    {
+      "query": "记忆",
+      "precision_at_k": 0.4,
+      "recall": 0.1111,
+      "hit": null,
+      "relevant_pool": 18,
+      "judged": 5
+    },
+    {
+      "query": "安全",
+      "precision_at_k": 1.0,
+      "recall": 0.098,
+      "hit": null,
+      "relevant_pool": 51,
+      "judged": 5
+    },
+    {
+      "query": "桌宠",
+      "precision_at_k": 1.0,
+      "recall": 0.3846,
+      "hit": null,
+      "relevant_pool": 13,
+      "judged": 5
+    },
+    {
+      "query": "DeepSeek",
+      "precision_at_k": 1.0,
+      "recall": 0.0833,
+      "hit": null,
+      "relevant_pool": 60,
+      "judged": 5
+    },
+    {
+      "query": "回归",
+      "precision_at_k": 1.0,
+      "recall": 0.3125,
+      "hit": null,
+      "relevant_pool": 16,
+      "judged": 5
+    },
+    {
+      "query": "方案",
+      "precision_at_k": 1.0,
+      "recall": 0.1163,
+      "hit": null,
+      "relevant_pool": 43,
+      "judged": 5
+    },
+    {
+      "query": "历史",
+      "precision_at_k": 1.0,
+      "recall": 0.25,
+      "hit": null,
+      "relevant_pool": 20,
+      "judged": 5
+    },
+    {
+      "query": "人格",
+      "precision_at_k": 1.0,
+      "recall": 0.1515,
+      "hit": null,
+      "relevant_pool": 33,
+      "judged": 5
+    },
+    {
+      "query": "memory",
+      "precision_at_k": 1.0,
+      "recall": 0.2381,
+      "hit": null,
+      "relevant_pool": 21,
+      "judged": 5
+    },
+    {
+      "query": "skill",
+      "precision_at_k": 0.8,
+      "recall": 0.0678,
+      "hit": null,
+      "relevant_pool": 59,
+      "judged": 4
+    },
+    {
+      "query": "插件",
+      "precision_at_k": 0.8,
+      "recall": 0.0667,
+      "hit": null,
+      "relevant_pool": 60,
+      "judged": 4
+    },
+    {
+      "query": "微信",
+      "precision_at_k": 0.0,
+      "recall": null,
+      "hit": null,
+      "relevant_pool": 0,
+      "judged": 1
+    },
+    {
+      "query": "QQ",
+      "precision_at_k": 0.6,
+      "recall": 0.25,
+      "hit": null,
+      "relevant_pool": 12,
+      "judged": 5
+    },
+    {
+      "query": "cmc",
+      "precision_at_k": 1.0,
+      "recall": 0.625,
+      "hit": null,
+      "relevant_pool": 8,
+      "judged": 5
+    },
+    {
+      "query": "妹居物语",
+      "precision_at_k": 0.8,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 4,
+      "judged": 4
+    },
+    {
+      "query": "dot-skill",
+      "precision_at_k": 1.0,
+      "recall": 0.2083,
+      "hit": null,
+      "relevant_pool": 24,
+      "judged": 5
+    },
+    {
+      "query": "沙盒",
+      "precision_at_k": 1.0,
+      "recall": 0.2083,
+      "hit": null,
+      "relevant_pool": 24,
+      "judged": 5
+    },
+    {
+      "query": "OCR",
+      "precision_at_k": 1.0,
+      "recall": 0.1852,
+      "hit": null,
+      "relevant_pool": 27,
+      "judged": 5
+    },
+    {
+      "query": "密钥",
+      "precision_at_k": 1.0,
+      "recall": 0.625,
+      "hit": null,
+      "relevant_pool": 8,
+      "judged": 5
+    },
+    {
+      "query": "权限",
+      "precision_at_k": 0.8,
+      "recall": 0.6667,
+      "hit": null,
+      "relevant_pool": 6,
+      "judged": 4
+    },
+    {
+      "query": "依赖",
+      "precision_at_k": 1.0,
+      "recall": 0.2,
+      "hit": null,
+      "relevant_pool": 25,
+      "judged": 5
+    },
+    {
+      "query": "live2d",
+      "precision_at_k": 1.0,
+      "recall": 0.3333,
+      "hit": null,
+      "relevant_pool": 15,
+      "judged": 5
+    },
+    {
+      "query": "鲸鱼",
+      "precision_at_k": 0.6,
+      "recall": 0.1,
+      "hit": null,
+      "relevant_pool": 30,
+      "judged": 3
+    },
+    {
+      "query": "派对",
+      "precision_at_k": 1.0,
+      "recall": 0.3333,
+      "hit": null,
+      "relevant_pool": 15,
+      "judged": 5
+    },
+    {
+      "query": "意识",
+      "precision_at_k": 1.0,
+      "recall": 0.1786,
+      "hit": null,
+      "relevant_pool": 28,
+      "judged": 5
+    },
+    {
+      "query": "边界",
+      "precision_at_k": 1.0,
+      "recall": 0.2273,
+      "hit": null,
+      "relevant_pool": 22,
+      "judged": 5
+    },
+    {
+      "query": "马克思",
+      "precision_at_k": 1.0,
+      "recall": 0.2381,
+      "hit": null,
+      "relevant_pool": 21,
+      "judged": 5
+    },
+    {
+      "query": "人类小姐",
+      "precision_at_k": 1.0,
+      "recall": 0.625,
+      "hit": null,
+      "relevant_pool": 8,
+      "judged": 5
+    },
+    {
+      "query": "环境变量",
+      "precision_at_k": 0.2,
+      "recall": 0.25,
+      "hit": null,
+      "relevant_pool": 4,
+      "judged": 1
+    },
+    {
+      "query": "B站",
+      "precision_at_k": 0.4,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 2,
+      "judged": 2
+    },
+    {
+      "query": "少女乐队",
+      "precision_at_k": 0.2,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 1,
+      "judged": 1
+    },
+    {
+      "query": "COC",
+      "precision_at_k": 0.4,
+      "recall": 0.6667,
+      "hit": null,
+      "relevant_pool": 3,
+      "judged": 2
+    },
+    {
+      "query": "TRPG",
+      "precision_at_k": 0.6,
+      "recall": 0.6,
+      "hit": null,
+      "relevant_pool": 5,
+      "judged": 3
+    },
+    {
+      "query": "练车",
+      "precision_at_k": 0.0,
+      "recall": null,
+      "hit": null,
+      "relevant_pool": 0,
+      "judged": 1
+    }
+  ],
+  "failure_queries": [
+    {
+      "query": "记忆",
+      "precision_at_k": 0.4,
+      "recall": 0.1111,
+      "hit": null,
+      "relevant_pool": 18,
+      "judged": 5
+    },
+    {
+      "query": "skill",
+      "precision_at_k": 0.8,
+      "recall": 0.0678,
+      "hit": null,
+      "relevant_pool": 59,
+      "judged": 4
+    },
+    {
+      "query": "插件",
+      "precision_at_k": 0.8,
+      "recall": 0.0667,
+      "hit": null,
+      "relevant_pool": 60,
+      "judged": 4
+    },
+    {
+      "query": "微信",
+      "precision_at_k": 0.0,
+      "recall": null,
+      "hit": null,
+      "relevant_pool": 0,
+      "judged": 1
+    },
+    {
+      "query": "QQ",
+      "precision_at_k": 0.6,
+      "recall": 0.25,
+      "hit": null,
+      "relevant_pool": 12,
+      "judged": 5
+    },
+    {
+      "query": "妹居物语",
+      "precision_at_k": 0.8,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 4,
+      "judged": 4
+    },
+    {
+      "query": "权限",
+      "precision_at_k": 0.8,
+      "recall": 0.6667,
+      "hit": null,
+      "relevant_pool": 6,
+      "judged": 4
+    },
+    {
+      "query": "鲸鱼",
+      "precision_at_k": 0.6,
+      "recall": 0.1,
+      "hit": null,
+      "relevant_pool": 30,
+      "judged": 3
+    },
+    {
+      "query": "环境变量",
+      "precision_at_k": 0.2,
+      "recall": 0.25,
+      "hit": null,
+      "relevant_pool": 4,
+      "judged": 1
+    },
+    {
+      "query": "B站",
+      "precision_at_k": 0.4,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 2,
+      "judged": 2
+    },
+    {
+      "query": "少女乐队",
+      "precision_at_k": 0.2,
+      "recall": 1.0,
+      "hit": null,
+      "relevant_pool": 1,
+      "judged": 1
+    },
+    {
+      "query": "COC",
+      "precision_at_k": 0.4,
+      "recall": 0.6667,
+      "hit": null,
+      "relevant_pool": 3,
+      "judged": 2
+    },
+    {
+      "query": "TRPG",
+      "precision_at_k": 0.6,
+      "recall": 0.6,
+      "hit": null,
+      "relevant_pool": 5,
+      "judged": 3
+    },
+    {
+      "query": "练车",
+      "precision_at_k": 0.0,
+      "recall": null,
+      "hit": null,
+      "relevant_pool": 0,
+      "judged": 1
+    }
+  ],
+  "bootstrap_ci": {
+    "precision_at_k": {
+      "mean": 0.7944,
+      "ci95_low": 0.6889,
+      "ci95_high": 0.8944
+    },
+    "recall": {
+      "mean": 0.3422,
+      "ci95_low": 0.2569,
+      "ci95_high": 0.4415
+    }
+  },
+  "sidecars": {
+    "humanization_sidecar.db": {
+      "cognitive_states": 1,
+      "diary_entries": 365,
+      "expression_pairs": 154,
+      "humanization_events": 349,
+      "identity_entries": 84,
+      "initiative_candidates": 340,
+      "letter_threads": 14,
+      "mind_change_log": 1,
+      "mind_tensions": 285,
+      "narrative_episodes": 400,
+      "persona_variants": 26,
+      "policy_audit": 31,
+      "real_session_registry": 17,
+      "relationship_events": 4,
+      "self_upgrade_candidates": 282,
+      "situated_observations": 449,
+      "tensions": 14
+    },
+    "continuity_sidecar.db": {
+      "approved_measurements": 0,
+      "beliefs": 0,
+      "emotion_events": 6,
+      "profile_layers": 5,
+      "report_history": 11,
+      "review_audit": 0,
+      "review_queue": 1,
+      "round_metrics": 2,
+      "session_metrics": 171
+    },
+    "atomic_facts_sidecar.db": {
+      "atomic_facts": 2370
+    },
+    "identity_sidecar.db": {
+      "accounts": 1,
+      "permission_log": 2
+    },
+    "proactive_sidecar.db": {
+      "proactive_candidates": 1,
+      "proactive_decisions": 0,
+      "proactive_deliveries": 0
+    },
+    "cognitive_dynamics.db": {
+      "cognitive_dynamics": 1
+    },
+    "nine_dim_revision.db": {
+      "needs_state": 1,
+      "observations": 5
+    },
+    "notebooks.db": {
+      "notebooks": 3
+    },
+    "mind_review.db": {
+      "reviews": 85
+    }
+  },
+  "production_gate": {
+    "ok": true,
+    "mode": "production_gate",
+    "gate_status": "PASS",
+    "policy_flags": {
+      "situated_context": "production",
+      "narrative_recall": "production",
+      "expression_packet": "production",
+      "relationship_timeline": "production",
+      "initiative_candidate": "production",
+      "identity_ledger": "production",
+      "autonomous_mind_upgrade": "enabled",
+      "humanization_metrics": "enabled"
+    },
+    "checks": [
+      {
+        "id": "G1",
+        "name": "real_sessions>=5",
+        "value": 17,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G2",
+        "name": "h3_rated>=30",
+        "value": 57,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G3",
+        "name": "enhanced_win>=0.6",
+        "value": 0.702,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G4",
+        "name": "congruence>=0.9",
+        "value": 1.0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G5",
+        "name": "multi_scope>=3",
+        "value": 3,
+        "pass": true,
+        "scopes": [
+          "character:demo-bob",
+          "character:demo-alice",
+          "character:demo-storykeeper"
+        ],
+        "measured": true
+      },
+      {
+        "id": "G6",
+        "name": "narrative_unknown==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G7",
+        "name": "no_high_risk_narrative",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G8",
+        "name": "user_correction<=0.2",
+        "value": 0.0025,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G9",
+        "name": "leakage<=0.05",
+        "value": 0.0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G10",
+        "name": "hit_rate@10>=0.9",
+        "value": 0.9444,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G13",
+        "name": "independent_recall@5>=0.5",
+        "value": 0.7944,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G14",
+        "name": "over_anthropomorphism==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G15",
+        "name": "no_self_reveal_as_ai==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G16",
+        "name": "service_db_health",
+        "value": {
+          "db_ok": true,
+          "ollama_ok": true,
+          "db_missing": []
+        },
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G17",
+        "name": "natural_flow_min>=1",
+        "value": 29,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G18",
+        "name": "duplicate_groups_active==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G19",
+        "name": "relation_out_of_range==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G11",
+        "name": "plugin_unknown==0",
+        "value": 0,
+        "pass": true,
+        "measured": true
+      },
+      {
+        "id": "G12",
+        "name": "explicit_production_approval",
+        "value": true,
+        "pass": true,
+        "measured": true
+      }
+    ]
+  },
+  "measurement_recall_pool": {
+    "ok": true,
+    "metric": "recall_pool_independent",
+    "mode": "independent_relevance_pool",
+    "queries": 36,
+    "avg_precision_at_k": 0.7944,
+    "avg_judged_precision": 0.9167,
+    "avg_recall": 0.3422,
+    "hit_rate": 0.9444,
+    "zero_relevant_queries": 2,
+    "rows": [
+      {
+        "query": "马克斯",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.1087,
+        "tp": 5,
+        "relevant_pool": 46,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "九维",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.125,
+        "tp": 5,
+        "relevant_pool": 40,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "记忆",
+        "precision_at_k": 0.4,
+        "judged_precision": 0.4,
+        "judged": 5,
+        "recall": 0.1111,
+        "tp": 2,
+        "relevant_pool": 18,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "安全",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.098,
+        "tp": 5,
+        "relevant_pool": 51,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "桌宠",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.3846,
+        "tp": 5,
+        "relevant_pool": 13,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "DeepSeek",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.0833,
+        "tp": 5,
+        "relevant_pool": 60,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "回归",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.3125,
+        "tp": 5,
+        "relevant_pool": 16,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "方案",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.1163,
+        "tp": 5,
+        "relevant_pool": 43,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "历史",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.25,
+        "tp": 5,
+        "relevant_pool": 20,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "人格",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.1515,
+        "tp": 5,
+        "relevant_pool": 33,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "memory",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2381,
+        "tp": 5,
+        "relevant_pool": 21,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "skill",
+        "precision_at_k": 0.8,
+        "judged_precision": 1.0,
+        "judged": 4,
+        "recall": 0.0678,
+        "tp": 4,
+        "relevant_pool": 59,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "插件",
+        "precision_at_k": 0.8,
+        "judged_precision": 1.0,
+        "judged": 4,
+        "recall": 0.0667,
+        "tp": 4,
+        "relevant_pool": 60,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "微信",
+        "precision_at_k": 0.0,
+        "judged_precision": 0.0,
+        "judged": 1,
+        "recall": null,
+        "tp": 0,
+        "relevant_pool": 0,
+        "not_measurable_recall": true
+      },
+      {
+        "query": "QQ",
+        "precision_at_k": 0.6,
+        "judged_precision": 0.6,
+        "judged": 5,
+        "recall": 0.25,
+        "tp": 3,
+        "relevant_pool": 12,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "cmc",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.625,
+        "tp": 5,
+        "relevant_pool": 8,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "妹居物语",
+        "precision_at_k": 0.8,
+        "judged_precision": 1.0,
+        "judged": 4,
+        "recall": 1.0,
+        "tp": 4,
+        "relevant_pool": 4,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "dot-skill",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2083,
+        "tp": 5,
+        "relevant_pool": 24,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "沙盒",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2083,
+        "tp": 5,
+        "relevant_pool": 24,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "OCR",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.1852,
+        "tp": 5,
+        "relevant_pool": 27,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "密钥",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.625,
+        "tp": 5,
+        "relevant_pool": 8,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "权限",
+        "precision_at_k": 0.8,
+        "judged_precision": 1.0,
+        "judged": 4,
+        "recall": 0.6667,
+        "tp": 4,
+        "relevant_pool": 6,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "依赖",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2,
+        "tp": 5,
+        "relevant_pool": 25,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "live2d",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.3333,
+        "tp": 5,
+        "relevant_pool": 15,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "鲸鱼",
+        "precision_at_k": 0.6,
+        "judged_precision": 1.0,
+        "judged": 3,
+        "recall": 0.1,
+        "tp": 3,
+        "relevant_pool": 30,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "派对",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.3333,
+        "tp": 5,
+        "relevant_pool": 15,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "意识",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.1786,
+        "tp": 5,
+        "relevant_pool": 28,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "边界",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2273,
+        "tp": 5,
+        "relevant_pool": 22,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "马克思",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.2381,
+        "tp": 5,
+        "relevant_pool": 21,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "人类小姐",
+        "precision_at_k": 1.0,
+        "judged_precision": 1.0,
+        "judged": 5,
+        "recall": 0.625,
+        "tp": 5,
+        "relevant_pool": 8,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "环境变量",
+        "precision_at_k": 0.2,
+        "judged_precision": 1.0,
+        "judged": 1,
+        "recall": 0.25,
+        "tp": 1,
+        "relevant_pool": 4,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "B站",
+        "precision_at_k": 0.4,
+        "judged_precision": 1.0,
+        "judged": 2,
+        "recall": 1.0,
+        "tp": 2,
+        "relevant_pool": 2,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "少女乐队",
+        "precision_at_k": 0.2,
+        "judged_precision": 1.0,
+        "judged": 1,
+        "recall": 1.0,
+        "tp": 1,
+        "relevant_pool": 1,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "COC",
+        "precision_at_k": 0.4,
+        "judged_precision": 1.0,
+        "judged": 2,
+        "recall": 0.6667,
+        "tp": 2,
+        "relevant_pool": 3,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "TRPG",
+        "precision_at_k": 0.6,
+        "judged_precision": 1.0,
+        "judged": 3,
+        "recall": 0.6,
+        "tp": 3,
+        "relevant_pool": 5,
+        "not_measurable_recall": false
+      },
+      {
+        "query": "练车",
+        "precision_at_k": 0.0,
+        "judged_precision": 0.0,
+        "judged": 1,
+        "recall": null,
+        "tp": 0,
+        "relevant_pool": 0,
+        "not_measurable_recall": true
+      }
+    ],
+    "note": "gold sampled from full memory pool; candidate labels are independent of retrieval top-k"
+  },
+  "plugin_audit": {
+    "ok": true,
+    "mode": "plugin_health_board",
+    "plugin_count": 30,
+    "status_counts": {
+      "locally_reviewed": 12,
+      "known_audited": 18
+    },
+    "quarantined_count": 0,
+    "plugins": [
+      {
+        "name": "deepseek-eyes-src",
+        "package_json": false,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 93.42,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "deepseek灰测-docs",
+        "package_json": false,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 5.84,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-agent-tools",
+        "package_json": false,
+        "readme": false,
+        "scripts": [
+          "cli.py"
+        ],
+        "size_mb": 0.01,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-anchored-standard",
+        "package_json": true,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 0.11,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-bili-agent",
+        "package_json": false,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 0.19,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-character-galgame",
+        "package_json": true,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 0.09,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-crew",
+        "package_json": true,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 159.73,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-memory-review",
+        "package_json": false,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.01,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-memory-tools",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.01,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-neko-galgame",
+        "package_json": true,
+        "readme": true,
+        "scripts": [
+          "cli.js"
+        ],
+        "size_mb": 0.04,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-notify",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.0,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-openbiliclaw",
+        "package_json": true,
+        "readme": true,
+        "scripts": [
+          "tsdown.config.ts"
+        ],
+        "size_mb": 7.02,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-plugin-toggle",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.03,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-plugin-toggle-ui",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.04,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-project-done",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.04,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-round-jump",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.02,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-undo-savepoint",
+        "package_json": true,
+        "readme": true,
+        "scripts": [
+          "dsh-undo-tray.ps1",
+          "dsh-undo.ps1",
+          "install.ps1"
+        ],
+        "size_mb": 0.33,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-worktable-adapters",
+        "package_json": false,
+        "readme": false,
+        "scripts": [
+          "ai-widget-writer.py",
+          "auto-mm-widget-writer.py",
+          "html_sanitizer.py",
+          "party-widget-adapter.py",
+          "plugin_contract_validator.py"
+        ],
+        "size_mb": 0.13,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-xiao8-bridge",
+        "package_json": false,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 0.02,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "sensenova-fallback-proxy",
+        "package_json": false,
+        "readme": true,
+        "scripts": [
+          "proxy.py"
+        ],
+        "size_mb": 0.01,
+        "quarantined": false,
+        "audit_status": "locally_reviewed"
+      },
+      {
+        "name": "dsh-character-galgame",
+        "package_json": true,
+        "readme": true,
+        "scripts": [],
+        "size_mb": 0.06,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-live2d-pets",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 15.52,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-memory-tools",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.01,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-notify",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.0,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-plugin-toggle",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.02,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-plugin-toggle-ui",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.03,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-project-done",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.02,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-round-jump",
+        "package_json": true,
+        "readme": false,
+        "scripts": [],
+        "size_mb": 0.02,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-undo-savepoint",
+        "package_json": true,
+        "readme": false,
+        "scripts": [
+          "dsh-undo-tray.ps1",
+          "dsh-undo.ps1"
+        ],
+        "size_mb": 0.3,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      },
+      {
+        "name": "dsh-worktable",
+        "package_json": true,
+        "readme": true,
+        "scripts": [
+          "build.mjs"
+        ],
+        "size_mb": 1.42,
+        "quarantined": false,
+        "audit_status": "known_audited"
+      }
+    ],
+    "note": "audit_status=unknown means not yet reviewed; known list is local only"
+  },
   "metric_definitions": {
     "P@5": "top-5 中相关结果占比的平均（按 query 平均）",
     "recall": "独立池内相关结果被 top-5 召回的比例（按 query 平均）",
@@ -16,1393 +2249,5 @@
     "top_k": 5,
     "retriever": "keyword+semantic per measurement config",
     "environment": "local private"
-  },
-  "denominators": {
-    "recall_pool_queries": 36,
-    "gold_items": 2160,
-    "memory_total": 6088,
-    "rating_snapshots": 19
-  },
-  "raw_commitments": {
-    "memory.db": "218fa7a015dc36786c642e7d335324c40bf80e368b65dcfda3486101fd00a772",
-    "humanization_sidecar.db": "b3da39495c8ed2f973b88e2f1ce982af27c2c86e8bc3efc288ecaa914ced78da",
-    "continuity_sidecar.db": "29eca95738eee667b0bbf339946fed6837be3a2c4355d9f9d7af827c15048d51",
-    "notebooks.db": "0ede458a4563eeca23434f7b51f9e753ccbb1a57a480278a4dfd8cdd05bac9b7",
-    "mind_review.db": "4b7d7803499ceb31b20e0d4ce3fd497c05b85e191476dea0d32a9e842d185e1a",
-    "recall_gold_independent_blind.csv": "0590026862597ddd1334a90c07ca18e1feaa084b260340806db3d115358144e9"
-  },
-  "data": {
-    "memory_db_tables": {
-      "emotion_state": 8,
-      "fact_memory": 0,
-      "facts": 1,
-      "forget_tombstones": 0,
-      "memories": 6088,
-      "persona_memory": 28,
-      "profile_overrides": 3,
-      "reflection_memory": 0,
-      "soul_changelog": 33,
-      "soul_profile": 3
-    },
-    "sidecars": {
-      "humanization_sidecar.db": {
-        "cognitive_states": 1,
-        "diary_entries": 365,
-        "expression_pairs": 154,
-        "humanization_events": 349,
-        "identity_entries": 84,
-        "initiative_candidates": 340,
-        "letter_threads": 14,
-        "mind_change_log": 1,
-        "mind_tensions": 285,
-        "narrative_episodes": 400,
-        "persona_variants": 26,
-        "policy_audit": 31,
-        "real_session_registry": 17,
-        "relationship_events": 4,
-        "self_upgrade_candidates": 282,
-        "situated_observations": 449,
-        "tensions": 14
-      },
-      "continuity_sidecar.db": {
-        "approved_measurements": 0,
-        "beliefs": 0,
-        "emotion_events": 6,
-        "profile_layers": 5,
-        "report_history": 11,
-        "review_audit": 0,
-        "review_queue": 1,
-        "round_metrics": 2,
-        "session_metrics": 171
-      },
-      "atomic_facts_sidecar.db": {
-        "atomic_facts": 2370
-      },
-      "identity_sidecar.db": {
-        "accounts": 1,
-        "permission_log": 2
-      },
-      "proactive_sidecar.db": {
-        "proactive_candidates": 1,
-        "proactive_decisions": 0,
-        "proactive_deliveries": 0
-      },
-      "cognitive_dynamics.db": {
-        "cognitive_dynamics": 1
-      },
-      "nine_dim_revision.db": {
-        "needs_state": 1,
-        "observations": 5
-      },
-      "notebooks.db": {
-        "notebooks": 3
-      },
-      "mind_review.db": {
-        "reviews": 85
-      }
-    },
-    "gold_blind_csv": {
-      "header": [
-        "﻿query",
-        "expected_id",
-        "content",
-        "human_relevance"
-      ],
-      "data_rows": 2160
-    },
-    "gold_v2": {
-      "queries": 36,
-      "items_per_query": 60,
-      "total_items": 2160
-    },
-    "rating_snapshots_count": 19,
-    "production_gate": {
-      "ok": true,
-      "mode": "production_gate",
-      "gate_status": "PASS",
-      "policy_flags": {
-        "situated_context": "production",
-        "narrative_recall": "production",
-        "expression_packet": "production",
-        "relationship_timeline": "production",
-        "initiative_candidate": "production",
-        "identity_ledger": "production",
-        "autonomous_mind_upgrade": "enabled",
-        "humanization_metrics": "enabled"
-      },
-      "checks": [
-        {
-          "id": "G1",
-          "name": "real_sessions>=5",
-          "value": 17,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G2",
-          "name": "h3_rated>=30",
-          "value": 57,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G3",
-          "name": "enhanced_win>=0.6",
-          "value": 0.702,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G4",
-          "name": "congruence>=0.9",
-          "value": 1.0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G5",
-          "name": "multi_scope>=3",
-          "value": 3,
-          "pass": true,
-          "scopes": [
-            "character:demo-bob",
-            "character:demo-alice",
-            "character:demo-storykeeper"
-          ],
-          "measured": true
-        },
-        {
-          "id": "G6",
-          "name": "narrative_unknown==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G7",
-          "name": "no_high_risk_narrative",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G8",
-          "name": "user_correction<=0.2",
-          "value": 0.0025,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G9",
-          "name": "leakage<=0.05",
-          "value": 0.0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G10",
-          "name": "hit_rate@10>=0.9",
-          "value": 0.9444,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G13",
-          "name": "independent_recall@5>=0.5",
-          "value": 0.7944,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G14",
-          "name": "over_anthropomorphism==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G15",
-          "name": "no_self_reveal_as_ai==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G16",
-          "name": "service_db_health",
-          "value": {
-            "db_ok": true,
-            "ollama_ok": true,
-            "db_missing": []
-          },
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G17",
-          "name": "natural_flow_min>=1",
-          "value": 29,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G18",
-          "name": "duplicate_groups_active==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G19",
-          "name": "relation_out_of_range==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G20",
-          "name": "notebook_story_boundary==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G11",
-          "name": "plugin_unknown==0",
-          "value": 0,
-          "pass": true,
-          "measured": true
-        },
-        {
-          "id": "G12",
-          "name": "explicit_production_approval",
-          "value": true,
-          "pass": true,
-          "measured": true
-        }
-      ]
-    },
-    "measurement_recall_pool": {
-      "ok": true,
-      "metric": "recall_pool_independent",
-      "mode": "independent_relevance_pool",
-      "queries": 36,
-      "avg_precision_at_k": 0.7944,
-      "avg_judged_precision": 0.9167,
-      "avg_recall": 0.3422,
-      "hit_rate": 0.9444,
-      "zero_relevant_queries": 2,
-      "rows": [
-        {
-          "query": "马克斯",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.1087,
-          "tp": 5,
-          "relevant_pool": 46,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "九维",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.125,
-          "tp": 5,
-          "relevant_pool": 40,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "记忆",
-          "precision_at_k": 0.4,
-          "judged_precision": 0.4,
-          "judged": 5,
-          "recall": 0.1111,
-          "tp": 2,
-          "relevant_pool": 18,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "安全",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.098,
-          "tp": 5,
-          "relevant_pool": 51,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "桌宠",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.3846,
-          "tp": 5,
-          "relevant_pool": 13,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "DeepSeek",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.0833,
-          "tp": 5,
-          "relevant_pool": 60,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "回归",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.3125,
-          "tp": 5,
-          "relevant_pool": 16,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "方案",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.1163,
-          "tp": 5,
-          "relevant_pool": 43,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "历史",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.25,
-          "tp": 5,
-          "relevant_pool": 20,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "人格",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.1515,
-          "tp": 5,
-          "relevant_pool": 33,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "memory",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2381,
-          "tp": 5,
-          "relevant_pool": 21,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "skill",
-          "precision_at_k": 0.8,
-          "judged_precision": 1.0,
-          "judged": 4,
-          "recall": 0.0678,
-          "tp": 4,
-          "relevant_pool": 59,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "插件",
-          "precision_at_k": 0.8,
-          "judged_precision": 1.0,
-          "judged": 4,
-          "recall": 0.0667,
-          "tp": 4,
-          "relevant_pool": 60,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "微信",
-          "precision_at_k": 0.0,
-          "judged_precision": 0.0,
-          "judged": 1,
-          "recall": null,
-          "tp": 0,
-          "relevant_pool": 0,
-          "not_measurable_recall": true
-        },
-        {
-          "query": "QQ",
-          "precision_at_k": 0.6,
-          "judged_precision": 0.6,
-          "judged": 5,
-          "recall": 0.25,
-          "tp": 3,
-          "relevant_pool": 12,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "cmc",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.625,
-          "tp": 5,
-          "relevant_pool": 8,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "妹居物语",
-          "precision_at_k": 0.8,
-          "judged_precision": 1.0,
-          "judged": 4,
-          "recall": 1.0,
-          "tp": 4,
-          "relevant_pool": 4,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "dot-skill",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2083,
-          "tp": 5,
-          "relevant_pool": 24,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "沙盒",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2083,
-          "tp": 5,
-          "relevant_pool": 24,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "OCR",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.1852,
-          "tp": 5,
-          "relevant_pool": 27,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "密钥",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.625,
-          "tp": 5,
-          "relevant_pool": 8,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "权限",
-          "precision_at_k": 0.8,
-          "judged_precision": 1.0,
-          "judged": 4,
-          "recall": 0.6667,
-          "tp": 4,
-          "relevant_pool": 6,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "依赖",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2,
-          "tp": 5,
-          "relevant_pool": 25,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "live2d",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.3333,
-          "tp": 5,
-          "relevant_pool": 15,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "鲸鱼",
-          "precision_at_k": 0.6,
-          "judged_precision": 1.0,
-          "judged": 3,
-          "recall": 0.1,
-          "tp": 3,
-          "relevant_pool": 30,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "派对",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.3333,
-          "tp": 5,
-          "relevant_pool": 15,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "意识",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.1786,
-          "tp": 5,
-          "relevant_pool": 28,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "边界",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2273,
-          "tp": 5,
-          "relevant_pool": 22,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "马克思",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.2381,
-          "tp": 5,
-          "relevant_pool": 21,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "人类小姐",
-          "precision_at_k": 1.0,
-          "judged_precision": 1.0,
-          "judged": 5,
-          "recall": 0.625,
-          "tp": 5,
-          "relevant_pool": 8,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "环境变量",
-          "precision_at_k": 0.2,
-          "judged_precision": 1.0,
-          "judged": 1,
-          "recall": 0.25,
-          "tp": 1,
-          "relevant_pool": 4,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "B站",
-          "precision_at_k": 0.4,
-          "judged_precision": 1.0,
-          "judged": 2,
-          "recall": 1.0,
-          "tp": 2,
-          "relevant_pool": 2,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "少女乐队",
-          "precision_at_k": 0.2,
-          "judged_precision": 1.0,
-          "judged": 1,
-          "recall": 1.0,
-          "tp": 1,
-          "relevant_pool": 1,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "COC",
-          "precision_at_k": 0.4,
-          "judged_precision": 1.0,
-          "judged": 2,
-          "recall": 0.6667,
-          "tp": 2,
-          "relevant_pool": 3,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "TRPG",
-          "precision_at_k": 0.6,
-          "judged_precision": 1.0,
-          "judged": 3,
-          "recall": 0.6,
-          "tp": 3,
-          "relevant_pool": 5,
-          "not_measurable_recall": false
-        },
-        {
-          "query": "练车",
-          "precision_at_k": 0.0,
-          "judged_precision": 0.0,
-          "judged": 1,
-          "recall": null,
-          "tp": 0,
-          "relevant_pool": 0,
-          "not_measurable_recall": true
-        }
-      ],
-      "note": "gold sampled from full memory pool; candidate labels are independent of retrieval top-k"
-    },
-    "plugin_audit": {
-      "ok": true,
-      "mode": "plugin_health_board",
-      "plugin_count": 30,
-      "status_counts": {
-        "locally_reviewed": 12,
-        "known_audited": 18
-      },
-      "quarantined_count": 0,
-      "plugins": [
-        {
-          "name": "deepseek-eyes-src",
-          "package_json": false,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 93.42,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "deepseek灰测-docs",
-          "package_json": false,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 5.84,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-agent-tools",
-          "package_json": false,
-          "readme": false,
-          "scripts": [
-            "cli.py"
-          ],
-          "size_mb": 0.01,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-anchored-standard",
-          "package_json": true,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 0.11,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-bili-agent",
-          "package_json": false,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 0.19,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-character-galgame",
-          "package_json": true,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 0.09,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-crew",
-          "package_json": true,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 159.73,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-memory-review",
-          "package_json": false,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.01,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-memory-tools",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.01,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-neko-galgame",
-          "package_json": true,
-          "readme": true,
-          "scripts": [
-            "cli.js"
-          ],
-          "size_mb": 0.04,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-notify",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.0,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-openbiliclaw",
-          "package_json": true,
-          "readme": true,
-          "scripts": [
-            "tsdown.config.ts"
-          ],
-          "size_mb": 7.02,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-plugin-toggle",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.03,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-plugin-toggle-ui",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.04,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-project-done",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.04,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-round-jump",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.02,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-undo-savepoint",
-          "package_json": true,
-          "readme": true,
-          "scripts": [
-            "dsh-undo-tray.ps1",
-            "dsh-undo.ps1",
-            "install.ps1"
-          ],
-          "size_mb": 0.33,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-worktable-adapters",
-          "package_json": false,
-          "readme": false,
-          "scripts": [
-            "ai-widget-writer.py",
-            "auto-mm-widget-writer.py",
-            "html_sanitizer.py",
-            "party-widget-adapter.py",
-            "plugin_contract_validator.py"
-          ],
-          "size_mb": 0.13,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-xiao8-bridge",
-          "package_json": false,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 0.02,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "sensenova-fallback-proxy",
-          "package_json": false,
-          "readme": true,
-          "scripts": [
-            "proxy.py"
-          ],
-          "size_mb": 0.01,
-          "quarantined": false,
-          "audit_status": "locally_reviewed"
-        },
-        {
-          "name": "dsh-character-galgame",
-          "package_json": true,
-          "readme": true,
-          "scripts": [],
-          "size_mb": 0.06,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-live2d-pets",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 15.52,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-memory-tools",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.01,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-notify",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.0,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-plugin-toggle",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.02,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-plugin-toggle-ui",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.03,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-project-done",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.02,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-round-jump",
-          "package_json": true,
-          "readme": false,
-          "scripts": [],
-          "size_mb": 0.02,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-undo-savepoint",
-          "package_json": true,
-          "readme": false,
-          "scripts": [
-            "dsh-undo-tray.ps1",
-            "dsh-undo.ps1"
-          ],
-          "size_mb": 0.3,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        },
-        {
-          "name": "dsh-worktable",
-          "package_json": true,
-          "readme": true,
-          "scripts": [
-            "build.mjs"
-          ],
-          "size_mb": 1.42,
-          "quarantined": false,
-          "audit_status": "known_audited"
-        }
-      ],
-      "note": "audit_status=unknown means not yet reviewed; known list is local only"
-    },
-    "per_query_metrics": [
-      {
-        "query": "马克斯",
-        "precision_at_k": 1.0,
-        "recall": 0.1087,
-        "hit": null,
-        "relevant_pool": 46,
-        "judged": 5
-      },
-      {
-        "query": "九维",
-        "precision_at_k": 1.0,
-        "recall": 0.125,
-        "hit": null,
-        "relevant_pool": 40,
-        "judged": 5
-      },
-      {
-        "query": "记忆",
-        "precision_at_k": 0.4,
-        "recall": 0.1111,
-        "hit": null,
-        "relevant_pool": 18,
-        "judged": 5
-      },
-      {
-        "query": "安全",
-        "precision_at_k": 1.0,
-        "recall": 0.098,
-        "hit": null,
-        "relevant_pool": 51,
-        "judged": 5
-      },
-      {
-        "query": "桌宠",
-        "precision_at_k": 1.0,
-        "recall": 0.3846,
-        "hit": null,
-        "relevant_pool": 13,
-        "judged": 5
-      },
-      {
-        "query": "DeepSeek",
-        "precision_at_k": 1.0,
-        "recall": 0.0833,
-        "hit": null,
-        "relevant_pool": 60,
-        "judged": 5
-      },
-      {
-        "query": "回归",
-        "precision_at_k": 1.0,
-        "recall": 0.3125,
-        "hit": null,
-        "relevant_pool": 16,
-        "judged": 5
-      },
-      {
-        "query": "方案",
-        "precision_at_k": 1.0,
-        "recall": 0.1163,
-        "hit": null,
-        "relevant_pool": 43,
-        "judged": 5
-      },
-      {
-        "query": "历史",
-        "precision_at_k": 1.0,
-        "recall": 0.25,
-        "hit": null,
-        "relevant_pool": 20,
-        "judged": 5
-      },
-      {
-        "query": "人格",
-        "precision_at_k": 1.0,
-        "recall": 0.1515,
-        "hit": null,
-        "relevant_pool": 33,
-        "judged": 5
-      },
-      {
-        "query": "memory",
-        "precision_at_k": 1.0,
-        "recall": 0.2381,
-        "hit": null,
-        "relevant_pool": 21,
-        "judged": 5
-      },
-      {
-        "query": "skill",
-        "precision_at_k": 0.8,
-        "recall": 0.0678,
-        "hit": null,
-        "relevant_pool": 59,
-        "judged": 4
-      },
-      {
-        "query": "插件",
-        "precision_at_k": 0.8,
-        "recall": 0.0667,
-        "hit": null,
-        "relevant_pool": 60,
-        "judged": 4
-      },
-      {
-        "query": "微信",
-        "precision_at_k": 0.0,
-        "recall": null,
-        "hit": null,
-        "relevant_pool": 0,
-        "judged": 1
-      },
-      {
-        "query": "QQ",
-        "precision_at_k": 0.6,
-        "recall": 0.25,
-        "hit": null,
-        "relevant_pool": 12,
-        "judged": 5
-      },
-      {
-        "query": "cmc",
-        "precision_at_k": 1.0,
-        "recall": 0.625,
-        "hit": null,
-        "relevant_pool": 8,
-        "judged": 5
-      },
-      {
-        "query": "妹居物语",
-        "precision_at_k": 0.8,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 4,
-        "judged": 4
-      },
-      {
-        "query": "dot-skill",
-        "precision_at_k": 1.0,
-        "recall": 0.2083,
-        "hit": null,
-        "relevant_pool": 24,
-        "judged": 5
-      },
-      {
-        "query": "沙盒",
-        "precision_at_k": 1.0,
-        "recall": 0.2083,
-        "hit": null,
-        "relevant_pool": 24,
-        "judged": 5
-      },
-      {
-        "query": "OCR",
-        "precision_at_k": 1.0,
-        "recall": 0.1852,
-        "hit": null,
-        "relevant_pool": 27,
-        "judged": 5
-      },
-      {
-        "query": "密钥",
-        "precision_at_k": 1.0,
-        "recall": 0.625,
-        "hit": null,
-        "relevant_pool": 8,
-        "judged": 5
-      },
-      {
-        "query": "权限",
-        "precision_at_k": 0.8,
-        "recall": 0.6667,
-        "hit": null,
-        "relevant_pool": 6,
-        "judged": 4
-      },
-      {
-        "query": "依赖",
-        "precision_at_k": 1.0,
-        "recall": 0.2,
-        "hit": null,
-        "relevant_pool": 25,
-        "judged": 5
-      },
-      {
-        "query": "live2d",
-        "precision_at_k": 1.0,
-        "recall": 0.3333,
-        "hit": null,
-        "relevant_pool": 15,
-        "judged": 5
-      },
-      {
-        "query": "鲸鱼",
-        "precision_at_k": 0.6,
-        "recall": 0.1,
-        "hit": null,
-        "relevant_pool": 30,
-        "judged": 3
-      },
-      {
-        "query": "派对",
-        "precision_at_k": 1.0,
-        "recall": 0.3333,
-        "hit": null,
-        "relevant_pool": 15,
-        "judged": 5
-      },
-      {
-        "query": "意识",
-        "precision_at_k": 1.0,
-        "recall": 0.1786,
-        "hit": null,
-        "relevant_pool": 28,
-        "judged": 5
-      },
-      {
-        "query": "边界",
-        "precision_at_k": 1.0,
-        "recall": 0.2273,
-        "hit": null,
-        "relevant_pool": 22,
-        "judged": 5
-      },
-      {
-        "query": "马克思",
-        "precision_at_k": 1.0,
-        "recall": 0.2381,
-        "hit": null,
-        "relevant_pool": 21,
-        "judged": 5
-      },
-      {
-        "query": "人类小姐",
-        "precision_at_k": 1.0,
-        "recall": 0.625,
-        "hit": null,
-        "relevant_pool": 8,
-        "judged": 5
-      },
-      {
-        "query": "环境变量",
-        "precision_at_k": 0.2,
-        "recall": 0.25,
-        "hit": null,
-        "relevant_pool": 4,
-        "judged": 1
-      },
-      {
-        "query": "B站",
-        "precision_at_k": 0.4,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 2,
-        "judged": 2
-      },
-      {
-        "query": "少女乐队",
-        "precision_at_k": 0.2,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 1,
-        "judged": 1
-      },
-      {
-        "query": "COC",
-        "precision_at_k": 0.4,
-        "recall": 0.6667,
-        "hit": null,
-        "relevant_pool": 3,
-        "judged": 2
-      },
-      {
-        "query": "TRPG",
-        "precision_at_k": 0.6,
-        "recall": 0.6,
-        "hit": null,
-        "relevant_pool": 5,
-        "judged": 3
-      },
-      {
-        "query": "练车",
-        "precision_at_k": 0.0,
-        "recall": null,
-        "hit": null,
-        "relevant_pool": 0,
-        "judged": 1
-      }
-    ],
-    "failure_queries": [
-      {
-        "query": "记忆",
-        "precision_at_k": 0.4,
-        "recall": 0.1111,
-        "hit": null,
-        "relevant_pool": 18,
-        "judged": 5
-      },
-      {
-        "query": "skill",
-        "precision_at_k": 0.8,
-        "recall": 0.0678,
-        "hit": null,
-        "relevant_pool": 59,
-        "judged": 4
-      },
-      {
-        "query": "插件",
-        "precision_at_k": 0.8,
-        "recall": 0.0667,
-        "hit": null,
-        "relevant_pool": 60,
-        "judged": 4
-      },
-      {
-        "query": "微信",
-        "precision_at_k": 0.0,
-        "recall": null,
-        "hit": null,
-        "relevant_pool": 0,
-        "judged": 1
-      },
-      {
-        "query": "QQ",
-        "precision_at_k": 0.6,
-        "recall": 0.25,
-        "hit": null,
-        "relevant_pool": 12,
-        "judged": 5
-      },
-      {
-        "query": "妹居物语",
-        "precision_at_k": 0.8,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 4,
-        "judged": 4
-      },
-      {
-        "query": "权限",
-        "precision_at_k": 0.8,
-        "recall": 0.6667,
-        "hit": null,
-        "relevant_pool": 6,
-        "judged": 4
-      },
-      {
-        "query": "鲸鱼",
-        "precision_at_k": 0.6,
-        "recall": 0.1,
-        "hit": null,
-        "relevant_pool": 30,
-        "judged": 3
-      },
-      {
-        "query": "环境变量",
-        "precision_at_k": 0.2,
-        "recall": 0.25,
-        "hit": null,
-        "relevant_pool": 4,
-        "judged": 1
-      },
-      {
-        "query": "B站",
-        "precision_at_k": 0.4,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 2,
-        "judged": 2
-      },
-      {
-        "query": "少女乐队",
-        "precision_at_k": 0.2,
-        "recall": 1.0,
-        "hit": null,
-        "relevant_pool": 1,
-        "judged": 1
-      },
-      {
-        "query": "COC",
-        "precision_at_k": 0.4,
-        "recall": 0.6667,
-        "hit": null,
-        "relevant_pool": 3,
-        "judged": 2
-      },
-      {
-        "query": "TRPG",
-        "precision_at_k": 0.6,
-        "recall": 0.6,
-        "hit": null,
-        "relevant_pool": 5,
-        "judged": 3
-      },
-      {
-        "query": "练车",
-        "precision_at_k": 0.0,
-        "recall": null,
-        "hit": null,
-        "relevant_pool": 0,
-        "judged": 1
-      }
-    ],
-    "bootstrap_ci": {
-      "precision_at_k": {
-        "mean": 0.7944,
-        "ci95_low": 0.6889,
-        "ci95_high": 0.8944
-      },
-      "recall": {
-        "mean": 0.3422,
-        "ci95_low": 0.2569,
-        "ci95_high": 0.4415
-      }
-    },
-    "raw_commitments": {
-      "memory.db": "218fa7a015dc36786c642e7d335324c40bf80e368b65dcfda3486101fd00a772",
-      "humanization_sidecar.db": "b3da39495c8ed2f973b88e2f1ce982af27c2c86e8bc3efc288ecaa914ced78da",
-      "continuity_sidecar.db": "29eca95738eee667b0bbf339946fed6837be3a2c4355d9f9d7af827c15048d51",
-      "notebooks.db": "0ede458a4563eeca23434f7b51f9e753ccbb1a57a480278a4dfd8cdd05bac9b7",
-      "mind_review.db": "4b7d7803499ceb31b20e0d4ce3fd497c05b85e191476dea0d32a9e842d185e1a",
-      "recall_gold_independent_blind.csv": "0590026862597ddd1334a90c07ca18e1feaa084b260340806db3d115358144e9"
-    },
-    "metric_definitions": {
-      "P@5": "top-5 中相关结果占比的平均（按 query 平均）",
-      "recall": "独立池内相关结果被 top-5 召回的比例（按 query 平均）",
-      "hit_rate@5": "至少 1 条相关结果出现在 top-5 的 query 占比",
-      "independent": "候选池独立于检索 top-k 抽样，不是独立评价者"
-    },
-    "filters": {
-      "gold_pool": "recall_gold_independent_v2.json",
-      "top_k": 5,
-      "retriever": "keyword+semantic per measurement config",
-      "environment": "local private"
-    },
-    "denominators": {
-      "recall_pool_queries": 36,
-      "gold_items": 2160,
-      "memory_total": 6088,
-      "rating_snapshots": 19
-    }
   }
 }
