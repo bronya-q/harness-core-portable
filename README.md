@@ -4,7 +4,7 @@
 > 它做的是让“关系型 AI 界面”**更稳定、更连续、更可信任**。
 
 ```text
-版本：v0.1.0-alpha.1
+版本：v0.1.0-alpha.2
 状态：alpha / WIP
 License：MIT
 Python：3.13+
@@ -268,6 +268,7 @@ RESEARCH.md             研究动机、范式、数据与效果
 PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与研究建议
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）
 QUICKSTART.md           English quickstart
+RELEASE_NOTES.md        Release notes（v0.1.0-alpha.1 / alpha.2）
 QUICKSTART.zh-CN.md     中文快速开始
 开始体验.bat            Windows 双击入口
 demo_experience.py       离线可感知演示（合成数据，一键清理）

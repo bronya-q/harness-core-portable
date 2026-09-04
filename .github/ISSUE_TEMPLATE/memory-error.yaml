@@ -1,0 +1,24 @@
+name: Memory / persona issue
+description: 记忆错误、串角色、人设漂移
+title: "[Memory] "
+labels: ["memory"]
+body:
+  - type: checkboxes
+    id: types
+    attributes:
+      label: 问题类型
+      options:
+        - label: 没记住
+        - label: 记错
+        - label: 召回无关内容
+        - label: 串角色/项目
+        - label: 删除后仍出现
+        - label: Story Core 冲突
+  - type: input
+    id: scope
+    attributes:
+      label: 涉及的 scope
+  - type: textarea
+    id: detail
+    attributes:
+      label: 详细说明
