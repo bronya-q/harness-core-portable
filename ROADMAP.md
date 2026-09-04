@@ -484,24 +484,24 @@ telemetry 记录什么 / 返回码是什么
 
 ### v0.4
 
-- 同一 query 配对 A/B
-- 保留失败样本
-- 明确 toke
-n baseline
-- 模型/参数/数据集固定
-- demo/directed/real 分离
-- 工程角色仅在 worktree 中实施
-- 结构化 Evidence Bundle
+- ✅ 同一 query 配对 A/B
+- ✅ 保留失败样本（`ab retriever --save-failures <file>`）
+- ✅ 明确 token baseline（`usage baseline set/check`）
+- ✅ 模型/参数/数据集固定（`ab retriever --meta '{"model":...,"dataset":...}'`）
+- 🚧 demo/directed/real 分离（event 已支持 session/content 来源，仍待 UI 分组）
+- ✅ 工程角色仅在 worktree 中实施（Workspace Lease + `workspace check`）
+- ✅ 结构化 Evidence Bundle
 
 ### v0.5
 
-- 稳定 API 版本
-- adapter 权限 manifest
-- 跨前端 scope 保持一致
-- 无密钥进入 trace
-- 断开 adapter 后核心仍可运行
-- 兼容性矩阵
-- 迁移与弃用政策
+- ✅ 稳定 Python API 基础（`harness_core.MemoryClient/EventClient/UsageClient`）
+- ✅ OpenAI-compatible adapter 基础（`harness_core.adapters.openai_compatible`）
+- ✅ 兼容矩阵（`AGENT_COMPATIBILITY.md` + `ecosystem status`）
+- ⬜ adapter 权限 manifest 完整版
+- ⬜ 跨前端 scope 保持一致
+- ⬜ 无密钥进入 trace 验证
+- ⬜ 断开 adapter 后核心仍可运行测试
+- ⬜ 迁移与弃用政策
 
 ---
 

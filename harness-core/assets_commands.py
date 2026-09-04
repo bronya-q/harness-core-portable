@@ -466,6 +466,25 @@ def cmd_workspace(args):
             return 1
         print(json.dumps({"ok": True, "workspace": read_json(p)}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "check":
+        name = rest[0] if rest else ""
+        if not name:
+            print("用法：harness.py workspace check <name>")
+            return 1
+        lease_path = WORKSPACE_DIR / name / "workspace.json"
+        if not lease_path.exists():
+            print(json.dumps({"ok": False, "error": "workspace_not_found", "name": name}, ensure_ascii=False))
+            return 1
+        lease = read_json(lease_path)
+        missing = []
+        bad = []
+        for pth in lease.get("forbidden_paths", []):
+            if "*" not in pth and (Path.cwd() / pth).exists():
+                bad.append("forbidden_exists:" + pth)
+        ok = lease.get("status") == "active" and lease.get("actual_execution") is False and not bad
+        print(json.dumps({"ok": ok, "workspace": name, "lease": lease,
+                          "issues": bad, "note": "仅检查租约元数据；真正的文件系统隔离需宿主执行"}, ensure_ascii=False, indent=2))
+        return 0 if ok else 1
     if sub == "release":
         name = rest[0] if rest else ""
         if not name:

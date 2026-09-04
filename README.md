@@ -225,6 +225,7 @@ python harness.py ab role --a unified-object-model.example.json --b knowledge-so
 python harness.py ab retriever --retriever-a keyword --retriever-b atomic --top-k 5 [--per-query]
 python harness.py evidence create --task example-task [--workspace <ws>]
 python harness.py evidence handoff --task example-task
+python harness.py ecosystem status      # Agent 生态兼容矩阵
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -305,6 +306,9 @@ schema_commands.py      schema list/validate 统一 schema 校验
 event_store.py          统一事件信封 / token usage 存储
 event_commands.py       event/usage CLI 入口
 comparison_commands.py  ab role/retriever + evidence bundle
+harness_core/           稳定 Python API（MemoryClient/EventClient/UsageClient）
+harness_core/adapters/  OpenAI-compatible adapter
+ecosystem_status.py     生态兼容矩阵状态
 schemas/                统一角色/事件/token schema
 unified-object-model.example.json  统一对象模型示例
 knowledge-sources.example.json  知识源 schema 示例（不含私有正文）
