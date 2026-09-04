@@ -52,7 +52,7 @@ public_demo
 not_based_on_a_real_person
 ```
 
-不要复刻扫兴姬、Blanche、Markos 的独特表达、名字、口癖、背景或美术。
+不要复刻本机综合人格 A、本机知识管理员 A、本机知识管理员 B 的独特表达、名字、口癖、背景或美术。
 
 ## 4. 四分离
 
@@ -99,10 +99,10 @@ Permission Resolver
 ### 不进入公共默认包
 
 ```text
-扫兴姬完整人格
-Blanche 完整人格
-Markos 完整人格
-本机 Evil 人格化命名与表达
+本机综合人格 A完整人格
+本机知识管理员 A 完整人格
+本机知识管理员 B 完整人格
+本机 Adversarial Review 人格化命名与表达
 私人日记、信件和关系
 本机路径与启动器
 私人知识库
@@ -197,7 +197,7 @@ data-quality-reviewer
 现实人物模仿
 ```
 
-## 10. Evil 去品牌化
+## 10. Adversarial Review 去品牌化
 
 公共核心改用功能名：
 
@@ -214,7 +214,7 @@ Evidence Challenge
 ```json
 {
   "public_profile": "review:adversarial",
-  "local_display_name": "Evil"
+  "local_display_name": "Adversarial Review"
 }
 ```
 
@@ -316,7 +316,7 @@ session_count
 scope_isolation_result
 ```
 
-不输出 `Blanche sessions=...`、`Markos diary count=...` 之类的按名字聚合。
+不输出 `本机知识管理员 A sessions=...`、`本机知识管理员 B diary count=...` 之类的按名字聚合。
 
 ## 15. CREDITS 处理
 
@@ -354,7 +354,7 @@ risk-reviewer / security-reviewer / measurement-reviewer / adversarial-reviewer
 
 | 优先级 | 内容 |
 |---|---|
-| P0 | 公共代码去私有角色路由：`runtime_resolver.py` / `manifest.json` / `generate_manifest.py` / README / SKILL / CREDITS / RESARCH / PRE_MODEL_BASELINE；`git grep -i -E "blanche|markos|markus|..."` 在不需 attribution 的公共运行代码中应为零 |
+| P0 | 公共代码去私有角色路由：`runtime_resolver.py` / `manifest.json` / `generate_manifest.py` / README / SKILL / CREDITS / RESARCH / PRE_MODEL_BASELINE；`git grep -i -E "local-persona|local-persona|local-persona|..."` 在不需 attribution 的公共运行代码中应为零 |
 | P1 | 建立本机 overlay：`personas.local.json` / `knowledge-sources.local.json` / `integrations.local.json` / `private-identifiers.txt`，全部加入 `.gitignore` |
 | P2 | 加入公共发布扫描：private identifier / absolute path / private-local manifest / asset/license / tracked file / ZIP |
 | P3 | 替换公开示例为全新合成角色 |
@@ -382,6 +382,6 @@ private_local
 
 ---
 
-> 结论：Blanche、Markos、扫兴姬以及本机 Evil 命名可以继续作为私人系统存在。
+> 结论：本机知识管理员 A、本机知识管理员 B、本机综合人格 A以及本机 Adversarial Review 命名可以继续作为私人系统存在。
 > 公共 Harness 只吸收它们验证过的通用能力：角色专属知识域、方法型专家能力、风险审查、来源验证、工程职责、角色热插拔、跨角色委派、日志/日记/内省、权限与回滚。
 > 不能吸收具体人格名称、思想立场、私人语料、独特口癖、关系表达、本机目录、私人使用统计、未核验资产。
