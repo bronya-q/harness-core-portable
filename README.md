@@ -381,6 +381,9 @@ AGENT_COMPATIBILITY.md  Agent 生态兼容矩阵（R0/R1/R2）
 docs/TASKS_INDEX.md     任务设计文档索引
 docs/DEPLOYMENTS_INDEX.md 部署记录索引
 docs/templates/         任务设计/部署记录模板
+examples/agent-integrations/  AGENTS.md/CLAUDE.md/Codex/DeepSeek/MCP fixtures
+docs/user-testing/      首次用户测试协议与结果模板
+scripts/create-github-release.sh  GitHub Pre-release 创建脚本（需 gh CLI）
 QUICKSTART.zh-CN.md     中文快速开始
 开始体验.bat            Windows 双击入口
 demo_experience.py       离线可感知演示（合成数据，一键清理）

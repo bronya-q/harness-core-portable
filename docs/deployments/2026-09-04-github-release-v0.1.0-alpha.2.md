@@ -1,6 +1,6 @@
 ---
-title: GitHub release v0.1.0-alpha.2
-status: deployed
+title: GitHub tag v0.1.0-alpha.2（Release 页面待创建）
+status: implemented
 kind: deployment-record
 date: 2026-09-04
 deployed_at: 2026-09-04
@@ -13,11 +13,13 @@ contains_private_data: false
 topics: [release, github, alpha]
 ---
 
-# GitHub Release v0.1.0-alpha.2 部署记录
+# GitHub Tag v0.1.0-alpha.2 部署记录（Release 页面待创建）
+
+> 本记录早期标题使用了“GitHub Release”，但实际只完成 main 与 annotated tag 推送。GitHub Releases API 仍为空，因此状态修正为 `implemented`；只有 Release 页面可回读后才能标为 `deployed`。
 
 ## 1. 部署摘要
 
-在主分支创建 `v0.1.0-alpha.2` tag 并推送。
+在主分支创建 annotated tag `v0.1.0-alpha.2` 并推送。尚未创建 GitHub Pre-release 对象。待发布正文见 `docs/releases/v0.1.0-alpha.2.md`。
 
 ## 2. 用户可感知变化
 
