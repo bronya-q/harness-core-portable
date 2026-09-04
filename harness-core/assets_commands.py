@@ -692,6 +692,12 @@ def cmd_workspace(args):
         if allowed and not any(command[0].startswith(a) for a in allowed):
             print(json.dumps({"ok": False, "error": "command_not_allowed", "allowed_commands": allowed}, ensure_ascii=False))
             return 1
+        forbidden = lease.get("forbidden_paths", [])
+        for arg in command:
+            for pat in forbidden:
+                if pat in arg or (pat.endswith("/**") and arg.startswith(pat[:-3])):
+                    print(json.dumps({"ok": False, "error": "forbidden_path_in_command", "forbidden": pat, "arg": arg}, ensure_ascii=False))
+                    return 1
         if lease.get("actual_execution") is True:
             print(json.dumps({"ok": False, "error": "actual_execution_disabled_for_lease"}, ensure_ascii=False))
             return 1

@@ -32,8 +32,35 @@ def _load(path):
 
 
 def _validate_required(obj, schema):
+    issues = []
     missing = [k for k in schema.get("required", []) if k not in obj]
-    return missing
+    issues.extend("missing:" + k for k in missing)
+    props = schema.get("properties", {})
+    for key, spec in props.items():
+        if key not in obj:
+            continue
+        val = obj[key]
+        expected = spec.get("type")
+        if expected and isinstance(expected, list):
+            if type(val).__name__ not in expected and val is not None:
+                issues.append("type_mismatch:%s:expected=%s" % (key, expected))
+        elif expected and expected in ("string", "integer", "number", "boolean", "array", "object"):
+            if expected == "integer" and not isinstance(val, int):
+                issues.append("type_mismatch:%s:expected=integer" % key)
+            elif expected == "number" and not isinstance(val, (int, float)):
+                issues.append("type_mismatch:%s:expected=number" % key)
+            elif expected == "boolean" and not isinstance(val, bool):
+                issues.append("type_mismatch:%s:expected=boolean" % key)
+            elif expected == "string" and not isinstance(val, str):
+                issues.append("type_mismatch:%s:expected=string" % key)
+            elif expected == "array" and not isinstance(val, list):
+                issues.append("type_mismatch:%s:expected=array" % key)
+            elif expected == "object" and not isinstance(val, dict):
+                issues.append("type_mismatch:%s:expected=object" % key)
+        enum = spec.get("enum")
+        if enum and val not in enum:
+            issues.append("enum_mismatch:%s:%s not in %s" % (key, val, enum))
+    return issues
 
 
 def cmd_list():
@@ -63,9 +90,9 @@ def cmd_validate(kind, path):
     except Exception as e:
         print(json.dumps({"ok": False, "error": "invalid_json", "detail": str(e)}, ensure_ascii=False))
         return 1
-    missing = _validate_required(obj, schema)
-    ok = not missing
-    print(json.dumps({"ok": ok, "schema": schema_key, "path": str(sp), "missing": missing},
+    issues = _validate_required(obj, schema)
+    ok = not issues
+    print(json.dumps({"ok": ok, "schema": schema_key, "path": str(sp), "issues": issues},
                      ensure_ascii=False, indent=2))
     return 0 if ok else 1
 

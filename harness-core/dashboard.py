@@ -78,16 +78,20 @@ def main():
     sc = DATA_DIR / "story_core.db"
     mem = DATA_DIR / "memory.db"
     has_data = any(p.exists() for p in [hs, nb, sc, mem])
+    t0 = time.perf_counter()
 
     diaries = _q(hs, "SELECT * FROM diary_entries ORDER BY created_at DESC LIMIT 10") if hs.exists() else []
     episodes = _q(hs, "SELECT * FROM narrative_episodes ORDER BY created_at DESC LIMIT 15") if hs.exists() else []
     events = _q(hs, "SELECT * FROM humanization_events ORDER BY observed_at DESC LIMIT 15") if hs.exists() else []
     identities = _q(hs, "SELECT * FROM identity_entries ORDER BY created_at DESC LIMIT 20") if hs.exists() else []
+    humanization_read_ms = (time.perf_counter() - t0) * 1000
+
     notes = _q(nb, "SELECT * FROM notebooks ORDER BY created_at DESC LIMIT 15") if nb.exists() else []
     story = _q(sc, "SELECT * FROM story_core ORDER BY created_at DESC LIMIT 10") if sc.exists() else []
     hist = _q(sc, "SELECT * FROM story_core_history ORDER BY id DESC LIMIT 15") if sc.exists() else []
     mem_total = _q(mem, "SELECT COUNT(*) c FROM memories")[0]["c"] if mem.exists() else 0
     mem_active = _q(mem, "SELECT COUNT(*) c FROM memories WHERE archived=0")[0]["c"] if mem.exists() else 0
+    storage_read_ms = (time.perf_counter() - t0) * 1000
 
     scopes = sorted({r["scope"] for r in episodes + notes + diaries + identities})
     roles = ", ".join(scopes) if scopes else "暂无角色数据"
@@ -114,9 +118,15 @@ def main():
                 except Exception:
                     pass
 
+    event_usage_read_ms = (time.perf_counter() - t0) * 1000
+    char_read_ms = (time.perf_counter() - t0) * 1000
+    total_ms = (time.perf_counter() - t0) * 1000
     spans = [
-        ("用户输入", 8), ("Scope Resolver", 6), ("Persona Load", 4), ("Memory Search", 38),
-        ("Story Core", 3), ("Prompt Build", 2), ("Model", 55), ("Telemetry", 2),
+        ("Humanization reads", round(humanization_read_ms, 1)),
+        ("Notebook/Story/Memory reads", round(storage_read_ms - humanization_read_ms, 1)),
+        ("Event/Usage reads", round(event_usage_read_ms - storage_read_ms, 1)),
+        ("Character assets", round(char_read_ms - event_usage_read_ms, 1)),
+        ("HTML render", round(total_ms - char_read_ms, 1)),
     ]
 
     # estimate token
@@ -197,7 +207,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="span-track">
 {''.join(f"<div class='span-bar' style='flex-grow:{v}'> {n}</div>" for n,v in spans)}
 </div>
-<p class="span-muted">未接入真实 provider timing；此处仅为 span 结构示意。</p>
+<p class="span-muted">当前为 Dashboard 数据读取的真实耗时（非模型推理耗时）。</p>
 </div>
 <div class="grid">
   <div class="card"><h2>角色画廊</h2>

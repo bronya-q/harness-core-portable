@@ -489,7 +489,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 明确 token baseline（`usage baseline set/check`）
 - ✅ 模型/参数/数据集固定（`ab retriever --meta '{"model":...,"dataset":...}'`）
 - 🚧 demo/directed/real 分离（event 已支持 session/content 来源，仍待 UI 分组）
-- ✅ Workspace 基础：Lease/check/worktree create/list/remove + `workspace run` 基本命令约束（allowed_commands / actual_execution）；仍缺完整文件系统沙箱
+- ✅ Workspace 基础：Lease/check/worktree create/list/remove + `workspace run` 基本命令约束（allowed_commands / forbidden_paths / actual_execution）；仍缺完整文件系统沙箱
 - ✅ 结构化 Evidence Bundle
 
 ### v0.5
@@ -574,7 +574,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 交互式桥图（用 HTML <details> 实现点击下钻，无 JS，符合 CSP）
 - ✅ 点击节点下钻（details 展开详情）
 - ✅ span 结构示意（无 JS/CSP 安全）
-- 🚧 真实 span/耗时 telemetry 采集（当前为硬编码示意）
+- ✅ Dashboard 数据读取真实耗时已采集（非模型推理耗时）；模型推理耗时仍待获取
 - ✅ 角色画廊完整页（角色卡：persona_id/display_name/scope/role_types/knowledge_bindings/distribution）
 
 ### P3：v0.3 角色资产化
