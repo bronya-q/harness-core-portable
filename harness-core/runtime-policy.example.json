@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "flags": {
+    "g1_expression": "canary",
+    "dynamic_memory": "canary",
+    "belief": "shadow",
+    "three_needs": "shadow",
+    "autonomous_tasks": "disabled"
+  },
+  "bounds": {
+    "dynamic_memory": {
+      "max_recall_items": 3,
+      "max_recall_chars": 1200,
+      "allowed_scopes": ["character:demo-alice","character:demo-storykeeper","character:demo-bob"],
+      "current_stage": "bounded_canary"
+    },
+    "collaboration_context": {
+      "current_stage": "shadow",
+      "allowed_scopes": ["character:demo-alice","character:demo-storykeeper","character:demo-bob"],
+      "max_notebook_items": 3,
+      "max_notebook_chars": 600,
+      "max_story_core_chars": 1200,
+      "max_collab_chars": 1600
+    }
+  },
+  "note": "belief/needs never authorize behavior; collaboration_context default shadow."
+}
