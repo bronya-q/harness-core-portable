@@ -12,7 +12,41 @@
 
 > 关于“角色化知识治理 / Knowledge Stewardship”的完整方向见 `KNOWLEDGE_STEWARDSHIP.md`。
 
-本地优先的 AI 角色与长期心智工作台：管理角色资产、经历、日记、内省、共享世界、上下文成本与运行权限。
+---
+
+## 0.1 v0.1.0-alpha.1 冻结状态
+
+> 这是当前发布基线：**alpha / WIP**，不是 production-ready。
+
+### 已满足
+
+- ✅ 统一入口：`python harness.py start / demo / doctor / inspect / data / dashboard`
+- ✅ 离线可感知演示：`python harness.py demo --offline`
+- ✅ Git clone 与 Download ZIP 双模式自检通过
+- ✅ 机器可读本地记录快照 + 口径校验
+- ✅ production gate fail-closed（clean clone 预期 rc=1）
+- ✅ 文档：README / QUICKSTART / LOCAL_RECORDS / RESEARCH / PRE_MODEL_BASELINE / ROADMAP / KNOWLEDGE_STEWARDSHIP
+- ✅ 远端与本地同步
+
+### 发布时仍要保留的边界
+
+- 不含真实用户数据 / 私有人格卡 / 模型权重 / API key
+- 不开启 Autonomous
+- 不启用 L4/L5 实际影响
+- 第三方 provenance 仍逐项核验中
+- 完整生产运行面依赖私有数据，公开包返回 UNAVAILABLE / FAIL
+
+### 尚未进入 v0.1 的范围
+
+以下全部留到 v0.2+，详见本文档后续章节：
+
+- 角色资产化 / HCP / Character Card
+- 运行桥交互图 / 模块热插拔
+- 完整上下文成本可视化
+- 日志-日记-内省-整理系统
+- 知识域治理与知识桥
+- 记忆统一入口 `memory correct/forget/restore`
+- `backup / privacy / feedback` 完整闭环
 
 ---
 

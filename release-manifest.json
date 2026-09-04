@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T09:56:12.857887+00:00",
+  "generated_at": "2026-09-04T09:58:29.772026+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 111,
   "files": {
@@ -23,9 +23,9 @@
     "PRE_MODEL_BASELINE.md": "02b41700e40f840cbbad7abed99818984d60a548a86df5c9db2699da0be73a06",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "4a9aa56e2521bff79ae1735de151b06e7912f8fb50ceadd2fa178a87c805e483",
+    "README.md": "e18925c358b69db54cc95a7e6e4c65d0e5fa6783133c7d69bd6d8f738d4d1261",
     "RESEARCH.md": "3ec2f445d4e09fe8bf91c8bb09a93f4226c81da148c7245402b190d6803f8377",
-    "ROADMAP.md": "1a0bc721ba8c00a4325918bdac72a754f3c7ac59ae7e147ad035bae5305b2f43",
+    "ROADMAP.md": "c4eaebdd44923eb6bfe86f6fe258501f0a164121b3010d6f377279f7d9d2f1ee",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "10664d415e1ef074d3be7eaaff97fb5479e32dd9547ddb38f44204d05f18e0ef",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
