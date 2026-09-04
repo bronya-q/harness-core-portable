@@ -241,16 +241,18 @@ Published on PyPI
 
 这些外部证据目前仍未完成。
 
-## 9. 建议修正
+## 9. 建议修正与执行状态
 
 ### GitHub Release body
 
-不改变 tag，只编辑 Release 正文：
+不改变 tag，只编辑 Release 正文。复核时以下两项已经同步到远端，`updated_at=2026-09-04T14:00:48Z`：
 
-1. 把 manifest entries 从 `180` 改为 `182`；
-2. 给 `schema validate --mode` 增加勘误，说明 alpha.3 中 parser 未接线、main 已修复；
-3. 明确 Release assets 为 0，wheel 需要本地构建；
-4. 保留 Alpha/WIP、非 production-ready 和 MCP 外部未验证说明。
+1. ✅ manifest entries 已从 `180` 改为 `182`；
+2. ✅ 已为 `schema validate --mode` 增加勘误，说明 alpha.3 中 parser 未接线、修复属于 tag 之后的 main/alpha.4；
+3. ⬜ 如需分发 wheel，应明确 Release assets 当前为 0，并另行上传受校验产物；
+4. ✅ 保留 Alpha/WIP、非 production-ready 和 MCP 外部未验证说明。
+
+远端 body 与仓库 `docs/releases/v0.1.0-alpha.3.md` 在标准化换行后完全一致。
 
 ### 仓库文档
 
@@ -271,7 +273,7 @@ Tag archive selfcheck/tests: PASS
 Manifest frozen count: 182
 Uploaded assets: 0
 GitHub Download ZIP execution: NOT YET VERIFIED
-Release body accuracy: NEEDS ERRATA
+Release body accuracy: ERRATA APPLIED / REMOTE-LOCAL MATCH
 MCP Inspector/Registry/real hosts: NOT VERIFIED
 Production readiness: NOT CLAIMED
 ```
