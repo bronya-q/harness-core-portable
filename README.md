@@ -192,6 +192,11 @@ python harness.py memory forget --id <id>
 python harness.py privacy export          # 导出脱敏隐私摘要
 python harness.py backup create           # 创建本地备份
 python harness.py feedback export --redacted
+python harness.py character list            # 角色资产列表
+python harness.py character install <pkg>   # 安装角色包
+python harness.py character activate <id>   # 激活角色
+python harness.py knowledge list            # 知识域绑定
+python harness.py workspace create --name demo --role ux-engineer
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -261,6 +266,8 @@ QUICKSTART.zh-CN.md     中文快速开始
 demo_experience.py       离线可感知演示（合成数据，一键清理）
 dashboard.py             本地只读 HTML 控制台生成器
 control_commands.py      memory/privacy/backup/feedback 用户控制入口
+assets_commands.py      character/knowledge/workspace 资产与工程工作区管理
+knowledge-sources.example.json  知识源 schema 示例（不含私有正文）
 local_records_export.py   本地记录快照生成脚本（需在原始环境运行）
 local_records_verify.py  本地记录快照校验脚本
 MENTAL_MODEL_EFFECTS.md 心智效果说明

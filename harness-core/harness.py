@@ -51,6 +51,9 @@ PASSTHROUGH = {
     "privacy": ["control_commands.py", ["privacy"]],
     "backup": ["control_commands.py", ["backup"]],
     "feedback": ["control_commands.py", ["feedback"]],
+    "character": ["assets_commands.py", ["character"]],
+    "knowledge": ["assets_commands.py", ["knowledge"]],
+    "workspace": ["assets_commands.py", ["workspace"]],
 }
 
 # Fine-grained subcommands
