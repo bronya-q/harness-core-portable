@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T12:58:31.257136+00:00",
+  "generated_at": "2026-09-04T13:00:30.998804+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 183,
   "files": {
@@ -10,7 +10,7 @@
     ".github/ISSUE_TEMPLATE/privacy.yaml": "9cd78c87246d6f6eff5e348901f0ab86914dddea57d171821253b2dd3034164f",
     ".gitignore": "34026ef212b4a31e367fa31ec0bc5a9ca754ac60b2a578268b873e5b3d2d1798",
     "AGENT_USAGE.md": "9aa9ce2f0f1c0391c5007e435b52189eff43bfaced04d802c9ac9496937ee525",
-    "CONTRIBUTING.md": "3edcc69592a821774ade69e76b67edf9921e249a2de42cb354b64bbf43010cc8",
+    "CONTRIBUTING.md": "46090c980aeb86c194d5fe2823423d1c3f73c29345079262c082e31961a1cff0",
     "CREDITS.md": "98de3d6953f31a624a1883cbe2329a8880a06c35f2892250643bce3aca1d4f5c",
     "EFFECTS.md": "d7562d354506f38b996e8ac9d54caabd48b4efb9f54a26ec5c6ce0d6ee7ab966",
     "ENGINEERING_ROLES.md": "11395c26d52f0f72e5b836d1ecfded7d03f52726021b3f35b0e87a0e1e74073e",
@@ -29,7 +29,7 @@
     "PUBLIC_CONTENT_BOUNDARY.md": "5f679ea3f697e2c761a13004c75fad1355e3586a7835a8f90bea8d0a5e1739e7",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "4bbd920ac072d95a1db37fef3c79971bd8f1f557943dcc8fe2b36abd68e39c4b",
+    "README.md": "9011371926121b577afd66a54d4370fed88502e08fd7217fcf4d48504c61781c",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
     "ROADMAP.md": "e5819dede275bcb6660d63dae6980211194e2f4052ac605972c1b57aa189cb6a",

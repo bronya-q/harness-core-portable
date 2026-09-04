@@ -343,50 +343,67 @@ NATURAL_DATA_GAP.md  数据缺口与求助
 
 见 `CONTRIBUTING.md` / `SECURITY.md` / `NATURAL_DATA_GAP.md`。
 
-## 需要大家一起来（外部协作任务）
+## 需要大家一起来（真的，这些我一个人搞不定）
 
-有些事我这边做不了，需要真实环境或外部流程，欢迎热心人士一起参与：
+这项目做到现在，有些事不是我不想做，是真得有人有真实环境，或者拉上几个活人一起试。如果你愿意搭把手，随便挑一个，先谢了。
 
 ### 1. MCP Inspector 实跑
 
+协议 smoke 我已经过了：
+
 ```bash
-python -m unittest tests.test_mcp_server  # 先确认协议 smoke 通过
-# 再在 MCP Inspector 中加载：
+python -m unittest tests.test_mcp_server
+```
+
+再下一步就需要有人把服务器在 Inspector 里加载：
+
+```bash
 python -m harness_core.adapters.mcp_server
 ```
 
-需要：浏览器/交互式环境。
+这个得开着浏览器/交互环境，我这边干不了。
 
 ### 2. Official MCP Registry 提交
 
-- 仓库已准备好：`docs/mcp/server.json`、`docs/mcp/verification.md`
-- 需要：提交到 [Official MCP Registry](https://github.com/modelcontextprotocol/servers) 的 PR + 审核
+材料我备好了：
+
+```text
+docs/mcp/server.json
+docs/mcp/verification.md
+```
+
+就差有人去提 PR + 走审核。不是我偷懒，是这一步本来就得人去提交。
 
 ### 3. 真实宿主验证
 
-在以下环境中跑通 `harness-core-mcp`，并记录版本与结论：
+想麻烦用这些环境的朋友帮忙跑一下 `harness-core-mcp`，记个版本和结论就行：
 
 - Claude Code
 - Codex CLI
 - GitHub Copilot（VS Code / JetBrains）
 
-### 4. 首次用户测试
+### 4. 首次用户测试（这个最缺人）
 
-按 `docs/user-testing/PROTOCOL.md` 找 5 名首次用户，把结果填入 `docs/user-testing/results-template.md`。
+按 `docs/user-testing/PROTOCOL.md` 找 5 个没碰过这项目的人试一遍，把结果填进 `docs/user-testing/results-template.md`。
+
+哪怕只来 1 个人，也比没人强。
 
 ### 5. 双人标注
 
-对 recall gold 做小规模双人标注，计算 Cohen’s κ，贡献给测量学基础。
+对 recall gold 做一小批双人标注，算一下 Cohen’s κ。这块是项目“测量学”最弱的一环，有人帮一下会好很多。
 
 ### 6. 真实截图 / GIF
 
-为 README 和 Release 提供合成 Demo 截图、20–30 秒离线 Demo GIF。
+现在 README 全是文字，再漂亮也是文字。有空的帮我生成一张合成 Demo 截图，或者一段 20–30 秒离线 Demo GIF。
 
 ### 7. CI 与跨平台
 
-帮忙加 GitHub Actions、Windows/macOS/Linux 矩阵验证。
+哪个平台的 GitHub Actions、Windows/macOS/Linux 矩阵，欢迎来加。
 
-如果你愿意做其中任何一项，请开 Issue 或在 GitHub Discussions 回帖，我会把对应任务拆好、补齐文档和验收标准。
+---
+
+> 愿意做其中任何一项，直接开 Issue 或在 GitHub Discussions 回帖就行。我会把任务拆好、验收标准写清楚。
+> 最后，不管大家有没有装，都祝看到的朋友们用 AI 许愿工程一次就成，DSH 版本更新兼容性依旧稳定。
 
 ## 文档
 
