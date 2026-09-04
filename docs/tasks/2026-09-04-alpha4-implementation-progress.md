@@ -77,6 +77,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **知识桥权限矩阵可视化**
   - Dashboard 知识域关系网格现在在每个单元格显示操作（read/quote/summarize/propose_edit）
   - 角色与知识域之间的权限不再只有身份，还展示可执行操作
+- [x] **本地 SQLite 迁移基础**
+  - `python harness.py migration status|check|dry-run|prepare --backup`
+  - 检查 `memory/notebooks/story/events/vector_queue` 的 schema_version 表
+  - `dry-run` 只读；`prepare --backup` 迁移前备份复制
+- [x] **情境模式差异对比**
+  - `character mode diff --persona <id> --mode-a <a> --mode-b <b>`
+  - 输出两个模式的 display_name / capabilities / effect / 权限差异
 
 ## 尝试过 / 未通过
 

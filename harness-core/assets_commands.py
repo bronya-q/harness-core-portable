@@ -557,7 +557,7 @@ def _modes_for(pid):
 
 def _cmd_character_mode(args):
     if not args:
-        print("用法：harness.py character mode list|switch|current [--persona <id>] [--mode <id>]")
+        print("用法：harness.py character mode list|switch|current|diff [--persona <id>] [--mode <id>] [--mode-a <id>] [--mode-b <id>]")
         return 1
     sub = args[0]
     pid = ""
@@ -595,6 +595,35 @@ def _cmd_character_mode(args):
             shutil.copy2(ACTIVE_MODE_FILE, HARNESS_DIR / "active-mode.json.bak")
         write_json(ACTIVE_MODE_FILE, {"persona_id": pid, "mode_id": mode_id, "display_name": match.get("display_name")})
         print(json.dumps({"ok": True, "persona_id": pid, "mode_id": mode_id, "effects": match.get("effect")}, ensure_ascii=False))
+        return 0
+    if sub == "diff":
+        mode_a = mode_b = ""
+        for i, a in enumerate(args):
+            if a == "--mode-a" and i + 1 < len(args):
+                mode_a = args[i + 1]
+            if a == "--mode-b" and i + 1 < len(args):
+                mode_b = args[i + 1]
+        if not pid or not mode_a or not mode_b:
+            print("用法：harness.py character mode diff --persona <id> --mode-a <a> --mode-b <b>")
+            return 1
+        modes = _modes_for(pid)
+        ma = next((m for m in modes if m.get("mode_id") == mode_a), None)
+        mb = next((m for m in modes if m.get("mode_id") == mode_b), None)
+        if not ma or not mb:
+            print(json.dumps({"ok": False, "error": "mode_not_found", "persona_id": pid,
+                              "a": mode_a, "b": mode_b}, ensure_ascii=False))
+            return 1
+        def _norm(m):
+            return {k: v for k, v in m.items() if k in ("display_name", "capabilities", "effect",
+                                                        "knowledge_access", "filesystem_write",
+                                                        "process_execution", "network", "autonomous")}
+        diff = {"a": _norm(ma), "b": _norm(mb)}
+        diff["differences"] = {}
+        for k in set(diff["a"]) | set(diff["b"]):
+            if diff["a"].get(k) != diff["b"].get(k):
+                diff["differences"][k] = {"a": diff["a"].get(k), "b": diff["b"].get(k)}
+        print(json.dumps({"ok": True, "persona_id": pid, "mode_a": mode_a, "mode_b": mode_b,
+                          **diff}, ensure_ascii=False, indent=2))
         return 0
     print("未知 character mode 子命令：" + sub)
     return 1

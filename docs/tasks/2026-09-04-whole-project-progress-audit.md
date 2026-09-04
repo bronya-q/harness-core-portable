@@ -591,3 +591,9 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 32. 后续处理记录（2026-09-04 续 20）
 
 - **知识桥权限矩阵可视化**：Dashboard 知识域关系网格在单元格中显示操作（read/quote/summarize/propose_edit），角色↔知识域↔权限↔操作矩阵可视化进一步完成。
+
+## 33. 后续处理记录（2026-09-04 续 21）
+
+- **本地 SQLite 迁移基础**：新增 `python harness.py migration status|check|dry-run|prepare --backup`，检查关键本地库 schema_version；`dry-run` 只读。
+- **情境模式差异对比**：新增 `python harness.py character mode diff --persona <id> --mode-a <a> --mode-b <b>`。
+- 新增 `tests/test_migration_and_mode.py`（2 用例），unittest 总数 29。
