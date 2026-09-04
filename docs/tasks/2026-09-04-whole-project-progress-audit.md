@@ -491,3 +491,10 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 9. n-gram fallback：新增 `harness-core/ngram_fallback.py` 与 `tests/test_ngram_fallback.py`（目前 unittest 9 个用例）。
 
 仍未做：MCP Inspector/Registry/host、用户首测、alpha.3 Release 页面、可玩卡牌游戏、完整 resolver/policy 全入口覆盖。
+
+## 14. 后续处理记录（2026-09-04 续 2）
+
+- **向量队列“以后重试”语义**：`skip_unavailable` 不再把项标为 done，而是标记为 `deferred` 并写入 `next_retry_at` / `retry_count`；worker 默认指数退避，`--retry-failed` 可重新打开 `failed` 项。`queue_status` / `data status` 增加 `deferred` 与 `retryable`。
+- **provider usage 全入口覆盖（R1 起步）**：Ollama `/api/generate` 返回的 `prompt_eval_count` / `eval_count` 现在在 roleplay 入口写入 `provider_reported` 记录；`event_store.token_usage` 增加 `provider` / `prompt_tokens` / `completion_tokens`；`usage summary` 输出 `by_source` 与 `by_provider`；`OpenAICompatibleAdapter` 增加 `chat_with_usage`。
+- **可玩卡牌游戏**：新增 `harness-core/card_game.py`（Harness Memory Match），支持 `play` / `deal` / `deck`，含公开合成牌组、配对评分、自动冒烟模式，以及 `tests/test_card_game.py`。
+- 测试数量增至 14 个用例。

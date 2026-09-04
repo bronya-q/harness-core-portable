@@ -116,9 +116,23 @@ def cmd_usage(args):
         actual = sum(r.get("actual_tokens") or 0 for r in rows)
         baseline = sum(r.get("baseline_tokens") or 0 for r in rows)
         avoided = sum(r.get("estimated_avoided_tokens") or 0 for r in rows)
+        by_source = {}
+        for r in rows:
+            src = r.get("usage_source") or "unknown"
+            by_source.setdefault(src, {"rows": 0, "actual_tokens": 0})
+            by_source[src]["rows"] += 1
+            by_source[src]["actual_tokens"] += r.get("actual_tokens") or 0
+        by_provider = {}
+        for r in rows:
+            prov = r.get("provider") or "unreported"
+            by_provider.setdefault(prov, {"rows": 0, "prompt_tokens": 0, "completion_tokens": 0})
+            by_provider[prov]["rows"] += 1
+            by_provider[prov]["prompt_tokens"] += r.get("prompt_tokens") or 0
+            by_provider[prov]["completion_tokens"] += r.get("completion_tokens") or 0
         print(json.dumps({"ok": True, "mode": "usage_summary", "rows": len(rows),
                           "actual_tokens": actual, "baseline_tokens": baseline,
-                          "avoided_tokens": avoided}, ensure_ascii=False, indent=2))
+                          "avoided_tokens": avoided, "by_source": by_source,
+                          "by_provider": by_provider}, ensure_ascii=False, indent=2))
         return 0
     if sub == "baseline":
         bsub = args[1] if len(args) > 1 else ""

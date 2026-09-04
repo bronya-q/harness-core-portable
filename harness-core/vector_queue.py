@@ -23,13 +23,24 @@ def _connect():
         attempts INTEGER NOT NULL DEFAULT 0,
         last_error TEXT,
         processing_at REAL,
-        done_at REAL
+        done_at REAL,
+        status TEXT,
+        next_retry_at REAL,
+        retry_count INTEGER NOT NULL DEFAULT 0
     )""")
     # 兼容旧队列表，只增加列，不迁移或删除已有数据。
     cols = {r[1] for r in con.execute("PRAGMA table_info(queue)")}
-    if "processing_at" not in cols:
-        con.execute("ALTER TABLE queue ADD COLUMN processing_at REAL")
-        con.commit()
+    for col, ddl in [
+        ("processing_at", "ALTER TABLE queue ADD COLUMN processing_at REAL"),
+        ("status", "ALTER TABLE queue ADD COLUMN status TEXT"),
+        ("next_retry_at", "ALTER TABLE queue ADD COLUMN next_retry_at REAL"),
+        ("retry_count", "ALTER TABLE queue ADD COLUMN retry_count INTEGER NOT NULL DEFAULT 0"),
+    ]:
+        if col not in cols:
+            con.execute(ddl)
+    # 旧数据若无 status，视为 pending。
+    con.execute("UPDATE queue SET status='pending' WHERE status IS NULL")
+    con.commit()
     return con
 
 
@@ -38,8 +49,8 @@ def enqueue(memory_id):
     try:
         con = _connect()
         con.execute(
-            "INSERT OR IGNORE INTO queue(memory_id,enqueued_at) VALUES(?,?)",
-            (int(memory_id), time.time()),
+            "INSERT OR IGNORE INTO queue(memory_id,enqueued_at,status) VALUES(?,?,?)",
+            (int(memory_id), time.time(), "pending"),
         )
         con.commit()
         con.close()
@@ -53,14 +64,18 @@ def queue_status():
     try:
         con = _connect()
         total = con.execute("SELECT COUNT(*) FROM queue").fetchone()[0]
-        pending = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NULL").fetchone()[0]
-        processing = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NOT NULL").fetchone()[0]
+        pending = con.execute("SELECT COUNT(*) FROM queue WHERE status='pending' AND done_at IS NULL").fetchone()[0]
+        processing = con.execute("SELECT COUNT(*) FROM queue WHERE status='processing' AND done_at IS NULL").fetchone()[0]
+        deferred = con.execute("SELECT COUNT(*) FROM queue WHERE status='deferred' AND done_at IS NULL").fetchone()[0]
+        failed = con.execute("SELECT COUNT(*) FROM queue WHERE status='failed' AND done_at IS NULL").fetchone()[0]
         done = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NOT NULL").fetchone()[0]
-        failed = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND attempts>=5").fetchone()[0]
-        stale = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NOT NULL AND processing_at<?",
+        retryable = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND status IN ('pending','deferred') AND (next_retry_at IS NULL OR next_retry_at<=?)",
+                                (time.time(),)).fetchone()[0]
+        stale = con.execute("SELECT COUNT(*) FROM queue WHERE status='processing' AND done_at IS NULL AND processing_at<?",
                             (time.time() - 600,)).fetchone()[0]
         con.close()
         return {"ok": True, "total": total, "pending": pending, "processing": processing,
-                "done": done, "failed": failed, "stale": stale, "available": QUEUE_DB.exists()}
+                "deferred": deferred, "failed": failed, "done": done, "retryable": retryable,
+                "stale": stale, "available": QUEUE_DB.exists()}
     except Exception as exc:
         return {"ok": False, "error": str(exc), "available": QUEUE_DB.exists()}

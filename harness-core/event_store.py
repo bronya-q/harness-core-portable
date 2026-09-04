@@ -47,7 +47,17 @@ def _connect():
     c.execute("CREATE TABLE IF NOT EXISTS token_usage("
               "id INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT, usage_source TEXT, model_id TEXT, "
               "tokenizer_id TEXT, context_window INTEGER, components TEXT, actual_tokens INTEGER, "
-              "baseline_id TEXT, baseline_tokens INTEGER, estimated_avoided_tokens INTEGER, created_at REAL)")
+              "baseline_id TEXT, baseline_tokens INTEGER, estimated_avoided_tokens INTEGER, created_at REAL, "
+              "provider TEXT, prompt_tokens INTEGER, completion_tokens INTEGER)")
+    # 兼容旧 usage 表
+    ucols = {r[1] for r in c.execute("PRAGMA table_info(token_usage)")}
+    for col, ddl in [
+        ("provider", "ALTER TABLE token_usage ADD COLUMN provider TEXT"),
+        ("prompt_tokens", "ALTER TABLE token_usage ADD COLUMN prompt_tokens INTEGER"),
+        ("completion_tokens", "ALTER TABLE token_usage ADD COLUMN completion_tokens INTEGER"),
+    ]:
+        if col not in ucols:
+            c.execute(ddl)
     return c
 
 
@@ -100,13 +110,15 @@ def list_events(limit=20, scope=None):
 def record_usage(usage):
     c = _connect()
     cur = c.execute("INSERT INTO token_usage(event_id,usage_source,model_id,tokenizer_id,context_window,components,"
-                    "actual_tokens,baseline_id,baseline_tokens,estimated_avoided_tokens,created_at) "
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                    "actual_tokens,baseline_id,baseline_tokens,estimated_avoided_tokens,created_at,"
+                    "provider,prompt_tokens,completion_tokens) "
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     (usage.get("event_id"), usage.get("usage_source"), usage.get("model_id"),
                      usage.get("tokenizer_id"), usage.get("context_window"),
                      json.dumps(usage.get("components", {}), ensure_ascii=False),
                      usage.get("actual_tokens"), usage.get("baseline_id"), usage.get("baseline_tokens"),
-                     usage.get("estimated_avoided_tokens"), time.time()))
+                     usage.get("estimated_avoided_tokens"), time.time(),
+                     usage.get("provider"), usage.get("prompt_tokens"), usage.get("completion_tokens")))
     uid = cur.lastrowid
     c.commit(); c.close()
     return uid
