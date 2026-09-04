@@ -97,5 +97,7 @@
     "harness-core/__pycache__/roleplay_memory_chat.cpython-313.pyc": "54d4ed244d61b4f5",
     "harness-core/__pycache__/runtime_policy.cpython-313.pyc": "7a7f982b10757e39",
     "harness-core/__pycache__/runtime_resolver.cpython-313.pyc": "01c00b6de45f8e82"
-  }
+  },
+  "version": "0.1.0",
+  "status": "alpha_wip"
 }
