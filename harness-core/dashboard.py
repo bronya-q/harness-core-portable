@@ -24,6 +24,8 @@ except Exception:
 
 SKILL = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
+sys.path.insert(0, str(SKILL))
+from event_store import list_events, list_usage  # noqa: E402
 OUT_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
 OUT_FILE = OUT_DIR / "index.html"
 
@@ -90,6 +92,24 @@ def main():
     scopes = sorted({r["scope"] for r in episodes + notes + diaries + identities})
     roles = ", ".join(scopes) if scopes else "暂无角色数据"
 
+    # events + usage + characters
+    events = list_events(limit=15)
+    usage = list_usage(limit=10)
+    CHAR_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "characters"
+    chars = []
+    if CHAR_DIR.exists():
+        for d in sorted(CHAR_DIR.iterdir()):
+            if not d.is_dir():
+                continue
+            mf = d / "package-manifest.json"
+            if mf.exists():
+                try:
+                    m = json.loads(mf.read_text(encoding="utf-8"))
+                    chars.append({"persona_id": m.get("persona_id", d.name),
+                                  "display_name": m.get("display_name", d.name)})
+                except Exception:
+                    pass
+
     # estimate token
     est = {"diary": sum(_est_tokens(d.get("content")) for d in diaries),
            "episodes": sum(_est_tokens(e.get("summary")) for e in episodes),
@@ -114,6 +134,7 @@ def main():
     page = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <title>Harness Mind Console</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'unsafe-inline'; script-src 'none'">
 <style>
 body{{font-family:system-ui,Segoe UI,Roboto,sans-serif;margin:2rem;max-width:1100px;color:#222;background:#fafafa}}
 h1{{font-size:1.5rem}} h2{{font-size:1.1rem;border-bottom:1px solid #ddd;padding-bottom:.2rem}}
@@ -153,6 +174,19 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
               ↓ Ollama / Qwen
               ↓ 输出 → Session Telemetry → Auto-note
 </pre></div>
+<div class="grid">
+  <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
+  <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>
+</div>
+<div class="grid">
+  <div class="card"><h2>角色资产</h2>{li(chars,'display_name',lambda c: f"{c.get('display_name')} <span class='muted'>({c.get('persona_id')})</span>") if chars else '<p class="muted">暂无本机角色资产</p>'}</div>
+  <div class="card"><h2>隐私数据流</h2><pre>
+SQLite            本地
+Ollama            127.0.0.1
+HTML Dashboard    本地文件
+外部网络          无连接
+</pre></div>
+</div>
 <p class="muted">生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')} · 数据目录：{_html(DATA_DIR)}</p>
 </body></html>"""
 

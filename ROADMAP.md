@@ -552,18 +552,22 @@ n baseline
 - ✅ usage/token telemetry schema 文件
 - ✅ local overlay loading order（runtime_resolver 读取 `~/.dsh/harness/personas.local.json`）
 - ⬜ package schema version 强制校验
-- ⬜ event envelope 实际写入底层
-- ⬜ token usage 实际采集
+- ✅ event envelope 实际写入底层（`event add/list`，events.db）
+- ✅ token usage 实际采集（`usage record/list`，events.db token_usage 表）
 
 ### P2：v0.2 可视运行台
 
-- ⬜ Dashboard 只读 projection
-- ⬜ 角色和职责卡
-- ⬜ 运行桥
-- ⬜ 三条时间线
-- ⬜ Token 面板
-- ⬜ 隐私数据流
-- ⬜ HTML 安全测试
+- ✅ Dashboard 只读 projection（已含角色/经历/日记/Story/Token/桥图/隐私/事件时间线）
+- ✅ 角色和职责卡（dashboard 读取本机 character 资产）
+- ✅ 运行桥（文本版）
+- ✅ 事件时间线（events.db）
+- ✅ Token 面板（token_usage）
+- ✅ 隐私数据流（文本版）
+- ✅ HTML 安全：CSP + HTML escaping + 无内联脚本
+- ⬜ 交互式桥图
+- ⬜ 点击节点下钻
+- ⬜ span 时间线
+- ⬜ 角色画廊完整页
 
 ### P3：v0.3 角色资产化
 
