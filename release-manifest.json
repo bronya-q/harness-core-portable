@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T12:56:03.558033+00:00",
+  "generated_at": "2026-09-04T12:56:45.457991+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 182,
+  "count": 183,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -42,7 +42,7 @@
     "docs/AGENT_COMPATIBILITY.json": "2acec841a980c4b7f9d6c68075aeea540b6b7c47ae12aa1c7f1ed66eb918c24f",
     "docs/AGENT_COMPATIBILITY.md": "e30b400a7d781f5d2bfb32c6dc042d25864dc47a96439e4b501c4922020bb666",
     "docs/DEPLOYMENTS_INDEX.md": "52175c4f9b74c66cadf4007347e163120d6844c748de5253c016fd2c035780f6",
-    "docs/TASKS_INDEX.md": "053ca441231e9b5394b15cc9d2630e1415cdad59f85428d4de3f22f9699e855f",
+    "docs/TASKS_INDEX.md": "2c3a9407b418d8fcdd1cc4d0950ea83ac4f0c0acb9e8317be17b1e96a9d0889e",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.2.md": "1bcad6ee1fbad8641b22673e8e1c6c4d76e440ff45f0d0fae20a21c5e987a5bd",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.3.md": "2ebba3ac101919b630def0c70dae7a31a4882be37d32c904fbecbf1321347234",
     "docs/deployments/2026-09-04-situated-mode-and-readme-onboarding-deployment.md": "bcfbb6da8e6afc72badfd931da9b790b847a7d349b88f0e73f5fda5f4f39db3f",
@@ -58,6 +58,7 @@
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "01ca0b9ae52fea97734f0c51e68995c4d8c71a46fa1b1d975002e3f3d6196fa8",
+    "docs/tasks/2026-09-04-whole-project-progress-audit.md": "4ad146208c0a112b0afdd5b7a57c39d6e39a4999a37093af89ba1e318b812b96",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
     "docs/user-testing/PROTOCOL.md": "2a4afc7766bb43de61ac96d21cb3b816979de7997e5d5f7a224871b87e07334e",

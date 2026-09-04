@@ -1,0 +1,498 @@
+---
+title: Harness Core Portable 全项目进展审计
+status: verified
+kind: task-design
+date: 2026-09-04
+updated_at: 2026-09-04
+owner_role: project-progress-review
+source_commit: dc35830
+target_version: v0.2-v0.5
+public: true
+contains_private_data: false
+topics: [project-audit, progress, roadmap, release, mcp, testing]
+---
+
+# Harness Core Portable 全项目进展审计
+
+## 1. 审计口径
+
+本报告区分：
+
+```text
+designed
+implemented
+locally tested
+clean-clone verified
+externally tested
+deployed/released
+```
+
+报告的 `status: verified` 只表示本次盘点已完成，不表示整个项目完成。
+
+正式基线绑定：
+
+```text
+HEAD: dc35830f62e6c5e6e60a466fa8c26825f07347a2
+origin/main: c3adf0ff8aeeb6ef49a38118cd37d2b59249c850
+HEAD ahead of origin/main: 1 commit
+```
+
+审计期间 MCP/packaging 文件持续被并发修改。因此：
+
+- 已提交 HEAD 用于正式通过项；
+- 未提交工作区单列为 implementing；
+- 不把未提交代码算成已交付。
+
+没有读取私人 overlay、私人语料、API key 或私人数据库正文。
+
+## 2. 一页结论
+
+项目已经从“脚本与说明集合”进入“可运行的 alpha 工程原型”阶段。离线演示、scope 隔离、记忆纠错/恢复、静态控制台、角色包基础、安全校验、工作区、A/B、事件/usage、MCP 原型和基本测试都已有真实代码。
+
+当前最准确判断：
+
+```text
+产品概念与架构：较完整
+公开离线体验：可运行并经 clean clone 验证
+本地角色/记忆基础：可用 alpha
+HCP 角色资产：安全和事务基础明显增强，仍非完整沙箱/热挂载
+Workspace：真实 worktree 基础可运行，仍非完整隔离执行环境
+Dashboard：只读投影可用，真实读取耗时实现有计时边界问题
+测试：从几乎无测试提升到 5 文件/8 用例，但没有 CI workflow
+MCP：R1 原型；官方 SDK/打包正在施工，当前工作区测试失败
+测量：bootstrap CI 与 Cohen’s kappa 工具已实现，心理效度未建立
+知识桥：主要仍是配置/展示，实际 mount/delegation 未完成
+游戏：未发现可玩的卡牌游戏引擎
+n-gram fallback：未发现实现证据
+首次用户研究：只有 protocol/template，没有参与者结果
+发布：alpha.2 GitHub Pre-release 已发布；main 比 tag 领先 26 commits
+生产就绪：否
+```
+
+## 3. 进展评分（工程成熟度，不是心理效度）
+
+| 领域 | 成熟度 | 说明 |
+|---|---:|---|
+| 项目定位/边界设计 | 4/5 | public/synthetic/private 分层清楚，但公开名称残留 |
+| README/首次理解 | 4/5 | 首屏和一分钟 Demo 明显改善；仍缺真实截图/GIF与用户数据 |
+| 离线 Demo | 4/5 | clean clone 通过、隔离/纠错/恢复/清理可见 |
+| 记忆与 scope | 4/5 | 核心路径存在；全入口 resolver/policy 一致性仍不足 |
+| 角色资产 HCP | 3.5/5 | validate/install/preview/activation/rollback 与安全检查有进展 |
+| Situated character | 2.5/5 | schema/mode/关系事件基础存在，完整关系—处境 UX 尚未闭环 |
+| Knowledge Stewardship | 1.5/5 | schema/config/list 基础；真实 mount/health/delegation 未完成 |
+| Workspace/Evidence | 3/5 | worktree/run/evidence 基础可运行；非完整沙箱 |
+| Dashboard/可观测性 | 3/5 | 静态只读、escape/CSP、事件/usage/读取 timing；部分 timing 有 bug |
+| Token telemetry | 2.5/5 | storage/summary/estimate 基础；provider usage 全入口覆盖未证明 |
+| 数据 provenance/consent | 2/5 | 字段和部分 identity consent 存在；首次运行分项同意未完成 |
+| 测量学 | 2/5 | 工程指标、bootstrap、κ 工具存在；构念字典/效度研究缺失 |
+| 测试与 CI | 2.5/5 | 8 个 unittest；无 GitHub Actions、多 OS、Inspector |
+| MCP/Agent 生态 | 1.5/5 | MCP 原型与设计存在；未 Registry/host-tested，当前在途测试失败 |
+| Release 工程 | 3/5 | tag、Pre-release、manifest、自检存在；文档状态滞后，main 远超 tag |
+| 可玩卡牌游戏 | 0/5 | 未发现 game engine/game loop/规则/CLI |
+| n-gram fallback | 0/5 | 未发现实现或测试 |
+
+## 4. 已验证通过
+
+### 4.1 已提交基线
+
+在正式 HEAD 和临时 clean clone 中：
+
+```text
+python release_verify.py           PASS, 177 entries
+python package_selfcheck.py        PASS
+python -m unittest discover        PASS, 8 tests
+python harness.py demo --offline   PASS
+```
+
+离线 Demo 验证：
+
+- 创建两个 synthetic 角色；
+- 跨会话召回；
+- Alice/Bob scope 隔离；
+- 共享 Story Core 不泄露私人记忆；
+- 用户纠错；
+- 版本恢复；
+- Autonomous disabled；
+- 无网络上传；
+- 临时数据清理。
+
+### 4.2 alpha.2 冻结点
+
+`v0.1.0-alpha.2` 指向：
+
+```text
+d7f7de7e2fdfaecba43921c0e13016ebb7113c8b
+```
+
+对 tag 做本地 archive/ZIP 模拟：
+
+```text
+release_verify: PASS, 133 entries
+package_selfcheck: PASS
+```
+
+GitHub API 已回读到：
+
+```text
+Release URL: https://github.com/bronya-q/harness-core-portable/releases/tag/v0.1.0-alpha.2
+draft: false
+prerelease: true
+published_at: 2026-09-04T11:53:58Z
+```
+
+`/releases/latest` 返回 404 是因为只有 pre-release，没有 stable/latest release，属于正常 GitHub 语义。
+
+### 4.3 测试增长
+
+已有 5 个测试文件、8 个用例：
+
+- activation failure/rollback；
+- ecosystem status；
+- Memory/Event/Usage Python API；
+- MCP initialize/tools list；
+- bootstrap CI；
+- Cohen’s kappa。
+
+这是相较早期“无常规测试”的显著进步。
+
+### 4.4 HCP 安装安全
+
+当前代码确认 install 会先 validate，ZIP 使用 `_safe_extract_zip`，并检查多类风险。合成恶意 ZIP 实测：
+
+```text
+../escape.txt
+→ install rc=1
+→ package_validation_failed
+→ zip_path_traversal
+```
+
+已有/声称覆盖：
+
+- traversal；
+- symlink；
+- ADS；
+- nested zip；
+- 大小/压缩比；
+- public executable；
+- JSON/PNG MIME 基础一致性。
+
+仍不能称为完整恶意包沙箱；未做全面 fuzz、资源耗尽和跨平台攻击矩阵。
+
+### 4.5 Activation
+
+已有：
+
+- preflight；
+- state history；
+- lock file；
+- backup/rollback/recover；
+- `--simulate-failure`；
+- failure injection unittest。
+
+测试验证激活 B 失败后 active 仍为 A，再 recover 回到 active 状态。
+
+仍缺：真实进程崩溃、断电、锁竞争、多进程并发和完整持久化回放。
+
+### 4.6 Workspace
+
+在临时 clean clone 中实测：
+
+```text
+workspace create                 rc=0
+workspace worktree create       rc=0
+workspace run ...               rc=0, WORKTREE_OK
+workspace worktree remove       rc=0
+```
+
+这已经不再只是元数据。但命令输出明确说明它是基本命令约束，不是完整沙箱。
+
+### 4.7 Schema
+
+`schema list` 现已包含：
+
+- unified-role；
+- event-envelope；
+- token-usage；
+- situated-mode。
+
+validator 增加了顶层 type/enum 检查。但发现 `--mode` 接线遗漏：帮助和 map 支持它，CLI parser 实际只识别 role/event/token，实测 rc=1。
+
+### 4.8 Dashboard
+
+隔离 `DSH_HOME` 构建 rc=0；静态文件、CSP、HTML escaping 和无服务模式存在。
+
+真实读取 timing 已开始实现，但：
+
+- `event_usage_read_ms` 与 `char_read_ms` 在同一时点赋值，Character Assets span 近似 0；
+- `total_ms` 在 HTML render 之前记录，所以 HTML render span 不是真正完整渲染耗时；
+- 标题仍写“结构示意；真实耗时待采集”，下方又写真实读取耗时，文案冲突。
+
+## 5. 当前在途工作区
+
+审计后段状态：
+
+```text
+M ROADMAP.md
+M docs/AGENT_COMPATIBILITY.md
+A docs/mcp/server.json
+A docs/mcp/verification.md
+M harness_core/adapters/mcp_server.py
+A pyproject.toml
+M release-manifest.json
+M tests/test_mcp_server.py
+```
+
+这是 MCP 官方 SDK/packaging 工作，不属于已提交基线。
+
+当前工作区实际结果：
+
+```text
+unittest: FAIL, 1/8 failed
+MCP initialize fixture: invalid request parameters
+package_selfcheck: FAIL
+release_verify: manifest/hash mismatch during in-progress edits
+```
+
+失败原因之一是测试仍发送空 initialize params，而官方 SDK 要求 protocolVersion/capabilities/clientInfo。
+
+判断：
+
+```text
+MCP official SDK migration: implementing
+PyPI packaging: implementing
+MCP protocol verified: no
+MCP Inspector: not run
+Official Registry: not listed
+Claude/Codex/Copilot host test: not run
+```
+
+不要在修复并重新提交前把当前 MCP 状态升级成 R2。
+
+## 6. 外部生态状态
+
+### GitHub
+
+- public repository：是；
+-语言：Python；
+- stars/watchers：1/1；
+- forks：0；
+- open issues：0；
+- discussions：关闭；
+- alpha.1/alpha.2 tags：存在；
+- alpha.2 Pre-release：存在；
+- stable latest release：不存在。
+
+### Topics
+
+API 回读到 19 个 Topics，包括：
+
+```text
+harness
+harness-plugin
+ai-evaluation-tools
+humanization
+llm-agentic-workflow
+local-first
+local-first-ai
+long-term-memory
+long-term-memory-benchmark
+long-term-memory-llm
+memory-system
+multi-agent
+multi-agent-ai
+personal
+roleplay-ai
+sqlite
+agent-memory
+coding-agent-memory
+context-engineering
+```
+
+Topics 已真实部署，但部分词较宽泛。应继续按“实现+UX+验证+文档至少三类证据”维护，尤其 `harness-plugin`、`multi-agent-ai`、`coding-agent-memory`。
+
+### MCP Registry
+
+查询：
+
+```text
+io.github.bronya-q/harness-core-portable
+```
+
+结果 count=0。尚未收录。
+
+## 7. 与原始目标的对应
+
+| 原始方向 | 当前状态 |
+|---|---|
+| 隔离人格 | 基础实现并由 Demo 验证 |
+| 长期记忆 | 基础实现并有跨会话 Demo |
+| 每角色语料 | corpus-to-draft 基础存在 |
+| 角色热切换 | activation 状态存在；真正全入口 runtime 热挂载未完成 |
+| 场景卡 | Character Card scenario → Story Core 草稿基础存在 |
+| 可玩卡牌游戏 | 未实现 |
+| n-gram fallback | 未发现实现 |
+| 可视化 | 静态 Dashboard 已实现基础 |
+| 工程角色 | workspace/evidence/A-B 基础存在 |
+| 本地知识角色 | bindings/sources 列表基础；真实 mount/delegation 未完成 |
+| 切身化关系角色 | relationship/episode/mode schema 基础；用户可理解的完整闭环仍不足 |
+| grounded diary/reflection | 数据表和部分命令存在；完整 candidate→review→apply→rollback 链未验证 |
+| Token 节省可视化 | estimate/usage 面板基础；provider reported 覆盖未证明 |
+| 用户同意 | 字段与部分 explicit consent 存在；首次运行分项同意未完成 |
+| 测量学 | 工程工具开始补齐；构念字典、信效度计划及真实研究未完成 |
+
+## 8. 明确缺口
+
+### P0：恢复当前绿灯
+
+1. 完成或回退未提交 MCP 改动；
+2. 用合法 initialize fixture 修复 MCP test；
+3. 更新 release manifest；
+4. 保证 `unittest`、`release_verify`、`package_selfcheck` 同时 rc=0；
+5. 再提交和推送。
+
+### P0：状态一致性
+
+1. 兼容矩阵 JSON 仍写 MCP R0/no server，与代码不一致；
+2. `mcpREADME.md` 仍写没有 MCP server；
+3. GitHub Release 部署记录仍写“页面待创建”，与外部 API 不一致；
+4. ROADMAP 仍写 alpha.2 是 next Pre-release；
+5. ROADMAP 仍写工作区 clean/synced；
+6. ROADMAP 第 303 行仍说 bridge/span 未实现，与 P2 勾选冲突；
+7. v0.3 task 仍写 ADS/MIME 未完成，与后续代码冲突。
+
+### P1：公开边界
+
+公开仓库仍出现偏好型私人角色名称，位置包括 README、Knowledge Stewardship 和若干测量脚本。P0“私人案例已抽象化”不能视为完全完成。
+
+### P1：CLI/Schema
+
+- 根 `python harness.py --help` 仍 rc=1；
+- `schema validate --mode` 未接线；
+- 顶层 launcher 对 passthrough 脚本的实际 rc 传播不统一；
+- `package_selfcheck` 的 root help 只测试无参数，不测试 `--help`。
+
+### P1：Runtime policy
+
+当前默认值与既定核心政策不一致：
+
+```text
+代码：g1_expression=shadow, dynamic_memory=shadow
+既定目标：g1_expression=canary, dynamic_memory=canary
+```
+
+更重要的是 resolver/policy 仅被少量入口导入。尚无证据证明所有 memory/persona/MCP/workspace/dashboard 入口都统一执行 resolver 与 runtime policy。
+
+### P1：数据质量
+
+- event schema 没有明确 session provenance `real/demo/smoke/regression/unknown` 字段；
+- Dashboard 没有按 real/demo/smoke 分组；
+- vector worker 有 retry/stale/error 机制，但没有统一 dashboard telemetry/持续监控证据；
+- `skip_unavailable` 把队列项标 done，需要明确是否允许以后重试；
+- provider-reported usage 全入口覆盖未证明。
+
+### P2：测量学
+
+已有 bootstrap/κ 函数不等于完成测量学：
+
+- 没有独立构念字典；
+- 没有统一 trait/state/behavior/self_report/inference schema；
+- 没有真实双标注数据；
+- 没有效度研究；
+- 没有首次用户研究结果；
+- 没有 Krippendorff’s alpha。
+
+### P2：CI/跨平台
+
+没有 `.github/workflows`。当前只证明本机 Windows 和临时本地 clone，未证明 GitHub Actions、Linux/macOS 或 Python version matrix。
+
+### P2：产品体验
+
+- README 没有真实截图/GIF；
+- 首次用户 protocol 存在但没有 5 人结果；
+- Demo 运行后自动删除，所以 protocol 中紧接着查找 Alice memory 的步骤可能无法执行，需要重设计测试 fixture；
+- Dashboard 的数据路径/状态来源对非专家仍可更直观。
+
+### P3：缺失能力
+
+- 可玩卡牌游戏；
+- n-gram fallback；
+- 实际知识源 mount/health/delegation；
+- 全入口 character hot-load；
+- migration/dry-run/rollback/compatibility window；
+- 完整沙箱；
+- Official MCP Registry 与真实 coding-agent host tests。
+
+## 9. 推荐下一轮顺序
+
+```text
+1. 先让当前 MCP 分支恢复全绿
+2. 修所有状态漂移和 Release 部署记录
+3. 修 --help、schema --mode、Dashboard timing
+4. 增加 GitHub Actions Windows/Linux CI
+5. 完成 public identifier 清理
+6. 真正统一 resolver/runtime policy 全入口
+7. session/content provenance + vector telemetry
+8. 首次运行分项 consent
+9. 构念字典与 measurement schema
+10. 首次用户测试
+11. MCP Inspector → TestPyPI/PyPI → Registry → Host tests
+12. 再决定 v0.3 tag；不移动 alpha.2
+13. 单独设计并实现 n-gram fallback 和可玩卡牌游戏
+```
+
+## 10. 发布建议
+
+当前不适合立刻打新 tag，原因：
+
+- 工作区正在施工且测试失败；
+- main 比 alpha.2 领先 26 commits、64 文件；
+- 文档状态和代码状态有漂移；
+- v0.3 task 的验收框尚未按证据更新；
+- 无 CI。
+
+满足以下条件后再准备 v0.3 pre-release：
+
+```text
+clean worktree
+HEAD == origin/main
+all tests green
+release_verify green
+package_selfcheck green
+Windows/Linux CI green
+malicious HCP fixture green
+activation failure/recovery green
+schema --mode green
+public boundary scan green
+release notes/tag/manifest aligned
+GitHub Release deployment record prepared
+```
+
+## 11. 后辈接手说明
+
+- 开始前先运行 `git status`，当前有并发 MCP 修改；
+- 不要覆盖未提交 `pyproject.toml`、MCP server/tests/docs；
+- 正式结论绑定 `dc35830`，在途结论绑定工作区快照；
+- 不要把 Registry listing 称为认证；
+- 不要把 worktree runner 称为沙箱；
+- 不要把读取 timing 称为模型推理 span；
+- 不要把 bootstrap/κ 工具称为心理效度；
+- 不要把 role activation marker 称为全入口热挂载；
+- 不要把 tag 后的 main 能力写进 alpha.2；
+- 保持 Autonomous 与 L4/L5 actual-impact disabled；
+- 所有外部发布、账号登录、付费和设置更改需要用户授权。
+
+## 12. 最终判定
+
+```text
+项目阶段：快速发展的 alpha 工程原型
+公开可体验性：已建立
+基础可靠性：明显提升
+当前工作区健康：红灯（MCP 在途导致 tests/selfcheck 失败）
+已提交基线健康：绿灯
+外部发布：alpha.2 Pre-release 已发布
+主线发布准备：尚未
+MCP 外部生态：尚未
+可玩游戏：尚未
+生产就绪：否
+下一关键目标：恢复全绿 + 状态一致性 + CI + 数据/测量闭环
+```

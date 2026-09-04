@@ -14,3 +14,4 @@
 | 2026-09-04 | [v0.3-release-preparation-design.md](tasks/2026-09-04-v0.3-release-preparation-design.md) | designed | v0.3 | release / hcp / activation | 补安全/失败测试/发布记录 |
 
 | 2026-09-04 | [official-mcp-and-coding-agent-ecosystem-validation-design.md](tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md) | designed | v0.5+ | MCP / Registry / coding-agent / interoperability | 先修协议合规与数据边界，再做 Inspector、PyPI、Registry 和真实宿主验证 |
+| 2026-09-04 | [whole-project-progress-audit.md](tasks/2026-09-04-whole-project-progress-audit.md) | verified | v0.2-v0.5 | project audit / progress / release | 先恢复 MCP 在途分支全绿，再修状态漂移、CI、数据质量与测量闭环 |
