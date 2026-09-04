@@ -565,16 +565,16 @@ n baseline
 - ✅ Token 面板（token_usage）
 - ✅ 隐私数据流（文本版）
 - ✅ HTML 安全：CSP + HTML escaping + 无内联脚本
-- ⬜ 交互式桥图
-- ⬜ 点击节点下钻
+- ✅ 交互式桥图（用 HTML <details> 实现点击下钻，无 JS，符合 CSP）
+- ✅ 点击节点下钻（details 展开详情）
 - ⬜ span 时间线
 - ⬜ 角色画廊完整页
 
 ### P3：v0.3 角色资产化
 
-- ⬜ HCP 安全验证
-- ⬜ sandbox preview
-- ⬜ 事务化 activation
-- ⬜ rollback
+- ✅ HCP 安全验证（`character validate --target public`：distribution / private memory / real person / license / absolute path / zip traversal）
+- ✅ sandbox preview（`character preview`：只读预览，不写入）
+- ✅ 事务化 activation（切换前备份，失败可回滚）
+- ✅ rollback（`character rollback`）
 - ⬜ Character Card 映射
 - ⬜ corpus-to-draft 审批

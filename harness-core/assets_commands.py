@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 HARNESS_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness"
 CHARACTERS_DIR = HARNESS_DIR / "characters"
 ACTIVE_FILE = HARNESS_DIR / "active-character.json"
+ACTIVE_BACKUP = HARNESS_DIR / "active-character.json.bak"
 WORKSPACE_DIR = HARNESS_DIR / "workspaces"
 KNOWLEDGE_SOURCES_FILE = HARNESS_DIR / "knowledge-sources.json"
 EXAMPLE_SOURCES = ROOT / "knowledge-sources.example.json"
@@ -52,6 +53,12 @@ def cmd_character(args):
         return 1
     sub = args[0]
     rest = args[1:]
+    if sub == "validate":
+        return _cmd_character_validate(rest)
+    if sub == "preview":
+        return _cmd_character_preview(rest)
+    if sub == "rollback":
+        return _cmd_character_rollback()
     if sub == "list":
         ensure_dirs()
         items = []
@@ -154,9 +161,19 @@ def cmd_character(args):
             print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
             return 1
         manifest = read_json(manifest_path)
-        write_json(ACTIVE_FILE, {"persona_id": pid, "scope": manifest.get("scope", "character:" + pid),
-                                 "display_name": manifest.get("display_name", pid)})
-        print(json.dumps({"ok": True, "active": pid, "scope": manifest.get("scope")}, ensure_ascii=False))
+        # 事务化激活：先备份当前 active，再写入；失败可回滚
+        if ACTIVE_FILE.exists():
+            shutil.copy2(ACTIVE_FILE, ACTIVE_BACKUP)
+        try:
+            write_json(ACTIVE_FILE, {"persona_id": pid, "scope": manifest.get("scope", "character:" + pid),
+                                     "display_name": manifest.get("display_name", pid)})
+        except Exception as e:
+            if ACTIVE_BACKUP.exists():
+                shutil.copy2(ACTIVE_BACKUP, ACTIVE_FILE)
+            print(json.dumps({"ok": False, "error": "activation_failed", "detail": str(e)}, ensure_ascii=False))
+            return 1
+        print(json.dumps({"ok": True, "active": pid, "scope": manifest.get("scope"),
+                          "rollback_available": ACTIVE_BACKUP.exists()}, ensure_ascii=False))
         return 0
     if sub == "deactivate":
         if ACTIVE_FILE.exists():
@@ -194,6 +211,140 @@ def cmd_character(args):
         return 0
     print("未知 character 子命令：" + sub)
     return 1
+
+
+def _has_abs_path(text):
+    bs = chr(92)
+    return ("C:" + bs + "Users") in text or ("C:" + bs * 2 + "Users") in text or "/Users/" in text
+
+
+def _validate_package(src, target):
+    issues = []
+    if not src.exists():
+        return ["source_not_found"]
+    manifest_path = None
+    if src.is_file() and src.suffix.lower() == ".zip":
+        with zipfile.ZipFile(src) as zf:
+            names = zf.namelist()
+            for n in names:
+                if n.startswith("../") or "\\" in n or n.startswith("/"):
+                    issues.append("zip_path_traversal:" + n)
+            for n in ("package-manifest.json", "character.json"):
+                if n in names:
+                    manifest_path = "virtual:" + n
+                    break
+            if not manifest_path:
+                issues.append("manifest_not_found")
+    else:
+        for n in ("package-manifest.json", "character.json"):
+            if (src / n).exists():
+                manifest_path = src / n
+                break
+        if not manifest_path:
+            issues.append("manifest_not_found")
+    if not manifest_path:
+        return issues
+    manifest = read_json(src / "package-manifest.json") if src.is_dir() else {"_virtual": True}
+    if target == "public":
+        d = manifest.get("distribution")
+        if d != "public":
+            issues.append("distribution_not_public:" + str(d))
+        if manifest.get("contains_private_memory"):
+            issues.append("contains_private_memory")
+        if manifest.get("contains_real_person_data"):
+            issues.append("contains_real_person_data")
+        if manifest.get("license_status") != "verified":
+            issues.append("license_not_verified")
+        if manifest.get("visibility") == "private_local":
+            issues.append("private_local_manifest")
+    if not manifest.get("persona_id"):
+        issues.append("missing_persona_id")
+    # absolute path scan in all text files
+    root = src if src.is_dir() else Path(manifest_path)
+    if src.is_dir():
+        for f in src.rglob("*"):
+            if f.is_file():
+                try:
+                    t = f.read_text(encoding="utf-8", errors="replace")
+                    if _has_abs_path(t):
+                        issues.append("absolute_path:" + str(f.relative_to(src)))
+                except Exception:
+                    pass
+    elif str(manifest_path).startswith("virtual:"):
+        # zip: read manifest content
+        try:
+            with zipfile.ZipFile(src) as zf:
+                import json as _json
+                m = _json.loads(zf.read(manifest_path.split(":")[-1]))
+                if "persona_id" not in m:
+                    issues.append("missing_persona_id")
+        except Exception:
+            issues.append("invalid_manifest")
+    return issues
+
+
+def _cmd_character_validate(args):
+    target = "public"
+    package = ""
+    i = 0
+    while i < len(args):
+        if args[i] == "--package" and i + 1 < len(args):
+            package = args[i + 1]; i += 2
+        elif args[i] == "--target" and i + 1 < len(args):
+            target = args[i + 1]; i += 2
+        else:
+            i += 1
+    if not package:
+        print("用法：harness.py character validate --package <path> [--target public]")
+        return 1
+    issues = _validate_package(Path(package).expanduser().resolve(), target)
+    ok = not issues
+    print(json.dumps({"ok": ok, "target": target, "package": package, "issues": issues},
+                     ensure_ascii=False, indent=2))
+    return 0 if ok else 1
+
+
+def _cmd_character_preview(args):
+    package = args[0] if args else ""
+    if not package:
+        print("用法：harness.py character preview <path>")
+        return 1
+    src = Path(package).expanduser().resolve()
+    if not src.exists():
+        print(json.dumps({"ok": False, "error": "source_not_found", "path": str(src)}, ensure_ascii=False))
+        return 1
+    # dry-run preview: no writes
+    manifest_path = src / "package-manifest.json" if src.is_dir() else None
+    if src.is_file() and src.suffix.lower() == ".zip":
+        with zipfile.ZipFile(src) as zf:
+            names = zf.namelist()
+            for n in ("package-manifest.json", "character.json"):
+                if n in names:
+                    manifest_path = "virtual:" + n
+                    break
+    if not manifest_path:
+        print(json.dumps({"ok": False, "error": "manifest_not_found"}, ensure_ascii=False))
+        return 1
+    if isinstance(manifest_path, Path):
+        manifest = read_json(manifest_path)
+    else:
+        with zipfile.ZipFile(src) as zf:
+            import json as _json
+            manifest = _json.loads(zf.read(manifest_path.split(":")[-1]))
+    print(json.dumps({"ok": True, "preview": True, "package": str(src), "manifest": manifest},
+                     ensure_ascii=False, indent=2))
+    return 0
+
+
+def _cmd_character_rollback():
+    if not ACTIVE_BACKUP.exists():
+        print(json.dumps({"ok": False, "error": "no_backup"}, ensure_ascii=False))
+        return 1
+    prev = read_json(ACTIVE_BACKUP)
+    write_json(ACTIVE_FILE, prev)
+    ACTIVE_BACKUP.unlink(missing_ok=True)
+    print(json.dumps({"ok": True, "active": prev.get("persona_id")}, ensure_ascii=False))
+    return 0
 
 
 def cmd_knowledge(args):
