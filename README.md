@@ -312,6 +312,7 @@ python harness.py evidence create --task example-task [--workspace <ws>]
 python harness.py evidence handoff --task example-task
 python harness.py ecosystem status      # Agent 生态兼容矩阵
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
+python -m unittest discover              # 标准库功能回归测试
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
 python harness.py notebook note --scope game:demo --text '...' --kind manual
@@ -397,7 +398,9 @@ comparison_commands.py  ab role/retriever + evidence bundle
 harness_core/           稳定 Python API（MemoryClient/EventClient/UsageClient）
 schemas/situated-mode.schema.json  情境模式 schema
 harness-core/personas/demo-modes/  合成角色模式示例
-harness_core/adapters/  OpenAI-compatible adapter
+harness_core/adapters/  OpenAI-compatible adapter + MCP server (stdio)
+harness_core/measurement_utils.py  bootstrap CI / Cohen's kappa
+tests/                  标准库 unittest（API/ecosystem/MCP/activation/measurement）
 ecosystem_status.py     生态兼容矩阵状态
 schemas/                统一角色/事件/token schema
 unified-object-model.example.json  统一对象模型示例

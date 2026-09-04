@@ -496,8 +496,9 @@ telemetry 记录什么 / 返回码是什么
 
 - ✅ 稳定 Python API 基础（`harness_core.MemoryClient/EventClient/UsageClient`）
 - ✅ OpenAI-compatible adapter 基础（`harness_core.adapters.openai_compatible`）
+- ✅ MCP server 原型（`harness.py mcp serve`，stdio JSON-RPC，暴露 memory/events/usage）
 - ✅ 兼容矩阵文件与 `ecosystem status` 基础
-- 🚧 R1 证据未满：已有 `examples/agent-integrations/` fixtures；仍无 MCP server / 官方集成测试
+- 🚧 R1 证据未满：已有 fixtures + MCP server 原型；仍无官方集成测试 / 认证
 - ⬜ adapter 权限 manifest 完整版
 - ⬜ 跨前端 scope 保持一致
 - ⬜ 无密钥进入 trace 验证

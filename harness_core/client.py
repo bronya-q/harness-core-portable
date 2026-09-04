@@ -32,6 +32,13 @@ class _Base:
     def _env(self):
         env = dict(os.environ)
         env["DSH_HOME"] = str(self.data_dir.parent)
+        # notebook.py 使用 Path.home()，需要把 HOME/USERPROFILE 指到临时用户目录
+        if self.data_dir.parent.name == ".dsh":
+            home = self.data_dir.parent.parent
+        else:
+            home = self.data_dir.parent
+        env["HOME"] = str(home)
+        env["USERPROFILE"] = str(home)
         return env
 
     def _run(self, script, *args):
