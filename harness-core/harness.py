@@ -46,6 +46,7 @@ PASSTHROUGH = {
     "doctor": ["ux_commands.py", ["doctor"]],
     "inspect": ["ux_commands.py", ["inspect"]],
     "data": ["ux_commands.py", ["data"]],
+    "dashboard": ["dashboard.py", []],
 }
 
 # Fine-grained subcommands

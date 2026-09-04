@@ -185,6 +185,7 @@ python roleplay_memory_chat.py --help
 
 ```bash
 python harness.py demo --offline        # 5 分钟离线可感知演示（合成数据）
+python harness.py dashboard build       # 生成本地只读 HTML 控制台
 python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
 python release_verify.py                # 发布物 SHA-256 清单校验
 python harness.py audit                 # 聚合自检（生产门控 fail-closed）
@@ -249,6 +250,7 @@ QUICKSTART.md           English quickstart
 QUICKSTART.zh-CN.md     中文快速开始
 开始体验.bat            Windows 双击入口
 demo_experience.py       离线可感知演示（合成数据，一键清理）
+dashboard.py             本地只读 HTML 控制台生成器
 local_records_export.py   本地记录快照生成脚本（需在原始环境运行）
 local_records_verify.py  本地记录快照校验脚本
 MENTAL_MODEL_EFFECTS.md 心智效果说明
