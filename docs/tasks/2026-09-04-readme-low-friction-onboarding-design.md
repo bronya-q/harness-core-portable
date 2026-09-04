@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: documentation-and-ux
-source_commit: b450db2
+source_commit: c98320b
 target_version: v0.2+
 public: true
 contains_private_data: false
