@@ -1,6 +1,6 @@
 ---
-title: GitHub tag v0.1.0-alpha.3（tag-only；Release 页面待创建）
-status: implemented
+title: GitHub Pre-release v0.1.0-alpha.3
+status: deployed
 kind: deployment-record
 date: 2026-09-04
 deployed_at: 2026-09-04
@@ -13,11 +13,11 @@ contains_private_data: false
 topics: [release, alpha, github, mcp, character, workspace]
 ---
 
-# GitHub Tag v0.1.0-alpha.3 部署记录（tag-only）
+# GitHub Pre-release v0.1.0-alpha.3 部署记录
 
 ## 1. 部署摘要
 
-在 main 分支创建 `v0.1.0-alpha.3` annotated tag 并推送。本次只完成 tag 部署；**未创建 GitHub Pre-release/Release 页面**。创建页面需用户授权，本记录不伪造 `deployed` 状态。
+在 main 分支创建 `v0.1.0-alpha.3` annotated tag 并推送；随后经用户授权，使用 `gh release create` 创建 GitHub Pre-release 页面。
 
 ## 2. 用户可感知变化
 
@@ -51,8 +51,8 @@ topics: [release, alpha, github, mcp, character, workspace]
 
 - MCP Inspector / Official Registry / Claude Code / Codex / Copilot
 - 首次用户真实测试
-- GitHub Pre-release 页面创建（需明确授权 + gh/UI）
 - 第三方 clone + ZIP 回读
+- MCP Inspector / Official Registry / 真实宿主仍待后续
 
 ## 7. 回滚方法
 
@@ -60,5 +60,6 @@ topics: [release, alpha, github, mcp, character, workspace]
 
 ## 8. 后辈接手说明
 
-- 确认 Release 页面是否创建
+- Release 页面已创建（Pre-release，draft=false）
+- 第三方 clone + ZIP 回读仍待核验
 - 检查 `character mode` / `workspace worktree` / `mcp` 命令

@@ -32,7 +32,7 @@
 | 层 | 状态 |
 |---|---|
 | Last verified release baseline | `v0.1.0-alpha.1`（tag 在远端） |
-| Current main release | `v0.1.0-alpha.3`（tag-only；Release 页面待授权创建） |
+| Current main release | `v0.1.0-alpha.3`（GitHub Pre-release 已创建） |
 | Current main capabilities | 已包含 demo/UX/控制台/用户控制/角色资产/知识域/工程工作区/公共边界 |
 | Unreleased working-tree changes | 当前工作区干净，与 origin/main 同步 |
 | Planned capabilities | 见 v0.2–v0.5 |
