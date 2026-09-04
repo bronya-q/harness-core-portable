@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T13:54:39.005721+00:00",
+  "generated_at": "2026-09-04T13:56:37.334947+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 194,
+  "count": 195,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -33,7 +33,7 @@
     "README.md": "960257bd0d47350263353780b33c3977984e28be7225fa52e9a95bc3bef7a1f4",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
-    "ROADMAP.md": "56a97817692e61adf9b19d713db16b96a69fdbfbb783e66dd0f2b22e839f30af",
+    "ROADMAP.md": "8f8a38abbd8d5e195cbe3cdcd2678f58b0fb2cc949f7d7cf6b5fff705332c6c7",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "d4f0c5ae7da500e9bb5e11747f00dfae230420defa059e378d3e58e5691ddb47",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
@@ -53,6 +53,7 @@
     "docs/project-intro-and-feedback.md": "633b87af4176ef2fcdb9c7320a41d5ede98bd934abb9b11d18390fa512b1a66f",
     "docs/releases/v0.1.0-alpha.2.md": "e4b281bf40d7bd8de0a31c7facee23ef9e2733a3586e68897bdda409f059ecc0",
     "docs/releases/v0.1.0-alpha.3.md": "0b6dab71ff5117d6cb7b98712c170fa7e9900619e800347e79c56f7e3c405438",
+    "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
     "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "f9b44cb2eaa186813e181dbecae2fba7743c836c3b6942c769605bb49559a54b",
     "docs/tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md": "99fbca62f8be13f43e313741624f8ab9db697b6037f288f72709874ce8c486b2",
