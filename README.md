@@ -245,6 +245,7 @@ EFFECTS.md              效果与个性化边界
 LOCAL_RECORDS.md        本地记录：有什么、能说明什么、不能说明什么
 ROADMAP.md             产品路线与未实现方向：角色资产化/运行桥/上下文成本/控制台/日记内省
 KNOWLEDGE_STEWARDSHIP.md  角色化知识治理：Blanche/Markos/Evil 的知识域、职责、权限与桥图
+ENGINEERING_ROLES.md    工程角色体系：谁负责规划/实现/测试/审查/发布/维护/恢复
 RESEARCH.md             研究动机、范式、数据与效果
 PRE_MODEL_BASELINE.md   前心智模型基线：本机记忆/md 材料清点与研究建议
 local-records-snapshot.public.json  机器可读本地记录快照（脱敏指标）

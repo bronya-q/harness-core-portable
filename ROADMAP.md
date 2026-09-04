@@ -11,6 +11,7 @@
 本地优先的 AI 角色与长期心智工作台：管理角色资产、经历、日记、内省、共享世界、上下文成本与运行权限。
 
 > 关于“角色化知识治理 / Knowledge Stewardship”的完整方向见 `KNOWLEDGE_STEWARDSHIP.md`。
+> 关于“工程角色体系 / Engineering Roles”的完整方向见 `ENGINEERING_ROLES.md`。
 
 ---
 
