@@ -225,6 +225,21 @@ def main():
     if not prov_html:
         prov_html = "<p class='muted'>暂无 usage。</p>"
 
+    # 最近写操作（可撤销预览）
+    notes_db = DATA_DIR / "notebooks.db"
+    manual_notes = _q(notes_db, "SELECT id,scope,kind,content,version,status,created_at FROM notebooks WHERE kind='manual' ORDER BY created_at DESC LIMIT 8")
+    manual_html = ""
+    if manual_notes:
+        for n in manual_notes:
+            status = "active" if n.get("status") in (None, "", "active") else n.get("status")
+            undo_hint = ("python harness.py memory undo --id %s" % n.get("id")) if status == "active" else "已归档，可用 restore 恢复"
+            manual_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:100%%'>v%s · %s</div>"
+                            "<span class='st-muted'>%s · %s</span></div>"
+                            % (_html(n.get("scope")), _html(n.get("version")), _html(status),
+                               _html((n.get("content") or "")[:60]), _html(undo_hint)))
+    else:
+        manual_html = "<p class='muted'>暂无手动写操作记录。</p>"
+
     # 运行桥彩色状态条（纯 CSS CSP-safe）
     try:
         policy = runtime_policy.load()
@@ -347,6 +362,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
   <div class="card"><h2>向量队列</h2>{vq_html}</div>
 </div>
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
+<div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>

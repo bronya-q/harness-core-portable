@@ -95,6 +95,17 @@ class KnowledgeStewardshipTest(unittest.TestCase):
         self.assertIn("demo-archivist", d["responsible_roles"])
         self.assertTrue(d["allowed"])
 
+    def test_suggest_returns_limited_readonly_snippet(self):
+        kb_dir = self.home / "local" / "kb-a"
+        (kb_dir / "theory.md").write_text("女性主义理论强调差异性、情境与批判性。", encoding="utf-8")
+        p = self._run("suggest", "--question", "女性主义理论怎么理解？", "--role", "demo-archivist", "--limit", "3")
+        self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+        d = json.loads(p.stdout)
+        self.assertTrue(d["ok"])
+        self.assertTrue(d["allowed"])
+        self.assertTrue(d["delegate"]["matched"])
+        self.assertTrue(any("女性主义理论强调差异性" in m.get("snippet", "") for m in d["matches"]))
+
 
 if __name__ == "__main__":
     unittest.main()
