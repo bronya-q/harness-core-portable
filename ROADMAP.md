@@ -32,7 +32,7 @@
 | 层 | 状态 |
 |---|---|
 | Last verified release baseline | `v0.1.0-alpha.1`（tag 在远端） |
-| Current main release | `v0.1.0-alpha.3`（next Pre-release） |
+| Current main release | `v0.1.0-alpha.3`（tag-only；Release 页面待授权创建） |
 | Current main capabilities | 已包含 demo/UX/控制台/用户控制/角色资产/知识域/工程工作区/公共边界 |
 | Unreleased working-tree changes | 当前工作区干净，与 origin/main 同步 |
 | Planned capabilities | 见 v0.2–v0.5 |
@@ -300,7 +300,7 @@ source revoked/deleted
 - 节点状态：green / blue / yellow / gray / red / purple（同时有文字）
 - 点击节点看候选数、注入数、字符/token、延迟、被过滤原因
 
-**未实现**：交互式桥图、点击下钻、span 时间线。
+**已实现（R1）**：静态交互式桥图（HTML `<details>`）、点击下钻、span 结构示意与数据读取真实耗时；模型推理 span 与真实 provider span 尚未接入。
 
 ---
 

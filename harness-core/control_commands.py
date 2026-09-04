@@ -25,6 +25,7 @@ SKILL = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 BACKUP_ROOT = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-backups"
 PRIVACY_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
+CONSENT_FILE = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "consent.json"
 
 
 def _run(script, *args):
@@ -116,7 +117,7 @@ def cmd_memory(args):
 
 def cmd_privacy(args):
     if not args:
-        print("用法：harness.py privacy status|export|reset-demo")
+        print("用法：harness.py privacy status|consent|export|reset-demo")
         return 1
     sub = args[0]
     if sub == "status":
@@ -131,6 +132,45 @@ def cmd_privacy(args):
         print(json.dumps({"ok": True, "data_dir": str(DATA_DIR), "files": names,
                           "total_mb": round(total, 2), "auto_upload": False}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "consent":
+        if not args:
+            print("用法：harness.py privacy consent --status|--set --scope <s> --items <comma,list>")
+            return 1
+        if "--status" in args:
+            if CONSENT_FILE.exists():
+                d = json.loads(CONSENT_FILE.read_text(encoding="utf-8"))
+                print(json.dumps({"ok": True, "consent": d}, ensure_ascii=False, indent=2))
+                return 0
+            print(json.dumps({"ok": False, "error": "consent_not_recorded",
+                              "note": "首次运行的逐项同意尚未记录；默认不做任何自动上传/自动执行。"},
+                             ensure_ascii=False, indent=2))
+            return 1
+        if "--set" in args:
+            scope = ""
+            items = ""
+            i = 1
+            while i < len(args):
+                if args[i] == "--scope" and i + 1 < len(args):
+                    scope = args[i + 1]; i += 2
+                elif args[i] == "--items" and i + 1 < len(args):
+                    items = args[i + 1]; i += 2
+                else:
+                    i += 1
+            if not scope or not items:
+                print("用法：privacy consent --set --scope <s> --items memory,story,notebook,telemetry")
+                return 1
+            allowed = {"memory", "story", "notebook", "telemetry"}
+            choice = {x.strip(): True for x in items.split(",") if x.strip() in allowed}
+            CONSENT_FILE.parent.mkdir(parents=True, exist_ok=True)
+            d = {"schema_version": 1, "scope": scope, "items": choice,
+                 "set_at": datetime.now().isoformat(),
+                 "note": "这些是本机功能开关，不等于上传授权；上传仍为 NONE。"}
+            CONSENT_FILE.write_text(json.dumps(d, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+            print(json.dumps({"ok": True, "consent_file": str(CONSENT_FILE), "consent": d},
+                             ensure_ascii=False, indent=2))
+            return 0
+        print("用法：harness.py privacy consent --status|--set --scope <s> --items <comma,list>")
+        return 1
     if sub == "export":
         PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
         out = PRIVACY_DIR / "privacy-export.json"

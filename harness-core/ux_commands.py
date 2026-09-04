@@ -27,6 +27,9 @@ SKILL = Path(__file__).resolve().parent
 ROOT = SKILL.parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 
+sys.path.insert(0, str(SKILL))
+import vector_queue  # noqa: E402
+
 
 def _read_policy_example():
     p = SKILL / "runtime-policy.example.json"
@@ -180,6 +183,11 @@ def cmd_data_status():
             print(f"  ✓ {name}: {size_mb:.2f} MB")
     if not has:
         print("  暂无数据库文件（还没有写入过数据）")
+    vq = vector_queue.queue_status()
+    if vq.get("ok"):
+        print("  vector_queue.db: pending={pending} processing={processing} done={done} failed={failed} stale={stale}".format(**vq))
+    else:
+        print("  vector_queue.db: 未初始化/不可读（这通常是正常的）")
     print(f"\n  合计约 {total:.2f} MB")
     print("  无自动上传。")
     print("  可随时运行 `python harness.py demo --reset` 清理 demo 临时数据。")

@@ -475,3 +475,19 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 生产就绪：否
 下一关键目标：状态一致性 + CI + resolver/policy 全入口 + 数据/测量闭环
 ```
+
+## 13. 后续处理记录（2026-09-04 续）
+
+在报告提交后，按推荐顺序推进了以下项：
+
+1. 状态漂移：`AGENT_COMPATIBILITY.json` MCP 改为 R1；`mcpREADME.md` 改为“已有 R1 server”；alpha.2 部署记录改为 deployed；alpha.3 改为 tag-only（status=implemented）；DEPLOYMENTS_INDEX 加入 alpha.3；ROADMAP 修正 alpha.3 与 Runtime Bridge 状态；v0.3 task 的 ADS/MIME/激活测试更新；pyproject version 对齐 PEP 440 `0.1.0a3`。
+2. CLI/Schema：根 `harness.py --help` 返回 0；`schema validate --mode` 接线并支持 modes 集合；`schema list` 增加 measurement。
+3. CI：新增 `.github/workflows/ci.yml`（Windows/Linux × py3.11/3.13）。
+4. 公开边界：扫描确认私有角色名只保留在 `local_records_export.py` 的 sanitizer 映射中，作为替换规则而非公开内容。
+5. Runtime policy：默认 `g1_expression` / `dynamic_memory` 改为 canary（与 example policy 对齐）；autonomous_tasks 仍 disabled。
+6. Provenance / telemetry：event 增加 `session_provenance` / `content_provenance`；Dashboard 增加来源分组；`vector_queue.queue_status()` 与 `data status` 暴露队列摘要。
+7. Consent：`privacy consent --status/--set` 实现首次运行分项同意记录。
+8. 构念字典：新增 `docs/measurement/CONSTRUCT_DICTIONARY.md` 与 `schemas/measurement.schema.json`。
+9. n-gram fallback：新增 `harness-core/ngram_fallback.py` 与 `tests/test_ngram_fallback.py`（目前 unittest 9 个用例）。
+
+仍未做：MCP Inspector/Registry/host、用户首测、alpha.3 Release 页面、可玩卡牌游戏、完整 resolver/policy 全入口覆盖。

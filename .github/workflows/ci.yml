@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ["3.11", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package (optional MCP extra)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[mcp]" || python -m pip install -e .
+      - name: Release verify
+        run: python release_verify.py
+      - name: Package selfcheck
+        run: python package_selfcheck.py
+      - name: Unit tests
+        run: python -m unittest discover

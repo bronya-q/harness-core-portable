@@ -4,7 +4,7 @@
 import json, os
 from pathlib import Path
 DATA=Path(os.environ.get('MEMORY_EMOTION_DATA_DIR',str(Path.home()/'.dsh/memory-emotion')))
-FLAGS={'g1_expression':'shadow','dynamic_memory':'shadow','belief':'shadow','three_needs':'shadow','autonomous_tasks':'disabled'}
+FLAGS={'g1_expression':'canary','dynamic_memory':'canary','belief':'shadow','three_needs':'shadow','autonomous_tasks':'disabled'}
 BOUNDS={'dynamic_memory':{'max_recall_items':3,'max_recall_chars':1200,'allowed_scopes':['character:demo-bob','character:demo-alice','character:demo-storykeeper','persona-cards'],'current_stage':'bounded_canary'}}
 
 def load():
