@@ -55,6 +55,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - Dashboard 新增「公共边界快照」卡片
   - 扫描 README / CONTRIBUTING / SECURITY / LICENSE 中的私人标识与绝对路径
   - 命中时高亮提示需人工确认；默认关键公开文件应为干净
+- [x] **首次使用向导细化**
+  - `start` 首次同意后显示「首次使用提示」
+  - 选择 Demo 前提示临时合成数据/自动清理/--keep
 
 ## 尝试过 / 未通过
 
