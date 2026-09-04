@@ -13,6 +13,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 
 # alpha.4 实现推进记录
 
+> ⏸️ **施工暂停 / CONSTRUCTION PAUSED**
+>
+> 当前暂停批量功能推进，本记录转为存档。恢复时先核对本文件与 `docs/tasks/2026-09-04-partial-implementation-inventory.md`。
+
 > 本记录是 alpha.4 的内部推进日志；状态只表示“已做/未做/尝试过”，不表示生产就绪。
 
 ## 已完成

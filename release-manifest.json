@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T15:44:19.657885+00:00",
+  "generated_at": "2026-09-04T15:50:16.870396+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 208,
   "files": {
@@ -56,12 +56,12 @@
     "docs/project-intro-and-feedback.md": "e14bd254c9eeb0346210dedaea4d7d8eb19a4a4c40e40011563e635fee7186b8",
     "docs/releases/v0.1.0-alpha.2.md": "e4b281bf40d7bd8de0a31c7facee23ef9e2733a3586e68897bdda409f059ecc0",
     "docs/releases/v0.1.0-alpha.3.md": "c9880d0301694835a3ddb817cfa361419247463bc54291ce47bb20e99edef815",
-    "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "18de33cb3641dc7a165879f41e2170ca5eab8101ee077091b5c159a8d8dfa090",
+    "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "63eed02666bcf5de74ed16b1ef01925514830cacb8f1ad3105fe4eae71f3a57a",
     "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
     "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "f9b44cb2eaa186813e181dbecae2fba7743c836c3b6942c769605bb49559a54b",
     "docs/tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md": "99fbca62f8be13f43e313741624f8ab9db697b6037f288f72709874ce8c486b2",
-    "docs/tasks/2026-09-04-partial-implementation-inventory.md": "8a5a7d45e28ace16a53d251e6bf10b130880ff0aa713cefaba4a189fc255a2b3",
+    "docs/tasks/2026-09-04-partial-implementation-inventory.md": "54881b26e8b037e318f273890439d71662a59c8ebefa402f7946e47f836d6469",
     "docs/tasks/2026-09-04-public-release-alpha2-design.md": "ad3c0e5e553c830c667b7e2fd224e11f67dd8f1d11ad3826bc41e354b00ccf2d",
     "docs/tasks/2026-09-04-rawmem-memdsl-learning-and-adaptation-design.md": "7197fb5775a9a9ea27d82f5e3d601dac2b46cfa485b3a5c6aad59ddbb1a9ace1",
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",

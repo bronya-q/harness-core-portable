@@ -1,6 +1,6 @@
 ---
 title: 部分实现清单（诚实盘点）
-status: drafted
+status: archived-paused
 kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
@@ -11,6 +11,11 @@ topics: [inventory, partial, gap, roadmap, review]
 ---
 
 # 部分实现清单（诚实盘点）
+
+> ⏸️ **施工暂停 / CONSTRUCTION PAUSED**
+>
+> 本清单作为**存档记录**保留。当前暂停批量功能推进，优先转为等待首次用户反馈、外部环境验证与后续授权。
+> 之后如需恢复，应先核对 `docs/tasks/2026-09-04-alpha4-implementation-progress.md` 的最新状态。
 
 > 结论先说：**这个项目几乎每个被提到的能力都只完成了一部分。**
 > 下面不是“批评”，而是为了下一轮 alpha.4 能把有限的精力放到真正缺人的地方。
