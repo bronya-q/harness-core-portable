@@ -28,6 +28,7 @@ sys.path.insert(0, str(SKILL))
 from event_store import list_events, list_usage  # noqa: E402
 from vector_queue import queue_status  # noqa: E402
 import assets_commands  # noqa: E402
+import runtime_policy  # noqa: E402
 OUT_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
 OUT_FILE = OUT_DIR / "index.html"
 
@@ -211,6 +212,60 @@ def main():
     if not prov_html:
         prov_html = "<p class='muted'>暂无 usage。</p>"
 
+    # 运行桥彩色状态条（纯 CSS CSP-safe）
+    try:
+        policy = runtime_policy.load()
+    except Exception:
+        policy = {}
+    flags = policy.get("flags", {}) if isinstance(policy, dict) else {}
+    bounds = policy.get("_bounds", {}) if isinstance(policy, dict) else {}
+    dyn_mode = flags.get("dynamic_memory", "shadow")
+    g1_mode = flags.get("g1_expression", "canary")
+
+    def _status_bar(label, state, color, extra=""):
+        pct = {"ok": 100, "warn": 70, "block": 20, "info": 50}.get(color.split("_")[0] if "_" in color else color, 50)
+        cls = {"green": "st-green", "yellow": "st-yellow", "red": "st-red", "blue": "st-blue"}.get(color, "st-blue")
+        return ("<div class='st-row'><span class='st-label'>%s</span>"
+                "<div class='st-bar %s' style='width:%d%%'>%s</div>"
+                "<span class='st-muted'>%s</span></div>"
+                % (_html(label), cls, pct, _html(state), _html(extra)))
+
+    bridge_html = _status_bar("① Scope Resolver", "已解析", "green",
+                              "角色/项目 %d 个；跨角色默认 BLOCK" % len(scopes))
+    bridge_html += _status_bar("② Perspective Card", "已加载", "green",
+                               "%s 角色资产" % (", ".join(scopes[:2]) if scopes else "暂无"))
+    bridge_html += _status_bar("③ Memory Recall", dyn_mode, {"canary": "yellow", "shadow": "yellow", "disabled": "blue"}.get(dyn_mode, "yellow"),
+                               "active %d 条；recall limit %s" % (mem_active, bounds.get("dynamic_memory", {}).get("max_recall_items", "N/A")))
+    bridge_html += _status_bar("④ Notebook / Story Core", "%d 笔记 / v%s" % (len(notes), (story[0].get("version") if story else "-")),
+                               "green" if notes or story else "blue", "本地只读")
+    bridge_html += _status_bar("⑤ Runtime Policy", "autonomous disabled", "green",
+                               "network NONE · g1=%s" % (g1_mode or "canary"))
+    bridge_html += _status_bar("⑥ Model → Output → Telemetry", "记录", "green" if usage else "blue",
+                               "usage %d 条 · provider_reported=%d" % (len(usage), sum(1 for u in usage if u.get("usage_source") == "provider_reported")))
+
+    # 知识域关系网格：角色 ↔ 知识域 ↔ 权限
+    roles_for_grid = [c.get("persona_id") for c in chars] or ["demo-archivist"]
+    sources_for_grid = kh.get("checks", [])
+    grid_html = "<div class='kgrid'><div class='kgrid-row kgrid-head'><span>角色</span>"
+    for c in sources_for_grid:
+        grid_html += "<span>%s</span>" % _html(c.get("display_name") or c.get("source_id"))
+    grid_html += "</div>"
+    for role in roles_for_grid[:10]:
+        grid_html += "<div class='kgrid-row'><span class='kgrid-role'>%s</span>" % _html(role)
+        for c in sources_for_grid:
+            stewards = c.get("stewards", [])
+            bound = c.get("bound_roles", [])
+            if role in stewards:
+                cell = ("<span class='kgrid-cell st-green'>steward</span>")
+            elif role in bound:
+                cell = ("<span class='kgrid-cell st-blue'>reader</span>")
+            elif c.get("default_access") == "deny":
+                cell = ("<span class='kgrid-cell st-red'>blocked</span>")
+            else:
+                cell = ("<span class='kgrid-cell st-yellow'>guest</span>")
+            grid_html += cell
+        grid_html += "</div>"
+
     page = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <title>Harness Mind Console</title>
@@ -232,6 +287,16 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 .hb-row{{display:flex;align-items:center;gap:.5rem;margin:.3rem 0;font-size:.85rem}}
 .hb-row>span{{width:130px;flex-shrink:0;text-align:right;color:#444}}
 .hb{{background:#8bb8d8;color:#fff;border-radius:3px;padding:.15rem .3rem;min-width:2rem;font-size:.75rem;white-space:nowrap}}
+.st-row{{display:flex;align-items:center;gap:.5rem;margin:.35rem 0;font-size:.85rem}}
+.st-label{{width:160px;flex-shrink:0;text-align:right;color:#444}}
+.st-bar{{color:#fff;border-radius:3px;padding:.15rem .3rem;font-size:.75rem;white-space:nowrap;min-width:3rem;text-align:center}}
+.st-green{{background:#2e7d32}} .st-yellow{{background:#f9a825}} .st-red{{background:#c62828}} .st-blue{{background:#1565c0}}
+.st-muted{{color:#888;font-size:.8rem;margin-left:.3rem}}
+.kgrid{{display:grid;gap:.3rem;font-size:.8rem}}
+.kgrid-row{{display:grid;grid-template-columns:130px repeat(auto-fit,minmax(110px,1fr));gap:.3rem;align-items:center}}
+.kgrid-head span{{font-weight:bold;background:#eef2f7;border-radius:4px;padding:.3rem}}
+.kgrid-role{{background:#f5f5f5;border-radius:4px;padding:.3rem}}
+.kgrid-cell{{border-radius:4px;padding:.3rem;text-align:center;color:#fff}}
 </style></head><body>
 <h1>Harness Mind Console</h1>
 <p class="muted">本地只读静态报告 · 不自动上传 · 不开放端口</p>
@@ -256,13 +321,13 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>估算上下文 token（按字符/4 估算）</h2>
 <p>日记 {_html(est['diary'])} · 经历摘要 {_html(est['episodes'])} · 笔记 {_html(est['notes'])} tokens</p>
 <p class="muted">估算值，不是模型真实 usage；真实 token 以 provider 为准。</p></div>
-<div class="card"><h2>运行桥（点击节点查看详情）</h2>
-<details><summary>① 用户输入 → Scope Resolver</summary><p>解析当前角色/项目 scope；跨角色记忆默认 BLOCK。</p></details>
-<details><summary>② Perspective Card</summary><p>{_html(roles[:80])} 已加载人格/边界。</p></details>
-<details><summary>③ Memory Recall</summary><p>候选 {_html(mem_active)} 条 active；实际注入比例见 Token 面板。</p></details>
-<details><summary>④ Notebook / Story Core</summary><p>经历笔记 {len(notes)} 条；Story Core 版本见上方。</p></details>
-<details><summary>⑤ Runtime Policy → Prompt Builder</summary><p>自动执行 <b>DISABLED</b>；网络上传 <b>NONE</b>。</p></details>
-<details><summary>⑥ Model → Output → Telemetry → Auto-note</summary><p>详见统一事件时间线。</p></details>
+<div class="card"><h2>运行桥（彩色状态条）</h2>
+<div class="st-track">{bridge_html}</div>
+<p class="st-muted">状态条为只读投影，不表示真实推理/接线；颜色只表示当前本地状态。</p>
+</div>
+<div class="card"><h2>知识域关系网格（角色 ↔ 知识域 ↔ 权限）</h2>
+<div class="kgrid">{grid_html}</div>
+<p class="st-muted">grid 只显示本地角色资产与知识源配置；没有真实知识正文访问。</p>
 </div>
 <div class="grid">
   <div class="card"><h2>知识域与挂载</h2>{kn_html}</div>
