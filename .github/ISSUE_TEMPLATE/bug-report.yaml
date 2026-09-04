@@ -1,0 +1,27 @@
+name: Bug report
+description: 提交可复现问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: 你运行了哪个命令？
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 你期待看到什么？
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际发生了什么？
+  - type: checkboxes
+    id: env
+    attributes:
+      label: 环境
+      options:
+        - label: 使用 Ollama
+        - label: 使用 demo 数据
+        - label: 愿意附上脱敏 doctor 输出

@@ -1,0 +1,14 @@
+name: Privacy concern
+description: 隐私、路径、密钥或数据泄漏
+title: "[Privacy] "
+labels: ["security"]
+body:
+  - type: textarea
+    id: detail
+    attributes:
+      label: 问题描述
+      description: 请不要粘贴 API key、真实对话、用户名路径或私有人格卡。
+  - type: input
+    id: file
+    attributes:
+      label: 相关文件
