@@ -31,6 +31,7 @@ class DashboardVisualizationTest(unittest.TestCase):
             self.assertIn("工程工作区 / Evidence", s)
             self.assertIn("Workspace", s)
             self.assertIn("Evidence Bundle", s)
+            self.assertIn("公共边界快照", s)
             self.assertIn("hb-row", s)
         finally:
             shutil.rmtree(home, ignore_errors=True)

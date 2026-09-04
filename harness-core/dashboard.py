@@ -288,6 +288,42 @@ def main():
 
     web_html = "<p>Workspaces: %d · Evidence: %d</p>" % (len(workspaces), len(evidence))
 
+    # 公共边界快照（粗略扫描，不替代人工审查）
+    boundary_patterns = [
+        ("demo-alice", ["demo-alice"]),
+        ("demo-storykeeper", ["demo-storykeeper"]),
+        ("demo-bob", ["demo-bob"]),
+        ("local-persona", ["local-persona"]),
+        ("本机知识管理员 A", ["本机知识管理员 A"]),
+        ("本机知识管理员 B", ["本机知识管理员 B"]),
+        ("本机综合人格 A", ["本机综合人格 A"]),
+        ("windows_abs_path", [r"c:\users", "c:/users", r"c:\documents", "c:/documents"]),
+        ("private_overlay", [".dsh/harness-local", "personas.local.json"]),
+    ]
+    boundary_files = ["README.md", "CONTRIBUTING.md", "SECURITY.md", "LICENSE"]
+    found = []
+    for rel in boundary_files:
+        f = SKILL.parent / rel
+        if not f.exists():
+            continue
+        try:
+            txt = f.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+        for label, needles in boundary_patterns:
+            for needle in needles:
+                if needle.lower() in txt.lower():
+                    found.append({"file": rel, "pattern": label, "count": txt.lower().count(needle.lower())})
+    boundary_html = ""
+    if found:
+        for item in found[:12]:
+            boundary_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:100%%'>%s</div>"
+                              "<span class='st-muted'>%s · x%d</span></div>"
+                              % (_html(item["file"]), _html(item["pattern"]), _html(item["file"]), item["count"]))
+        boundary_html += "<p class='st-muted'>⚠️ 命中公共文件，需人工确认是否属于边界文档/示例。</p>"
+    else:
+        boundary_html = "<p class='ok'>未在关键公开文件中命中明显私人标识/绝对路径。</p>"
+
     # 运行桥彩色状态条（纯 CSS CSP-safe）
     try:
         policy = runtime_policy.load()
@@ -412,6 +448,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
 <div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
 <div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
+<div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>

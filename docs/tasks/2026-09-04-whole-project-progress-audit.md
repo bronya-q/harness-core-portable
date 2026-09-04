@@ -559,3 +559,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **知识桥受控返回预算**：`knowledge access` / `knowledge suggest` 支持 `--max-chars`，默认 200，片段按预算截断并返回 `max_chars`。
 - **MCP Inspector 根因线索**：用最小 Node MCP server 手动 stdio 正常，但 Inspector CLI 仍报 `No servers found in config file`，说明该 CLI 版本可能要求 `--server-url` 或 catalog/config 条目，而非直接传 stdio 命令。
+
+## 25. 后续处理记录（2026-09-04 续 13）
+
+- **合规/公共边界快照**：Dashboard 新增「公共边界快照」卡片，扫描 README/CONTRIBUTING/SECURITY/LICENSE 中的私人标识、绝对路径与 overlay 引用；`test_dashboard_visualization` 增加断言。
