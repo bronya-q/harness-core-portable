@@ -133,12 +133,18 @@ def _card_consistency(scope):
 
 
 
-COLLAB_TELEMETRY = {"attempted": False, "notebook_status": "not_run", "story_status": "not_run", "collab_chars": 0, "notebook_note_count": 0, "story_version": None, "error_type": None}
+def _new_collab_telemetry():
+    return {"attempted": False, "notebook_status": "not_run", "story_status": "not_run", "collab_chars": 0, "notebook_note_count": 0, "story_version": None, "error_type": None}
 
 
-def _collab_block(scope, namespace=None):
+
+
+def _collab_block(scope, namespace=None, collab_telemetry=None):
     """读取 notebook + story core（受控协作层，只读，带 policy/budget/telemetry）。"""
     import subprocess as sp
+    if collab_telemetry is None:
+        collab_telemetry = _new_collab_telemetry()
+    COLLAB_TELEMETRY = collab_telemetry
     COLLAB_TELEMETRY["attempted"] = True
     try:
         collab_cfg = (policy or {}).get("_bounds", {}).get("collaboration_context", {})
@@ -153,7 +159,7 @@ def _collab_block(scope, namespace=None):
     if stage not in ("canary", "production") or not allowed or scope not in allowed:
         COLLAB_TELEMETRY["notebook_status"] = "policy_block"
         COLLAB_TELEMETRY["story_status"] = "policy_block"
-        return ""
+        return "", COLLAB_TELEMETRY
     lines = []
     try:
         p = sp.run([sys.executable, str(SKILL / "notebook.py"), "summary", "--scope", scope, "--limit", str(max_items)], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15)
@@ -199,8 +205,8 @@ def _collab_block(scope, namespace=None):
         text = text[:max_collab]
     COLLAB_TELEMETRY["collab_chars"] = len(text)
     if lines:
-        return text + "\n"
-    return ""
+        return text + "\n", COLLAB_TELEMETRY
+    return "", COLLAB_TELEMETRY
 
 def generate(model, prompt, num_predict):
     """Single Ollama generate call. Returns response string."""
@@ -309,7 +315,8 @@ def main():
             situation_block = ("{系统：时间 %s，场景 roleplay，scope %s，"
                                "最近线索：%s}\n") % (hctx.get("time"), scope, clue or "无")
     card_block = _card_consistency(scope)
-    collab_block = _collab_block(scope, getattr(args, 'story_namespace', ''))
+    collab_telemetry = _new_collab_telemetry()
+    collab_block, collab_telemetry = _collab_block(scope, getattr(args, 'story_namespace', ''), collab_telemetry)
     base_prompt = (
         (situation_block if situation_block else "") +
         (card_block if card_block else "") +
@@ -355,10 +362,10 @@ def main():
                             "session_kind": session_kind, "source_kind": source_kind,
                             "entrypoint": entry['entrypoint'],
                             "fallback_used": False,
-                            "details": {"dynamic_memory_mode": policy.get('dynamic_memory'), "memory_injected": inject_memory, "recall_limit": recall_limit, "memory_chars": len(memories), "humanization_context": bool(hctx), "expression_packet": bool(expression_rule_id), "expression_rule_id": expression_rule_id, "expression_evidence_ids": expression_evidence_ids, "canary_pair": canary_pair_done, "canary_selected": selected, "source_kind": source_kind, "collab_telemetry": COLLAB_TELEMETRY}})
+                            "details": {"dynamic_memory_mode": policy.get('dynamic_memory'), "memory_injected": inject_memory, "recall_limit": recall_limit, "memory_chars": len(memories), "humanization_context": bool(hctx), "expression_packet": bool(expression_rule_id), "expression_rule_id": expression_rule_id, "expression_evidence_ids": expression_evidence_ids, "canary_pair": canary_pair_done, "canary_selected": selected, "source_kind": source_kind, "collab_telemetry": collab_telemetry}})
         except Exception:
             pass
-        if getattr(args, 'notebook_auto', False):
+        if getattr(args, 'notebook_auto', False) and response and error_type is None:
             try:
                 _note_text = "roleplay: " + (args.prompt[:80] if args.prompt else "")
                 subprocess.run(
@@ -366,8 +373,9 @@ def main():
                      "--text", _note_text, "--kind", "auto"],
                     capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=10,
                 )
-            except Exception:
-                pass
+                collab_telemetry["notebook_auto"] = "note_submitted"
+            except Exception as exc:
+                collab_telemetry["notebook_auto"] = "error:" + type(exc).__name__
         if expression_rule_id:
             try:
                 ext = SKILL / "humanization.py"

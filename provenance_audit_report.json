@@ -1,7 +1,7 @@
 {
   "repo_files": 58,
   "upstream_files": 10,
-  "upstream_root": "C:\\Users\\HL\\Documents\\harness\\_research\\NEKO",
+  "upstream_root": "~/Documents/harness/_research/NEKO",
   "threshold": 0.5,
   "hits": [],
   "conclusion": "受控比对完成；高相似度命中见上。"

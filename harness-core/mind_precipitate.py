@@ -5,7 +5,7 @@ mind_precipitate.py — P3：Codex 自我进化模式的本地沉淀。
 
 把 approved/applied 的 mind_evolution 候选沉淀为：
   SKILL.md / WORKFLOW.md / experience.json
-写入共享目录 C:\\Users\\HL\\Documents\\harness\\_mind-evolution\\
+写入共享目录 ~/Documents/harness/_mind-evolution/
 使后续跨会话可通过 index.json 复用。
 
 不自动执行；只写文档资产。

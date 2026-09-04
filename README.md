@@ -118,17 +118,25 @@ Obsidian 学习强化库等
 # 1. 解压/克隆仓库
 cd harness-core-portable
 
-# 2. 运行自检（失败返回非 0）
+# 2. 发布前离线自检（不依赖 Ollama / 私有卡，干净 clone 应通过）
+python package_selfcheck.py
+
+# 3. 根目录统一 launcher（自检，失败返回非 0；生产门控未满足时预期失败）
 python harness.py audit
 
-# 3. 看政策
+# 4. 看政策
 python harness.py status
 
-# 4. 内生审查
-python mind_review.py run
+# 5. 内生审查（走 harness review）
+python harness.py review run
+
+# 或直接进入核心目录
+cd harness-core
+python harness.py status
+python roleplay_memory_chat.py --help
 ```
 
-> 可选：本地 Ollama（用于 embedding / LLM），不联网即可跑核心指标。
+> 可选：本地 Ollama（用于 embedding / LLM / 角色生成）；最小核心不需要 Ollama。
 
 ## 核心概念
 
@@ -144,7 +152,9 @@ python mind_review.py run
 ## 常用命令
 
 ```bash
-python harness.py audit                 # 聚合自检
+python package_selfcheck.py             # 离线/静态发布自检（干净 clone 应通过）
+python release_verify.py                # 发布物 SHA-256 清单校验
+python harness.py audit                 # 聚合自检（生产门控 fail-closed）
 python harness.py notebook note --scope game:demo --text '...' --kind manual
 python harness.py notebook restore --scope game:demo --version 1
 python harness.py story set --namespace story:game-demo --content '...'

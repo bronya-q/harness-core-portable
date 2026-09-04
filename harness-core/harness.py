@@ -88,12 +88,12 @@ def _subprocess_json(script, args):
 
 def audit():
     """聚合 production_gate + quarterly + health + snapshot。"""
-    gate, _ = _subprocess_json("production_gate.py", [])
-    qa, _ = _subprocess_json("quarterly_audit.py", [])
+    gate, gate_rc = _subprocess_json("production_gate.py", [])
+    qa, qa_rc = _subprocess_json("quarterly_audit.py", [])
     health, _ = _subprocess_json("memory_health_report.py", [])
     snap, _ = _subprocess_json("rating_snapshot.py", [])
     print(json.dumps({
-        "ok": True,
+        "ok": gate_rc == 0 and qa_rc == 0,
         "mode": "audit",
         "production_gate": gate.get("gate_status"),
         "quarterly": qa.get("summary"),
@@ -102,6 +102,7 @@ def audit():
         "gate_checks": gate.get("checks", []),
         "quarterly_checks": qa.get("checks", []),
     }, ensure_ascii=False, indent=2))
+    return 0 if (gate_rc == 0 and qa_rc == 0) else 1
 
 
 def main():
@@ -110,8 +111,7 @@ def main():
         return 0
     cmd = sys.argv[1]
     if cmd == "audit":
-        audit()
-        return 0
+        return audit()
     if cmd == "measure":
         sub = sys.argv[2] if len(sys.argv) > 2 else "congruence"
         if sub in MEASURE_MAP:
