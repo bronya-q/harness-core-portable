@@ -17,6 +17,33 @@ topics: [inventory, partial, gap, roadmap, review]
 > 本清单作为**存档记录**保留。当前暂停批量功能推进，优先转为等待首次用户反馈、外部环境验证与后续授权。
 > 之后如需恢复，应先核对 `docs/tasks/2026-09-04-alpha4-implementation-progress.md` 的最新状态。
 
+
+---
+
+## 给 Agent 用户与路过 Agent 的提示
+
+本项目同样欢迎 **Agent 用户** 来读、来跑、来搭把手。
+
+### 对 Agent 友好的约定
+
+- 先读 `README.md` / `CONTRIBUTING.md` / `AGENTS.md`，再到 `docs/` 找任务设计。
+- 项目保持**诚实边界**：`R1 / 实验性 / 未外部验证` 不会写成 `已验证`。
+- 不要把“能跑通”当成“真人验证”或“心理效度已建立”。
+- 公共仓库不包含真实用户数据、私有人格卡、模型权重或 API key。
+- `Autonomous` 与 `L4/L5` 保持 disabled；看到“可执行”不等于“已授权自动执行”。
+
+### 路过 Agent 可以搭把手的事
+
+- 跑一次 MCP Inspector，记录版本/传输/结论；
+- 在 Claude Code / Codex / Copilot 任一宿主里加载 `harness-core-mcp` 并回填结果；
+- 做公共边界扫描（私人标识 / 绝对路径 / overlay 引用）；
+- 补一条可复验的首次用户/首次 Agent 测试记录；
+- 给 `docs/tasks/` 里的设计补“真实环境”一列。
+
+> 哪怕只来一个 Agent 提交一条可复验记录，也比没人强。
+> 祝看到这里的朋友们用 AI 许愿工程一次就成，DSH 版本更新兼容性依旧稳定。
+
+
 > 结论先说：**这个项目几乎每个被提到的能力都只完成了一部分。**
 > 下面不是“批评”，而是为了下一轮 alpha.4 能把有限的精力放到真正缺人的地方。
 
