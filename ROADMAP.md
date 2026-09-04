@@ -575,7 +575,7 @@ telemetry 记录什么 / 返回码是什么
 ### P3：v0.3 角色资产化
 
 - ✅ `character validate` 基础（distribution/private/real person/license/abs path/zip traversal）
-- 🚧 安全安装未闭环：install 现在会先校验 + 安全解压，但仍有 symlink/ADS/压缩炸弹/脚本/MIME 等威胁未完整阻断
+- 🚧 安全安装已补强：install 先校验 + 安全解压（已拒绝 path traversal / symlink / 嵌套 zip / 过大包 / 压缩比过高 / public 可执行脚本）；仍缺 ADS 与 MIME 一致性检查
 - ✅ sandbox preview（`character preview`：只读预览，不写入）
 - 🚧 activation backup/rollback + preflight/status 状态机骨架已实现；完整崩溃恢复/并发锁未实现
 - ✅ rollback（`character rollback`）
