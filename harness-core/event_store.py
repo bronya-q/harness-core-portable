@@ -52,10 +52,11 @@ def _json_load(s):
 def record_event(event):
     eid = event.get("event_id") or "evt_" + uuid.uuid4().hex[:16]
     c = _connect()
+    occurred = event.get("occurred_at") or time.strftime("%Y-%m-%dT%H:%M:%S")
     c.execute("INSERT INTO events(event_id,event_type,scope,occurred_at,recorded_at,session_id,source_ids,"
               "root_source_ids,content_type,visibility,consent_scope,retention,derived_artifact_ids,version) "
               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-              (eid, event.get("event_type"), event.get("scope"), event.get("occurred_at"),
+              (eid, event.get("event_type"), event.get("scope"), occurred,
                event.get("recorded_at") or time.strftime("%Y-%m-%dT%H:%M:%S"),
                event.get("session_id"), json.dumps(event.get("source_ids", []), ensure_ascii=False),
                json.dumps(event.get("root_source_ids", []), ensure_ascii=False),
