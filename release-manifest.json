@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T11:12:03.727172+00:00",
+  "generated_at": "2026-09-04T11:20:30.018810+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 148,
+  "count": 149,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -42,9 +42,10 @@
     "docs/AGENT_COMPATIBILITY.json": "2acec841a980c4b7f9d6c68075aeea540b6b7c47ae12aa1c7f1ed66eb918c24f",
     "docs/AGENT_COMPATIBILITY.md": "1722da2755c54a11142066245fe0cac3d3019d40fd0361cfd691998beacfa4a2",
     "docs/DEPLOYMENTS_INDEX.md": "e5ae9ea073a058b2cd3960b27c2ad624032cae104cc7427a960cd8549f5ce40e",
-    "docs/TASKS_INDEX.md": "2f71131bac36eb3cb8083499a9dcbbd388fb708e9b20e1233f7166066776bd95",
+    "docs/TASKS_INDEX.md": "a96bd5be68626a55f958f40742ecbaa075512f665fb9d961269fdd52cb76797f",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.2.md": "5786f02ff1a682fff0a856e0ecaea9ba8abb13a436c1f8c5b8cfc70b1fc4cbfc",
     "docs/tasks/2026-09-04-public-release-alpha2-design.md": "ad3c0e5e553c830c667b7e2fd224e11f67dd8f1d11ad3826bc41e354b00ccf2d",
+    "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "cd62ddb6ca7335a48db3d210b6c67413f6fce14e646980e9daf4dd9eae81cfb9",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
     "harness-core/SKILL.md": "1f73b7c93cd3b7b8c419cc7414e2600d8bb6a57906b42eee04e3dad660e7199b",
