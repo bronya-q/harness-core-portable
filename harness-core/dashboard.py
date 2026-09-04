@@ -307,7 +307,25 @@ def main():
     else:
         ab_html = "<p class='muted'>暂无 A/B 记录（用 `ab role/retriever --save <name>` 可保存）。</p>"
 
-    web_html = "<p>Workspaces: %d · Evidence: %d · A/B: %d</p>" % (len(workspaces), len(evidence), len(ab_records))
+    suggest_hist = []
+    hist_path = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "knowledge-suggest-history.json"
+    if hist_path.exists():
+        try:
+            hd = json.loads(hist_path.read_text(encoding="utf-8"))
+            suggest_hist = hd.get("entries", []) if isinstance(hd, dict) else []
+        except Exception:
+            pass
+    suggest_html = ""
+    if suggest_hist:
+        for e in suggest_hist[:8]:
+            suggest_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:70%%'>%s</div>"
+                             "<span class='st-muted'>%s · sources=%s · matches=%s</span></div>"
+                             % (_html(e.get("role") or "?"), _html((e.get("question") or "")[:40]),
+                                _html(e.get("at", "")), _html(e.get("sources", 0)), _html(e.get("matches", 0))))
+    else:
+        suggest_html = "<p class='muted'>暂无 knowledge suggest 记录。</p>"
+
+    web_html = "<p>Workspaces: %d · Evidence: %d · A/B: %d · Suggest: %d</p>" % (len(workspaces), len(evidence), len(ab_records), len(suggest_hist))
 
     # 公共边界快照（粗略扫描，不替代人工审查）
     boundary_patterns = [
@@ -470,6 +488,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
 <div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
 <div class="card"><h2>A/B 记录</h2>{ab_html}</div>
+<div class="card"><h2>知识桥 Suggest 历史</h2>{suggest_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
