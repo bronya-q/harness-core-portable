@@ -1,6 +1,6 @@
 ---
 title: Topics alignment and situated character design
-status: designed
+status: implemented
 kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04

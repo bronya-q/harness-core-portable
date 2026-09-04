@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "persona_id": "demo-archivist",
+  "modes": [
+    {"mode_id": "companion", "display_name": "陪伴", "capabilities": ["companion-expression"], "effect": "observation", "filesystem_write": false, "network": false, "autonomous": false},
+    {"mode_id": "archival-research", "display_name": "档案研究", "capabilities": ["knowledge-retrieval", "timeline-curation"], "effect": "proposal_only", "filesystem_write": false, "network": false, "autonomous": false}
+  ]
+}

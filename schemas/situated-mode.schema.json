@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "title": "Situated Mode Schema",
+  "description": "同一人格在不同职责/情境下使用的模式配置。",
+  "required": ["mode_id", "display_name", "persona_id", "capabilities", "effect"],
+  "properties": {
+    "mode_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "persona_id": { "type": "string" },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "knowledge_access": { "type": "array", "items": { "type": "string" } },
+    "private_memory_access": { "enum": ["persona_only", "none", "project_only"] },
+    "effect": { "enum": ["proposal_only", "observation", "production"] },
+    "filesystem_write": { "type": "boolean" },
+    "process_execution": { "enum": ["none", "read_only_checks", "sandbox_only"] },
+    "network": { "type": "boolean" },
+    "autonomous": { "type": "boolean" }
+  }
+}
