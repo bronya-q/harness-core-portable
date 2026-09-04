@@ -262,6 +262,14 @@ def cmd_privacy(args):
         d = {"version": 1, "platform": sys.platform, "python": sys.version.split()[0],
              "data_dir": str(DATA_DIR), "auto_upload": False, "aggregate_only": True,
              "contains_pii": False, "exported_at": datetime.now().isoformat()}
+        print("导出预览（不会自动上传）：")
+        print("  data_dir: %s" % d["data_dir"])
+        print("  platform: %s" % d["platform"])
+        print("  aggregate_only: %s" % d["aggregate_only"])
+        print("  contains_pii: %s" % d["contains_pii"])
+        if not _confirm_risk("privacy export", "将生成本地脱敏导出文件。", yes="--yes" in args):
+            print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
+            return 1
         out.write_text(json.dumps(d, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
         print(json.dumps({"ok": True, "output": str(out)}, ensure_ascii=False, indent=2))
         return 0
@@ -324,10 +332,10 @@ def cmd_backup(args):
 
 def cmd_feedback(args):
     if not args or args[0] != "export":
-        print("用法：harness.py feedback export --redacted")
+        print("用法：harness.py feedback export --redacted [--yes]")
         return 1
-    if len(args) < 2 or args[1] != "--redacted":
-        print("用法：harness.py feedback export --redacted")
+    if "--redacted" not in args:
+        print("用法：harness.py feedback export --redacted [--yes]")
         return 1
     PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
     out = PRIVACY_DIR / "feedback-redacted.json"
@@ -335,6 +343,13 @@ def cmd_feedback(args):
                                   "model": "undisclosed"},
          "results": {"demo_completed": True, "included_content": False},
          "note": "不会自动发送；请检查后再手动附到 issue。"}
+    print("反馈导出预览（不会自动发送）：")
+    print("  platform: %s" % d["system"]["platform"])
+    print("  model: %s" % d["system"]["model"])
+    print("  included_content: %s" % d["results"]["included_content"])
+    if not _confirm_risk("feedback export", "将生成本地脱敏反馈文件。", yes="--yes" in args):
+        print(json.dumps({"ok": False, "status": "cancelled"}, ensure_ascii=False))
+        return 1
     out.write_text(json.dumps(d, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print(json.dumps({"ok": True, "output": str(out)}, ensure_ascii=False, indent=2))
     return 0

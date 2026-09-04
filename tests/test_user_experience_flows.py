@@ -99,6 +99,29 @@ class UserExperienceFlowsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_privacy_export_preview_and_confirm(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = _env(home)
+            p = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "privacy", "export"],
+                input="n" + chr(10), capture_output=True, text=True, encoding="utf-8",
+                errors="replace", env=env, timeout=30,
+            )
+            self.assertEqual(p.returncode, 1, p.stderr + p.stdout[-300:])
+            self.assertIn("导出预览", p.stdout)
+            self.assertIn("cancelled", p.stdout)
+            self.assertFalse((home / "harness-dashboard" / "privacy-export.json").exists())
+            p2 = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "privacy", "export", "--yes"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertEqual(p2.returncode, 0, p2.stderr + p2.stdout[-300:])
+            self.assertTrue((home / "harness-dashboard" / "privacy-export.json").exists())
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_knowledge_access_read_only_snippet(self):
         home = Path(tempfile.mkdtemp())
         try:
