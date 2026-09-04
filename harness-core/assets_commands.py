@@ -4,7 +4,7 @@
 
 子命令：
   character list|install|activate|deactivate|remove|show
-  knowledge list|sources
+  knowledge list|sources|health|mount|delegate
   workspace create|list|status|release
 """
 import argparse
@@ -13,6 +13,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 import zipfile
 from pathlib import Path
 
@@ -33,6 +34,7 @@ STATE_FILE = HARNESS_DIR / "character-state.json"
 LOCK_FILE = HARNESS_DIR / "activate.lock"
 KNOWLEDGE_SOURCES_FILE = HARNESS_DIR / "knowledge-sources.json"
 EXAMPLE_SOURCES = ROOT / "knowledge-sources.example.json"
+KNOWLEDGE_MOUNTS_FILE = HARNESS_DIR / "knowledge-mounts.json"
 
 
 def ensure_dirs():
@@ -592,9 +594,155 @@ def _cmd_character_mode(args):
     return 1
 
 
+def _load_sources():
+    cfg = read_json(KNOWLEDGE_SOURCES_FILE) if KNOWLEDGE_SOURCES_FILE.exists() else read_json(EXAMPLE_SOURCES)
+    sources = cfg.get("sources", []) if isinstance(cfg, dict) else cfg
+    return sources or []
+
+
+def _role_bindings():
+    ensure_dirs()
+    bindings = []
+    for d in sorted(CHARACTERS_DIR.iterdir()):
+        if not d.is_dir():
+            continue
+        manifest = read_json(d / "package-manifest.json") or read_json(d / "character.json")
+        pid = manifest.get("persona_id", d.name)
+        for kb in manifest.get("knowledge_bindings", []):
+            bindings.append({"persona_id": pid, **kb})
+    return bindings
+
+
+def _expand_root(root):
+    if not root:
+        return None
+    try:
+        return Path(os.path.expanduser(str(root)))
+    except Exception:
+        return None
+
+
+def _load_mounts():
+    return read_json(KNOWLEDGE_MOUNTS_FILE) or {"schema_version": 1, "mounts": []}
+
+
+def _save_mounts(mounts):
+    mounts.setdefault("schema_version", 1)
+    mounts.setdefault("mounts", [])
+    write_json(KNOWLEDGE_MOUNTS_FILE, mounts)
+
+
+def _knowledge_health(source_id=None):
+    sources = _load_sources()
+    checks = []
+    for src in sources:
+        sid = src.get("source_id", "")
+        if source_id and sid != source_id:
+            continue
+        root = _expand_root(src.get("root"))
+        exists = bool(root and root.exists())
+        is_dir = bool(root and root.is_dir())
+        readable = bool(root and is_dir and os.access(str(root), os.R_OK))
+        stewards = src.get("stewards", []) or []
+        bound_roles = []
+        for b in _role_bindings():
+            if b.get("domain_id") == sid or b.get("source_ref") == sid:
+                if b.get("persona_id") not in bound_roles:
+                    bound_roles.append(b.get("persona_id"))
+        if not exists:
+            status = "missing"
+        elif not is_dir:
+            status = "not_dir"
+        elif not readable:
+            status = "unreadable"
+        else:
+            status = "ok"
+        checks.append({"source_id": sid, "display_name": src.get("display_name", ""),
+                       "root": str(root) if root else None,
+                       "exists": exists, "is_dir": is_dir, "readable": readable,
+                       "status": status, "private": bool(src.get("private", True)),
+                       "portable": bool(src.get("portable", False)),
+                       "default_access": src.get("default_access", "deny"),
+                       "stewards": stewards, "bound_roles": bound_roles})
+    return {"ok": bool(checks) and all(c["status"] == "ok" for c in checks),
+            "checks": checks}
+
+
+def _knowledge_mount(role, domain):
+    sources = _load_sources()
+    src = next((s for s in sources if s.get("source_id") == domain), None)
+    if not src:
+        return {"ok": False, "error": "unknown_domain", "domain": domain}
+    bindings = _role_bindings()
+    role_ok = any(b.get("persona_id") == role for b in bindings)
+    if not role_ok:
+        return {"ok": False, "error": "unknown_role_binding", "role": role, "domain": domain}
+    stewards = src.get("stewards", []) or []
+    if role not in stewards and src.get("default_access", "deny") == "deny":
+        return {"ok": False, "error": "default_access_deny", "role": role, "domain": domain}
+    mounts = _load_mounts()
+    recorded = False
+    for m in mounts.get("mounts", []):
+        if m.get("persona_id") == role and m.get("source_id") == domain:
+            m.update({"mount_mode": "read_only", "state": "registered",
+                      "mounted_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                      "note": "只读挂载状态登记；不是完整知识桥。"})
+            recorded = True
+            break
+    if not recorded:
+        mounts.setdefault("mounts", []).append({
+            "persona_id": role, "source_id": domain, "mount_mode": "read_only",
+            "state": "registered", "mounted_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "note": "只读挂载状态登记；不是完整知识桥。",
+        })
+    _save_mounts(mounts)
+    return {"ok": True, "role": role, "domain": domain, "source": src.get("display_name", domain),
+            "mount_mode": "read_only", "state": "registered",
+            "note": "只读挂载状态登记；不是完整知识桥。"}
+
+
+def _knowledge_delegate(question, current_role=None):
+    q = (question or "").strip().lower()
+    if not q:
+        return {"ok": False, "error": "missing_question"}
+    sources = _load_sources()
+    bindings = _role_bindings()
+    candidates = []
+    for src in sources:
+        words = set()
+        for v in [src.get("source_id"), src.get("display_name"), src.get("kind")] + (src.get("content_types") or []):
+            if not v:
+                continue
+            for part in str(v).split():
+                if part:
+                    words.add(part.lower())
+        hits = [w for w in words if w and w in q]
+        if not hits:
+            for ct in (src.get("content_types") or []):
+                if str(ct) in q:
+                    hits.append(str(ct))
+        if hits:
+            stewards = src.get("stewards", []) or []
+            bound = [b.get("persona_id") for b in bindings
+                     if b.get("source_ref") == src.get("source_id") or b.get("domain_id") == src.get("source_id")]
+            candidates.append({"source_id": src.get("source_id"), "display_name": src.get("display_name", ""),
+                               "hits": sorted(set(hits)), "responsible_roles": sorted(set(stewards + bound))})
+    if not candidates:
+        return {"ok": True, "matched": False, "responsible_roles": [],
+                "allowed": False, "note": "未匹配到知识域；当前角色可直接回答，不调用知识桥。"}
+    best = max(candidates, key=lambda c: len(c.get("hits", [])))
+    roles = best.get("responsible_roles", [])
+    allowed = not roles or (current_role is not None and current_role in roles)
+    return {"ok": True, "matched": True, "source_id": best["source_id"],
+            "display_name": best["display_name"], "hits": best.get("hits", []),
+            "responsible_roles": roles, "allowed": allowed,
+            "current_role": current_role,
+            "note": "这是最小委派冒烟，不是真实知识检索；不会把知识正文传给当前角色。"}
+
+
 def cmd_knowledge(args):
     if not args:
-        print("用法：harness.py knowledge list|sources")
+        print("用法：harness.py knowledge list|sources|health|mount|delegate")
         return 1
     sub = args[0]
     if sub == "list":
@@ -615,6 +763,44 @@ def cmd_knowledge(args):
         print(json.dumps({"ok": True, "config": str(KNOWLEDGE_SOURCES_FILE if KNOWLEDGE_SOURCES_FILE.exists() else EXAMPLE_SOURCES),
                           "sources": sources}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "health":
+        source_id = ""
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--source" and i + 1 < len(args1):
+                source_id = args1[i + 1]
+        result = _knowledge_health(source_id or None)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
+    if sub == "mount":
+        role = domain = ""
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--role" and i + 1 < len(args1):
+                role = args1[i + 1]
+            if a == "--domain" and i + 1 < len(args1):
+                domain = args1[i + 1]
+        if not role or not domain:
+            print("用法：python harness.py knowledge mount --role <persona_id> --domain <source_id>")
+            return 1
+        result = _knowledge_mount(role, domain)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
+    if sub == "delegate":
+        question = ""
+        role = ""
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--question" and i + 1 < len(args1):
+                question = args1[i + 1]
+            if a == "--role" and i + 1 < len(args1):
+                role = args1[i + 1]
+        if not question:
+            print("用法：python harness.py knowledge delegate --question <问题> [--role <persona_id>]")
+            return 1
+        result = _knowledge_delegate(question, role or None)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
     print("未知 knowledge 子命令：" + sub)
     return 1
 

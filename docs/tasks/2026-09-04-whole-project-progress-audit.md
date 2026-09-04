@@ -502,3 +502,11 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 15. 后续处理记录（2026-09-04 续 3）
 
 - **alpha.3 Release 页面**：经用户授权，已用 `gh release create` 创建 GitHub Pre-release 页面，状态 `draft=false / prerelease=true`，URL 可从 `https://github.com/bronya-q/harness-core-portable/releases/tag/v0.1.0-alpha.3` 回读。部署记录与 DEPLOYMENTS_INDEX 同步更新为 `deployed`。
+
+## 16. 后续处理记录（2026-09-04 续 4）
+
+- **Knowledge Stewardship R1 最小闭环**：在 `assets_commands.py` 增加 `knowledge health` / `knowledge mount` / `knowledge delegate`。
+  - `health`：检查知识源目录存在/可读，并匹配 steward 与角色 binding；
+  - `mount`：把角色对知识域登记为“只读挂载状态”（写入 `knowledge-mounts.json`），明确不是完整知识桥；
+  - `delegate`：按关键词匹配负责知识域，返回负责角色与是否允许，不传递知识正文。
+  - 新增 `tests/test_knowledge_stewardship.py`（3 用例），unittest 总数 17。
