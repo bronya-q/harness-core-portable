@@ -483,7 +483,7 @@ python user_model.py files --dir ~/Downloads --limit 50
 ```
 
 只读、候选、不诊断、不自动写入人格/关系/政策。
-> 社交/IM 来源：用户已明确同意并指定 **QQ 与微信**；`media_sources.json` 已登记，QQ 本地报告/消息已可接入（`profile --include-media`），微信数据在 `D:/微信`，尚待解析适配。
+> 社交/IM 来源：用户已明确同意并指定 **QQ 与微信**；`media_sources.json` 已登记，QQ 本地报告/消息已可接入（`profile --include-media`），微信数据在 `D:/WeChat`，尚待解析适配。
 
 
 ### 3.10 真实数据回环、健康看板与季度审计

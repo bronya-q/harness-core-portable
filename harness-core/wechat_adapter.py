@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """wechat_adapter.py — 微信只读探测（暂不解析）。
 
-由于微信本地数据形态未确认，本工具只扫描 D:/微信 顶层结构并输出可见文件，
+由于微信本地数据形态未确认，本工具只扫描 D:/WeChat 顶层结构并输出可见文件，
 不读取聊天内容，不导入任何数据。
 """
 import json
@@ -14,7 +14,7 @@ try:
 except Exception:
     pass
 
-WEIXIN = Path("D:/微信")
+WEIXIN = Path("D:/WeChat")
 
 
 def main():
