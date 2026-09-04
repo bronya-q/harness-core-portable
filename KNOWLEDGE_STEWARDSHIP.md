@@ -1,7 +1,12 @@
 # 角色化知识治理（Knowledge Stewardship）
 
 > 本文档记录一个方向：角色不只是“说话的人”，而是某些**知识域、工作流、日志、日记和解释方式的责任主体 / 知识管理员**。
-> 状态：**方向 / 未实现**；本机已有 本机知识管理员 A、本机知识管理员 B、Adversarial Review 三种原型。
+> 状态：**方向已文档化；R1 最小闭环已实现**。已有 `knowledge health` / `knowledge mount` / `knowledge delegate` 三个命令，但仍不是真实知识源检索/挂载/委派。
+>
+> 当前实现（R1）：
+> - `knowledge health`：检查知识源目录是否存在、是否可读、steward 绑定是否匹配
+> - `knowledge mount`：把某个角色对某个知识域登记为“只读挂载状态”（写入 `knowledge-mounts.json`，不访问正文）
+> - `knowledge delegate`：根据问题关键词匹配负责知识域，返回负责角色与是否允许，不传递知识正文
 
 ---
 
