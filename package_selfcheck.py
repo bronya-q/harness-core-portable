@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""package_selfcheck.py — 离线/静态发布包自检（在干净 clone 中应通过）。
+"""package_selfcheck.py — 发布包静态冒烟自检（clean clone / Download ZIP 均应通过）。
+
+注意：这是“静态冒烟检查”，不是完整端到端 selfcheck；它不要求 Ollama/真实数据，
+也不验证完整生产运行面。完整运行面由 harness_selfcheck.py + production_gate.py 负责。
 
 与 harness_selfcheck.py 的区别：
   - harness_selfcheck.py 面向“完整运行面”，依赖真实会话/模型/门控数据；
@@ -84,7 +87,7 @@ def main():
     ok = not issues
     print(json.dumps({
         "ok": ok,
-        "mode": "package_selfcheck",
+        "mode": "package_static_smoke_check",
         "checks": checks,
         "issues": issues,
     }, ensure_ascii=False, indent=2))

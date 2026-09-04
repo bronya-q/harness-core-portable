@@ -85,9 +85,9 @@ production_gate / mind_review / rating_snapshot
 - 自然流：natural_session / flow-split；
 - 跨角色协作：notebook + story core。
 
-### 前后对比（结合更新后的对话记录）
+### 设计预期与本地观察（非受控 A/B）
 
-| 场景 | 使用前（无增强心智模型） | 使用后（增强心智模型） |
+| 场景 | 使用前（无增强心智模型） | 本地观察/预期改善（增强心智模型） |
 |---|---|---|
 | 角色扮演 | 容易串人、前后矛盾、没记忆 | 同一角色跨会话稳定，记得之前经历，关系/边界可控 |
 | 游戏/叙事 | 世界观容易漂移、剧情断档 | story core + notebook 保持世界观连续，角色防漂移 |
@@ -96,8 +96,10 @@ production_gate / mind_review / rating_snapshot
 | 文书/文档 | 长文档上下文塞爆、关键信息丢 | 受控注入 + 事实层 + 格式稳定 |
 | 多 agent 协作 | 各角色各写一套，容易冲突 | notebook + story core 共享世界核心，一致性提升 |
 
-> 这些对比来自**更新后的对话记录**（DeepSeek 导出、AutoMM、马克斯/布兰奇、COC/TRPG、Obsidian 等）中观察到的工程/体验差异；
-> 不代表“AI 真的理解和在乎”，心理效度仍需正式研究。
+> 这些是**作者观察与本地案例记录**，不是受控 A/B 实验。
+> 没有公开抽样方案、前后对照设计、独立评价者、任务成功指标、置信区间或失败样本。
+> 它只说明设计中预期改善的方向，不能当作正式效果验证。
+> 也不代表“AI 真的理解和在乎”，心理效度仍需正式研究。
 
 ### 证据来源（本地，不随仓库公开原文）
 ```text
@@ -167,7 +169,7 @@ python harness.py review run
 角色扮演注入（受控）：
 
 ```bash
-python roleplay_memory_chat.py \
+python harness.py roleplay \
   --persona demo-alice \
   --prompt '这是什么地方？' \
   --story-namespace 'story:game-demo' \

@@ -352,6 +352,33 @@ def main():
         error_type = type(exc).__name__
         raise
     finally:
+        # 先写 auto-note，让状态在 record_session 之前进入 telemetry
+        auto_note_status = "not_requested"
+        if getattr(args, 'notebook_auto', False):
+            if not response or error_type is not None:
+                auto_note_status = "skipped_no_successful_response"
+            else:
+                try:
+                    _note_text = "roleplay: " + (args.prompt[:80] if args.prompt else "")
+                    p = subprocess.run(
+                        [sys.executable, str(SKILL / "notebook.py"), "note", "--scope", scope,
+                         "--text", _note_text, "--kind", "auto"],
+                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=10,
+                    )
+                    if p.returncode == 0:
+                        auto_note_status = "submitted"
+                        try:
+                            d = json.loads(p.stdout)
+                            if d.get("ok"):
+                                collab_telemetry["notebook_auto_note_id"] = d.get("id")
+                                collab_telemetry["notebook_auto_version"] = d.get("version")
+                        except Exception:
+                            pass
+                    else:
+                        auto_note_status = "failed_rc_%s" % p.returncode
+                except Exception as exc:
+                    auto_note_status = "error:" + type(exc).__name__
+        collab_telemetry["notebook_auto"] = auto_note_status
         try:
             from continuity_store import record_session
             record_session({"scope": scope, "provider": "ollama-roleplay", "started_at": started,
@@ -365,17 +392,6 @@ def main():
                             "details": {"dynamic_memory_mode": policy.get('dynamic_memory'), "memory_injected": inject_memory, "recall_limit": recall_limit, "memory_chars": len(memories), "humanization_context": bool(hctx), "expression_packet": bool(expression_rule_id), "expression_rule_id": expression_rule_id, "expression_evidence_ids": expression_evidence_ids, "canary_pair": canary_pair_done, "canary_selected": selected, "source_kind": source_kind, "collab_telemetry": collab_telemetry}})
         except Exception:
             pass
-        if getattr(args, 'notebook_auto', False) and response and error_type is None:
-            try:
-                _note_text = "roleplay: " + (args.prompt[:80] if args.prompt else "")
-                subprocess.run(
-                    [sys.executable, str(SKILL / "notebook.py"), "note", "--scope", scope,
-                     "--text", _note_text, "--kind", "auto"],
-                    capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=10,
-                )
-                collab_telemetry["notebook_auto"] = "note_submitted"
-            except Exception as exc:
-                collab_telemetry["notebook_auto"] = "error:" + type(exc).__name__
         if expression_rule_id:
             try:
                 ext = SKILL / "humanization.py"

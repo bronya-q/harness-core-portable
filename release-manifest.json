@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T08:23:24.706262+00:00",
+  "generated_at": "2026-09-04T08:36:42.333400+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 97,
   "files": {
@@ -13,12 +13,12 @@
     "LICENSE": "729c2493b3c518c8e245946cdc761e04eadbae1bd7e9699a68f3c1fc942937c9",
     "MENTAL_MODEL_EFFECTS.md": "b694d30453a6a3a3e5ce9a319a66abc393fd15aa26a150bbedad6e0499b83abc",
     "NATURAL_DATA_GAP.md": "2321b1f129ae780a0c7c7500c9b72d3236bcebeeac1332c9f244a2c22ac151a7",
-    "NOTICE.md": "f38d920651db9de48395f5f6eff2b20eab1ead82aeedde47542170bb56cd69e7",
+    "NOTICE.md": "c44fcc6f491d57b7913e113c0407b55c6298eba0418faab2b6a5425f334a6c53",
     "PORTABLE_AGENTS.md": "be2deaab815cc73ed95e71629f047d659d1634598192ebf417a77c836dfac613",
     "PORTABLE_EVAL.md": "725bdb733392659b7c57352da146942ba84c7fc056102292ca04e127abee5fa7",
     "PORTABLE_README.md": "16dc9672961f7411fdbdd0eb140e40b174873869d44b5789f5459ad9a1d96b6c",
     "PORTABLE_REQUIREMENTS.txt": "50909b9eea04850fd89d918b832f458ddbf8dc45dea5954720c64b551468ddee",
-    "README.md": "8ee240f31d472b1e92e978dcacb430fd4d448f67f665d622c8bab8fed578e91d",
+    "README.md": "4e51619e5758d8c4623febe9d94518b8b50e224ecdbec2b300117d17ede6127b",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "10664d415e1ef074d3be7eaaff97fb5479e32dd9547ddb38f44204d05f18e0ef",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
@@ -49,7 +49,7 @@
     "harness-core/gold_human_label_import.py": "cdedc2c351c16e00ddd7a85b3b520b980a24866becc4bbbfa299f311356c9cd7",
     "harness-core/gold_labeler.py": "c88715c830e1175f1a0144af733cce2521986e8d1f2108b0ce1bf8ba55fe153e",
     "harness-core/gold_sampler.py": "9ba72e0d8306656ab7d6faba188fc4c6b86e793f252caaea87722aa735912b38",
-    "harness-core/harness.py": "4feef8d16559c2f94a0b87777ac9837f43460fce933d57102dd3fd2bb85e9f26",
+    "harness-core/harness.py": "7ed7920f09cf0501baf63fb4212ecb6d0bf9b5499e765c0198f3a7207dd9609a",
     "harness-core/harness_selfcheck.py": "59fbb27b5282ca12b75e146cb2088bd0d1424617a9cc4cb0a19ad1371b54b14e",
     "harness-core/history_backfill.py": "5e1b108d9c7424ff55ba1b60b9ae2dfcc8e111d864664787d42bfdc88cfbd932",
     "harness-core/humanization.py": "a3a6073c0c9fc733fc62191eb5ff34e105ab5b2e7fc7b0dcb447307f81cfcb06",
@@ -81,7 +81,7 @@
     "harness-core/rating_snapshot.py": "a3d620c1bb358693145a0bb1def25e4619238a091faa68ad31f55f68face8cc2",
     "harness-core/recall_context.py": "038e14b27a1d2ba053bb9af0961db1a9c628d618faee7b1d7037025c0ff729ee",
     "harness-core/retrieval_reranker.py": "82bcac78318b03400d3dd10439c3843f26d6dd3350ef2a5219988efa58f928b4",
-    "harness-core/roleplay_memory_chat.py": "361cb1819aa1bde0c1953618d2a39e5917677c4fe5d044bfd3ad2a3431db5f39",
+    "harness-core/roleplay_memory_chat.py": "fa4e155e428c085125672c82125e6c0fe4312d472075176099989b9c6720edd3",
     "harness-core/runtime-policy.example.json": "2ed0654731533403b706935cb8f9817a1226bfeee1b2dec0463d7772653c8894",
     "harness-core/runtime_policy.py": "4b3485e7e6e1dde4150b585ad6d452f31f8aec9381f2a75ecb6b219a5d54f905",
     "harness-core/runtime_preflight.py": "98533c0d7e2ae1c0b09c60a233474daf2ab240e464bdcd6075a885e1060fe005",
@@ -99,8 +99,8 @@
     "harness-core/vector_worker.py": "06092961fd1aa9302bf6094f12a20400568e9c4a64a5b3e456a712f692ea55c6",
     "harness-core/wechat_adapter.py": "7ee9a43bb04724da7fd79ef4f1556d9f8c7cd983232cbe46828edea6d4ee1bbb",
     "harness.py": "79771d2b4762d7e06190c384d65eab99a8845c3f7d360041f56b5d1c192c2e2b",
-    "package_selfcheck.py": "e47808830e16ea96ba3b895996830d120c703b1a8fdbc383992dfef7d6439365",
+    "package_selfcheck.py": "749bd3360b861b08077b134db092179e5de3023d5ee8de52dabf870dcdf13bd4",
     "provenance_audit_report.json": "521b3abaa50967d4d628ade3d477b62796b26de6f3503dba26530005b4579f4b",
-    "release_verify.py": "5b797bcbc72d8eeb935a557b3e057181a14032b60aeb27e7768c5a72878a85a1"
+    "release_verify.py": "e47c621dd21a6be988bd4078805f05bc4c2c90333494a8ab2ed74d7f392628bc"
   }
 }
