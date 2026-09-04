@@ -26,7 +26,7 @@
 
   G9 cross_scope leakage <= 0.05
 
-  G10 recall precision >= 0.5
+  G10 hit_rate@5 >= 0.9
 
   G11 plugin unknown == 0
 
@@ -356,7 +356,7 @@ def main():
 
         {"id": "G9", "name": "leakage<=0.05", "value": leak_rate, "pass": (leak_rate if leak_rate is not None else 1) <= 0.05},
 
-        {"id": "G10", "name": "hit_rate@10>=0.9", "value": rp_hit if rp_hit is not None else rec.get("hit_rate_at_top_k"), "pass": ((rp_hit if rp_hit is not None else rec.get("hit_rate_at_top_k")) or 0) >= 0.9},
+        {"id": "G10", "name": "hit_rate@5>=0.9", "value": rp_hit if rp_hit is not None else rec.get("hit_rate_at_top_k"), "pass": ((rp_hit if rp_hit is not None else rec.get("hit_rate_at_top_k")) or 0) >= 0.9},
 
         {"id": "G13", "name": "independent_recall@5>=0.5", "value": rp_p5, "pass": (rp_p5 or 0) >= 0.5},
 

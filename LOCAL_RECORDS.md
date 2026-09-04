@@ -2,6 +2,7 @@
 
 > 结论先写：这些是**作者自己的本地观察记录**，不是受控实验，不是可公开复现的证据。
 > 本文件参照 Hugging Face Model Card / GEM Data Card 的做法，用“可量化字段 + 来源 + 限制”来记录，而不是只列名字。
+> 机器可读快照：`local-records-snapshot.public.json`，由 `generate_local_records.py` 在本机生成，避免手抄漂移。
 
 ---
 
@@ -54,11 +55,14 @@
 | P@5（avg_precision_at_k） | 0.7944 |
 | judged_precision | 0.9167 |
 | recall | 0.3422 |
-| hit_rate@10 | 0.9444 |
+| hit_rate@5 | 0.9444 |
 | zero_relevant_queries | 2 |
 | queries | 36 |
 
 > 说明：这是“独立 relevance 池”上的本地评测，不是提交到第三方 benchmark 的结果。
+> 这里的“independent”指**候选池独立于检索 top-k 抽样**，不是“有独立评价者/独立标注者”。
+> bootstrap 95% CI（query 级，1000 次重采样）：P@5 = [0.6889, 0.8944]，recall = [0.2569, 0.4415]。
+> 逐 query 明细、失败 query（precision@5 < 1.0）和完整定义见 `local-records-snapshot.public.json`。
 
 ## 3. 生产门控（最近一次 PASS 快照）
 
@@ -75,7 +79,7 @@
 | G7 no_high_risk_narrative | 0 | true |
 | G8 user_correction<=0.2 | 0.0025 | true |
 | G9 leakage<=0.05 | 0.0 | true |
-| G10 hit_rate@10>=0.9 | 0.9444 | true |
+| G10 hit_rate@5>=0.9 | 0.9444 | true |
 | G13 independent_recall@5>=0.5 | 0.7944 | true |
 | G14 over_anthropomorphism==0 | 0 | true |
 | G15 no_self_reveal_as_ai==0 | 0 | true |
@@ -83,9 +87,10 @@
 | G17 natural_flow_min>=1 | 29 | true |
 | G18 duplicate_groups_active==0 | 0 | true |
 | G19 relation_out_of_range==0 | 0 | true |
-| G20 notebook_story_boundary==0 | 0 | true |
 | G11 plugin_unknown==0 | 0 | true |
 | G12 explicit_production_approval | true | true |
+
+> 说明：公开仓库 `production_gate.py` 覆盖 G1–G19（G11/G12 顺序在末尾）。本地完整 gate 曾多一个 `G20 notebook_story_boundary`，该检查未包含在公开仓库，因此不在此表列出。
 
 ## 4. 本地下游工程记录
 
@@ -108,6 +113,7 @@
 - **评测说明**：指标含义、样本口径、是否独立；
 - **限制**：没有受控 A/B、没有独立评价者、没有公开原始数据；
 - **可复现性**：只提供命令和脚本，不提供原始数据。
+- **边界**：已有检索组件的离线 A/B（候选池独立）；**尚无**整体系统下游效果的 A/B。
 
 ### 5.1 借鉴的公开模板/惯例
 
@@ -123,7 +129,7 @@
 ## 6. 这些数据能说明什么
 
 - 本地系统确实积累了跨会话记忆、人格条目、叙事片段、主动候选、评测记录；
-- 在本地独立 relevance 池上，recall-pool 有具体数值（P@5=0.7944，hit_rate@10=0.9444）；
+- 在本地独立 relevance 池上，recall-pool 有具体数值（P@5=0.7944，hit_rate@5=0.9444）；
 - 生产门控在特定本地快照上通过，且大部分边界检查值为 0；
 - 下游工程确实产生了可观察的连续性/一致性/目标管理记录。
 
