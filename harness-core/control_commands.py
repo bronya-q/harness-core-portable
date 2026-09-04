@@ -313,11 +313,14 @@ def cmd_backup(args):
     if sub == "restore":
         name = args[1] if len(args) > 1 else ""
         if not name:
-            print("用法：harness.py backup restore <name>")
+            print("用法：harness.py backup restore <name> [--yes]")
             return 1
         src = BACKUP_ROOT / name
         if not src.exists():
             print(json.dumps({"ok": False, "error": "backup_not_found", "backup": name}, ensure_ascii=False))
+            return 1
+        if not _confirm_risk("backup restore", "用备份 %s 覆盖当前本地数据文件。" % name, yes="--yes" in args):
+            print(json.dumps({"ok": False, "status": "cancelled", "backup": name}, ensure_ascii=False))
             return 1
         restored = []
         for p in src.iterdir():

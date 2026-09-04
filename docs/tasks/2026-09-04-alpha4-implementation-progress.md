@@ -61,6 +61,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **知识桥多源合并去重**
   - `knowledge suggest` 支持 `--sources`（默认 2）
   - 会访问多个匹配知识源，合并去重片段，并在 `sources` 中列出每个源
+- [x] **高风险二次确认再扩展**
+  - `character deactivate` / `character remove` 默认需要确认
+  - `backup restore` 默认需要确认
+  - 均支持 `--yes`；取消返回 `status=cancelled`
 
 ## 尝试过 / 未通过
 
