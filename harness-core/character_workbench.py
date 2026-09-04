@@ -86,6 +86,16 @@ def write_import(m, output, yes):
     if not yes:
         print(json.dumps({"ok": True, "preview": True, "output": str(out), "mapping": m}, ensure_ascii=False, indent=2))
         return 0
+    missing = []
+    if not m.get("display_name"):
+        missing.append("missing_name")
+    if not (m.get("description") or m.get("personality") or m.get("scenario")):
+        missing.append("missing_character_fields")
+    if m.get("first_mes") is None:
+        missing.append("missing_first_mes")
+    if missing:
+        print(json.dumps({"ok": False, "error": "validation_failed", "missing": missing}, ensure_ascii=False))
+        return 1
     out.mkdir(parents=True, exist_ok=True)
     manifest = {
         "schema_version": 1,
@@ -178,6 +188,13 @@ def build_draft(corpus_dir, output, approve):
         "provenance": {"status": "needs_review", "source_kinds": ["user_corpus"]},
     }
     out = Path(output).expanduser()
+    bs = chr(92)
+    has_abs = any(("C:"+bs+"Users") in line or "/Users/" in line for line in lines)
+    draft["contains_abs_path"] = has_abs
+    if has_abs and approve:
+        print(json.dumps({"ok": False, "error": "corpus_contains_abs_path",
+                          "note": "语料包含绝对路径，拒绝 --approve 写入"}, ensure_ascii=False))
+        return 1
     if not approve:
         print(json.dumps({"ok": True, "preview": True, "output": str(out) + "（--approve 写入）", "draft": draft},
                          ensure_ascii=False, indent=2))

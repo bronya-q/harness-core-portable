@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T12:11:04.070189+00:00",
+  "generated_at": "2026-09-04T12:19:20.944462+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 167,
+  "count": 169,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -32,7 +32,7 @@
     "README.md": "746e3a7b9fb8a81cf54f3f021a41728c901e114f22f73ce2a5ac70507475d6b6",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
-    "ROADMAP.md": "479c07a32a511f0548afb8758519e9f180451ca39c4c8d1a2c38762d42d3f56b",
+    "ROADMAP.md": "28a6fc6d34c294ace1bab6b2a566085d2252ddcb97b8295a1e575a23de2852a3",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "d4f0c5ae7da500e9bb5e11747f00dfae230420defa059e378d3e58e5691ddb47",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
@@ -63,10 +63,10 @@
     "examples/agent-integrations/deepseek.md": "4c235e4f3bd72219a6f20adca01f90f0629259182013823613a8d715771addea",
     "examples/agent-integrations/mcpREADME.md": "75b09c49b1f5de40a231b56078a15a40dadbd9abe8a184359d82294860058328",
     "harness-core/SKILL.md": "1f73b7c93cd3b7b8c419cc7414e2600d8bb6a57906b42eee04e3dad660e7199b",
-    "harness-core/assets_commands.py": "a09364294c7d9b8cd05e3a5d86e056a060cc094c2a1b88a7289f72c51894a802",
+    "harness-core/assets_commands.py": "75d4c02d38b0dff4dfaebeb66100a6b0f2a83a15d5dc64c14ec643c13b13da58",
     "harness-core/atomic_fact_retriever.py": "fb71a860f36f7364d64a269abce4eca8c25141e46c479a01d69125aef984314a",
     "harness-core/atomic_facts_build.py": "cd191ac7044a3c5af707189751cbe7deabfa2e07340c400197a5a397e2a7e26b",
-    "harness-core/character_workbench.py": "e1212b7e006d0104f1b467ebafa40135570ad2c09c5ef867b30db810116cbbc4",
+    "harness-core/character_workbench.py": "7e4089b70183d91699323d4174e4c366e44d91ff50db132e3ad08fa3d6e747b8",
     "harness-core/cognitive_dynamics.py": "50be19bbcb44e254c94afe5511496282616866ed338caa145c5f31d1fad91ea2",
     "harness-core/comparison_commands.py": "ee3bbb49b19d7f4de53cfa08b4f7f2f317d8158baecdfb4cf0a8183be583451c",
     "harness-core/continuity_store.py": "1627245feb0557e9dcc3e508ed5814386c08c5ca2e2f37632b18d6f17b818f50",
@@ -170,6 +170,8 @@
     "schemas/token-usage.schema.json": "e70757c57617f57c7d9785fb014e4670087d5b308bf13c40d37c75431ff671a7",
     "schemas/unified-role.schema.json": "73201e04c03fe1ecc993a4080deaa4e0e4ec6447516057a022286cbb473d3239",
     "scripts/create-github-release.sh": "aebdaaebcea8077b8c2de06c0926994ecfd095b1838f76b7d5378b4e5de3032e",
+    "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/test_activation_failover.py": "465b708b97eff5b1c0ecd7ba66bf70eeedd44357967b5f11fd13e0c6b6909ed5",
     "unified-object-model.example.json": "7880eab0a3a687b19901953a311779628da68e1b91158d909354332dd796a726",
     "开始体验.bat": "f91507f84ed67d819bcb6f5ffe3430c7878a8d8c3f8f4fec4d20df1b229dac19"
   }

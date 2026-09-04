@@ -30,6 +30,7 @@ ACTIVE_BACKUP = HARNESS_DIR / "active-character.json.bak"
 WORKSPACE_DIR = HARNESS_DIR / "workspaces"
 ACTIVE_MODE_FILE = HARNESS_DIR / "active-mode.json"
 STATE_FILE = HARNESS_DIR / "character-state.json"
+LOCK_FILE = HARNESS_DIR / "activate.lock"
 KNOWLEDGE_SOURCES_FILE = HARNESS_DIR / "knowledge-sources.json"
 EXAMPLE_SOURCES = ROOT / "knowledge-sources.example.json"
 
@@ -71,6 +72,16 @@ def cmd_character(args):
             print("用法：harness.py character preflight <persona_id>")
             return 1
         return _cmd_character_preflight(pid)
+    if sub == "recover":
+        if not ACTIVE_BACKUP.exists():
+            print(json.dumps({"ok": False, "error": "no_backup"}, ensure_ascii=False))
+            return 1
+        prev = read_json(ACTIVE_BACKUP)
+        write_json(ACTIVE_FILE, prev)
+        ACTIVE_BACKUP.unlink(missing_ok=True)
+        _write_state("active", prev.get("persona_id"), "recovered from backup")
+        print(json.dumps({"ok": True, "active": prev.get("persona_id"), "recovered": True}, ensure_ascii=False))
+        return 0
     if sub == "mode":
         return _cmd_character_mode(rest)
     if sub == "card-import":
@@ -213,20 +224,29 @@ def cmd_character(args):
         return 0
     if sub == "activate":
         if not rest:
-            print("用法：harness.py character activate <persona_id>")
+            print("用法：harness.py character activate <persona_id> [--simulate-failure]")
             return 1
         pid = rest[0]
+        simulate_failure = "--simulate-failure" in rest
         manifest_path = CHARACTERS_DIR / pid / "package-manifest.json"
         if not manifest_path.exists():
             print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
             return 1
         manifest = read_json(manifest_path)
-        _write_state("preflight", pid, "validating package")
-        # 事务化激活：先备份当前 active，再写入；失败可回滚
-        _write_state("activating", pid, "backing up current active")
-        if ACTIVE_FILE.exists():
-            shutil.copy2(ACTIVE_FILE, ACTIVE_BACKUP)
+        # 简单并发锁
         try:
+            fd = os.open(str(LOCK_FILE), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+        except Exception:
+            print(json.dumps({"ok": False, "error": "lock_held"}, ensure_ascii=False))
+            return 1
+        try:
+            _write_state("preflight", pid, "validating package")
+            _write_state("activating", pid, "backing up current active")
+            if ACTIVE_FILE.exists():
+                shutil.copy2(ACTIVE_FILE, ACTIVE_BACKUP)
+            if simulate_failure:
+                raise RuntimeError("simulated_activation_failure")
             write_json(ACTIVE_FILE, {"persona_id": pid, "scope": manifest.get("scope", "character:" + pid),
                                      "display_name": manifest.get("display_name", pid)})
             _write_state("active", pid, "activation complete")
@@ -236,6 +256,11 @@ def cmd_character(args):
             _write_state("activation_failed", pid, str(e))
             print(json.dumps({"ok": False, "error": "activation_failed", "detail": str(e)}, ensure_ascii=False))
             return 1
+        finally:
+            try:
+                LOCK_FILE.unlink()
+            except Exception:
+                pass
         print(json.dumps({"ok": True, "active": pid, "scope": manifest.get("scope"),
                           "rollback_available": ACTIVE_BACKUP.exists()}, ensure_ascii=False))
         return 0
@@ -317,11 +342,23 @@ def _validate_package(src, target):
                 n = info.filename.replace(chr(92), "/")
                 if n.startswith("../") or "\\" in n or n.startswith("/") or ".." in n.split("/"):
                     issues.append("zip_path_traversal:" + n)
+                if ":" in n:
+                    issues.append("zip_ads:" + n)
                 if (info.external_attr >> 16) & 0o170000 == 0o120000:
                     issues.append("zip_symlink:" + n)
                 if n.lower().endswith(".zip"):
                     issues.append("nested_zip:" + n)
                 total_size += info.file_size
+                if n.lower().endswith((".json", ".jsonl")):
+                    raw = zf.read(info)
+                    try:
+                        json.loads(raw.decode("utf-8"))
+                    except Exception:
+                        issues.append("mime_mismatch_json:" + n)
+                elif n.lower().endswith(".png"):
+                    sig = zf.read(info)[:8]
+                    if sig != bytes([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]):
+                        issues.append("mime_mismatch_png:" + n)
                 if target == "public" and n.rsplit(".", 1)[-1].lower() in ("exe", "bat", "cmd", "sh", "ps1", "com"):
                     issues.append("executable_script:" + n)
             if total_size > 200 * 1024 * 1024:
@@ -368,6 +405,14 @@ def _validate_package(src, target):
     if src.is_dir():
         for f in src.rglob("*"):
             if f.is_file():
+                import json as _json
+                if f.suffix.lower() in (".json", ".jsonl"):
+                    try:
+                        _json.loads(f.read_text(encoding="utf-8"))
+                    except Exception:
+                        issues.append("mime_mismatch_json:" + str(f.relative_to(src)))
+                if f.suffix.lower() == ".png" and f.read_bytes()[:8] != bytes([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]):
+                    issues.append("mime_mismatch_png:" + str(f.relative_to(src)))
                 try:
                     t = f.read_text(encoding="utf-8", errors="replace")
                     if _has_abs_path(t):
@@ -624,6 +669,50 @@ def cmd_workspace(args):
             return 1
         print(json.dumps({"ok": True, "workspace": read_json(p)}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "run":
+        name = ""
+        command = []
+        i = 0
+        while i < len(rest):
+            if rest[i] == "--name" and i + 1 < len(rest):
+                name = rest[i + 1]; i += 2
+            elif rest[i] == "--":
+                command = rest[i + 1:]; break
+            else:
+                i += 1
+        if not name or not command:
+            print("用法：harness.py workspace run --name <ws> -- <command> [args...]")
+            return 1
+        lease_path = WORKSPACE_DIR / name / "workspace.json"
+        if not lease_path.exists():
+            print(json.dumps({"ok": False, "error": "workspace_not_found", "name": name}, ensure_ascii=False))
+            return 1
+        lease = read_json(lease_path)
+        allowed = lease.get("allowed_commands", [])
+        if allowed and not any(command[0].startswith(a) for a in allowed):
+            print(json.dumps({"ok": False, "error": "command_not_allowed", "allowed_commands": allowed}, ensure_ascii=False))
+            return 1
+        if lease.get("actual_execution") is True:
+            print(json.dumps({"ok": False, "error": "actual_execution_disabled_for_lease"}, ensure_ascii=False))
+            return 1
+        cwd = Path(lease.get("worktree_path", WORKSPACE_DIR / name))
+        cwd.mkdir(parents=True, exist_ok=True)
+        try:
+            res = subprocess.run(command, cwd=str(cwd), capture_output=True, text=True,
+                                 encoding="utf-8", errors="replace", timeout=120)
+        except Exception as e:
+            print(json.dumps({"ok": False, "error": "run_failed", "detail": str(e)}, ensure_ascii=False))
+            return 1
+        lease["last_command"] = command
+        lease["last_rc"] = res.returncode
+        write_json(lease_path, lease)
+        out = {"ok": res.returncode == 0, "workspace": name, "command": command,
+               "returncode": res.returncode, "stdout": res.stdout[-1000:], "stderr": res.stderr[-1000:],
+               "note": "基本命令约束：仅检查 allowed_commands 与 actual_execution；非完整沙箱"}
+        print(json.dumps(out, ensure_ascii=False, indent=2))
+        return 0 if res.returncode == 0 else 1
+    if sub == "worktree":
+        wsub = rest[0] if rest else ""
     if sub == "worktree":
         wsub = rest[0] if rest else ""
         name = ""
