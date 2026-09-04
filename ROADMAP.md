@@ -578,3 +578,95 @@ n baseline
 - ✅ rollback（`character rollback`）
 - ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
 - ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）
+
+---
+
+## 21. 后辈交接文档规则（Successor Documentation Rule）
+
+每个任务设计、部署、新 schema、新入口、新集成、新迁移或重要修复，都必须留下 Markdown 文档。
+
+### 任务设计文档
+
+```text
+docs/tasks/YYYY-MM-DD-任务名称-design.md
+```
+
+必须回答：
+
+- 为什么做
+- 解决什么问题
+- 准备怎么做
+- 边界是什么
+- 哪些不做
+- 如何验收
+- 失败怎么退出
+
+模板：`docs/templates/TASK_DESIGN_TEMPLATE.md`
+
+### 部署记录文档
+
+```text
+docs/deployments/YYYY-MM-DD-部署对象-版本.md
+```
+
+必须回答：
+
+- 最终部署了什么
+- 部署到哪里
+- 基于哪个 commit
+- 运行了哪些验证
+- 什么没有验证
+- 如何撤销
+- 后辈接手时先检查什么
+
+模板：`docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md`
+
+### 完成门槛
+
+任务状态必须经历：
+
+```text
+designed → implemented → tested → documented → verified → deployed
+```
+
+`documented` 不是可选项。
+
+### 防止文档泛滥
+
+- `docs/TASKS_INDEX.md` / `docs/DEPLOYMENTS_INDEX.md`
+- 状态枚举统一：draft / designed / approved / implementing / implemented / verified / deployed / superseded / abandoned
+- 新旧文档通过 `supersedes` / `superseded_by` 关联
+- 每份文档至少写“后辈最需要知道的五件事”：为什么做、改了什么、证据、未验证、如何撤销
+
+### 公共 vs 本机
+
+- 公共文档：通用设计、公共部署、公开 Release、合成 Demo、公共 schema、公开适配器
+- 本机文档：`~/.dsh/harness-local/docs/tasks/` 与 `docs/deployments/`
+- 本机文档进入公共仓库前必须：去角色名、去绝对路径、去私人语料、抽象为通用机制
+
+---
+
+## 22. 命名与热点策略
+
+正式名称保持 **Harness Core Portable**，不采用 `Agent Harness` 作为品牌。
+
+### 热点分布
+
+- **GitHub Topics**：负责搜索流量（codex、claude-code、deepseek、trae、zcode、mcp、coding-agent、context-engineering、agent-memory 等）
+- **Release 标题**：适度关联，不堆词
+- **Release Notes**：单独设 `Agent ecosystem relevance` 段落，说明集成状态
+- **文档标题**：真实适配任务可成为搜索入口
+- **Git tag**：只使用 SemVer，不把热点关键词塞进 tag
+
+### 建议 Topics 组合（实际在 GitHub About 设置，不写进 README）
+
+```text
+local-first / agent-memory / long-term-memory / context-engineering / persona
+ai-agent / coding-agent / mcp / llm-observability / multi-agent
+codex / claude-code / deepseek / trae / zcode
+python / sqlite / offline-first / roleplay
+```
+
+### 兼容矩阵
+
+`AGENT_COMPATIBILITY.md` 使用 R0/R1/R2 等级，不把“计划中”写成“已集成”。
