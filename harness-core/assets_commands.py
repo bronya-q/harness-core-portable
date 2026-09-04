@@ -740,7 +740,7 @@ def _knowledge_delegate(question, current_role=None):
             "note": "这是最小委派冒烟，不是真实知识检索；不会把知识正文传给当前角色。"}
 
 
-def _knowledge_access(role, source_id, query=None, limit=10):
+def _knowledge_access(role, source_id, query=None, limit=10, max_chars=200):
     sources = _load_sources()
     src = next((s for s in sources if s.get("source_id") == source_id), None)
     if not src:
@@ -777,12 +777,16 @@ def _knowledge_access(role, source_id, query=None, limit=10):
             if idx >= 0:
                 start = max(0, idx - 40)
                 end = min(len(content), idx + len(q) + 40)
-                matches.append({"file": p.name, "snippet": content[start:end].replace("\n", " ")})
+                snippet = content[start:end].replace("\n", " ")
+                if max_chars and len(snippet) > max_chars:
+                    snippet = snippet[:max_chars] + "..."
+                matches.append({"file": p.name, "snippet": snippet})
                 if len(matches) >= limit:
                     break
     return {"ok": True, "role": role, "source_id": source_id,
             "allowed": allowed, "files": files, "matches": matches,
-            "note": "只读目录清单 + 有限文本摘要；不会修改或上传知识源。"}
+            "max_chars": max_chars,
+            "note": "只读目录清单 + 有限上下文摘要（预算 %s 字符）；不会修改或上传知识源。" % max_chars}
 
 
 def cmd_knowledge(args):
@@ -849,6 +853,7 @@ def cmd_knowledge(args):
     if sub == "access":
         role = source_id = query = ""
         limit = 10
+        max_chars = 200
         args1 = args[1:]
         for i, a in enumerate(args1):
             if a == "--role" and i + 1 < len(args1):
@@ -859,16 +864,19 @@ def cmd_knowledge(args):
                 query = args1[i + 1]
             if a == "--limit" and i + 1 < len(args1):
                 limit = int(args1[i + 1])
+            if a == "--max-chars" and i + 1 < len(args1):
+                max_chars = int(args1[i + 1])
         if not role or not source_id:
-            print("用法：python harness.py knowledge access --role <persona_id> --source <source_id> [--query <text>] [--limit 10]")
+            print("用法：python harness.py knowledge access --role <persona_id> --source <source_id> [--query <text>] [--limit 10] [--max-chars 200]")
             return 1
-        result = _knowledge_access(role, source_id, query or None, limit)
+        result = _knowledge_access(role, source_id, query or None, limit, max_chars)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
     if sub == "suggest":
         question = ""
         role = ""
         limit = 3
+        max_chars = 200
         args1 = args[1:]
         for i, a in enumerate(args1):
             if a == "--question" and i + 1 < len(args1):
@@ -877,8 +885,10 @@ def cmd_knowledge(args):
                 role = args1[i + 1]
             if a == "--limit" and i + 1 < len(args1):
                 limit = int(args1[i + 1])
+            if a == "--max-chars" and i + 1 < len(args1):
+                max_chars = int(args1[i + 1])
         if not question or not role:
-            print("用法：python harness.py knowledge suggest --question <问题> --role <persona_id> [--limit 3]")
+            print("用法：python harness.py knowledge suggest --question <问题> --role <persona_id> [--limit 3] [--max-chars 200]")
             return 1
         d = _knowledge_delegate(question, role)
         if not d.get("matched") or not d.get("allowed"):
@@ -888,7 +898,7 @@ def cmd_knowledge(args):
             return 0
         hits = d.get("hits") or []
         access_query = hits[0] if hits else question
-        acc = _knowledge_access(role, d["source_id"], access_query, limit)
+        acc = _knowledge_access(role, d["source_id"], access_query, limit, max_chars)
         acc["delegate"] = d
         acc["note"] = "委派匹配 + 只读访问返回有限上下文；不会修改/上传知识源。"
         print(json.dumps(acc, ensure_ascii=False, indent=2))

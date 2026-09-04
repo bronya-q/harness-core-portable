@@ -554,3 +554,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **导出前预览**：`privacy export` 与 `feedback export --redacted` 增加预览 + 确认；支持 `--yes`；取消不写文件。
 - `tests/test_user_experience_flows.py` 增加 privacy export 预览/确认用例，unittest 总数 25。
+
+## 24. 后续处理记录（2026-09-04 续 12）
+
+- **知识桥受控返回预算**：`knowledge access` / `knowledge suggest` 支持 `--max-chars`，默认 200，片段按预算截断并返回 `max_chars`。
+- **MCP Inspector 根因线索**：用最小 Node MCP server 手动 stdio 正常，但 Inspector CLI 仍报 `No servers found in config file`，说明该 CLI 版本可能要求 `--server-url` 或 catalog/config 条目，而非直接传 stdio 命令。

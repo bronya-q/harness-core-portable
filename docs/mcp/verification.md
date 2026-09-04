@@ -20,7 +20,7 @@ Passes initialize + tools/list.
 
 | Item | Status |
 |---|---|
-| MCP Inspector | ⚠️ 已尝试 CLI（`npx @modelcontextprotocol/inspector --cli --method tools/list -- python -m harness_core.adapters.mcp_server`），本机 Windows 超时（rc=124），未取得成功输出；需后续排查或在 Linux/容器环境重试 |
+| MCP Inspector | ⚠️ 已尝试 CLI；Windows 直接传 stdio 命令时出现两种现象：无输出超时/`No servers found in config file`。最小 Node MCP server 手动 stdio 正常，但 Inspector CLI 仍报“No servers found in config file”，说明该 CLI 版本可能要求 `--server-url` 或 catalog/config 条目，而不是原生 stdio 命令；需改用 `--config`/`--catalog` 或 HTTP transport |
 | Official MCP Registry | ⬜ 未提交 |
 | Claude Code | ⬜ 未验证 |
 | Codex CLI | ⬜ 未验证 |
