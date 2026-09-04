@@ -47,6 +47,10 @@ PASSTHROUGH = {
     "inspect": ["ux_commands.py", ["inspect"]],
     "data": ["ux_commands.py", ["data"]],
     "dashboard": ["dashboard.py", []],
+    "memory": ["control_commands.py", ["memory"]],
+    "privacy": ["control_commands.py", ["privacy"]],
+    "backup": ["control_commands.py", ["backup"]],
+    "feedback": ["control_commands.py", ["feedback"]],
 }
 
 # Fine-grained subcommands
