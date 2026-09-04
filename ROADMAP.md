@@ -489,7 +489,7 @@ telemetry 记录什么 / 返回码是什么
 - ✅ 明确 token baseline（`usage baseline set/check`）
 - ✅ 模型/参数/数据集固定（`ab retriever --meta '{"model":...,"dataset":...}'`）
 - 🚧 demo/directed/real 分离（event 已支持 session/content 来源，仍待 UI 分组）
-- 🚧 Workspace Lease 元数据 + `workspace check` + `workspace worktree create/remove/list` 已实现；命令约束/隔离执行仍未强制
+- ✅ Workspace 基础：Lease/check/worktree create/list/remove + `workspace run` 基本命令约束（allowed_commands / actual_execution）；仍缺完整文件系统沙箱
 - ✅ 结构化 Evidence Bundle
 
 ### v0.5
@@ -575,9 +575,9 @@ telemetry 记录什么 / 返回码是什么
 ### P3：v0.3 角色资产化
 
 - ✅ `character validate` 基础（distribution/private/real person/license/abs path/zip traversal）
-- 🚧 安全安装已补强：install 先校验 + 安全解压（已拒绝 path traversal / symlink / 嵌套 zip / 过大包 / 压缩比过高 / public 可执行脚本）；仍缺 ADS 与 MIME 一致性检查
+- ✅ HCP 安全安装已补强：validate+install 强制；拒绝 path traversal / symlink / ADS / 嵌套 zip / 过大包 / 压缩比过高 / public 可执行脚本 / JSON-PNG MIME 不一致；仍缺完整沙箱执行
 - ✅ sandbox preview（`character preview`：只读预览，不写入）
-- 🚧 activation backup/rollback + preflight/status 状态机骨架已实现；完整崩溃恢复/并发锁未实现
+- ✅ activation backup/rollback + preflight/status + recover + activate.lock + 失败注入测试（`tests/test_activation_failover.py`）已实现；仍缺真实崩溃持久化回放
 - ✅ rollback（`character rollback`）
 - ✅ Character Card 映射（`character card-import`，支持 JSON/PNG chara tEXt，输出 HCP 预览/写入）
 - ✅ corpus-to-draft 审批（`character build --from <corpus> [--approve]`，带证据/覆盖率/待审字段）
