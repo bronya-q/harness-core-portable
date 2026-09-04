@@ -26,6 +26,8 @@ SKILL = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 sys.path.insert(0, str(SKILL))
 from event_store import list_events, list_usage  # noqa: E402
+from vector_queue import queue_status  # noqa: E402
+import assets_commands  # noqa: E402
 OUT_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
 OUT_FILE = OUT_DIR / "index.html"
 
@@ -158,6 +160,57 @@ def main():
     provenance_html = f"<p>Session provenance（会话来源）：{prov_counts(events, 'session_provenance')}</p>"
     provenance_html += f"<p>Content provenance（内容来源）：{prov_counts(events, 'content_provenance')}</p>"
 
+    # 知识域/向量队列/usage 可视化（纯 CSS，无 JS，符合 CSP）
+    try:
+        kh = assets_commands._knowledge_health()
+        mounts = assets_commands._load_mounts().get("mounts", [])
+    except Exception:
+        kh = {"ok": False, "checks": []}
+        mounts = []
+    kn_html = ""
+    if kh.get("checks"):
+        for c in kh["checks"]:
+            pct = {"ok": 100, "unreadable": 50, "missing": 0, "not_dir": 0}.get(c.get("status"), 0)
+            kn_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%s</div></div>"
+                        % (_html(c.get("display_name") or c.get("source_id")), pct, _html(c.get("status"))))
+    else:
+        kn_html = "<p class='muted'>暂无知识源配置。</p>"
+    if mounts:
+        kn_html += "<p class='muted'>挂载登记：</p>"
+        for m in mounts[:6]:
+            kn_html += "<p class='muted'>- %s ↔ %s · %s</p>" % (_html(m.get("persona_id")), _html(m.get("source_id")), _html(m.get("mount_mode") or "read_only"))
+
+    try:
+        vq = queue_status()
+    except Exception:
+        vq = {"ok": False}
+    vq_html = ""
+    vq_total = int(vq.get("total") or 0)
+    if vq_total > 0:
+        for key in ("pending", "processing", "deferred", "done", "failed"):
+            val = int(vq.get(key) or 0)
+            pct = int(round(val * 100 / max(1, vq_total)))
+            vq_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%d</div></div>"
+                        % (_html(key), pct, val))
+        vq_html += "<p class='muted'>retryable=%s · stale=%s</p>" % (_html(vq.get("retryable", 0)), _html(vq.get("stale", 0)))
+    else:
+        vq_html = "<p class='muted'>暂无向量队列记录。</p>"
+
+    by_provider = {}
+    for u in usage:
+        prov = u.get("provider") or "unreported"
+        by_provider.setdefault(prov, {"rows": 0, "tokens": 0})
+        by_provider[prov]["rows"] += 1
+        by_provider[prov]["tokens"] += u.get("actual_tokens") or 0
+    max_tokens = max([v["tokens"] for v in by_provider.values()] + [1])
+    prov_html = ""
+    for prov, v in sorted(by_provider.items(), key=lambda kv: (-kv[1]["tokens"], kv[0])):
+        pct = int(round(v["tokens"] * 100 / max_tokens))
+        prov_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%d tokens · %d rows</div></div>"
+                      % (_html(prov), pct, v["tokens"], v["rows"]))
+    if not prov_html:
+        prov_html = "<p class='muted'>暂无 usage。</p>"
+
     page = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <title>Harness Mind Console</title>
@@ -176,6 +229,9 @@ h1{{font-size:1.5rem}} h2{{font-size:1.1rem;border-bottom:1px solid #ddd;padding
 .span-muted{{color:#888}}
 code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 .prov-chip{{display:inline-block;background:#eef2f7;border:1px solid #d8e0ea;border-radius:4px;padding:.1rem .35rem;margin:.1rem;font-size:.8rem}}
+.hb-row{{display:flex;align-items:center;gap:.5rem;margin:.3rem 0;font-size:.85rem}}
+.hb-row>span{{width:130px;flex-shrink:0;text-align:right;color:#444}}
+.hb{{background:#8bb8d8;color:#fff;border-radius:3px;padding:.15rem .3rem;min-width:2rem;font-size:.75rem;white-space:nowrap}}
 </style></head><body>
 <h1>Harness Mind Console</h1>
 <p class="muted">本地只读静态报告 · 不自动上传 · 不开放端口</p>
@@ -208,6 +264,11 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <details><summary>⑤ Runtime Policy → Prompt Builder</summary><p>自动执行 <b>DISABLED</b>；网络上传 <b>NONE</b>。</p></details>
 <details><summary>⑥ Model → Output → Telemetry → Auto-note</summary><p>详见统一事件时间线。</p></details>
 </div>
+<div class="grid">
+  <div class="card"><h2>知识域与挂载</h2>{kn_html}</div>
+  <div class="card"><h2>向量队列</h2>{vq_html}</div>
+</div>
+<div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>

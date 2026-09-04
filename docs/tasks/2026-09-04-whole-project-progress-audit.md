@@ -510,3 +510,11 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
   - `mount`：把角色对知识域登记为“只读挂载状态”（写入 `knowledge-mounts.json`），明确不是完整知识桥；
   - `delegate`：按关键词匹配负责知识域，返回负责角色与是否允许，不传递知识正文。
   - 新增 `tests/test_knowledge_stewardship.py`（3 用例），unittest 总数 17。
+
+## 17. 后续处理记录（2026-09-04 续 5）
+
+- **Dashboard 可视化增强**：新增纯 CSS/CSP-safe 的可视化卡片：
+  - 知识域与挂载（source 健康状态横向条形 + 挂载登记）
+  - 向量队列（pending / processing / deferred / done / failed 条形）
+  - Token 来源 / Provider（按 provider 聚合 token 与记录数）
+  - 新增 `tests/test_dashboard_visualization.py`（1 用例），unittest 总数 18。
