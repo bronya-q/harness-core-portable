@@ -6,7 +6,7 @@
 > 它做的是让“关系型 AI 界面”**更稳定、更连续、更可信任**。
 
 ```text
-版本：v0.1.0-alpha.2
+版本：v0.1.0-alpha.3
 状态：alpha / WIP
 License：MIT
 Python：3.13+
