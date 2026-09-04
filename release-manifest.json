@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T09:00:35.500885+00:00",
+  "generated_at": "2026-09-04T09:07:44.272955+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 100,
+  "count": 101,
   "files": {
     ".gitignore": "ccff9e3800c5d8892d7ee8ad43f3123b6c7c1ae79fc817e25d77c497b5289edb",
     "AGENT_USAGE.md": "46101eb47e8e762bb8acec6e1cb7baf0086179b6ae3a722c05696124d794bc57",
@@ -19,7 +19,8 @@
     "PORTABLE_EVAL.md": "725bdb733392659b7c57352da146942ba84c7fc056102292ca04e127abee5fa7",
     "PORTABLE_README.md": "16dc9672961f7411fdbdd0eb140e40b174873869d44b5789f5459ad9a1d96b6c",
     "PORTABLE_REQUIREMENTS.txt": "50909b9eea04850fd89d918b832f458ddbf8dc45dea5954720c64b551468ddee",
-    "README.md": "3512ba5f7c9c4140aa5165c13e9baa7093bf11163c7691e4bcf01e418f41cc50",
+    "PRE_MODEL_BASELINE.md": "02b41700e40f840cbbad7abed99818984d60a548a86df5c9db2699da0be73a06",
+    "README.md": "9f8b17622d10c640105e553de7ca4ac2a26a950c2949aa437fd0329d9b4c0773",
     "SECURITY.md": "6b84b07d97d28392be5cfc30918d39acc44d259b1207dc40ac13e0480cdef9d3",
     "USER_CONTRIBUTIONS.md": "10664d415e1ef074d3be7eaaff97fb5479e32dd9547ddb38f44204d05f18e0ef",
     "USER_SURVEY.md": "eaf820d00c4712bd0b02871ca3eb8e948eb00ae2bfa9b32f1491e9869f2464ce",
