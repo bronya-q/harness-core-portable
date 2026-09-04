@@ -240,6 +240,54 @@ def main():
     else:
         manual_html = "<p class='muted'>暂无手动写操作记录。</p>"
 
+    # 工程工作区 / Evidence / A-B 可视化
+    ws_dir = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "workspaces"
+    workspaces = []
+    if ws_dir.exists():
+        for d in sorted(ws_dir.iterdir()):
+            if d.is_dir() and (d / "workspace.json").exists():
+                try:
+                    w = json.loads((d / "workspace.json").read_text(encoding="utf-8"))
+                    workspaces.append({"name": d.name, **w})
+                except Exception:
+                    pass
+    ws_html = ""
+    if workspaces:
+        for w in workspaces[:8]:
+            st = w.get("status", "unknown")
+            ws_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:100%%'>%s</div>"
+                        "<span class='st-muted'>role=%s · worktree=%s · actual_execution=%s</span></div>"
+                        % (_html(w.get("name")), _html(st), _html(w.get("role") or "-"),
+                           _html(w.get("worktree_path") or "-"), _html(w.get("actual_execution"))))
+    else:
+        ws_html = "<p class='muted'>暂无工作区 lease。</p>"
+
+    ev_dir = SKILL.parent / "docs" / "evidence"
+    evidence = []
+    if ev_dir.exists():
+        for fp in sorted(ev_dir.glob("*.json")):
+            try:
+                d = json.loads(fp.read_text(encoding="utf-8"))
+                evidence.append({"task_id": d.get("task_id", fp.stem),
+                                 "working_tree": d.get("working_tree", "?"),
+                                 "checks": len(d.get("checks", [])),
+                                 "unverified": len(d.get("unverified", [])),
+                                 "approval_required": d.get("approval_required", True),
+                                 "source": fp.name})
+            except Exception:
+                pass
+    ev_html = ""
+    if evidence:
+        for ev in evidence[:8]:
+            ev_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:80%%'>%s</div>"
+                        "<span class='st-muted'>checks=%s · unverified=%s · approval=%s</span></div>"
+                        % (_html(ev.get("task_id")), _html(ev.get("working_tree")),
+                           _html(ev.get("checks")), _html(ev.get("unverified")), _html(ev.get("approval_required"))))
+    else:
+        ev_html = "<p class='muted'>暂无 evidence 包。</p>"
+
+    web_html = "<p>Workspaces: %d · Evidence: %d</p>" % (len(workspaces), len(evidence))
+
     # 运行桥彩色状态条（纯 CSS CSP-safe）
     try:
         policy = runtime_policy.load()
@@ -363,6 +411,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 </div>
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
 <div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
+<div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>

@@ -40,6 +40,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - `privacy reset-demo` 默认需要确认，`--yes` 可跳过
   - `workspace worktree remove` / `workspace release` 默认需要确认，`--yes` 可跳过
   - 取消时返回 `status=cancelled`，不执行破坏性操作
+- [x] **A/B / Evidence / Workspace 可视化**
+  - Dashboard 新增「工程工作区 / Evidence」卡片
+  - 展示 Workspace lease（status / role / worktree / actual_execution）
+  - 展示 Evidence Bundle（task_id / working_tree / checks / unverified / approval）
 
 ## 尝试过 / 未通过
 
