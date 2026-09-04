@@ -51,6 +51,41 @@
 
 ---
 
+## 如何贡献 / 帮忙
+
+- 自然流样本（`natural_session_*.bat`）
+- gold 标注（`recall_gold_independent_blind.csv`）
+- 下游任务反馈（游戏 / 论文 / 网页 / 文书）
+- 安全 / 许可证核验
+
+详细说明见：
+
+- `CONTRIBUTING.md`
+- `SECURITY.md`
+- `NATURAL_DATA_GAP.md`
+
+<details>
+<summary><strong>需要大家一起来（真的，这些我一个人搞不定）</strong> <em>点击展开</em></summary>
+
+下面这些细项我已经在 README「需要大家一起来」里列好了，这里不重复贴一遍，你直接过去挑一个就行：
+
+- MCP Inspector 实跑
+- Official MCP Registry 提交
+- 真实宿主验证（Claude Code / Codex / Copilot）
+- 首次用户测试
+- 双人标注
+- 真实截图 / GIF
+- CI 与跨平台
+
+→ [README「需要大家一起来」](https://github.com/bronya-q/harness-core-portable#需要大家一起来真的这些我一个人搞不定)
+
+> 哪怕只来 1 个人，也比没人强。
+> 不管大家有没有装，都祝看到的朋友们用 AI 许愿工程一次就成，DSH 版本更新兼容性依旧稳定。
+
+</details>
+
+---
+
 ## 项目名与定位
 
 - 项目名：**Harness Core Portable**

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T13:56:37.334947+00:00",
+  "generated_at": "2026-09-04T13:59:00.608949+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 195,
   "files": {
@@ -50,7 +50,7 @@
     "docs/mcp/server.json": "05b322f08baecab48678e10d9457e70f2e6809fd99b4073854f5d08e19855c36",
     "docs/mcp/verification.md": "40c5567e29410e6f884376916286f718d6217628e607dd273186349e4ed4bf20",
     "docs/measurement/CONSTRUCT_DICTIONARY.md": "d39ee275ad33a2ac00dc3841bfc43c73909a8bc4a590ff910e0f91f876cd47f3",
-    "docs/project-intro-and-feedback.md": "633b87af4176ef2fcdb9c7320a41d5ede98bd934abb9b11d18390fa512b1a66f",
+    "docs/project-intro-and-feedback.md": "e14bd254c9eeb0346210dedaea4d7d8eb19a4a4c40e40011563e635fee7186b8",
     "docs/releases/v0.1.0-alpha.2.md": "e4b281bf40d7bd8de0a31c7facee23ef9e2733a3586e68897bdda409f059ecc0",
     "docs/releases/v0.1.0-alpha.3.md": "0b6dab71ff5117d6cb7b98712c170fa7e9900619e800347e79c56f7e3c405438",
     "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
