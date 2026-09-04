@@ -267,4 +267,4 @@ MIT。第三方许可证/来源见 `NOTICE.md` / `CREDITS.md`。
 
 ---
 
-> 如果你在 10 秒内没看出它适合什么，请回去读 [NATURAL_DATA_GAP.md](NATURAL_DATA_GAP.md) —— 它最诚实。
+> 如果你在 10 秒内没看出它适合什么，请回去读 [MENTAL_MODEL_EFFECTS.md](MENTAL_MODEL_EFFECTS.md) —— 它最诚实。
