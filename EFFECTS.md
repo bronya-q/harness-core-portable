@@ -73,3 +73,48 @@ python harness.py audit             # 汇总
 > 总结：这套系统在**连续性、一致性、边界安全、可审计性**上有明确工程效果；
 > 在“用户情感满足度”上目前只有代理，不做心理效度承诺。
 > 它可以接其他用户本地知识库进行个性化，但必须**本地优先 + 授权 + 脱敏**。
+
+---
+
+## 5. 特定工程成效：是否满足预期 / 是否偏离目标 / 是否抑制牛角尖
+
+| 工程维度 | 系统如何帮助 | 可观察指标 |
+|---|---|---|
+| 满足用户预期 | `user_confirmed` + 盲评 + 自然流反馈 | 用户确认率、盲评通过、user_correction_rate |
+| 不偏离最初目标 | `mind_evolution` 目标分层 + 长/短目标 + master_tasks | 目标清单偏离检测、`production_gate` 门控 |
+| 抑制牛角尖 | 认知动力（注意力/好奇心/精力）+ 主动候选门控 + 自进化候选 | `cognitive_dynamics` 状态、`proactive_pipeline` 决策分布 |
+| 聚焦主线 | user_model 技术主线/创作支线候选信号 | user_model_signals 稳定性 |
+| 防止过度自我强化 | 内生审查 mind_review + 自进化白名单 | mind_review 违规计数 |
+
+> 说明：这些是**过程指标**，不等于“用户满意”本身；最终仍需要用户逐项确认。
+
+## 6. 成本：token 与本地资源利用率
+
+| 成本项 | 系统关注点 | 工具 |
+|---|---|---|
+| Token | 每次 roleplay/memory recall/评测的输入输出 | `ui.usage` / `rating_snapshot` / `daily_report` 可用时统计 |
+| 本地资源 | 内存/显存（Ollama 模型）、磁盘（DB/vector/模型）、CPU/GPU | `memory_health_report` / `rating_snapshot` / `deepseek-eyes` 类探针 |
+| 复用 | 向量复用、缓存、避免重复重嵌 | `vector_worker` / `fill_vec` 断点续跑 |
+| 可控 | `max_recall_items=3 / max_recall_chars=1200` 限制注入上下文 | 运行时 policy |
+
+> 可量化的成本报告建议：
+> ```text
+> python rating_snapshot.py        # 输出快照含 db hashes / 命令
+> python daily_report.py           # 日报含 health/quarterly
+> 若接入 usage_daily：可看 token 预算
+> ```
+
+## 7. 一个“实验工程”的完整效果闭环
+
+```text
+原始目标
+  → user_confirmed 目标确认
+  → mind_evolution 分目标
+  → 执行（roleplay/natural_session）
+  → 自审（mind_review / production_gate）
+  → 成本（token / 资源 / 时间）
+  → 用户反馈（盲评 / 修正）
+  → 是否继续 / 回滚
+```
+
+> 这套闭环让“是否偏离初始目标”变成**可检查、可回滚**，而不是黑盒。
