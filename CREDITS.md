@@ -91,3 +91,28 @@
 > 本仓库代码为原创；外部项目仅作为“设计思想/模板”参考。
 > 不含任何外部项目的受版权代码、角色素材、语音、图片或文本片段。
 > 若需商用或分发，请自行核对上述项目的各自许可证。
+
+---
+
+## 11. 马克斯系统（本地 celebrity-markus）
+
+- 来源：`C:/Users/HL/.dsh/skills/celebrity-markus`（本地系统）
+- 性质：**本地内部系统**，非外部开源项目
+- 借鉴：
+  - 认知动力系统（注意力/好奇心/心情/精力）→ `cognitive_dynamics.py`
+  - 自发系统 / 精力系统 / 分层次长目标短目标 → `mind_evolution.py` / `proactive_pipeline.py`
+  - 私人日记 / 信件系统 → `mind_precipitate.py` / H8 日记
+- 未使用其角色文本/私有内容进本仓库。
+
+## 12. 布兰奇系统（本地 Blanche 人格）
+
+- 来源：`C:/Users/HL/Desktop/Entity 140 - “Blanche”.txt` 与 `C:/Users/HL/feminism_kb`
+- 性质：**本地内部系统**
+- 借鉴：
+  - “预测式大文本 + 知识块”的人格实现思路 → `p4_experiment.narrative` / `natural_session`
+  - 知识库/卡片式人格 → `perspective_card.py` / `user_model_signals.py`
+- 未使用其角色文本/知识库全文进本仓库。
+
+---
+
+> 以上为本地系统借鉴；如需商用/分发，仍需确认这些本地系统的内部授权约定。
