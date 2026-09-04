@@ -9,8 +9,14 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import urllib.request
 from pathlib import Path
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
 
 HOME = Path.home()
 SKILL = Path(__file__).resolve().parent
