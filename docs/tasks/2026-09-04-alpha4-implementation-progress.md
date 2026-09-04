@@ -51,6 +51,10 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **知识桥受控返回预算**
   - `knowledge access` / `knowledge suggest` 支持 `--max-chars`（默认 200）
   - 返回片段按预算截断，并注明 `max_chars`
+- [x] **合规/公共边界快照**
+  - Dashboard 新增「公共边界快照」卡片
+  - 扫描 README / CONTRIBUTING / SECURITY / LICENSE 中的私人标识与绝对路径
+  - 命中时高亮提示需人工确认；默认关键公开文件应为干净
 
 ## 尝试过 / 未通过
 
