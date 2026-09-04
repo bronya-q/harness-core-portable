@@ -585,9 +585,9 @@ n baseline
 - ✅ 检索器 A/B：`ab retriever --retriever-a <a> --retriever-b <b> --top-k 5`（需私有 gold；公开 clean clone 返回 UNAVAILABLE）
 - ✅ Token 基线：`usage summary`（actual/baseline/avoided 汇总）
 - ✅ Evidence Bundle：`evidence create --task <name> [--workspace <ws>]`（task_id/base_commit/changed_files/checks/unverified/approval_required/rollback）
-- ⬜ 同一 query 配对 A/B 的逐条 diff
-- ⬜ token 基线固定版本 / CI
-- ⬜ 结构化 handoff 自动生成
+- ✅ 同一 query 配对 A/B 的逐条 diff（`ab retriever --per-query`）
+- ✅ token 基线固定版本 / CI（`usage baseline set/check`）
+- ✅ 结构化 handoff 自动生成（`evidence handoff --task <task>`）
 
 ---
 

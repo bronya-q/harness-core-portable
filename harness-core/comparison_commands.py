@@ -57,7 +57,7 @@ def cmd_role_ab(a, b):
     return 0
 
 
-def cmd_retriever_ab(a, b, top_k):
+def cmd_retriever_ab(a, b, top_k, per_query=False):
     def run_one(retriever):
         p = subprocess.run([sys.executable, str(SKILL / "measurement.py"), "recall-pool",
                             "--retriever", retriever, "--top-k", str(top_k)],
@@ -72,11 +72,34 @@ def cmd_retriever_ab(a, b, top_k):
         print(json.dumps({"ok": False, "error": "recall_pool_unavailable",
                           "note": "需要私有 gold 数据；公开 clean clone 通常不可用"}, ensure_ascii=False, indent=2))
         return 1
+    rows_a = ra.get("rows") or []
+    rows_b = rb.get("rows") or []
+    per_query_rows = []
+    if per_query:
+        for i in range(max(len(rows_a), len(rows_b))):
+            xa = rows_a[i] if i < len(rows_a) else {}
+            xb = rows_b[i] if i < len(rows_b) else {}
+            pd = None
+            rd = None
+            if xa.get("precision_at_k") is not None and xb.get("precision_at_k") is not None:
+                pd = round(xb.get("precision_at_k") - xa.get("precision_at_k"), 4)
+            if xa.get("recall") is not None and xb.get("recall") is not None:
+                rd = round(xb.get("recall") - xa.get("recall"), 4)
+            per_query_rows.append({
+                "query": xa.get("query") or xb.get("query"),
+                "precision_a": xa.get("precision_at_k"), "precision_b": xb.get("precision_at_k"),
+                "precision_delta": pd,
+                "recall_a": xa.get("recall"), "recall_b": xb.get("recall"),
+                "recall_delta": rd,
+                "relevant_pool": xa.get("relevant_pool") or xb.get("relevant_pool"),
+            })
+        per_query_rows.sort(key=lambda r: (r["precision_delta"] if r["precision_delta"] is not None else 0))
     out = {
         "retriever_a": {"name": a, "p_at_5": ra.get("avg_precision_at_k"), "recall": ra.get("avg_recall"),
                         "hit_rate": ra.get("hit_rate")},
         "retriever_b": {"name": b, "p_at_5": rb.get("avg_precision_at_k"), "recall": rb.get("avg_recall"),
                         "hit_rate": rb.get("hit_rate")},
+        "per_query": per_query_rows,
         "note": "基于同一独立 relevance 池；结果仅用于本地对照，不视为第三方认证。",
     }
     print(json.dumps({"ok": True, "mode": "retriever_ab", **out}, ensure_ascii=False, indent=2))
@@ -123,6 +146,43 @@ def cmd_evidence_create(task, workspace):
     return 0
 
 
+def cmd_handoff_create(task):
+    EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+    ev_file = EVIDENCE_DIR / (task + ".json")
+    if not ev_file.exists():
+        print(json.dumps({"ok": False, "error": "evidence_not_found", "task": task}, ensure_ascii=False))
+        return 1
+    ev = _load_json(ev_file)
+    md = [
+        "# Handoff: " + task,
+        "",
+        "## 后辈最需要知道的五件事",
+        "",
+        "1. 为什么这样做：" + str(ev.get("role_id") or "未知"),
+        "2. 实际改了什么：" + "; ".join(ev.get("changed_files", [])[:5]),
+        "3. 哪些证据说明有效：" + str(len(ev.get("checks", []))) + " 条 checks",
+        "4. 哪些事情还没有验证：" + "; ".join(ev.get("unverified", [])),
+        "5. 出问题怎么撤销：" + str(ev.get("rollback", "见部署文档")),
+        "",
+        "## 基础信息",
+        "",
+        "- task_id: " + str(ev.get("task_id")),
+        "- base_commit: " + str(ev.get("base_commit")),
+        "- working_tree: " + str(ev.get("working_tree")),
+        "- approval_required: " + str(ev.get("approval_required")),
+        "- created_at: " + str(ev.get("created_at")),
+        "",
+        "## 尚未验证",
+        "",
+    ]
+    for u in ev.get("unverified", []):
+        md.append("- " + u)
+    out = SKILL.parent / "docs" / "tasks" / ("handoff-" + task + ".md")
+    out.write_text(chr(10).join(md) + chr(10), encoding="utf-8")
+    print(json.dumps({"ok": True, "mode": "handoff", "output": str(out)}, ensure_ascii=False, indent=2))
+    return 0
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
@@ -142,6 +202,7 @@ def main():
     if args[0] == "ab" and len(args) >= 2 and args[1] == "retriever":
         a = b = "keyword"
         top_k = 5
+        per_query = False
         i = 2
         while i < len(args):
             if args[i] == "--retriever-a" and i + 1 < len(args):
@@ -150,9 +211,11 @@ def main():
                 b = args[i + 1]; i += 2
             elif args[i] == "--top-k" and i + 1 < len(args):
                 top_k = int(args[i + 1]); i += 2
+            elif args[i] == "--per-query":
+                per_query = True; i += 1
             else:
                 i += 1
-        return cmd_retriever_ab(a, b, top_k)
+        return cmd_retriever_ab(a, b, top_k, per_query)
     if args[0] == "evidence" and len(args) >= 2 and args[1] == "create":
         task = workspace = ""
         i = 2
@@ -164,6 +227,15 @@ def main():
             else:
                 i += 1
         return cmd_evidence_create(task, workspace)
+    if args[0] == "evidence" and len(args) >= 2 and args[1] == "handoff":
+        task = ""
+        i = 2
+        while i < len(args):
+            if args[i] == "--task" and i + 1 < len(args):
+                task = args[i + 1]; i += 2
+            else:
+                i += 1
+        return cmd_handoff_create(task)
     print(__doc__)
     return 0
 

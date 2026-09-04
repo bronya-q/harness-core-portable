@@ -3,7 +3,10 @@
 """event_commands.py — event / usage CLI 入口。"""
 import json
 import sys
+from pathlib import Path
 from event_store import record_event, list_events, record_usage, list_usage
+
+BASELINE_FILE = Path.home() / ".dsh" / "harness" / "usage-baseline.json"
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -107,6 +110,38 @@ def cmd_usage(args):
                           "actual_tokens": actual, "baseline_tokens": baseline,
                           "avoided_tokens": avoided}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "baseline":
+        bsub = args[1] if len(args) > 1 else ""
+        if bsub == "set":
+            base_tokens = 0
+            base_id = "all_eligible_same_scope"
+            i = 2
+            while i < len(args):
+                if args[i] == "--baseline-tokens" and i + 1 < len(args):
+                    base_tokens = int(args[i + 1]); i += 2
+                elif args[i] == "--baseline-id" and i + 1 < len(args):
+                    base_id = args[i + 1]; i += 2
+                else:
+                    i += 1
+            BASELINE_FILE.parent.mkdir(parents=True, exist_ok=True)
+            data = {"baseline_tokens": base_tokens, "baseline_id": base_id, "set_at": __import__("time").strftime("%Y-%m-%dT%H:%M:%S")}
+            BASELINE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+            print(json.dumps({"ok": True, "baseline": data}, ensure_ascii=False, indent=2))
+            return 0
+        if bsub == "check":
+            if not BASELINE_FILE.exists():
+                print(json.dumps({"ok": False, "error": "baseline_not_set"}, ensure_ascii=False))
+                return 1
+            base = json.loads(BASELINE_FILE.read_text(encoding="utf-8"))
+            rows = list_usage(limit=1000)
+            actual = sum(r.get("actual_tokens") or 0 for r in rows)
+            ok = actual <= base.get("baseline_tokens", 0)
+            print(json.dumps({"ok": ok, "mode": "usage_baseline_check",
+                              "baseline_tokens": base.get("baseline_tokens"), "actual_tokens": actual,
+                              "within_baseline": ok}, ensure_ascii=False, indent=2))
+            return 0 if ok else 1
+        print("用法：usage baseline set|check")
+        return 1
     print("未知 usage 子命令：" + sub)
     return 1
 
