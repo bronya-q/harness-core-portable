@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Minimal MCP (Model Context Protocol) server over stdio.
+"""MCP server for Harness Core Portable.
 
-Exposes a small read-only/memory-management surface to MCP-capable clients.
-No private persona content, no network, no automatic upload.
+Uses the official MCP Python SDK when available; falls back to a minimal
+stdio JSON-RPC implementation otherwise. Public surface: memory list,
+event list, usage summary. No private persona content, no network upload.
 
-Protocol: JSON-RPC 2.0 over line-delimited stdio.
-Methods: initialize, tools/list, tools/call, notifications/initialized.
+Install:
+  pip install harness-core-portable[mcp]
+Run:
+  python -m harness_core.adapters.mcp_server
 """
 import json
 import sys
@@ -20,15 +23,33 @@ _ROOT = Path(__file__).resolve().parent.parent.parent
 _SKILL = _ROOT / "harness-core"
 sys.path.insert(0, str(_SKILL))
 
-from event_store import list_events, list_usage  # noqa: E402
+try:
+    from mcp.server.fastmcp import FastMCP
+
+    MCP = FastMCP("harness-core-mcp")
+    HAS_SDK = True
+except Exception:
+    MCP = None
+    HAS_SDK = False
 
 
-def _memory_list(args):
-    scope = args.get("scope", "character:demo")
-    return {"ok": True, "notes": []}  # placeholder replaced by subprocess-free memory list? Use event_store? For now simple
+def _memory_list(scope: str = "character:demo") -> dict:
+    import subprocess, sys as _sys
+    p = subprocess.run([_sys.executable, str(_SKILL / "notebook.py"), "list", "--scope", scope],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
+    try:
+        return json.loads(p.stdout)
+    except Exception:
+        return {"ok": False, "raw": p.stdout[-300:], "stderr": p.stderr[-300:]}
 
 
-def _usage_summary(args):
+def _events_list(limit: int = 10) -> dict:
+    from event_store import list_events
+    return {"ok": True, "events": list_events(limit=limit)}
+
+
+def _usage_summary() -> dict:
+    from event_store import list_usage
     rows = list_usage(limit=1000)
     actual = sum(r.get("actual_tokens") or 0 for r in rows)
     baseline = sum(r.get("baseline_tokens") or 0 for r in rows)
@@ -37,33 +58,48 @@ def _usage_summary(args):
             "avoided_tokens": avoided}
 
 
-def _events_list(args):
-    limit = int(args.get("limit", 10))
-    return {"ok": True, "events": list_events(limit=limit)}
+def _register_sdk():
+    @MCP.tool()
+    def memory_list(scope: str = "character:demo") -> str:
+        """List scoped memory notes."""
+        return json.dumps(_memory_list(scope), ensure_ascii=False)
+
+    @MCP.tool()
+    def events_list(limit: int = 10) -> str:
+        """List recent event envelope records."""
+        return json.dumps(_events_list(limit), ensure_ascii=False)
+
+    @MCP.tool()
+    def usage_summary() -> str:
+        """Summarize recorded token usage."""
+        return json.dumps(_usage_summary(), ensure_ascii=False)
 
 
-def _tools():
-    return [
-        {"name": "memory_list", "description": "List scoped memory notes (demo scope by default).",
-         "inputSchema": {"type": "object", "properties": {"scope": {"type": "string"}}}},
-        {"name": "events_list", "description": "List recent event envelope records.",
-         "inputSchema": {"type": "object", "properties": {"limit": {"type": "integer"}}}},
-        {"name": "usage_summary", "description": "Summarize recorded token usage.",
-         "inputSchema": {"type": "object", "properties": {}}},
-    ]
+if HAS_SDK:
+    _register_sdk()
+
+# ---- Fallback minimal JSON-RPC (used when mcp package is not installed) ----
+TOOLS = [
+    {"name": "memory_list", "description": "List scoped memory notes.",
+     "inputSchema": {"type": "object", "properties": {"scope": {"type": "string"}}}},
+    {"name": "events_list", "description": "List recent event envelope records.",
+     "inputSchema": {"type": "object", "properties": {"limit": {"type": "integer"}}}},
+    {"name": "usage_summary", "description": "Summarize recorded token usage.",
+     "inputSchema": {"type": "object", "properties": {}}},
+]
 
 
-def _call_tool(name, args):
+def _call(name, args):
     if name == "memory_list":
-        return _memory_list(args)
+        return _memory_list(args.get("scope", "character:demo"))
     if name == "events_list":
-        return _events_list(args)
+        return _events_list(int(args.get("limit", 10)))
     if name == "usage_summary":
-        return _usage_summary(args)
+        return _usage_summary()
     return {"ok": False, "error": "unknown_tool:" + name}
 
 
-def main():
+def _fallback_main():
     for line in sys.stdin:
         line = line.strip()
         if not line:
@@ -77,24 +113,32 @@ def main():
         params = req.get("params", {}) or {}
         if method == "initialize":
             result = {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}},
-                      "serverInfo": {"name": "harness-core-mcp", "version": "0.1.0"}}
+                      "serverInfo": {"name": "harness-core-mcp", "version": "0.2.0"}}
         elif method == "tools/list":
-            result = {"tools": _tools()}
+            result = {"tools": TOOLS}
         elif method == "tools/call":
             name = params.get("name", "")
             args = params.get("arguments", {}) or {}
-            content = _call_tool(name, args)
+            content = _call(name, args)
             result = {"content": [{"type": "text", "text": json.dumps(content, ensure_ascii=False)}],
                       "isError": content.get("ok") is False}
         elif method == "notifications/initialized":
             result = None
         else:
-            result = {"error": {"code": -32601, "message": "method not found"}}
+            resp = {"jsonrpc": "2.0", "id": rid, "error": {"code": -32601, "message": "method not found"}}
+            sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
+            sys.stdout.flush()
+            continue
         resp = {"jsonrpc": "2.0", "id": rid, "result": result}
         sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
         sys.stdout.flush()
-        if method == "shutdown":
-            break
+
+
+def main():
+    if HAS_SDK:
+        MCP.run()
+    else:
+        _fallback_main()
 
 
 if __name__ == "__main__":

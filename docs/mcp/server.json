@@ -1,0 +1,15 @@
+{
+  "name": "harness-core-mcp",
+  "description": "Local-first role memory, event timeline, and token usage summary for Harness Core Portable.",
+  "version": "0.2.0",
+  "protocol": "stdio",
+  "transport": "stdio",
+  "command": "python",
+  "args": ["-m", "harness_core.adapters.mcp_server"],
+  "tools": [
+    {"name": "memory_list", "description": "List scoped memory notes."},
+    {"name": "events_list", "description": "List recent event envelope records."},
+    {"name": "usage_summary", "description": "Summarize recorded token usage."}
+  ],
+  "privacy": "local_only"
+}

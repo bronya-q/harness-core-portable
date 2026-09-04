@@ -18,7 +18,7 @@
 |---|---|---|
 | AGENTS.md-based coding agents | R1 | 项目以 `AGENTS.md` 作为上下文入口，可作为 Codex 等 agent 的项目记忆/上下文基础 |
 | CLAUDE.md / hook workflows | R1 | 可提供项目说明、hooks 与 handoff 方向，未做官方 Claude Code 插件 |
-| MCP-capable clients | R0 | 当前未提供 MCP server；未来可通过本地事件 API/命令暴露 |
+| MCP-capable clients | R1 | 已有 stdio MCP server（FastMCP），`python -m harness_core.adapters.mcp_server`；官方 Inspector/Registry 未验证 |
 | OpenAI-compatible / DeepSeek backends | R1 | runtime 支持本地 Ollama，理论上可通过兼容端点接入 DeepSeek 等服务，未做完整云端测试 |
 | Trae / ZCode | R0 | 当前无专门适配 |
 
