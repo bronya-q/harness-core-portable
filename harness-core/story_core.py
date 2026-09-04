@@ -18,13 +18,19 @@ DB = Path.home() / ".dsh" / "memory-emotion" / "story_core.db"
 def connect():
     DB.parent.mkdir(parents=True, exist_ok=True)
     c = sqlite3.connect(str(DB))
+    c.execute("PRAGMA busy_timeout=5000")
     c.row_factory = sqlite3.Row
     c.execute("""CREATE TABLE IF NOT EXISTS story_core(
-      id TEXT PRIMARY KEY, namespace TEXT, content TEXT, version INTEGER,
-      created_at REAL, updated_at REAL)""")
+      id TEXT PRIMARY KEY, namespace TEXT NOT NULL, content TEXT NOT NULL, version INTEGER NOT NULL,
+      created_at REAL NOT NULL, updated_at REAL NOT NULL)""")
     c.execute("""CREATE TABLE IF NOT EXISTS story_core_history(
-      id INTEGER PRIMARY KEY AUTOINCREMENT, namespace TEXT, content TEXT, version INTEGER,
-      created_at REAL)""")
+      id INTEGER PRIMARY KEY AUTOINCREMENT, namespace TEXT NOT NULL, content TEXT NOT NULL, version INTEGER NOT NULL,
+      created_at REAL NOT NULL, operation TEXT DEFAULT 'set', restored_from_version INTEGER)""")
+    cols = [r[1] for r in c.execute('PRAGMA table_info(story_core_history)').fetchall()]
+    if 'operation' not in cols:
+        c.execute("ALTER TABLE story_core_history ADD COLUMN operation TEXT DEFAULT 'set'")
+    if 'restored_from_version' not in cols:
+        c.execute("ALTER TABLE story_core_history ADD COLUMN restored_from_version INTEGER")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_story_core_namespace ON story_core(namespace)")
     c.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_story_core_history_ns_ver ON story_core_history(namespace, version)")
     return c
@@ -35,12 +41,12 @@ def set_core(args):
     if row:
         c.execute("UPDATE story_core SET content=?, version=version+1, updated_at=? WHERE id=?", (args.content, time.time(), row["id"]))
         ver = row["version"] + 1
-        c.execute("INSERT INTO story_core_history(namespace,content,version,created_at) VALUES(?,?,?,?)", (args.namespace, args.content, ver, time.time()))
+        c.execute("INSERT INTO story_core_history(namespace,content,version,created_at,operation) VALUES(?,?,?,?,?)", (args.namespace, args.content, ver, time.time(), "set"))
     else:
         import uuid
         c.execute("INSERT INTO story_core(id,namespace,content,version,created_at,updated_at) VALUES(?,?,?,1,?,?)",
                   (uuid.uuid4().hex[:16], args.namespace, args.content, time.time(), time.time()))
-        c.execute("INSERT INTO story_core_history(namespace,content,version,created_at) VALUES(?,?,1,?)", (args.namespace, args.content, time.time()))
+        c.execute("INSERT INTO story_core_history(namespace,content,version,created_at,operation) VALUES(?,?,1,?,?)", (args.namespace, args.content, time.time(), "set"))
     c.commit(); c.close()
     row2 = connect().execute("SELECT * FROM story_core WHERE namespace=?", (args.namespace,)).fetchone()
     print(json.dumps({"ok": True, "namespace": args.namespace, "version": row2["version"]}, ensure_ascii=False))
@@ -93,8 +99,8 @@ def restore(args):
         ver = 1
         c.execute("INSERT INTO story_core(id,namespace,content,version,created_at,updated_at) VALUES(?,?,?,?,?,?)",
                   (uuid.uuid4().hex[:16], args.namespace, target["content"], ver, time.time(), time.time()))
-    c.execute("INSERT INTO story_core_history(namespace,content,version,created_at) VALUES(?,?,?,?)",
-              (args.namespace, target["content"], ver, time.time()))
+    c.execute("INSERT INTO story_core_history(namespace,content,version,created_at,operation,restored_from_version) VALUES(?,?,?,?,?,?)",
+              (args.namespace, target["content"], ver, time.time(), "restore", target["version"]))
     c.commit(); c.close()
     print(json.dumps({"ok": True, "namespace": args.namespace, "version": ver, "restored_from": target["version"]}, ensure_ascii=False))
     return 0

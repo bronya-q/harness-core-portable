@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "generated_at": 0,
-  "count": 89,
+  "count": 94,
   "hashes": {
     ".gitignore": "ccff9e3800c5d889",
     "AGENT_USAGE.md": "a4ce146d303a39a7",
@@ -18,8 +18,10 @@
     "PORTABLE_EVAL.md": "d21621dd9349d04d",
     "PORTABLE_README.md": "6f76068cf46e6335",
     "PORTABLE_REQUIREMENTS.txt": "50909b9eea04850f",
-    "README.md": "0ef008f0625c5889",
+    "README.md": "41c9b35e6e20ada2",
     "SECURITY.md": "6b84b07d97d28392",
+    "USER_CONTRIBUTIONS.md": "10664d415e1ef074",
+    "USER_SURVEY.md": "eaf820d00c4712bd",
     "harness-core/atomic_facts_build.py": "ea6a38f5a956efc3",
     "harness-core/atomic_fact_retriever.py": "12a657adb7a5cfe9",
     "harness-core/cognitive_dynamics.py": "38072f483691188e",
@@ -35,7 +37,7 @@
     "harness-core/gold_human_label_import.py": "fb83f982eb6f6977",
     "harness-core/gold_labeler.py": "f24dd714ca60f5a6",
     "harness-core/gold_sampler.py": "908e4b0bfd2c1482",
-    "harness-core/harness.py": "ea2673d76cdafbb3",
+    "harness-core/harness.py": "3a67752064f4d6bc",
     "harness-core/harness_selfcheck.py": "03063da1a8f28991",
     "harness-core/history_backfill.py": "30bffaabd76713a3",
     "harness-core/humanization.py": "3f2f318b2c05b0fd",
@@ -53,7 +55,7 @@
     "harness-core/need_projection.py": "f2f16c009b85a73c",
     "harness-core/nine_dim.py": "4b0a1ec0498e9bf6",
     "harness-core/nine_dim_revision.py": "1164c36966b1c735",
-    "harness-core/notebook.py": "0fdc5ed2dc5834d5",
+    "harness-core/notebook.py": "b271502afd969026",
     "harness-core/p4_experiment.py": "7f614aa17cf68fc5",
     "harness-core/perspective_card.py": "46104468843a069e",
     "harness-core/perspective_card_schema.json": "49df04feff4598ca",
@@ -67,7 +69,7 @@
     "harness-core/rating_snapshot.py": "a2470b9b0fcb22d7",
     "harness-core/recall_context.py": "d794aa0dd6290b1e",
     "harness-core/retrieval_reranker.py": "772cdd22639afcfb",
-    "harness-core/roleplay_memory_chat.py": "8190efa1e6b352d0",
+    "harness-core/roleplay_memory_chat.py": "1383a9f23f5f2425",
     "harness-core/runtime-policy.example.json": "2ed0654731533403",
     "harness-core/runtime_policy.py": "86e3db883f446372",
     "harness-core/runtime_preflight.py": "43894d418c1b9648",
@@ -75,7 +77,7 @@
     "harness-core/semantic_search.py": "c9f8e4ba8efe07e0",
     "harness-core/session_ingest.py": "1128a7a2e45921a3",
     "harness-core/SKILL.md": "da2adbb2337a268c",
-    "harness-core/story_core.py": "858660cdc7a41c7e",
+    "harness-core/story_core.py": "fb7a6ac66b0c1863",
     "harness-core/tools_inventory.json": "d46d628cb18dae99",
     "harness-core/tools_inventory.py": "c61eee2f3235a610",
     "harness-core/tools_legacy.json": "0c10c40b8038b284",
@@ -91,6 +93,9 @@
     "harness-core/docs/Kimi-Moonshot-研究学习-20260903.md": "b31bd1de804618c4",
     "harness-core/docs/原子事实-实体-时间-A-B实验-20260902.md": "be76e30f72f97507",
     "harness-core/docs/工具清单与依赖图-20260901.md": "0c6a2b34a2af9f34",
-    "harness-core/docs/记忆召回调研-方案-20260901.md": "719a2ac8bc3187e2"
+    "harness-core/docs/记忆召回调研-方案-20260901.md": "719a2ac8bc3187e2",
+    "harness-core/__pycache__/roleplay_memory_chat.cpython-313.pyc": "54d4ed244d61b4f5",
+    "harness-core/__pycache__/runtime_policy.cpython-313.pyc": "7a7f982b10757e39",
+    "harness-core/__pycache__/runtime_resolver.cpython-313.pyc": "01c00b6de45f8e82"
   }
 }
