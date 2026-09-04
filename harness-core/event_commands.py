@@ -22,6 +22,8 @@ def cmd_event(args):
     if sub == "add":
         scope = event_type = content_type = ""
         session_id = ""
+        session_provenance = "unknown"
+        content_provenance = "unknown"
         i = 1
         while i < len(args):
             if args[i] == "--scope" and i + 1 < len(args):
@@ -32,13 +34,21 @@ def cmd_event(args):
                 content_type = args[i + 1]; i += 2
             elif args[i] == "--session-id" and i + 1 < len(args):
                 session_id = args[i + 1]; i += 2
+            elif args[i] == "--session-provenance" and i + 1 < len(args):
+                session_provenance = args[i + 1]; i += 2
+            elif args[i] == "--content-provenance" and i + 1 < len(args):
+                content_provenance = args[i + 1]; i += 2
             else:
                 i += 1
         if not scope or not event_type:
-            print("用法：harness.py event add --scope <s> --event-type <t> [--content-type <c>] [--session-id <id>]")
+            print("用法：harness.py event add --scope <s> --event-type <t> [--content-type <c>] [--session-id <id>] "
+                  "[--session-provenance real|demo|smoke|regression|unknown] "
+                  "[--content-provenance observed|derived|inferred|unknown]")
             return 1
         eid = record_event({"event_type": event_type, "scope": scope, "content_type": content_type or "fact",
                             "session_id": session_id or None,
+                            "session_provenance": session_provenance,
+                            "content_provenance": content_provenance,
                             "occurred_at": __import__("time").strftime("%Y-%m-%dT%H:%M:%S")})
         print(json.dumps({"ok": True, "event_id": eid}, ensure_ascii=False))
         return 0

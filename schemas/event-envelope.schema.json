@@ -2,21 +2,93 @@
   "schema_version": 1,
   "title": "Unified Event Envelope Schema",
   "description": "For logs / episodes / diary / reflection and derived artifacts.",
-  "required": ["event_id", "event_type", "scope", "occurred_at", "recorded_at"],
+  "required": [
+    "event_id",
+    "event_type",
+    "scope",
+    "occurred_at",
+    "recorded_at"
+  ],
   "properties": {
-    "event_id": { "type": "string" },
-    "event_type": { "type": "string" },
-    "scope": { "type": "string" },
-    "occurred_at": { "type": "string" },
-    "recorded_at": { "type": "string" },
-    "session_id": { "type": "string" },
-    "source_ids": { "type": "array", "items": { "type": "string" } },
-    "root_source_ids": { "type": "array", "items": { "type": "string" } },
-    "content_type": { "enum": ["fact", "perception", "interpretation", "uncertainty", "fictional_embellishment"] },
-    "visibility": { "enum": ["private", "public", "local"] },
-    "consent_scope": { "type": "object" },
-    "retention": { "type": "object" },
-    "derived_artifact_ids": { "type": "array", "items": { "type": "string" } },
-    "version": { "type": "integer", "minimum": 1 }
+    "event_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "occurred_at": {
+      "type": "string"
+    },
+    "recorded_at": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "root_source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "content_type": {
+      "enum": [
+        "fact",
+        "perception",
+        "interpretation",
+        "uncertainty",
+        "fictional_embellishment"
+      ]
+    },
+    "visibility": {
+      "enum": [
+        "private",
+        "public",
+        "local"
+      ]
+    },
+    "consent_scope": {
+      "type": "object"
+    },
+    "retention": {
+      "type": "object"
+    },
+    "derived_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "session_provenance": {
+      "enum": [
+        "real",
+        "demo",
+        "smoke",
+        "regression",
+        "unknown"
+      ]
+    },
+    "content_provenance": {
+      "enum": [
+        "observed",
+        "derived",
+        "inferred",
+        "user_declared",
+        "unknown"
+      ]
+    }
   }
 }

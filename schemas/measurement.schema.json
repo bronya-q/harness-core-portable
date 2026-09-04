@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "title": "Measurement Construct Schema",
+  "description": "统一记录测量学构念（trait/state/behavior/self_report/inference）及其操作化定义。",
+  "required": ["construct_id", "construct_name", "construct_type", "definition", "observation_unit", "scale_type"],
+  "properties": {
+    "construct_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "construct_name": { "type": "string" },
+    "construct_type": { "enum": ["trait", "state", "behavior", "self_report", "inference"] },
+    "definition": { "type": "string" },
+    "operationalization": {
+      "type": "object",
+      "properties": {
+        "measure": { "type": "string" },
+        "formula": { "type": "string" },
+        "data_source": { "enum": ["event", "memory", "dialogue_turn", "episode", "persona", "user_session", "notebook_note"] }
+      }
+    },
+    "observation_unit": { "enum": ["event", "memory", "dialogue_turn", "episode", "persona", "user_session", "notebook_note"] },
+    "scale_type": { "enum": ["binary", "ordinal", "likert_5", "continuous", "count", "proportion", "duration"] },
+    "labels": { "type": "array", "items": { "type": "string" } },
+    "source": { "enum": ["system", "user", "annotator", "model", "derived"] },
+    "validity_status": { "enum": ["planned", "demonstrated", "not_yet_established"] },
+    "reliability_status": { "enum": ["not_measured", "posthoc", "planned"] },
+    "notes": { "type": "string" }
+  }
+}

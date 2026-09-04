@@ -10,7 +10,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-DATA_DIR = Path(os.path.expanduser("~/.dsh/memory-emotion"))
+DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 QUEUE_DB = DATA_DIR / "vector_queue.db"
 
 
@@ -46,3 +46,21 @@ def enqueue(memory_id):
         return True
     except Exception:
         return False
+
+
+def queue_status():
+    """返回向量队列的持续监控摘要（不修改队列状态）。"""
+    try:
+        con = _connect()
+        total = con.execute("SELECT COUNT(*) FROM queue").fetchone()[0]
+        pending = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NULL").fetchone()[0]
+        processing = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NOT NULL").fetchone()[0]
+        done = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NOT NULL").fetchone()[0]
+        failed = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND attempts>=5").fetchone()[0]
+        stale = con.execute("SELECT COUNT(*) FROM queue WHERE done_at IS NULL AND processing_at IS NOT NULL AND processing_at<?",
+                            (time.time() - 600,)).fetchone()[0]
+        con.close()
+        return {"ok": True, "total": total, "pending": pending, "processing": processing,
+                "done": done, "failed": failed, "stale": stale, "available": QUEUE_DB.exists()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc), "available": QUEUE_DB.exists()}

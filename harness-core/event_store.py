@@ -34,7 +34,16 @@ def _connect():
       event_id TEXT PRIMARY KEY, event_type TEXT NOT NULL, scope TEXT NOT NULL,
       occurred_at TEXT NOT NULL, recorded_at TEXT NOT NULL, session_id TEXT,
       source_ids TEXT, root_source_ids TEXT, content_type TEXT, visibility TEXT,
-      consent_scope TEXT, retention TEXT, derived_artifact_ids TEXT, version INTEGER DEFAULT 1)""")
+      consent_scope TEXT, retention TEXT, derived_artifact_ids TEXT, version INTEGER DEFAULT 1,
+      session_provenance TEXT, content_provenance TEXT)""")
+    for col, ddl in [
+        ("session_provenance", "ALTER TABLE events ADD COLUMN session_provenance TEXT"),
+        ("content_provenance", "ALTER TABLE events ADD COLUMN content_provenance TEXT"),
+    ]:
+        try:
+            c.execute(ddl)
+        except Exception:
+            pass
     c.execute("CREATE TABLE IF NOT EXISTS token_usage("
               "id INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT, usage_source TEXT, model_id TEXT, "
               "tokenizer_id TEXT, context_window INTEGER, components TEXT, actual_tokens INTEGER, "
@@ -54,8 +63,9 @@ def record_event(event):
     c = _connect()
     occurred = event.get("occurred_at") or time.strftime("%Y-%m-%dT%H:%M:%S")
     c.execute("INSERT INTO events(event_id,event_type,scope,occurred_at,recorded_at,session_id,source_ids,"
-              "root_source_ids,content_type,visibility,consent_scope,retention,derived_artifact_ids,version) "
-              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+              "root_source_ids,content_type,visibility,consent_scope,retention,derived_artifact_ids,version,"
+              "session_provenance,content_provenance) "
+              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
               (eid, event.get("event_type"), event.get("scope"), occurred,
                event.get("recorded_at") or time.strftime("%Y-%m-%dT%H:%M:%S"),
                event.get("session_id"), json.dumps(event.get("source_ids", []), ensure_ascii=False),
@@ -64,7 +74,9 @@ def record_event(event):
                json.dumps(event.get("consent_scope", {}), ensure_ascii=False),
                json.dumps(event.get("retention", {}), ensure_ascii=False),
                json.dumps(event.get("derived_artifact_ids", []), ensure_ascii=False),
-               event.get("version", 1)))
+               event.get("version", 1),
+               event.get("session_provenance", "unknown"),
+               event.get("content_provenance", "unknown")))
     c.commit(); c.close()
     return eid
 

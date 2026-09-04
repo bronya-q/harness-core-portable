@@ -8,6 +8,7 @@
   python harness.py schema validate --event <file>
   python harness.py schema validate --token <file>
   python harness.py schema validate --mode <file>
+  python harness.py schema validate --measurement <file>
 """
 import json
 import sys
@@ -24,6 +25,7 @@ SCHEMAS = {
     "event-envelope": SCHEMAS_DIR / "event-envelope.schema.json",
     "token-usage": SCHEMAS_DIR / "token-usage.schema.json",
     "situated-mode": SCHEMAS_DIR / "situated-mode.schema.json",
+    "measurement": SCHEMAS_DIR / "measurement.schema.json",
 }
 
 
@@ -73,7 +75,7 @@ def cmd_list():
 
 def cmd_validate(kind, path):
     schema_key = {"--role": "unified-role", "--event": "event-envelope", "--token": "token-usage",
-                  "--mode": "situated-mode"}.get(kind)
+                  "--mode": "situated-mode", "--measurement": "measurement"}.get(kind)
     if not schema_key or schema_key not in SCHEMAS:
         print(json.dumps({"ok": False, "error": "invalid_schema_type", "type": kind}, ensure_ascii=False))
         return 1
@@ -90,7 +92,23 @@ def cmd_validate(kind, path):
     except Exception as e:
         print(json.dumps({"ok": False, "error": "invalid_json", "detail": str(e)}, ensure_ascii=False))
         return 1
-    issues = _validate_required(obj, schema)
+    issues = []
+    targets = []
+    if isinstance(obj, dict) and isinstance(obj.get("modes"), list):
+        parent_scalars = {k: v for k, v in obj.items() if k != "modes"}
+        targets = [(f"modes[{i}]", {**parent_scalars, **item})
+                   for i, item in enumerate(obj["modes"]) if isinstance(item, dict)]
+        if not targets:
+            issues.append("modes:empty_or_invalid")
+    elif isinstance(obj, list):
+        targets = [(f"[{i}]", item) for i, item in enumerate(obj) if isinstance(item, dict)]
+        if not targets:
+            issues.append("root:empty_or_invalid")
+    else:
+        targets = [("root", obj)]
+    for label, item in targets:
+        for issue in _validate_required(item, schema):
+            issues.append(f"{label}:{issue}")
     ok = not issues
     print(json.dumps({"ok": ok, "schema": schema_key, "path": str(sp), "issues": issues},
                      ensure_ascii=False, indent=2))
@@ -115,7 +133,7 @@ def main():
         path = None
         i = 1
         while i < len(args):
-            if args[i] in ("--role", "--event", "--token"):
+            if args[i] in ("--role", "--event", "--token", "--mode"):
                 kind = args[i]
                 if i + 1 < len(args):
                     path = args[i + 1]

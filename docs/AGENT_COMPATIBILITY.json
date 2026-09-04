@@ -1,10 +1,30 @@
 {
   "schema_version": 1,
   "entries": [
-    {"name": "AGENTS.md-based coding agents", "status": "R1", "note": "project context / memory entry"},
-    {"name": "CLAUDE.md / hooks", "status": "R1", "note": "documentation / handoff direction"},
-    {"name": "MCP-capable clients", "status": "R0", "note": "no MCP server yet"},
-    {"name": "OpenAI-compatible / DeepSeek backends", "status": "R1", "note": "local Ollama / compatible endpoints"},
-    {"name": "Trae / ZCode", "status": "R0", "note": "no dedicated adapter yet"}
+    {
+      "name": "AGENTS.md-based coding agents",
+      "status": "R1",
+      "note": "project context / memory entry"
+    },
+    {
+      "name": "CLAUDE.md / hooks",
+      "status": "R1",
+      "note": "documentation / handoff direction"
+    },
+    {
+      "name": "MCP-capable clients",
+      "status": "R1",
+      "note": "stdio/FastMCP server prototype; Inspector/Registry/host not verified"
+    },
+    {
+      "name": "OpenAI-compatible / DeepSeek backends",
+      "status": "R1",
+      "note": "local Ollama / compatible endpoints"
+    },
+    {
+      "name": "Trae / ZCode",
+      "status": "R0",
+      "note": "no dedicated adapter yet"
+    }
   ]
 }

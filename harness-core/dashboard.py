@@ -99,6 +99,7 @@ def main():
     # events + usage + characters
     events = list_events(limit=15)
     usage = list_usage(limit=10)
+    event_usage_read_ms = (time.perf_counter() - t0) * 1000
     CHAR_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "characters"
     chars = []
     if CHAR_DIR.exists():
@@ -118,7 +119,6 @@ def main():
                 except Exception:
                     pass
 
-    event_usage_read_ms = (time.perf_counter() - t0) * 1000
     char_read_ms = (time.perf_counter() - t0) * 1000
     total_ms = (time.perf_counter() - t0) * 1000
     spans = [
@@ -126,7 +126,7 @@ def main():
         ("Notebook/Story/Memory reads", round(storage_read_ms - humanization_read_ms, 1)),
         ("Event/Usage reads", round(event_usage_read_ms - storage_read_ms, 1)),
         ("Character assets", round(char_read_ms - event_usage_read_ms, 1)),
-        ("HTML render", round(total_ms - char_read_ms, 1)),
+        ("Total data collection", round(total_ms, 1)),
     ]
 
     # estimate token
@@ -149,6 +149,14 @@ def main():
     ev_html = li(events, "metric", lambda e: f"{e.get('metric')} = {e.get('value')} · {_ts(e.get('observed_at'))}")
     note_html = li(notes, "content", lambda n: f"[v{n.get('version')}|{n.get('kind')}] {n.get('content')}")
     story_html = li(story, "content", lambda s: f"[{s.get('namespace')} v{s.get('version')}] {s.get('content')}")
+    from collections import Counter
+    def prov_counts(items, key):
+        counts = Counter((x.get(key) or "unknown") for x in items)
+        if not counts:
+            return "<p class='muted'>暂无事件</p>"
+        return "".join(f"<span class='prov-chip'>{_html(k)} {_html(v)}</span> " for k, v in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])))
+    provenance_html = f"<p>Session provenance（会话来源）：{prov_counts(events, 'session_provenance')}</p>"
+    provenance_html += f"<p>Content provenance（内容来源）：{prov_counts(events, 'content_provenance')}</p>"
 
     page = f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
@@ -167,6 +175,7 @@ h1{{font-size:1.5rem}} h2{{font-size:1.1rem;border-bottom:1px solid #ddd;padding
 .span-bar{{background:#8bb8d8;color:#fff;padding:.2rem .4rem;border-radius:4px;font-size:.75rem;white-space:nowrap;min-width:64px}}
 .span-muted{{color:#888}}
 code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
+.prov-chip{{display:inline-block;background:#eef2f7;border:1px solid #d8e0ea;border-radius:4px;padding:.1rem .35rem;margin:.1rem;font-size:.8rem}}
 </style></head><body>
 <h1>Harness Mind Console</h1>
 <p class="muted">本地只读静态报告 · 不自动上传 · 不开放端口</p>
@@ -203,11 +212,12 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>
 </div>
-<div class="card"><h2>Span 时间线（结构示意；真实耗时待采集）</h2>
+<div class="card"><h2>数据来源分组</h2>{provenance_html}</div>
+<div class="card"><h2>Span 时间线（数据读取真实耗时）</h2>
 <div class="span-track">
 {''.join(f"<div class='span-bar' style='flex-grow:{v}'> {n}</div>" for n,v in spans)}
 </div>
-<p class="span-muted">当前为 Dashboard 数据读取的真实耗时（非模型推理耗时）。</p>
+<p class="span-muted">当前为 Dashboard 数据读取的真实耗时；不包含 HTML 渲染与模型推理 span。</p>
 </div>
 <div class="grid">
   <div class="card"><h2>角色画廊</h2>
