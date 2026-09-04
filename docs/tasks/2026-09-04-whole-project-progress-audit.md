@@ -29,12 +29,12 @@ deployed/released
 
 报告的 `status: verified` 只表示本次盘点已完成，不表示整个项目完成。
 
-最终验证基线绑定：
+最终复测绑定：
 
 ```text
-HEAD: 57f73ae（审计结束时）
-origin/main: 57f73ae
-release tag: v0.1.0-alpha.3 → b3ad9fc
+功能/发布基线: v0.1.0-alpha.3 → b3ad9fc
+报告首次登记: 9b6c54e
+审计结束时仓库: main 与 origin/main 持续推进；最终 git 状态见报告提交后的实际命令
 ```
 
 审计期间仓库持续并发推进。MCP/packaging 在中途曾处于测试失败的未提交状态，随后已由 `d36f471` 完成、由 `b3ad9fc` 冻结 alpha.3，并在 `9b6c54e` 登记本报告。最终结论只采用完成后的重新验证结果；中途红灯不再作为当前状态。
@@ -450,7 +450,7 @@ GitHub Release deployment record prepared
 ## 11. 后辈接手说明
 
 - 开始前先运行 `git status`；仓库有并发推进，不能依赖旧 HEAD；
-- 本报告最终复测基线为 `57f73ae`，release tag 为 `b3ad9fc`；
+- 本报告功能复测基线为 release tag `b3ad9fc`，首次登记 commit 为 `9b6c54e`；
 - 不要把 Registry listing 称为认证；
 - 不要把 worktree runner 称为沙箱；
 - 不要把读取 timing 称为模型推理 span；
