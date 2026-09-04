@@ -30,6 +30,9 @@
 - ✅ 远端与本地同步
 - ✅ 用户控制入口：`memory list/explain/correct/restore/forget`、`privacy status/export/reset-demo`、`backup create/list/restore`、`feedback export --redacted`
 - ✅ Notebook 支持 `forget`（归档）与 `list --all`，默认只显示 active
+- ✅ 角色资产基础：`character list/install/activate/deactivate/remove/show`
+- ✅ 知识域基础：`knowledge list`（读取角色包 knowledge-bindings）+ `knowledge sources`（读取知识源清单/示例）
+- ✅ 工程工作区基础：`workspace create/list/status/release`（Workspace Lease / worktree 抽象）
 
 ### 发布时仍要保留的边界
 
@@ -43,11 +46,11 @@
 
 以下全部留到 v0.2+，详见本文档后续章节：
 
-- 角色资产化 / HCP / Character Card
+- 完整角色资产化：HCP 压缩包 / Character Card 兼容 / 角色运行时真正热挂载（安装/激活基础已上线）
 - 运行桥交互图 / 模块热插拔
 - 完整上下文成本可视化
 - 日志-日记-内省-整理系统
-- 知识域治理与知识桥
+- 完整知识域治理与知识桥（启动器/健康检查/权限卡已抽象成示例）
 - 更完整的记忆/会话级 `memory explain` 与 `restore` 高级视图（基础版已上线）
 - `privacy / backup / feedback` 的 GUI 化与策略化（CLI 基础版已上线）
 
