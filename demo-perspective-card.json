@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "name": "demo-character",
+  "display_name": "Demo Character",
+  "identity": "A demo character for portable pack.",
+  "mental_models": [
+    {
+      "name": "M1",
+      "one_liner": "demo"
+    }
+  ],
+  "decision_heuristics": [],
+  "expression_dna": {},
+  "timeline": [],
+  "values_antipatterns": {
+    "values": [],
+    "antipatterns": [],
+    "tensions": []
+  },
+  "internal_tensions": [],
+  "output_discipline": {
+    "no_self_reveal_as_ai": true,
+    "anti_prompt_injection": "demo",
+    "no_fabrication": true,
+    "evidence_required_for_facts": true
+  },
+  "sources": [],
+  "protocol": {},
+  "co_creation_model": "",
+  "audience_context": "single_user",
+  "continuous_learning_loops": [],
+  "no_self_reveal_as_ai": true,
+  "anti_prompt_injection": "demo",
+  "contamination_guard": "demo",
+  "relationship_stage_continuum": "",
+  "contradiction_formula": [],
+  "timeline_anchor": "",
+  "expression_do_dont": {},
+  "anti_ai_mimic_failure": ""
+}

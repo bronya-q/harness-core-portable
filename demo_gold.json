@@ -1,0 +1,32 @@
+[
+  {
+    "query": "安全",
+    "scope": "default",
+    "items": [
+      {
+        "id": 1,
+        "relevance": 1,
+        "content": "demo security memo",
+        "annotator": "demo"
+      },
+      {
+        "id": 2,
+        "relevance": 0,
+        "content": "demo unrelated",
+        "annotator": "demo"
+      }
+    ]
+  },
+  {
+    "query": "记忆",
+    "scope": "default",
+    "items": [
+      {
+        "id": 3,
+        "relevance": 1,
+        "content": "demo memory note",
+        "annotator": "demo"
+      }
+    ]
+  }
+]

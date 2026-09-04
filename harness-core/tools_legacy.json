@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "deprecated": {
+    "daily_report": {"reason": "与 harness_selfcheck/health 体系重叠", "recommended": "harness.py audit"},
+    "rating_snapshot": {"reason": "并入 harness.py snapshot 子命令", "recommended": "harness.py snapshot"},
+    "gold_human_label_export": {"reason": "与 gold_labeler 重叠", "recommended": "harness.py gold export"},
+    "gold_human_label_import": {"reason": "与 gold_labeler 重叠", "recommended": "harness.py gold import"},
+    "gold_sampler": {"reason": "与 gold_labeler 重叠", "recommended": "harness.py gold sample"},
+    "plugin_runtime_verify": {"reason": "并入 plugin_sandbox", "recommended": "harness.py plugins verify"},
+    "queue_health": {"reason": "并入 health/quarterly", "recommended": "harness.py audit"},
+    "memory_health_report": {"reason": "并入 health_board/quarterly", "recommended": "harness.py audit"},
+    "drift_matrix": {"reason": "并入 persona_drift/measurement", "recommended": "harness.py measure drift"},
+    "leakage_matrix": {"reason": "并入 measurement", "recommended": "harness.py measure leakage"},
+    "congruence_probe": {"reason": "并入 measurement", "recommended": "harness.py measure congruence"},
+    "recall_labeling": {"reason": "并入 gold_labeler", "recommended": "harness.py gold"},
+    "blind_review_export": {"reason": "并入 measurement/gold", "recommended": "harness.py gold export"},
+    "profile_layers": {"reason": "并入 user_model/humanization", "recommended": "harness.py persona"},
+    "review_queue": {"reason": "并入 review/queue", "recommended": "harness.py audit"}
+  },
+  "note": "deprecated = 不再推荐手动使用，但不删除；后台实现仍可被 harness.py 调用。"
+}
