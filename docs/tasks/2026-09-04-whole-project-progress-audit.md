@@ -534,3 +534,9 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 - **Dashboard 写操作预览**：Dashboard 增加「最近写操作（可撤销预览）」卡片，列出最近 manual 笔记，并给出 `memory undo --id` 撤销命令；真实截图/GIF 已重新生成。
 - **MCP Inspector**：Windows/WSL 的 CLI 仍未拿到成功输出；后续需排查 npx/stdio 挂起，或换容器 CI 环境。
 - `tests/test_knowledge_stewardship.py` 增加 suggest 用例，unittest 总数 22。
+
+## 20. 后续处理记录（2026-09-04 续 8）
+
+- **n-gram fallback 接入 `memory search`**：`harness.py memory search --query <q>` 在精确子串无结果时自动调用 `ngram_fallback.py`，返回 `source=ngram_fallback`。
+- **alpha.4 实现推进记录**：新增 `docs/tasks/2026-09-04-alpha4-implementation-progress.md`，记录已完成/尝试/下一步。
+- unittest 总数 23。
