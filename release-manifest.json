@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-04T11:27:10.916358+00:00",
+  "generated_at": "2026-09-04T11:30:36.029854+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 152,
+  "count": 153,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -42,9 +42,10 @@
     "docs/AGENT_COMPATIBILITY.json": "2acec841a980c4b7f9d6c68075aeea540b6b7c47ae12aa1c7f1ed66eb918c24f",
     "docs/AGENT_COMPATIBILITY.md": "1722da2755c54a11142066245fe0cac3d3019d40fd0361cfd691998beacfa4a2",
     "docs/DEPLOYMENTS_INDEX.md": "e5ae9ea073a058b2cd3960b27c2ad624032cae104cc7427a960cd8549f5ce40e",
-    "docs/TASKS_INDEX.md": "a66bc58aae69a4faa003b7bf80e045dbf135f1db0c0ebe9ea9261d4cfacf57cb",
+    "docs/TASKS_INDEX.md": "a766af3566625eb3eb740acf1ba448c22d9650c9b9384528803ce957866ed0aa",
     "docs/deployments/2026-09-04-github-release-v0.1.0-alpha.2.md": "5786f02ff1a682fff0a856e0ecaea9ba8abb13a436c1f8c5b8cfc70b1fc4cbfc",
     "docs/tasks/2026-09-04-public-release-alpha2-design.md": "ad3c0e5e553c830c667b7e2fd224e11f67dd8f1d11ad3826bc41e354b00ccf2d",
+    "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
