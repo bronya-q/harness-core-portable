@@ -74,6 +74,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - [x] **写操作 GUI 预览**
   - `memory write --html` 生成 `memory-write-preview.html` 预览页
   - 页面明确标注“未写入任何数据”；不触发 notebook 写入
+- [x] **知识桥权限矩阵可视化**
+  - Dashboard 知识域关系网格现在在每个单元格显示操作（read/quote/summarize/propose_edit）
+  - 角色与知识域之间的权限不再只有身份，还展示可执行操作
 
 ## 尝试过 / 未通过
 

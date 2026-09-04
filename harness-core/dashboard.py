@@ -407,13 +407,13 @@ def main():
             stewards = c.get("stewards", [])
             bound = c.get("bound_roles", [])
             if role in stewards:
-                cell = ("<span class='kgrid-cell st-green'>steward</span>")
+                cell = ("<span class='kgrid-cell st-green'>steward<small>read/quote/summarize/propose_edit</small></span>")
             elif role in bound:
-                cell = ("<span class='kgrid-cell st-blue'>reader</span>")
+                cell = ("<span class='kgrid-cell st-blue'>reader<small>read/quote</small></span>")
             elif c.get("default_access") == "deny":
-                cell = ("<span class='kgrid-cell st-red'>blocked</span>")
+                cell = ("<span class='kgrid-cell st-red'>blocked<small>none</small></span>")
             else:
-                cell = ("<span class='kgrid-cell st-yellow'>guest</span>")
+                cell = ("<span class='kgrid-cell st-yellow'>guest<small>read</small></span>")
             grid_html += cell
         grid_html += "</div>"
 
@@ -448,6 +448,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 .kgrid-head span{{font-weight:bold;background:#eef2f7;border-radius:4px;padding:.3rem}}
 .kgrid-role{{background:#f5f5f5;border-radius:4px;padding:.3rem}}
 .kgrid-cell{{border-radius:4px;padding:.3rem;text-align:center;color:#fff}}
+.kgrid-cell small{{display:block;font-size:.65rem;opacity:.85;margin-top:.1rem}}
 </style></head><body>
 <h1>Harness Mind Console</h1>
 <p class="muted">本地只读静态报告 · 不自动上传 · 不开放端口</p>

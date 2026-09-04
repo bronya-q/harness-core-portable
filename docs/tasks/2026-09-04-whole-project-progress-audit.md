@@ -587,3 +587,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 31. 后续处理记录（2026-09-04 续 19）
 
 - **写操作 GUI 预览**：`memory write --html` 生成 `memory-write-preview.html`，在浏览器查看预览，不写入 notebook；`test_user_experience_flows` 新增用例，unittest 总数 27。
+
+## 32. 后续处理记录（2026-09-04 续 20）
+
+- **知识桥权限矩阵可视化**：Dashboard 知识域关系网格在单元格中显示操作（read/quote/summarize/propose_edit），角色↔知识域↔权限↔操作矩阵可视化进一步完成。
