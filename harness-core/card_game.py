@@ -236,15 +236,48 @@ def _finish(scores, matched, rounds_played, players=1):
     return {"ok": True, "scores": scores, "matched": matched, "rounds": rounds_played}
 
 
+def role_card(persona_id, output=None):
+    manifest = None
+    # 尝试本机角色资产
+    import os
+    from pathlib import Path as P
+    char_dir = P(os.environ.get("DSH_HOME", P.home() / ".dsh")) / "harness" / "characters" / persona_id
+    if (char_dir / "package-manifest.json").exists():
+        try:
+            manifest = json.loads((char_dir / "package-manifest.json").read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    if not manifest:
+        # 合成 demo 角色
+        for f in (SKILL / "personas").glob("*.md"):
+            if persona_id in f.name:
+                manifest = {"persona_id": persona_id, "display_name": persona_id.replace("demo-", ""),
+                            "scope": "character:" + persona_id, "knowledge_bindings": []}
+    card = {"schema_version": 1, "derived_from": persona_id,
+            "persona_id": (manifest or {}).get("persona_id", persona_id),
+            "display_name": (manifest or {}).get("display_name", persona_id),
+            "scope": (manifest or {}).get("scope", "character:" + persona_id),
+            "knowledge_bindings": (manifest or {}).get("knowledge_bindings", []),
+            "roles": (manifest or {}).get("role_types", []) or ["默认职责"],
+            "note": "角色牌由 persona 资产衍生，不包含私人内容。"}
+    if output:
+        out = Path(output)
+        out.write_text(json.dumps(card, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        card["saved"] = str(out)
+    return card
+
+
 def main():
     ap = argparse.ArgumentParser(description="Harness Memory Match card game")
-    ap.add_argument("subcommand", nargs="?", default="play", choices=["play", "deal", "deck"])
+    ap.add_argument("subcommand", nargs="?", default="play", choices=["play", "deal", "deck", "role-card"])
     ap.add_argument("--rounds", type=int, default=3)
     ap.add_argument("--hand-size", type=int, default=8)
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--auto", action="store_true", help="automated smoke play")
     ap.add_argument("--deck", default="classic", choices=list(DECKS.keys()))
     ap.add_argument("--players", type=int, default=1)
+    ap.add_argument("--persona", default=None)
+    ap.add_argument("--output", default=None)
     args = ap.parse_args()
     if args.subcommand == "deck":
         print(json.dumps({"deck": args.deck, "count": len(build_deck(args.deck)),
@@ -254,6 +287,13 @@ def main():
         deck = build_deck(args.deck)
         hand = deal(deck, args.hand_size)
         print(json.dumps(hand, ensure_ascii=False, indent=2))
+        return 0
+    if args.subcommand == "role-card":
+        if not args.persona:
+            print("用法：python harness-core/card_game.py role-card --persona <id> [--output <file>]")
+            return 1
+        card = role_card(args.persona, args.output)
+        print(json.dumps({"ok": True, "card": card}, ensure_ascii=False, indent=2))
         return 0
     result = play(rounds=args.rounds, hand_size=args.hand_size, seed=args.seed,
                   auto=args.auto, deck=args.deck, players=args.players)

@@ -201,6 +201,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **知识源 explain 视图**：`python harness.py knowledge explain --source <id>` 展示健康/可信度/索引状态
 - ✅ **notebook / story_core 也做 scope/namespace 规范化**
 - ✅ **construct 列表过滤**：`measure construct` 不再把分隔行 `---` 当作构念
+- ✅ **卡牌角色牌衍生**：`card_game.py role-card --persona <id>` 从 persona 资产衍生角色卡
 
 ## 测试与发布
 

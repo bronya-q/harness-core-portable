@@ -677,3 +677,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 49. 后续处理记录（2026-09-04 续 37）
 
 - notebook / story_core scope 规范化、measure construct 过滤分隔行。
+
+## 50. 后续处理记录（2026-09-04 续 38）
+
+- 卡牌游戏增加 `role-card` 角色牌衍生；测试覆盖。
+- unittest 总数 56。
