@@ -690,3 +690,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 52. 后续处理记录（2026-09-04 续 40）
 
 - Dashboard 角色分工卡片；开始体验示例 conocimientos stewards 去私人化。
+
+## 53. 后续处理记录（2026-09-04 续 41）
+
+- `migration apply-script` 支持外部复杂迁移脚本；KNOWLEDGE_STEWARDSHIP / SKILL 文档再抽象。
