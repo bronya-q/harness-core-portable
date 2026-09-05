@@ -710,3 +710,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 57. 后续处理记录（2026-09-04 续 45）
 
 - usage audit、workspace isolate run、remaining-gaps 更新横幅。
+
+## 58. 后续处理记录（2026-09-04 续 46）
+
+- `mcp-verify` 自检脚本（stdio unittest + HTTP loopback）。
