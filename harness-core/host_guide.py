@@ -37,7 +37,7 @@ def main():
                 "示例配置见 docs/mcp/verification.md",
             ]},
         ],
-        "permission": "可设置 HARNESS_MCP_ADAPTER_ID 启用 adapter_gate 能力校验",
+        "permission": "adapter_gate 默认 fail-closed：未设置 HARNESS_MCP_ADAPTER_ID 时拒绝；显式设置 HARNESS_ALLOW_UNCONFIGURED=1 可放行（仅本地开发）。",
         "note": "这是导航说明，非认证；真实宿主测试需各自环境验证。",
     }
     print(json.dumps({"ok": True, **guide}, ensure_ascii=False, indent=2))

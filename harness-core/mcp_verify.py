@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """mcp_verify.py — MCP 自检（stdio 单测 + HTTP loopback 冒烟）。"""
 import json
+import os
 import subprocess
 import sys
 import threading
@@ -20,6 +21,10 @@ ROOT = Path(__file__).resolve().parent.parent
 def _run_http_verify():
     from harness_core.adapters.mcp_http_server import Handler
     import random
+    # HTTP smoke 使用已配置 adapter，避免 fail-closed 把冒烟误判为失败。
+    old = os.environ.get("HARNESS_MCP_ADAPTER_ID")
+    if not old:
+        os.environ["HARNESS_MCP_ADAPTER_ID"] = "harness-core-mcp"
     port = random.randint(18000, 20000)
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     t = threading.Thread(target=server.serve_forever, daemon=True)
@@ -39,6 +44,8 @@ def _run_http_verify():
     finally:
         server.shutdown()
         server.server_close()
+        if not old:
+            os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
 
 
 def main():
@@ -58,6 +65,27 @@ def main():
                        "detail": "tools=%d call=%s" % (len(tools.get("result", {}).get("tools", [])), ok)})
     except Exception as e:
         checks.append({"name": "http_loopback_smoke", "ok": False, "detail": repr(e)})
+    # Fail-closed 专项：未配置 adapter 必须拒绝，只有显式 HARNESS_ALLOW_UNCONFIGURED=1 才放行。
+    from harness_core.adapter_gate import can
+    saved = os.environ.get("HARNESS_MCP_ADAPTER_ID")
+    saved_allow = os.environ.get("HARNESS_ALLOW_UNCONFIGURED")
+    os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+    os.environ.pop("HARNESS_ALLOW_UNCONFIGURED", None)
+    deny_when_unconfigured = not can(None, "usage_read")
+    os.environ["HARNESS_ALLOW_UNCONFIGURED"] = "1"
+    allow_when_explicit = can(None, "usage_read")
+    if saved is not None:
+        os.environ["HARNESS_MCP_ADAPTER_ID"] = saved
+    else:
+        os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+    if saved_allow is not None:
+        os.environ["HARNESS_ALLOW_UNCONFIGURED"] = saved_allow
+    else:
+        os.environ.pop("HARNESS_ALLOW_UNCONFIGURED", None)
+    checks.append({"name": "adapter_gate_fail_closed",
+                   "ok": deny_when_unconfigured and allow_when_explicit,
+                   "detail": "deny_unconfigured=%s allow_explicit=%s" % (deny_when_unconfigured, allow_when_explicit)})
+
     ok_all = all(c["ok"] for c in checks)
     print(json.dumps({"ok": ok_all, "mode": "mcp_verify", "checks": checks,
                       "note": "本地复现验证；不代表 Registry/真实宿主认证。"}, ensure_ascii=False, indent=2))

@@ -10,6 +10,7 @@ Usage:
 """
 import argparse
 import json
+import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from harness_core.adapters.mcp_server import _events_list, _memory_list, _usage_summary
@@ -24,9 +25,30 @@ TOOLS = [
 ]
 
 
+MAX_REQUEST_SIZE = 1 << 20
+REQUEST_TIMEOUT = 30
+LOOPBACK_HOSTS = {"127.0.0.1", "::1", "localhost"}
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
-        length = int(self.headers.get("Content-Length", "0") or 0)
+        try:
+            self.connection.settimeout(REQUEST_TIMEOUT)
+        except Exception:
+            pass
+        ctype = self.headers.get("Content-Type", "")
+        if "application/json" not in ctype:
+            self._json({"jsonrpc": "2.0", "id": None,
+                        "error": {"code": -32600, "message": "content-type must be application/json"}}, 415)
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0") or 0)
+        except Exception:
+            length = 0
+        if length < 0 or length > MAX_REQUEST_SIZE:
+            self._json({"jsonrpc": "2.0", "id": None,
+                        "error": {"code": -32600, "message": "request too large"}}, 413)
+            return
         body = self.rfile.read(length).decode("utf-8")
         try:
             req = json.loads(body)
@@ -86,6 +108,10 @@ def main():
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8931)
     args = ap.parse_args()
+    if args.host not in LOOPBACK_HOSTS:
+        print("refusing to bind to non-loopback host: %s (security: this MCP HTTP server is " % args.host +
+              "intended for local-only use)", file=sys.stderr)
+        return 2
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     print("harness-core-mcp-http listening on http://%s:%d/mcp" % (args.host, args.port))
     try:
@@ -97,4 +123,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

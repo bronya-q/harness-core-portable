@@ -28,9 +28,13 @@ jobs:
       - name: Unit tests
         run: python -m unittest discover
       - name: R2 local checks
+        env:
+          HARNESS_MCP_ADAPTER_ID: harness-core-mcp
         run: |
           python harness.py secret-scan
+          python harness.py secret-scan --history
           python harness.py boundary-check
+          python harness.py boundary-check --history
           python harness.py runtime-coverage
           python harness.py mcp-verify
           python harness.py release-checklist
