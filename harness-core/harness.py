@@ -63,6 +63,7 @@ PASSTHROUGH = {
     "secret-scan": ["secret_scan.py", ["secret-scan"]],
     "memory-write-confirm": ["memory_write_confirm.py", ["memory-write-confirm"]],
     "letter": ["letter_system.py", ["letter"]],
+    "host-guide": ["host_guide.py", ["host-guide"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],
@@ -96,6 +97,8 @@ MEASURE_MAP = {
     "self-reveal": ["measurement.py", ["self_reveal"]],
     "leakage": ["leakage_matrix.py", []],
     "narrative": ["narrative_audit.py", ["audit"]],
+    "construct": ["measurement_admin.py", ["construct"]],
+    "reliability": ["measurement_admin.py", ["reliability"]],
 }
 
 
