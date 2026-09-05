@@ -49,12 +49,21 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"jsonrpc": "2.0", "id": None,
                         "error": {"code": -32600, "message": "request too large"}}, 413)
             return
-        body = self.rfile.read(length).decode("utf-8")
+        try:
+            body = self.rfile.read(length).decode("utf-8")
+        except UnicodeDecodeError:
+            self._json({"jsonrpc": "2.0", "id": None,
+                        "error": {"code": -32700, "message": "invalid utf-8"}}, 400)
+            return
         try:
             req = json.loads(body)
         except Exception:
             self._json({"jsonrpc": "2.0", "id": None,
                         "error": {"code": -32700, "message": "parse error"}}, 400)
+            return
+        if not isinstance(req, dict):
+            self._json({"jsonrpc": "2.0", "id": None,
+                        "error": {"code": -32600, "message": "request must be a JSON object"}}, 400)
             return
         method = req.get("method")
         rid = req.get("id")
