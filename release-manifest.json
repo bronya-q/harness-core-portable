@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T06:44:37.246307+00:00",
+  "generated_at": "2026-09-05T06:45:38.755002+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 236,
+  "count": 237,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.md": "be646848323060f02abf2fca6e0fd392e4c6b7be820bb84271c3dd492622570f",
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
@@ -121,7 +121,7 @@
     "harness-core/gold_human_label_import.py": "cdedc2c351c16e00ddd7a85b3b520b980a24866becc4bbbfa299f311356c9cd7",
     "harness-core/gold_labeler.py": "c88715c830e1175f1a0144af733cce2521986e8d1f2108b0ce1bf8ba55fe153e",
     "harness-core/gold_sampler.py": "9ba72e0d8306656ab7d6faba188fc4c6b86e793f252caaea87722aa735912b38",
-    "harness-core/harness.py": "7f4e7583c7a9121cac69885218ac395f2c2e0d87220c4f4635985c51ebda04bd",
+    "harness-core/harness.py": "772bea35963d30c366e5a5c102110797b095197d42815141e08343311336abc8",
     "harness-core/harness_selfcheck.py": "59fbb27b5282ca12b75e146cb2088bd0d1424617a9cc4cb0a19ad1371b54b14e",
     "harness-core/history_backfill.py": "5e1b108d9c7424ff55ba1b60b9ae2dfcc8e111d864664787d42bfdc88cfbd932",
     "harness-core/host_guide.py": "4b7aeaf053e30b269227a678b1f1caceebbf070d3347c09a37eee5983d34c258",
@@ -161,6 +161,7 @@
     "harness-core/plugin_sandbox.py": "ed340f6db09b25a8282446bb2057fef50146254dac97f8be7ec1a5f621494d37",
     "harness-core/proactive_pipeline.py": "685b88f02c66f129ca8548ed04e00cffb246b880d76114765fccdd620eb4cae7",
     "harness-core/production_gate.py": "c661320508b975bd76aaefba6e25bca7385b519c2e8d43c5420ff24df7d5c6d8",
+    "harness-core/project_check.py": "f6ee95d301356dd6eda384e14ec1a54f977129b83c79614518892f80c46e557b",
     "harness-core/psych_validity_probe.py": "8dd34923644e7f8c64fa85777e0c4eec0b95ad41f22d792e8cd34f2d0a59cd4e",
     "harness-core/quarterly_audit.py": "e07f4d3af0ddb9b8391250500e08b3ee0d670564da9f26e5dd3cdb92974b5cb8",
     "harness-core/rating_snapshot.py": "a3d620c1bb358693145a0bb1def25e4619238a091faa68ad31f55f68face8cc2",

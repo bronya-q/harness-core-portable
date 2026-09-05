@@ -65,6 +65,7 @@ PASSTHROUGH = {
     "letter": ["letter_system.py", ["letter"]],
     "host-guide": ["host_guide.py", ["host-guide"]],
     "mcp-verify": ["mcp_verify.py", ["mcp-verify"]],
+    "project-check": ["project_check.py", ["project-check"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],
