@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T15:46:55.546005+00:00",
+  "generated_at": "2026-09-05T15:51:17.209096+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 253,
   "files": {
@@ -81,7 +81,7 @@
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "ecea02e16c42d09e4f45f88427be8c1318a7c9ca153de79fb64d1220a2797e70",
     "docs/tasks/2026-09-05-history-sanitization-and-community-focus-plan.md": "739c3879741e849e9b81b01d1e67afae32dfd4fc7b3ebafa6dc38005a34899df",
-    "docs/tasks/2026-09-05-security-audit-findings.md": "beff08ccb4cc143dd58b2eb547fcb745a527cbe9807971cd5cf3994e90ef64f7",
+    "docs/tasks/2026-09-05-security-audit-findings.md": "1e8b2783c8018afd181c39c8cf0bd1a6f2337ece8ec56ead727b94c6a59b44e7",
     "docs/tasks/2026-09-05-synthetic-memory-interop-fixture.md": "826987b6ba53370a10f60c166526753f6e6378f6acc85b6fb3bd990b4e25ee86",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",

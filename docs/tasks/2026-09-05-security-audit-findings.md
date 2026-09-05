@@ -101,7 +101,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
 | F-01 | adapter 身份缺失默认放行 | ✅ 已修复：未配置 `HARNESS_MCP_ADAPTER_ID` 时拒绝；`HARNESS_ALLOW_UNCONFIGURED=1` 才放行 |
 | F-02 | HTTP 默认 loopback 但未强制 | ✅ 已修复：非 loopback host 拒绝启动并返回退出码 2 |
 | F-03 | HTTP 无请求体上限/超时/顶层类型检查 | ✅ 已修复：1 MiB 上限、30s 超时、`application/json`、顶层对象、非法 UTF-8 校验 |
-| F-04 | synthetic trace 只是规格检查，不是真实黄金路径 | ⚠️ 未实现真实运行时 trace；本文档只登记，不把它已跑通 |
+| F-04 | synthetic trace 只是规格检查，不是真实黄金路径 | 🟡 已跑通现有系统真实链路（offline demo / 版本化记忆 / 确认门 / 归档回滚 / 候选人工审核）；但 evidence→candidate→memory 流水线与外部操作门未实现，见 `docs/tasks/2026-09-05-real-golden-path-trace.md` |
 | F-05 | pyproject 把标准库声明为分发依赖 | ✅ 已修复：移除 `test = ["unittest"]` |
 | F-06 | CI MCP 安装失败被核心回退掩盖 | ✅ 已修复：去掉 `||` 回退，MCP extra 安装失败会让 CI 失败 |
 | F-07 | rev-list/grep 返回码未检查，失败可能输出零命中 | ✅ 已修复：secret-scan 与 boundary-check 均 fail-closed |
