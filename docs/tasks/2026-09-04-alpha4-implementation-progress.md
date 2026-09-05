@@ -161,6 +161,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **私人案例文档人工替换**：`HYBRID_FUNCTIONAL_PERSONA.md` / `ENGINEERING_ROLES.md` 已把具体本机角色名替换为公共占位，并加“公共抽象版”说明
 - ✅ **跨所有入口 scope 一致性**：`memory list/write/correct/restore/search` 均使用 `normalize_scope`
 
+## 写操作网页点确认
+
+- ✅ 新增 `python harness.py memory-write-confirm --scope <s> --text <t> [--port 8766]`
+- 在浏览器打开后点「确认写入」才真正写 notebook
+- 完成后显示 id / version / undo 命令
+- 只监听 `127.0.0.1`，不自动上传
+
 ## 测试与发布
 
 ```text

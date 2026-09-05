@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import time
+import urllib.parse
+import urllib.request
 import shutil
 import subprocess
 import sys
@@ -171,6 +174,36 @@ class UserExperienceFlowsTest(unittest.TestCase):
             self.assertEqual(p2.returncode, 0, p2.stderr + p2.stdout[-300:])
             self.assertFalse(char_dir.exists())
         finally:
+            shutil.rmtree(home, ignore_errors=True)
+
+    def test_memory_write_http_confirm(self):
+        home = Path(tempfile.mkdtemp())
+        env = _env(home)
+        import subprocess as sp
+        proc = sp.Popen(
+            [sys.executable, str(ROOT / "harness.py"), "memory-write-confirm",
+             "--scope", "character:demo-archivist", "--text", "网页确认写入", "--port", "8777"],
+            stdout=sp.DEVNULL, stderr=sp.DEVNULL, env=env,
+        )
+        try:
+            time.sleep(1)
+            data = urllib.parse.urlencode({"scope": "character:demo-archivist", "text": "网页确认写入"}).encode()
+            req = urllib.request.Request("http://127.0.0.1:8777/confirm", data=data, method="POST")
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                body = resp.read().decode("utf-8")
+            self.assertIn("id=", body)
+            lst = subprocess.run(
+                [sys.executable, str(ROOT / "harness.py"), "memory", "list", "--scope", "character:demo-archivist"],
+                capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env=env, timeout=30,
+            )
+            self.assertGreaterEqual(len(json.loads(lst.stdout)["notes"]), 1)
+        finally:
+            proc.terminate()
+            try:
+                proc.wait(timeout=5)
+            except Exception:
+                proc.kill()
             shutil.rmtree(home, ignore_errors=True)
 
     def test_knowledge_access_read_only_snippet(self):
