@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T05:12:34.998295+00:00",
+  "generated_at": "2026-09-05T05:20:03.393807+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 211,
+  "count": 212,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
     ".github/ISSUE_TEMPLATE/memory-error.yaml": "35bdcb27e308b758c4307089236479a5cf5d01cb750b255649575f07407ab505",
@@ -30,7 +30,7 @@
     "PUBLIC_CONTENT_BOUNDARY.md": "5f679ea3f697e2c761a13004c75fad1355e3586a7835a8f90bea8d0a5e1739e7",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "e708962b58c9dafb52c4cf0c58b075776456ad85ea01ba58710f767872ca58f7",
+    "README.md": "87c5992672869b5e06c8e65646ea29029917dc52e9088cc102f29659096b9d09",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
     "ROADMAP.md": "8f8a38abbd8d5e195cbe3cdcd2678f58b0fb2cc949f7d7cf6b5fff705332c6c7",
@@ -67,6 +67,7 @@
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md": "75b2aefdd6965d19b43dc67a6f1ac3acb2c03d8e72057bcc58906376e81f0bcb",
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
+    "docs/tasks/2026-09-04-remaining-gaps.md": "2ac269fce76a365a68bbba1bed581367769816d1d1f5f19f956998e9baf70ef1",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "0a390449d12425ce423062e0005b45b90b6fc1153565b4f831391e83a598664d",
