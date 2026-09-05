@@ -12,6 +12,8 @@ topics: [inventory, partial, gap, roadmap, review]
 
 # 部分实现清单（诚实盘点）
 
+> 📸 **Snapshot as of 2026-09-04 / 历史快照**：当前状态请以 `docs/tasks/2026-09-04-alpha.4-r2-plan.md` 和 `docs/tasks/2026-09-04-remaining-gaps.md` 为准。
+
 > ⏸️ **施工暂停 / CONSTRUCTION PAUSED**
 >
 > 本清单作为**存档记录**保留。当前暂停批量功能推进，优先转为等待首次用户反馈、外部环境验证与后续授权。
