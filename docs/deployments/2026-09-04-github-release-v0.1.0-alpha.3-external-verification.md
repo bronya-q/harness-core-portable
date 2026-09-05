@@ -5,7 +5,7 @@ kind: deployment-record
 date: 2026-09-04
 verified_at: 2026-09-04T13:54:11Z
 version: v0.1.0-alpha.3
-source_commit: b3ad9fc
+source_commit: be8167e
 release_id: 382769108
 target: github
 verified_by: project-progress-review
@@ -40,14 +40,14 @@ GitHub tag ref：
 ```text
 refs/tags/v0.1.0-alpha.3
 object type: tag
-annotated tag object: e7b3054e4d6e4212de94d6080a8f4f3e4a08a9e7
-commit: b3ad9fc4991c4282f0bfcc195b72066dd17d308c
+annotated tag object: f7d8537f65822c94e9fd8209df06fbfd592ef5db
+commit: be8167e9d960b8ff7952991051865cc19fc85f82
 ```
 
 本地 tag 解引用得到同一 commit：
 
 ```text
-v0.1.0-alpha.3^{} = b3ad9fc4991c4282f0bfcc195b72066dd17d308c
+v0.1.0-alpha.3^{} = be8167e9d960b8ff7952991051865cc19fc85f82
 ```
 
 Tag 是 annotated tag，但 GitHub verification 字段为：
@@ -158,7 +158,7 @@ rc=1
 {"ok": false, "error": "invalid_schema_type", "type": ""}
 ```
 
-原因是 alpha.3 冻结点的 parser 尚未接入 `--mode`。该修复位于 tag 之后的 main commit `83a80d1`，不能反向归入 alpha.3。
+原因是 alpha.3 冻结点的 parser 尚未接入 `--mode`。该修复位于 tag 之后的 main commit `c2930e3`，不能反向归入 alpha.3。
 
 因此：
 

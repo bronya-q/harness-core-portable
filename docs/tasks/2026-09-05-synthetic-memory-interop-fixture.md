@@ -5,7 +5,7 @@ kind: task-record
 date: 2026-09-05
 updated_at: 2026-09-05
 owner_role: memory-governance-review
-source_commit: 3c2440c
+source_commit: 2fe4fd6
 target_version: post-alpha.4
 public: true
 contains_private_data: false

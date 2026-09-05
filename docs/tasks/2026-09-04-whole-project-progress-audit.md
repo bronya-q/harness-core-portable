@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: project-progress-review
-source_commit: 9b6c54e
+source_commit: be18499
 target_version: v0.2-v0.5
 public: true
 contains_private_data: false
@@ -32,12 +32,12 @@ deployed/released
 最终复测绑定：
 
 ```text
-功能/发布基线: v0.1.0-alpha.3 → b3ad9fc
-报告首次登记: 9b6c54e
+功能/发布基线: v0.1.0-alpha.3 → be8167e
+报告首次登记: be18499
 审计结束时仓库: main 与 origin/main 持续推进；最终 git 状态见报告提交后的实际命令
 ```
 
-审计期间仓库持续并发推进。MCP/packaging 在中途曾处于测试失败的未提交状态，随后已由 `d36f471` 完成、由 `b3ad9fc` 冻结 alpha.3，并在 `9b6c54e` 登记本报告。最终结论只采用完成后的重新验证结果；中途红灯不再作为当前状态。
+审计期间仓库持续并发推进。MCP/packaging 在中途曾处于测试失败的未提交状态，随后已由 `ba362b4` 完成、由 `be8167e` 冻结 alpha.3，并在 `be18499` 登记本报告。最终结论只采用完成后的重新验证结果；中途红灯不再作为当前状态。
 
 没有读取私人 overlay、私人语料、API key 或私人数据库正文。
 
@@ -118,7 +118,7 @@ pip wheel . --no-deps              PASS，生成 0.1.0 wheel
 已验证的外部 alpha.2：
 
 ```text
-v0.1.0-alpha.2 → d7f7de7e2fdfaecba43921c0e13016ebb7113c8b
+v0.1.0-alpha.2 → 3ac847fa414576c530bac2a295c09d0658213643
 Release URL: https://github.com/bronya-q/harness-core-portable/releases/tag/v0.1.0-alpha.2
 draft: false
 prerelease: true
@@ -130,7 +130,7 @@ archive package_selfcheck: PASS
 最新 alpha.3：
 
 ```text
-v0.1.0-alpha.3 → b3ad9fc4991c4282f0bfcc195b72066dd17d308c
+v0.1.0-alpha.3 → be8167e9d960b8ff7952991051865cc19fc85f82
 local tag: exists and annotated
 remote/main: contains the tag commit
 GitHub Release API: 404 at audit time
@@ -225,7 +225,7 @@ validator 增加了顶层 type/enum 检查。但发现 `--mode` 接线遗漏：�
 
 ## 5. MCP 与打包当前状态
 
-审计中途曾出现 SDK migration 红灯；随后已由 `d36f471` 修复并提交。最终复测：
+审计中途曾出现 SDK migration 红灯；随后已由 `ba362b4` 修复并提交。最终复测：
 
 ```text
 Official FastMCP SDK path: implemented
@@ -450,7 +450,7 @@ GitHub Release deployment record prepared
 ## 11. 后辈接手说明
 
 - 开始前先运行 `git status`；仓库有并发推进，不能依赖旧 HEAD；
-- 本报告功能复测基线为 release tag `b3ad9fc`，首次登记 commit 为 `9b6c54e`；
+- 本报告功能复测基线为 release tag `be8167e`，首次登记 commit 为 `be18499`；
 - 不要把 Registry listing 称为认证；
 - 不要把 worktree runner 称为沙箱；
 - 不要把读取 timing 称为模型推理 span；

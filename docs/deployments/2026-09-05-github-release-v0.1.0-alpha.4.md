@@ -5,7 +5,7 @@ kind: deployment-record
 date: 2026-09-05
 deployed_at: 2026-09-05
 version: v0.1.0-alpha.4
-source_commit: 97cbd5e
+source_commit: b56e2aa
 target: github
 deployed_by: bronya-q
 public: true
@@ -38,7 +38,7 @@ topics: [release, alpha, github, deployment, progress]
 
 ## 4. 精确版本
 
-- commit: `97cbd5e`
+- commit: `b56e2aa`
 - tag: `v0.1.0-alpha.4`
 - release manifest count: 242
 
@@ -64,7 +64,7 @@ topics: [release, alpha, github, deployment, progress]
 
 ## 8. 后辈接手说明
 
-> ⚠️ **发布后发现（已修复）**：发布时 GitHub Actions 在 Ubuntu 3.13 存在失败；后续重写 MCP stdio 测试后，`e65f51f` / `cbeedf3` 的 CI 已转绿（4 个 matrix job 全部通过）。详见 `docs/deployments/2026-09-05-github-release-v0.1.0-alpha.4-external-verification.md`。
+> ⚠️ **发布后发现（已修复）**：发布时 GitHub Actions 在 Ubuntu 3.13 存在失败；后续重写 MCP stdio 测试后，`cc0e759` / `70d409c` 的 CI 已转绿（4 个 matrix job 全部通过）。详见 `docs/deployments/2026-09-05-github-release-v0.1.0-alpha.4-external-verification.md`。
 
 - 先跑 `python harness.py project-check`
 - 检查 `docs/tasks/2026-09-04-alpha.4-r2-plan.md` 的 Definition of Done
