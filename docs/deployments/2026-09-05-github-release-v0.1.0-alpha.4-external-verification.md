@@ -54,28 +54,34 @@ unittest discover   PASS  58 tests
 
 > 本地 git archive 通过 ≠ GitHub Download ZIP 已独立下载验证。
 
-## 5. GitHub Actions 状态
+## 5. GitHub Actions 状态（已更新）
+
+### 最初失败（audit 时）
 
 ```text
 run: 33952129886   (alpha.4 冻结提交 97cbd5e)
 conclusion: failure
-
 Ubuntu 3.13   package_selfcheck 失败
 Ubuntu 3.11   跑到 unit tests 后被取消
 Windows 3.11/3.13  被取消
 ```
 
-当前 main `582b2c1` 的 CI 同样失败：
+### 已修复
+
+- 重写 `tests/test_mcp_server.py`（逐条写/逐条读，降低时序敏感）。
+- 后续 push（`e65f51f`、`cbeedf3`）CI 已通过：
 
 ```text
-run: 33952198058
-conclusion: failure
-Ubuntu 3.13   unit tests 失败
-Ubuntu 3.11   release_verify/package_selfcheck/unittest 通过，R2 local checks 前被取消
-Windows      被取消
+run 33952679446   completed success
+run 33952861773   completed success
+
+test (windows-latest, 3.13)  ✓
+test (windows-latest, 3.11)  ✓
+test (ubuntu-latest, 3.13)   ✓
+test (ubuntu-latest, 3.11)   ✓
 ```
 
-**因此 alpha.4 不能称为“CI 全绿”。**
+**因此 CI 已从失败转为全绿。**
 
 ## 6. 已确认的本地测试波动
 
@@ -96,9 +102,9 @@ Release 发布本身: 真实
 tag/commit 对应: 正确
 Release 正文: 一致
 本地 tag 归档: 通过
-GitHub Actions: 失败
+GitHub Actions: 已修复，当前 main CI 全绿
 外部 ZIP: 未独立验证
-R2: 尚未达成
+R2: 本地自动项 5/12，外部项仍缺
 ```
 
-本记录用于防止“发布提交全绿”的误读。后续需修 CI 并补外部回读后才能更新为“发布健康”。
+本记录更新为：alpha.4 发布本体成立；CI 已通过后续修复转绿。外部 ZIP / 真实宿主 / 真人 / Registry / PyPI 仍属 R2 外部证据。

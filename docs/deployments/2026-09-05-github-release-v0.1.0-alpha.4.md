@@ -64,7 +64,7 @@ topics: [release, alpha, github, deployment, progress]
 
 ## 8. 后辈接手说明
 
-> ⚠️ **发布后发现**：GitHub Actions 在 Ubuntu 3.13 存在失败，完整 matrix 未全绿。详见 `docs/deployments/2026-09-05-github-release-v0.1.0-alpha.4-external-verification.md`。不要被“本机三项通过”误读为“发布全绿”。
+> ⚠️ **发布后发现（已修复）**：发布时 GitHub Actions 在 Ubuntu 3.13 存在失败；后续重写 MCP stdio 测试后，`e65f51f` / `cbeedf3` 的 CI 已转绿（4 个 matrix job 全部通过）。详见 `docs/deployments/2026-09-05-github-release-v0.1.0-alpha.4-external-verification.md`。
 
 - 先跑 `python harness.py project-check`
 - 检查 `docs/tasks/2026-09-04-alpha.4-r2-plan.md` 的 Definition of Done
