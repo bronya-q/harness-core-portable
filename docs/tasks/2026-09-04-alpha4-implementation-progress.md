@@ -222,6 +222,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **R2 发布勾选清单**：`python harness.py release-checklist` 输出 R2 DoD 自动/人工勾选项
 - ✅ **CI 集成 R2 本地检查**：`secret-scan` / `boundary-check` / `mcp-verify` / `release-checklist` 进入 GitHub Actions
 - ✅ **公共边界扫描 CLI**：`python harness.py boundary-check` 扫描私人标识/绝对路径/overlay，支持 allowlist
+- ✅ **release-checklist 纳入 boundary-check**：R2 勾选清单增加公共边界项
 
 ## 测试与发布
 
