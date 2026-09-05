@@ -68,6 +68,7 @@ def cmd_memory(args):
         if not scope:
             print("用法：harness.py memory list --scope <scope>")
             return 1
+        scope = normalize_scope(scope)
         r = _run("notebook.py", "list", "--scope", scope)
         print(json.dumps(r, ensure_ascii=False, indent=2))
         return 0
@@ -94,6 +95,7 @@ def cmd_memory(args):
         if not scope or not txt:
             print("用法：harness.py memory correct --scope <scope> --id <id> --text <新内容>")
             return 1
+        scope = normalize_scope(scope)
         r = _run("notebook.py", "note", "--scope", scope, "--text", "corrected: " + txt, "--kind", "manual")
         # 自动归档旧记录
         archived = False
@@ -114,6 +116,7 @@ def cmd_memory(args):
         if not scope or not ver:
             print("用法：harness.py memory restore --scope <scope> --version <n>")
             return 1
+        scope = normalize_scope(scope)
         r = _run("notebook.py", "restore", "--scope", scope, "--version", ver)
         print(json.dumps(r, ensure_ascii=False, indent=2))
         return 0 if r.get("ok") else 1
@@ -146,6 +149,7 @@ def cmd_memory(args):
         if not scope or not txt:
             print("用法：harness.py memory write --scope <scope> --text <内容> [--yes] [--html]")
             return 1
+        scope = normalize_scope(scope)
         if html_preview:
             PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
             out = PRIVACY_DIR / "memory-write-preview.html"

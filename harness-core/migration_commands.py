@@ -7,6 +7,7 @@
   python harness.py migration check
   python harness.py migration dry-run
   python harness.py migration policy
+  python harness.py migration apply [--backup]
   python harness.py migration prepare --backup
 """
 import json
@@ -102,6 +103,48 @@ def cmd_dry_run():
     return 0 if not issues else 1
 
 
+def cmd_apply(backup=True):
+    """实际执行 schema_version 表迁移（基础）。"""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    # 备份
+    if backup:
+        import shutil
+        backup_root = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-backups" / ("pre-migrate-" + time.strftime("%Y%m%d-%H%M%S"))
+        backup_root.mkdir(parents=True, exist_ok=True)
+        for name in DB_FILES:
+            p = DATA_DIR / name
+            if p.exists():
+                shutil.copy2(p, backup_root / name)
+        backup_path = str(backup_root)
+    else:
+        backup_path = None
+    applied = []
+    issues = []
+    for name in DB_FILES:
+        p = DATA_DIR / name
+        if not p.exists():
+            continue
+        con = sqlite3.connect(str(p))
+        try:
+            cols = [r[1] for r in con.execute("PRAGMA table_info(schema_version)")] if con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='schema_version'").fetchone() else []
+        except Exception:
+            cols = []
+        if not cols:
+            try:
+                con.execute("CREATE TABLE IF NOT EXISTS schema_version(version INTEGER NOT NULL)")
+                con.execute("INSERT INTO schema_version(version) VALUES(?)", (MIN_SCHEMA,))
+                con.commit()
+                applied.append({"database": name, "action": "add_schema_version_table", "version": MIN_SCHEMA})
+            except Exception as e:
+                issues.append(f"{name}:{e}")
+        con.close()
+    print(json.dumps({"ok": len(issues) == 0, "mode": "migration_apply",
+                      "backup": backup_path, "applied": applied, "issues": issues,
+                      "note": "仅创建/更新 schema_version 表；真实业务列迁移仍需单独实现。"},
+                     ensure_ascii=False, indent=2))
+    return 0 if not issues else 1
+
+
 def cmd_policy():
     policy = {
         "schema_version": 1,
@@ -133,6 +176,8 @@ def main():
         return cmd_dry_run()
     if cmd == "policy":
         return cmd_policy()
+    if cmd == "apply":
+        return cmd_apply("--backup" in sys.argv[2:])
     if cmd == "prepare" and "--backup" in sys.argv[2:]:
         # 简单备份：复制 events.db / memory.db 到 backup 目录
         import shutil
