@@ -337,6 +337,10 @@ python harness.py roleplay \
 
 ## 效果与边界
 
+> 完整缺口清单见
+> [`docs/tasks/2026-09-04-remaining-gaps.md`](docs/tasks/2026-09-04-remaining-gaps.md)。
+> 其中标 ❌ / 🟡 的项不代表已实现，只表示“提出过、还没做完或只做到部分”。
+
 - 效果：一致性、连续性、边界安全、可审计性；
 - 边界：**不是心理学效度**；工程 proxy ≠ 用户满足度；自然数据仍缺口。
 
@@ -445,6 +449,9 @@ RELEASE_NOTES.md        Release notes（v0.1.0-alpha.1 / alpha.2）
 AGENT_COMPATIBILITY.md  Agent 生态兼容矩阵（R0/R1/R2）
 docs/TASKS_INDEX.md     任务设计文档索引
 docs/DEPLOYMENTS_INDEX.md 部署记录索引
+docs/tasks/2026-09-04-remaining-gaps.md  当前缺口清单（已提出但未完成/部分完成）
+docs/tasks/2026-09-04-partial-implementation-inventory.md  部分实现清单（存档）
+docs/tasks/2026-09-04-alpha4-implementation-progress.md  alpha.4 推进记录（存档）
 docs/templates/         任务设计/部署记录模板
 examples/agent-integrations/  AGENTS.md/CLAUDE.md/Codex/DeepSeek/MCP fixtures
 docs/user-testing/      首次用户测试协议与结果模板
