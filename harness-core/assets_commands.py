@@ -911,6 +911,28 @@ def _knowledge_access(role, source_id, query=None, limit=10, max_chars=200):
             "note": "只读目录清单 + 有限上下文摘要（预算 %s 字符）；不会修改或上传知识源。" % max_chars}
 
 
+def _knowledge_index_search(source_id, query, limit=10):
+    """使用 knowledge-index.json 中的 token 列表做词重叠打分检索。"""
+    idx_path = HARNESS_DIR / "knowledge-index.json"
+    idx = read_json(idx_path) or {}
+    src = (idx.get("sources", {}) or {}).get(source_id) or {}
+    files = src.get("files", []) or []
+    if not files:
+        return {"ok": False, "error": "no_index", "note": "请先运行 knowledge index --source <id>"}
+    q_tokens = set(str(query).split())
+    scored = []
+    for f in files:
+        toks = set(f.get("tokens", []))
+        if not q_tokens:
+            continue
+        overlap = len(q_tokens & toks)
+        if overlap > 0:
+            scored.append({"file": f.get("file"), "path": f.get("path"), "overlap": overlap})
+    scored.sort(key=lambda x: (-x["overlap"], x["file"]))
+    return {"ok": True, "source_id": source_id, "matches": scored[:limit],
+            "note": "基于本地词频索引的重叠检索；不调用模型。"}
+
+
 def _record_suggest_history(entry):
     try:
         hist = read_json(HARNESS_DIR / "knowledge-suggest-history.json") or {"schema_version": 1, "entries": []}
@@ -944,8 +966,9 @@ def _knowledge_index(source_id):
         except Exception:
             continue
         words = max(1, len(text.split()))
+        tokens = list(set(text.split()))[:200]
         total_words += words
-        entries.append({"file": p.name, "path": str(p), "words": words})
+        entries.append({"file": p.name, "path": str(p), "words": words, "tokens": tokens})
     idx.setdefault("sources", {})[source_id] = {"indexed_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
                                                 "file_count": len(entries), "total_words": total_words,
                                                 "files": entries[:200]}
@@ -1050,6 +1073,7 @@ def cmd_knowledge(args):
         source_id = query = ""
         limit = 10
         max_chars = 200
+        use_index = False
         args1 = args[1:]
         for i, a in enumerate(args1):
             if a == "--source" and i + 1 < len(args1):
@@ -1060,10 +1084,15 @@ def cmd_knowledge(args):
                 limit = int(args1[i + 1])
             if a == "--max-chars" and i + 1 < len(args1):
                 max_chars = int(args1[i + 1])
+            if a == "--use-index":
+                use_index = True
         if not source_id or not query:
-            print("用法：python harness.py knowledge search --source <source_id> --query <text> [--limit 10] [--max-chars 200]")
+            print("用法：python harness.py knowledge search --source <source_id> --query <text> [--limit 10] [--max-chars 200] [--use-index]")
             return 1
-        result = _knowledge_access("", source_id, query, limit, max_chars)
+        if use_index:
+            result = _knowledge_index_search(source_id, query, limit)
+        else:
+            result = _knowledge_access("", source_id, query, limit, max_chars)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
     if sub == "access":

@@ -209,6 +209,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **文档抽象扩展到更多参考文件**：`KNOWLEDGE_STEWARDSHIP.md` / `harness-core/SKILL.md` 也去掉具体私人示例名
 - ✅ **letter/situated/role_division 接入 roleplay 实际决策**：roleplay prompt 现在加入「角色分工 / 用户关联 / 近期信件」
 - ✅ **situated 视图增加信件上下文**：`situated` 输出 `letters`
+- ✅ **knowledge 全文索引检索**：`knowledge index` 存 token 列表，`knowledge search --use-index` 按词重叠打分检索
 
 ## 测试与发布
 
