@@ -673,3 +673,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 48. 后续处理记录（2026-09-04 续 36）
 
 - scope 再补 inspect、Adversarial Review `--save`、knowledge `explain` 视图。
+
+## 49. 后续处理记录（2026-09-04 续 37）
+
+- notebook / story_core scope 规范化、measure construct 过滤分隔行。
