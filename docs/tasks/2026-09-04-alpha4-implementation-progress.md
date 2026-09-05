@@ -207,6 +207,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **公共示例 stewards 去私人化**：`knowledge-sources.example.json` 的 stewards 改为合成 demo 角色
 - ✅ **复杂 schema 迁移脚本**：`python harness.py migration apply-script --file migrate.py` 支持执行外部 `upgrade(con)` 脚本（带备份）
 - ✅ **文档抽象扩展到更多参考文件**：`KNOWLEDGE_STEWARDSHIP.md` / `harness-core/SKILL.md` 也去掉具体私人示例名
+- ✅ **letter/situated/role_division 接入 roleplay 实际决策**：roleplay prompt 现在加入「角色分工 / 用户关联 / 近期信件」
+- ✅ **situated 视图增加信件上下文**：`situated` 输出 `letters`
 
 ## 测试与发布
 

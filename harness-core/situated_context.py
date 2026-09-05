@@ -86,7 +86,14 @@ def build(scope=None):
         except Exception:
             pass
 
+    letters = []
+    try:
+        from letter_system import list_letters
+        letters = list_letters(scope, limit=3)
+    except Exception:
+        pass
     return {"scope": scope, "persona_id": persona_id, "mode_id": mode_id,
+            "letters": letters,
             "situation": {"active_persona": persona_id, "active_mode": mode_id,
                           "role": "当前角色/情境模式"},
             "relationship": rel,

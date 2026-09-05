@@ -345,8 +345,29 @@ def main():
             )
     except Exception:
         pass
+    situated_block = ""
+    try:
+        from situated_context import build as situated_build
+        sit = situated_build(scope)
+        rd = sit.get("role_division") or []
+        if rd:
+            parts = ["%s → %s" % (d.get("display_name") or d.get("source_id"), ",".join(d.get("stewards", []))) for d in rd[:3]]
+            situated_block += "【角色分工】" + "；".join(parts) + chr(10)
+        ur = sit.get("user_relation") or {}
+        rel = ur.get("relation_to_user") or {}
+        if rel:
+            situated_block += "【用户关联】rel=%s affinity=%s trust=%s" % (rel.get("rel_level"), rel.get("affinity"), rel.get("trust")) + chr(10)
+        # 近期信件
+        from letter_system import list_letters
+        lts = list_letters(scope, limit=3)
+        if lts:
+            for l in lts[:2]:
+                situated_block += "【信件】%s → %s：%s" % (l.get("from"), l.get("to"), l.get("subject") or l.get("body", "")[:40]) + chr(10)
+    except Exception:
+        pass
     base_prompt = (
         (situation_block if situation_block else "") +
+        (situated_block if situated_block else "") +
         (mode_block if mode_block else "") +
         (card_block if card_block else "") +
         (collab_block if collab_block else "") +
