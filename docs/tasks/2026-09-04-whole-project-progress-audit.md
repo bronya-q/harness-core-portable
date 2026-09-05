@@ -626,3 +626,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **角色/情境/UX R1**：situated 上下文视图、roleplay mode prompt 块、Dashboard 关系-情感状态卡片、Demo 后续引导。
 - 新增/更新测试，unittest 总数 37。
+
+## 40. 后续处理记录（2026-09-04 续 28）
+
+- **数据/测量/可观测 R1**：provider usage 记录器、工作流来源分组条、Krippendorff’s alpha、vector queue 历史监控。
+- 更新测试；unittest 总数 37（新增 krippendorff 用例与 vector history 断言）。

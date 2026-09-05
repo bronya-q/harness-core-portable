@@ -60,6 +60,10 @@ class VectorQueueDeferredTest(unittest.TestCase):
             self.assertEqual(row["retry_count"], 1)
             self.assertIn("Connection refused", row["last_error"])
             con.close()
+            vector_queue.queue_status()
+            hist = vector_queue.queue_history(limit=5)
+            self.assertTrue(hist["ok"])
+            self.assertGreaterEqual(len(hist["history"]), 1)
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
