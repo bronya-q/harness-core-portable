@@ -467,6 +467,7 @@ AGENT_COMPATIBILITY.md  Agent 生态兼容矩阵（R0/R1/R2）
 docs/TASKS_INDEX.md     任务设计文档索引
 docs/DEPLOYMENTS_INDEX.md 部署记录索引
 docs/tasks/2026-09-04-remaining-gaps.md  当前缺口清单（已提出但未完成/部分完成）
+docs/tasks/2026-09-04-alpha.4-r2-plan.md  R2 阶段规划（外部可验证基线）
 docs/tasks/2026-09-04-partial-implementation-inventory.md  部分实现清单（存档）
 docs/tasks/2026-09-04-alpha4-implementation-progress.md  alpha.4 推进记录（存档）
 docs/templates/         任务设计/部署记录模板
