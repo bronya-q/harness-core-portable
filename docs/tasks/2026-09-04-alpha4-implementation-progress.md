@@ -194,6 +194,12 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **宿主导航**：`python harness.py host-guide` 输出 Claude Code / Codex / Copilot 接入步骤
 - ✅ **知识源 search 别名**：`python harness.py knowledge search --source <id> --query <q>`
 
+## 继续推进
+
+- ✅ **scope 再补**：`inspect` 也使用 `normalize_scope`
+- ✅ **Adversarial Review 保存**：`python harness.py adversarial --save <name>` 把审查结果写入 `docs/tasks/adversarial-review-*.json`
+- ✅ **知识源 explain 视图**：`python harness.py knowledge explain --source <id>` 展示健康/可信度/索引状态
+
 ## 测试与发布
 
 ```text

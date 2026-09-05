@@ -1028,6 +1028,24 @@ def cmd_knowledge(args):
         result = _knowledge_index(source_id)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
+    if sub == "explain":
+        source_id = ""
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--source" and i + 1 < len(args1):
+                source_id = args1[i + 1]
+        if not source_id:
+            print("用法：python harness.py knowledge explain --source <source_id>")
+            return 1
+        d = _knowledge_health(source_id)
+        checks = d.get("checks", [])
+        if not checks:
+            print(json.dumps({"ok": False, "error": "source_not_found", "domain": source_id}, ensure_ascii=False))
+            return 1
+        c = checks[0]
+        print(json.dumps({"ok": True, "mode": "knowledge_explain", **c,
+                          "note": "知识源健康/可信度/索引状态视图。"}, ensure_ascii=False, indent=2))
+        return 0 if c.get("status") == "ok" else 1
     if sub == "search":
         source_id = query = ""
         limit = 10
