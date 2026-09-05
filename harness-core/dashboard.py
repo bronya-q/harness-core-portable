@@ -430,6 +430,18 @@ def main():
     else:
         letters_html = "<p class='muted'>暂无角色信件。</p>"
 
+    role_division_html = ""
+    if kh.get("checks"):
+        for c in kh["checks"]:
+            stewards = c.get("stewards", []) or []
+            role_division_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:70%%'>%s</div>"
+                                   "<span class='st-muted'>%s</span></div>"
+                                   % (_html(c.get("display_name") or c.get("source_id")),
+                                      _html(", ".join(stewards) if stewards else "未指定"),
+                                      _html("cred=" + str(c.get("credibility")))))
+    else:
+        role_division_html = "<p class='muted'>暂无知识源配置。</p>"
+
 
     # 关系-情感状态可视化
     rel_rows = []
@@ -616,6 +628,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>关系-情感状态</h2>{rel_html}</div>
 <div class="card"><h2>Adapter 权限矩阵</h2>{adapter_html}</div>
 <div class="card"><h2>角色信件</h2>{letters_html}</div>
+<div class="card"><h2>角色分工（知识域 → 负责角色）</h2>{role_division_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
