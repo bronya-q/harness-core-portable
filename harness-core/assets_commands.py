@@ -90,13 +90,22 @@ def cmd_character(args):
             return 1
         return _cmd_character_preflight(pid)
     if sub == "recover":
+        LOCK_FILE.unlink(missing_ok=True)
         if not ACTIVE_BACKUP.exists():
-            print(json.dumps({"ok": False, "error": "no_backup"}, ensure_ascii=False))
-            return 1
+            ACTIVE_FILE.unlink(missing_ok=True)
+            _write_state("recovered", None, "no backup; cleared active and lock")
+            print(json.dumps({"ok": True, "active": None, "recovered": True,
+                              "note": "无备份；已清除锁与激活标记。"}, ensure_ascii=False))
+            return 0
         prev = read_json(ACTIVE_BACKUP)
         write_json(ACTIVE_FILE, prev)
         ACTIVE_BACKUP.unlink(missing_ok=True)
         _write_state("active", prev.get("persona_id"), "recovered from backup")
+        try:
+            from runtime_hotload import write_context
+            write_context(prev.get("persona_id"), None, {"recovered": True})
+        except Exception:
+            pass
         print(json.dumps({"ok": True, "active": prev.get("persona_id"), "recovered": True}, ensure_ascii=False))
         return 0
     if sub == "mode":
@@ -249,16 +258,18 @@ def cmd_character(args):
         return 0
     if sub == "activate":
         if not rest:
-            print("用法：harness.py character activate <persona_id> [--simulate-failure]")
+            print("用法：harness.py character activate <persona_id> [--simulate-failure] [--simulate-crash]")
             return 1
         pid = rest[0]
         simulate_failure = "--simulate-failure" in rest
+        simulate_crash = "--simulate-crash" in rest
         manifest_path = CHARACTERS_DIR / pid / "package-manifest.json"
         if not manifest_path.exists():
             print(json.dumps({"ok": False, "error": "not_installed", "persona_id": pid}, ensure_ascii=False))
             return 1
         manifest = read_json(manifest_path)
         # 简单并发锁
+        crash_simulated = False
         try:
             fd = os.open(str(LOCK_FILE), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
             os.close(fd)
@@ -274,6 +285,12 @@ def cmd_character(args):
                 raise RuntimeError("simulated_activation_failure")
             write_json(ACTIVE_FILE, {"persona_id": pid, "scope": manifest.get("scope", "character:" + pid),
                                      "display_name": manifest.get("display_name", pid)})
+            if simulate_crash:
+                crash_simulated = True
+                _write_state("crash_simulated", pid, "simulated crash; lock intentionally left")
+                print(json.dumps({"ok": False, "status": "crash_simulated",
+                                  "note": "模拟崩溃：已写入 active 但保留锁，请运行 `character recover` 恢复。"}, ensure_ascii=False))
+                return 1
             _write_state("active", pid, "activation complete")
         except Exception as e:
             if ACTIVE_BACKUP.exists():
@@ -282,10 +299,16 @@ def cmd_character(args):
             print(json.dumps({"ok": False, "error": "activation_failed", "detail": str(e)}, ensure_ascii=False))
             return 1
         finally:
-            try:
-                LOCK_FILE.unlink()
-            except Exception:
-                pass
+            if not crash_simulated:
+                try:
+                    LOCK_FILE.unlink()
+                except Exception:
+                    pass
+        try:
+            from runtime_hotload import write_context
+            write_context(pid, None, {"scope": manifest.get("scope")})
+        except Exception:
+            pass
         print(json.dumps({"ok": True, "active": pid, "scope": manifest.get("scope"),
                           "rollback_available": ACTIVE_BACKUP.exists()}, ensure_ascii=False))
         return 0
@@ -379,6 +402,9 @@ def _validate_package(src, target):
                     issues.append("zip_symlink:" + n)
                 if n.lower().endswith(".zip"):
                     issues.append("nested_zip:" + n)
+                ext = n.rsplit(".", 1)[-1].lower() if "." in n else ""
+                if target == "public" and ext in ("html", "htm", "svg"):
+                    issues.append("untrusted_html_svg:" + n)
                 total_size += info.file_size
                 if n.lower().endswith((".json", ".jsonl")):
                     raw = zf.read(info)
@@ -434,8 +460,19 @@ def _validate_package(src, target):
     # absolute path scan in all text files
     root = src if src.is_dir() else Path(manifest_path)
     if src.is_dir():
-        for f in src.rglob("*"):
+        _dir_files = [f for f in src.rglob("*") if f.is_file()]
+        if len(_dir_files) > 5000:
+            issues.append("dir_too_many_files:" + str(len(_dir_files)))
+        _dir_size = sum(f.stat().st_size for f in _dir_files)
+        if _dir_size > 200 * 1024 * 1024:
+            issues.append("dir_too_large:" + str(_dir_size))
+        for f in _dir_files:
             if f.is_file():
+                ext = f.suffix.lower().lstrip(".")
+                if target == "public" and ext in ("html", "htm", "svg"):
+                    issues.append("untrusted_html_svg:" + str(f.relative_to(src)))
+                if target == "public" and ext in ("exe", "bat", "cmd", "sh", "ps1", "com"):
+                    issues.append("executable_script:" + str(f.relative_to(src)))
                 import json as _json
                 if f.suffix.lower() in (".json", ".jsonl"):
                     try:
@@ -617,6 +654,11 @@ def _cmd_character_mode(args):
         if ACTIVE_MODE_FILE.exists():
             shutil.copy2(ACTIVE_MODE_FILE, HARNESS_DIR / "active-mode.json.bak")
         write_json(ACTIVE_MODE_FILE, {"persona_id": pid, "mode_id": mode_id, "display_name": match.get("display_name")})
+        try:
+            from runtime_hotload import write_context
+            write_context(pid, mode_id, {"display_name": match.get("display_name"), "effects": match.get("effect")})
+        except Exception:
+            pass
         print(json.dumps({"ok": True, "persona_id": pid, "mode_id": mode_id, "effects": match.get("effect")}, ensure_ascii=False))
         return 0
     if sub == "diff":
@@ -727,8 +769,12 @@ def _knowledge_health(source_id=None):
             credibility = "private_medium"
         else:
             credibility = "portable_public"
+        idx_path = HARNESS_DIR / "knowledge-index.json"
+        idx_data = read_json(idx_path) or {}
+        idx_src = (idx_data.get("sources", {}) or {}).get(sid) or {}
         checks.append({"source_id": sid, "display_name": src.get("display_name", ""),
                        "file_count": file_count, "credibility": credibility,
+                       "indexed": bool(idx_src), "indexed_file_count": idx_src.get("file_count", 0),
                        "root": str(root) if root else None,
                        "exists": exists, "is_dir": is_dir, "readable": readable,
                        "status": status, "private": bool(src.get("private", True)),
@@ -872,6 +918,39 @@ def _record_suggest_history(entry):
         pass
 
 
+def _knowledge_index(source_id):
+    sources = _load_sources()
+    src = next((s for s in sources if s.get("source_id") == source_id), None)
+    if not src:
+        return {"ok": False, "error": "unknown_domain", "domain": source_id}
+    root = _expand_root(src.get("root"))
+    if not root or not root.is_dir():
+        return {"ok": False, "error": "source_unreadable", "source_id": source_id}
+    idx_path = HARNESS_DIR / "knowledge-index.json"
+    idx = read_json(idx_path) or {"schema_version": 1, "sources": {}}
+    entries = []
+    total_words = 0
+    for p in sorted(root.rglob("*")):
+        if not p.is_file():
+            continue
+        if p.suffix.lower() not in (".txt", ".md", ".json", ".csv", ".yml", ".yaml"):
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+        words = max(1, len(text.split()))
+        total_words += words
+        entries.append({"file": p.name, "path": str(p), "words": words})
+    idx.setdefault("sources", {})[source_id] = {"indexed_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                                                "file_count": len(entries), "total_words": total_words,
+                                                "files": entries[:200]}
+    write_json(idx_path, idx)
+    return {"ok": True, "source_id": source_id, "indexed": True,
+            "file_count": len(entries), "total_words": total_words,
+            "index_file": str(idx_path), "note": "只建立文本词频/文件清单索引，不调用模型。"}
+
+
 def cmd_knowledge(args):
     if not args:
         print("用法：harness.py knowledge list|sources|health|mount|delegate")
@@ -931,6 +1010,18 @@ def cmd_knowledge(args):
             print("用法：python harness.py knowledge delegate --question <问题> [--role <persona_id>]")
             return 1
         result = _knowledge_delegate(question, role or None)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
+    if sub == "index":
+        source_id = ""
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--source" and i + 1 < len(args1):
+                source_id = args1[i + 1]
+        if not source_id:
+            print("用法：python harness.py knowledge index --source <source_id>")
+            return 1
+        result = _knowledge_index(source_id)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
     if sub == "access":

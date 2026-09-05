@@ -185,7 +185,8 @@ def main():
     if kh.get("checks"):
         for c in kh["checks"]:
             pct = {"ok": 100, "unreadable": 50, "missing": 0, "not_dir": 0}.get(c.get("status"), 0)
-            extra = "files=%s · cred=%s" % (_html(c.get("file_count", 0)), _html(c.get("credibility")))
+            indexed = "indexed" if c.get("indexed") else "not_indexed"
+            extra = "files=%s · cred=%s · %s" % (_html(c.get("file_count", 0)), _html(c.get("credibility")), _html(indexed))
             kn_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%s</div>"
                         "<span class='st-muted'>%s</span></div>"
                         % (_html(c.get("display_name") or c.get("source_id")), pct, _html(c.get("status")), extra))
