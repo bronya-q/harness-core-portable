@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """adapter_gate.py — 用 adapter 权限 manifest 驱动真实运行（R1）。
 
-如果设置了 HARNESS_MCP_ADAPTER_ID，MCP 工具在执行前会查该 adapter 的 capabilities。
-没设置时保持默认放行（兼容现有行为）；设置后未授权能力返回 deny。
+Fail-closed：未设置 HARNESS_MCP_ADAPTER_ID 时默认拒绝（deny）。
+仅当显式设置 HARNESS_ALLOW_UNCONFIGURED=1 时才放行未配置 adapter（本地开发兼容）。
+设置 HARNESS_MCP_ADAPTER_ID 后按 manifest capabilities 校验。
 """
 import json
 import os
@@ -26,7 +27,7 @@ def _load_manifest():
 
 def can(adapter_id, capability):
     if not adapter_id:
-        return True
+        return os.environ.get("HARNESS_ALLOW_UNCONFIGURED") == "1"
     manifest = _load_manifest()
     adapter = manifest.get(adapter_id)
     if not adapter:

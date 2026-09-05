@@ -52,42 +52,75 @@ def os_walk(root):
 
 
 def scan_history():
-    """扫描所有 git 历史中的密钥形态（只读，不修改任何对象）。"""
+    """扫描所有 git 历史中的密钥形态（只读，不修改任何对象）。
+
+    Fail-closed：只有全部 refs 都成功扫描且无命中才返回 ok=True。
+    输出不包含匹配原文，只记录 ref/file/line/rule。
+    """
     import subprocess
     pats = "|".join("(%s)" % p for p, _ in PATTERNS)
-    cmd = ["git", "-C", str(ROOT), "grep", "-I", "-n", "-E", pats,
-           "--", "$(git rev-list --all)"]
-    # git grep 不能直接展开 $(...)，这里分批提交。
     try:
         revs = subprocess.run(["git", "-C", str(ROOT), "rev-list", "--all"],
                               capture_output=True, text=True, encoding="utf-8",
                               errors="replace", timeout=60)
+        if revs.returncode != 0:
+            return {"error": "git_rev_list_failed", "stderr": revs.stderr[-200:]}
         rev_list = [r for r in revs.stdout.splitlines() if r.strip()]
-    except Exception:
-        return [{"error": "git_rev_list_failed"}]
+    except Exception as e:
+        return {"error": "git_rev_list_failed", "detail": repr(e)}
     hits = []
+    scanned = 0
+    failed = 0
     for rev in rev_list:
         try:
             p = subprocess.run(["git", "-C", str(ROOT), "grep", "-I", "-n", "-E", pats, rev, "--"],
                                capture_output=True, text=True, encoding="utf-8",
                                errors="replace", timeout=30)
+        except Exception:
+            failed += 1
+            continue
+        if p.returncode == 0 or p.returncode == 1:
+            scanned += 1
+        else:
+            failed += 1
+        if p.returncode == 0:
             for line in p.stdout.splitlines():
                 if not line.strip() or "binary" in line:
                     continue
-                # 格式: blob:line:content 或 rev:file:line:content
-                hits.append({"history": True, "ref": rev[:12], "line": line[:300]})
-        except Exception:
-            continue
-    return hits
+                # 格式: rev:file:line:content
+                # 只保留前三个字段，丢弃匹配原文
+                parts = line.split(":", 3)
+                if len(parts) >= 4:
+                    hits.append({"history": True, "ref": rev[:12],
+                                 "file": parts[1], "line": parts[2]})
+    return {"hits": hits, "scanned": scanned, "failed": failed, "total_refs": len(rev_list)}
 
 
 def main():
     if "--history" in sys.argv:
-        hits = scan_history()
-    else:
-        hits = scan()
+        result = scan_history()
+        if isinstance(result, dict) and ("error" in result):
+            print(__import__("json").dumps({"ok": False, "mode": "secret_scan_history",
+                                            "error": result.get("error"),
+                                            "detail": result.get("detail", ""),
+                                            "note": "扫描失败，不能报告为通过。"},
+                                           ensure_ascii=False, indent=2))
+            return 1
+        hits = result.get("hits", [])
+        scanned = result.get("scanned", 0)
+        failed = result.get("failed", 0)
+        total = result.get("total_refs", 0)
+        ok = len(hits) == 0 and failed == 0 and total > 0
+        print(__import__("json").dumps({"ok": ok, "mode": "secret_scan_history",
+                                        "history": True,
+                                        "total_refs": total, "scanned": scanned, "failed": failed,
+                                        "hits": hits[:30],
+                                        "note": "在指定 refs 与规则覆盖范围内未发现命中；扫描失败另行记录。此结果不构成不存在真实凭据的证明。"},
+                                       ensure_ascii=False, indent=2))
+        return 0 if ok else 1
+    hits = scan()
     print(__import__("json").dumps({"ok": len(hits) == 0, "mode": "secret_scan",
-                                    "history": "--history" in sys.argv,
+                                    "history": False,
                                     "hits": hits[:30], "note": "辅助扫描，不构成安全认证。"},
                                    ensure_ascii=False, indent=2))
     return 0 if not hits else 1

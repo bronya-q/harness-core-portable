@@ -75,10 +75,39 @@ class EngineeringReleaseBatchTest(unittest.TestCase):
         sys.path.insert(0, str(ROOT))
         from harness_core.adapter_gate import can, get_adapter_id
         os.environ["HARNESS_MCP_ADAPTER_ID"] = "no-such-adapter"
+        os.environ.pop("HARNESS_ALLOW_UNCONFIGURED", None)
         self.assertFalse(can("no-such-adapter", "memory_read"))
         self.assertEqual(get_adapter_id(), "no-such-adapter")
         # restore
         os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+
+    def test_adapter_gate_fail_closed_when_unconfigured(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "harness-core"))
+        sys.path.insert(0, str(ROOT))
+        from harness_core.adapter_gate import can
+        saved_id = os.environ.get("HARNESS_MCP_ADAPTER_ID")
+        saved_allow = os.environ.get("HARNESS_ALLOW_UNCONFIGURED")
+        os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+        os.environ.pop("HARNESS_ALLOW_UNCONFIGURED", None)
+        self.assertFalse(can(None, "usage_read"), "unconfigured adapter must deny")
+        os.environ["HARNESS_ALLOW_UNCONFIGURED"] = "1"
+        self.assertTrue(can(None, "usage_read"), "explicit allow should grant")
+        if saved_id is not None:
+            os.environ["HARNESS_MCP_ADAPTER_ID"] = saved_id
+        else:
+            os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+        if saved_allow is not None:
+            os.environ["HARNESS_ALLOW_UNCONFIGURED"] = saved_allow
+        else:
+            os.environ.pop("HARNESS_ALLOW_UNCONFIGURED", None)
+
+    def test_mcp_http_server_refuses_non_loopback(self):
+        p = subprocess.run([sys.executable, "-m", "harness_core.adapters.mcp_http_server",
+                            "--host", "0.0.0.0", "--port", "0"],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           timeout=15)
+        self.assertEqual(p.returncode, 2, p.stdout + p.stderr[-300:])
 
     def test_private_docs_no_private_names(self):
         for rel in ("HYBRID_FUNCTIONAL_PERSONA.md", "ENGINEERING_ROLES.md"):
