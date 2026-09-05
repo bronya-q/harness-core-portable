@@ -98,6 +98,19 @@ class RuntimeAndSandboxGapsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_queue_alert_reports_stale(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = self._env(home)
+            # 用一个极小阈值，让空队列也可能触发 stale/failed? 空不会。直接测函数存在
+            p = subprocess.run([sys.executable, str(ROOT / "harness.py"), "data", "status"],
+                               capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               env=env, timeout=30)
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            self.assertIn("vector_queue", p.stdout)
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_public_hcp_rejects_html_svg(self):
         home = Path(tempfile.mkdtemp())
         try:
@@ -109,9 +122,11 @@ class RuntimeAndSandboxGapsTest(unittest.TestCase):
                             "distribution": "public", "license_status": "verified"},
                            ensure_ascii=False), encoding="utf-8")
             (pkg / "evil.html").write_text("<script>alert(1)</script>", encoding="utf-8")
+            (pkg / "run.py").write_text("print('x')", encoding="utf-8")
             p = self._run(env, "character", "validate", "--package", str(pkg), "--target", "public")
             self.assertEqual(p.returncode, 1, p.stderr + p.stdout[-300:])
             self.assertIn("untrusted_html_svg", p.stdout)
+            self.assertIn("executable_script", p.stdout)
         finally:
             shutil.rmtree(home, ignore_errors=True)
 

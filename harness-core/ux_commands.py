@@ -226,6 +226,9 @@ def cmd_data_status():
     vq = vector_queue.queue_status()
     if vq.get("ok"):
         print("  vector_queue.db: pending={pending} processing={processing} deferred={deferred} done={done} failed={failed} retryable={retryable} stale={stale}".format(**vq))
+        vqa = vector_queue.queue_alert()
+        if vqa.get("alerts"):
+            print("  vector_queue alerts: " + ", ".join(vqa["alerts"]))
     else:
         print("  vector_queue.db: 未初始化/不可读（这通常是正常的）")
     print(f"\n  合计约 {total:.2f} MB")
