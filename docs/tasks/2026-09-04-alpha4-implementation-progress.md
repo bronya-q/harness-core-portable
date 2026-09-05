@@ -226,6 +226,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **knowledge 自动委派路由**：`python harness.py knowledge route --question <q> --role <r>` 返回 allow / delegate 决策
 - ✅ **MCP memory_list 返回 runtime_context**：runtime 热挂载状态进一步接入 MCP 前端
 - ✅ **workspace 列表返回 runtime_context**：runtime 热挂载状态接入 workspace 前端
+- ✅ **memory list 返回 runtime_context**
+- ✅ **runtime-coverage 审计**：`python harness.py runtime-coverage` 统计 7/7 入口消费 runtime context
 
 ## 测试与发布
 

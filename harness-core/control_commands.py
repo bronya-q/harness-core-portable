@@ -70,6 +70,11 @@ def cmd_memory(args):
             return 1
         scope = normalize_scope(scope)
         r = _run("notebook.py", "list", "--scope", scope)
+        try:
+            from runtime_hotload import load_context
+            r["runtime_context"] = load_context()
+        except Exception:
+            pass
         print(json.dumps(r, ensure_ascii=False, indent=2))
         return 0
     if sub == "explain":
