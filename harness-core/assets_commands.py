@@ -1376,7 +1376,12 @@ def cmd_workspace(args):
                 if d.is_dir() and (d / "workspace.json").exists():
                     l = read_json(d / "workspace.json")
                     out.append({"workspace": d.name, "worktree": l.get("worktree_path"), "base": l.get("worktree_base")})
-            print(json.dumps({"ok": True, "worktrees": out}, ensure_ascii=False, indent=2))
+            try:
+                from runtime_hotload import load_context
+                ctx = load_context()
+            except Exception:
+                ctx = {}
+            print(json.dumps({"ok": True, "worktrees": out, "runtime_context": ctx}, ensure_ascii=False, indent=2))
             return 0
         if wsub == "remove":
             if not _confirm_risk("workspace worktree remove", "将尝试删除 worktree 目录并清理租约。", yes="--yes" in rest):
