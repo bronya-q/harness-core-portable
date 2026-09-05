@@ -8,6 +8,7 @@
   python harness.py migration dry-run
   python harness.py migration policy
   python harness.py migration apply [--backup]
+  python harness.py migration apply-script --file <migrate.py>
   python harness.py migration prepare --backup
 """
 import json
@@ -189,6 +190,46 @@ def cmd_apply(backup=True):
     return 0 if not issues else 1
 
 
+def cmd_apply_script(script_path):
+    """执行外部 migration 脚本（复杂 schema 变更）。
+
+    脚本需提供 `upgrade(con)` 函数；执行前先备份。
+    """
+    import importlib.util
+    import shutil
+    p = Path(script_path)
+    if not p.exists():
+        return json.dumps({"ok": False, "error": "script_not_found", "path": str(p)})
+    backup_root = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-backups" / ("pre-migrate-script-" + time.strftime("%Y%m%d-%H%M%S"))
+    backup_root.mkdir(parents=True, exist_ok=True)
+    for name in DB_FILES:
+        db = DATA_DIR / name
+        if db.exists():
+            shutil.copy2(db, backup_root / name)
+    spec = importlib.util.spec_from_file_location("migration_script", str(p))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    if not hasattr(mod, "upgrade"):
+        return json.dumps({"ok": False, "error": "missing_upgrade_function"})
+    applied = []
+    issues = []
+    for name in DB_FILES:
+        db = DATA_DIR / name
+        if not db.exists():
+            continue
+        con = sqlite3.connect(str(db))
+        try:
+            result = mod.upgrade(con) or {}
+            con.commit()
+            applied.append({"database": name, "result": result})
+        except Exception as e:
+            issues.append(f"{name}:{e}")
+        con.close()
+    return json.dumps({"ok": len(issues) == 0, "mode": "migration_apply_script",
+                       "backup": str(backup_root), "applied": applied, "issues": issues,
+                       "note": "外部迁移脚本已执行；请自行核对业务正确性。"})
+
+
 def cmd_policy():
     policy = {
         "schema_version": 1,
@@ -222,6 +263,16 @@ def main():
         return cmd_policy()
     if cmd == "apply":
         return cmd_apply("--backup" in sys.argv[2:])
+    if cmd == "apply-script":
+        script_file = ""
+        for i, a in enumerate(sys.argv[2:]):
+            if a == "--file" and i + 1 < len(sys.argv[2:]):
+                script_file = sys.argv[i + 3]
+        if not script_file:
+            print(json.dumps({"ok": False, "error": "missing --file"}, ensure_ascii=False))
+            return 1
+        print(cmd_apply_script(script_file))
+        return 0
     if cmd == "prepare" and "--backup" in sys.argv[2:]:
         # 简单备份：复制 events.db / memory.db 到 backup 目录
         import shutil
