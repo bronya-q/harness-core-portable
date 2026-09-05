@@ -12,6 +12,8 @@ topics: [gap, remaining, roadmap, archive, review]
 
 # 已提出但未完成 / 部分完成的缺口清单
 
+> 🔄 **2026-09-04 后续更新**：本清单原为暂存，后续已大量推进。当前 alpha.4 progress 已补完多项 R1；真正仍缺的主要是外部环境/真人/心理效度。本文件保留为历史存档。
+
 > 本文件是补充存档，配合 `partial-implementation-inventory.md` 使用。
 > 凡已完成的项不再列入；标 🟡 表示部分完成，标 ❌ 表示未做。
 

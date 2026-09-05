@@ -1434,16 +1434,38 @@ def cmd_workspace(args):
                 return 1
             worktree = lease.get("worktree_path")
             cwd = str(Path(worktree).expanduser()) if worktree and Path(worktree).exists() else str(Path.cwd())
+            isolate = "--isolate" in rest
+            temp_cwd = None
+            if isolate:
+                import tempfile
+                import shutil as _shutil
+                temp_cwd = Path(tempfile.mkdtemp(prefix="harness-sandbox-"))
+                src = Path(cwd)
+                if src.exists() and src.is_dir():
+                    for item in src.iterdir():
+                        dest = temp_cwd / item.name
+                        if item.is_dir():
+                            _shutil.copytree(item, dest, dirs_exist_ok=True)
+                        else:
+                            _shutil.copy2(item, dest)
+                cwd = str(temp_cwd)
             import subprocess as sp
             try:
                 p = sp.run(command, shell=True, cwd=cwd, capture_output=True, text=True,
                            encoding="utf-8", errors="replace", timeout=120)
                 print(json.dumps({"ok": p.returncode == 0, "mode": "workspace_sandbox_run",
                                   "workspace": name, "command": command, "cwd": cwd,
+                                  "isolate": isolate,
                                   "returncode": p.returncode, "stdout": p.stdout[:2000], "stderr": p.stderr[:2000],
-                                  "note": "在 lease 目录内执行；不是完整操作系统沙箱。"}, ensure_ascii=False, indent=2))
+                                  "note": "在 lease 目录内执行；--isolate 使用临时副本，不是完整操作系统沙箱。"}, ensure_ascii=False, indent=2))
+                if temp_cwd:
+                    import shutil as _shutil
+                    _shutil.rmtree(temp_cwd, ignore_errors=True)
                 return 0 if p.returncode == 0 else 1
             except Exception as e:
+                if temp_cwd:
+                    import shutil as _shutil
+                    _shutil.rmtree(temp_cwd, ignore_errors=True)
                 print(json.dumps({"ok": False, "mode": "workspace_sandbox_run", "error": type(e).__name__,
                                   "detail": str(e), "note": "执行失败。"}, ensure_ascii=False, indent=2))
                 return 1

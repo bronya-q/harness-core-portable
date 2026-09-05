@@ -706,3 +706,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 56. 后续处理记录（2026-09-04 续 44）
 
 - suggest 参考 role_division/letters、MCP memory_list 含 letters、Dashboard roleplay 上下文卡。
+
+## 57. 后续处理记录（2026-09-04 续 45）
+
+- usage audit、workspace isolate run、remaining-gaps 更新横幅。

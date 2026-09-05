@@ -213,6 +213,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **knowledge suggest 主动参考 role_division / letters**：返回责任分工与近期信件
 - ✅ **MCP memory_list 显示最近信件**：`memory_list` 响应包含 `letters`
 - ✅ **Dashboard 可视化 roleplay 注入上下文**：新增「角色运行上下文（roleplay 注入）」卡片
+- ✅ **usage 覆盖审计**：`python harness.py usage audit` 列出非 provider_reported 的入口
+- ✅ **workspace 隔离运行**：`workspace sandbox <name> run --command <cmd> --isolate` 使用临时副本执行
 
 ## 测试与发布
 
