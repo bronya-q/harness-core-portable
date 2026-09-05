@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T07:17:57.672696+00:00",
+  "generated_at": "2026-09-05T07:18:37.062615+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 243,
   "files": {
@@ -63,7 +63,7 @@
     "docs/releases/v0.1.0-alpha.3.md": "c9880d0301694835a3ddb817cfa361419247463bc54291ce47bb20e99edef815",
     "docs/releases/v0.1.0-alpha.4.md": "f162ce53c589be9a0ee6b79e27fb3499a5291eb6516ee6d2364da4e165a74c6b",
     "docs/tasks/2026-09-04-alpha.4-r2-plan.md": "4a6544b894fe5024611dfffe7d1d10f743a77edfd755b9746cf3e1b8ac7f1bea",
-    "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "d9ff64c38af61c0590c2aa53a861fc864d83ef3669d9dc0782ea2ccf7a0d464c",
+    "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "8cf0db42943a8a43a253ed303df202ab8ffd16c72353f434d942e9960f5625ac",
     "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
     "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "f9b44cb2eaa186813e181dbecae2fba7743c836c3b6942c769605bb49559a54b",
@@ -78,7 +78,7 @@
     "docs/tasks/2026-09-04-remaining-gaps.md": "d1a61d8f41850feb4aed9ea99a1c510f725a252ab0df566d814c8d961e87259d",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
-    "docs/tasks/2026-09-04-whole-project-progress-audit.md": "55e1d6a69c7747b81b5dcb2e477c87a08af656956e4365630f4048d968adb58c",
+    "docs/tasks/2026-09-04-whole-project-progress-audit.md": "5b3cc11ab8d688ca676bd6d1e593f5360959ba05a38b5acd9f1104bd3c06c28d",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
     "docs/user-testing/PROTOCOL.md": "2a4afc7766bb43de61ac96d21cb3b816979de7997e5d5f7a224871b87e07334e",
