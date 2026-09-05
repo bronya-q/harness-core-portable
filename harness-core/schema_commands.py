@@ -9,6 +9,7 @@
   python harness.py schema validate --token <file>
   python harness.py schema validate --mode <file>
   python harness.py schema validate --measurement <file>
+  python harness.py schema validate --adapter-permission <file>
 """
 import json
 import sys
@@ -26,6 +27,7 @@ SCHEMAS = {
     "token-usage": SCHEMAS_DIR / "token-usage.schema.json",
     "situated-mode": SCHEMAS_DIR / "situated-mode.schema.json",
     "measurement": SCHEMAS_DIR / "measurement.schema.json",
+    "adapter-permission": SCHEMAS_DIR / "adapter-permission.schema.json",
 }
 
 
@@ -75,7 +77,8 @@ def cmd_list():
 
 def cmd_validate(kind, path):
     schema_key = {"--role": "unified-role", "--event": "event-envelope", "--token": "token-usage",
-                  "--mode": "situated-mode", "--measurement": "measurement"}.get(kind)
+                  "--mode": "situated-mode", "--measurement": "measurement",
+                  "--adapter-permission": "adapter-permission"}.get(kind)
     if not schema_key or schema_key not in SCHEMAS:
         print(json.dumps({"ok": False, "error": "invalid_schema_type", "type": kind}, ensure_ascii=False))
         return 1

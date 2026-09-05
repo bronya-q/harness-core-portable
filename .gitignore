@@ -13,3 +13,9 @@ integrations.local.json
 review-profiles.local.json
 private-identifiers.txt
 .dsh/harness-local/
+
+# Private/local overlay docs (never commit)
+docs/_private/
+harness-local-docs/
+HYBRID_FUNCTIONAL_PERSONA.local.md
+ENGINEERING_ROLES.local.md

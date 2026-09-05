@@ -6,6 +6,7 @@
   python harness.py migration status
   python harness.py migration check
   python harness.py migration dry-run
+  python harness.py migration policy
   python harness.py migration prepare --backup
 """
 import json
@@ -101,6 +102,21 @@ def cmd_dry_run():
     return 0 if not issues else 1
 
 
+def cmd_policy():
+    policy = {
+        "schema_version": 1,
+        "minimum_core_version": "0.1.0",
+        "compatibility_window": "保留上一 schema 版本；跨主版本需显式迁移再使用",
+        "deprecation": "弃用功能会先在文档标注，再至少保留一个版本窗口",
+        "backup_before_migrate": True,
+        "dry_run_before_apply": True,
+        "note": "当前为策略声明；实际迁移动作尚未逐库实现，不能声称已完成生产迁移。",
+    }
+    print(json.dumps({"ok": True, "mode": "migration_policy", "policy": policy},
+                     ensure_ascii=False, indent=2))
+    return 0
+
+
 def main():
     args = sys.argv[1:]
     if args and args[0] == "migration":
@@ -115,6 +131,8 @@ def main():
         return cmd_check()
     if cmd == "dry-run":
         return cmd_dry_run()
+    if cmd == "policy":
+        return cmd_policy()
     if cmd == "prepare" and "--backup" in sys.argv[2:]:
         # 简单备份：复制 events.db / memory.db 到 backup 目录
         import shutil

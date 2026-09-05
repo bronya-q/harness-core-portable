@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "title": "Adapter Permission Manifest Schema",
+  "description": "描述 adapter（MCP / OpenAI-compatible / 未来桥）能访问哪些本地能力。",
+  "required": ["adapter_id", "capabilities", "allowed_scopes", "network"],
+  "properties": {
+    "adapter_id": { "type": "string" },
+    "adapter_type": { "enum": ["mcp", "openai_compatible", "http", "custom"] },
+    "capabilities": { "type": "array", "items": { "enum": ["memory_read", "memory_write", "event_read", "usage_read", "knowledge_access", "workspace_read", "workspace_write"] } },
+    "allowed_scopes": { "type": "array", "items": { "type": "string" } },
+    "network": { "enum": ["none", "localhost", "private_network", "external"] },
+    "autonomous": { "type": "boolean" },
+    "max_memory_chars": { "type": "integer", "minimum": 0 },
+    "max_knowledge_snippets": { "type": "integer", "minimum": 0 }
+  }
+}

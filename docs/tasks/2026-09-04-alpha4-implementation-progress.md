@@ -144,6 +144,16 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **Krippendorff’s alpha**：`measurement_utils.krippendorff_alpha()` + 测试
 - ✅ **vector queue 历史监控**：`queue_status()` 写入 history，`queue_history()` 读取，Dashboard 显示近期 pending 趋势
 
+## 工程/发布工程 R1
+
+- ✅ **package schema 强制校验**：`character validate` 也强制 `schema_version` / `minimum_core_version`
+- ✅ **迁移/弃用政策声明**：`python harness.py migration policy` 输出 compatibility window / deprecation / backup / dry-run 策略
+- ✅ **adapter 权限 manifest 基础**：`schemas/adapter-permission.schema.json` + `harness-core/adapters.example.json` + `schema validate --adapter-permission`
+- ✅ **无密钥 trace 扫描**：`python harness.py secret-scan` + 测试
+- ✅ **断开 adapter 核心可运行测试**：`test_core_runs_independent_of_adapter`
+- ✅ **跨前端 scope 规范化**：`harness-core/scope_utils.py`，`memory search` 使用
+- ✅ **私人文档迁移设计**：`docs/tasks/2026-09-04-private-document-migration.md` + `.gitignore` 条目
+
 ## 测试与发布
 
 ```text
