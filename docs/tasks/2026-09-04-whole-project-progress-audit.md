@@ -636,3 +636,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **工程/发布工程 R1**：package schema 校验（validate+install）、migration policy 声明、adapter permission schema、secret-scan、断开 adapter 测试、scope 规范化、私人文档迁移设计。
 - 更新测试；unittest 总数 40。
+
+## 42. 后续处理记录（2026-09-04 续 30）
+
+- **工程/发布进一步推进**：migration apply 实际写 schema_version、Dashboard adapter 权限矩阵、私人案例文档公共化替换、scope 规范化覆盖 memory 多入口。
+- 新增 `tests/test_engineering_release_batch.py`；unittest 总数 45。

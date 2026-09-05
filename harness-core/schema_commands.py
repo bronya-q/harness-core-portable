@@ -136,7 +136,7 @@ def main():
         path = None
         i = 1
         while i < len(args):
-            if args[i] in ("--role", "--event", "--token", "--mode"):
+            if args[i] in ("--role", "--event", "--token", "--mode", "--measurement", "--adapter-permission"):
                 kind = args[i]
                 if i + 1 < len(args):
                     path = args[i + 1]

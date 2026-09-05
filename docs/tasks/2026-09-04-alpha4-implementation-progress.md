@@ -154,6 +154,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **跨前端 scope 规范化**：`harness-core/scope_utils.py`，`memory search` 使用
 - ✅ **私人文档迁移设计**：`docs/tasks/2026-09-04-private-document-migration.md` + `.gitignore` 条目
 
+## 工程/发布工程进一步推进
+
+- ✅ **实际逐库 migration 动作**：`python harness.py migration apply --backup` 为本地库创建/更新 `schema_version` 表（备份先行）
+- ✅ **真实 adapter 权限矩阵**：Dashboard 新增「Adapter 权限矩阵」卡片，读取 `adapters.example.json`
+- ✅ **私人案例文档人工替换**：`HYBRID_FUNCTIONAL_PERSONA.md` / `ENGINEERING_ROLES.md` 已把具体本机角色名替换为公共占位，并加“公共抽象版”说明
+- ✅ **跨所有入口 scope 一致性**：`memory list/write/correct/restore/search` 均使用 `normalize_scope`
+
 ## 测试与发布
 
 ```text

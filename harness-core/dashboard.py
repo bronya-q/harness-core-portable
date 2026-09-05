@@ -390,6 +390,29 @@ def main():
 
     web_html = "<p>Workspaces: %d · Evidence: %d · A/B: %d · Suggest: %d</p>" % (len(workspaces), len(evidence), len(ab_records), len(suggest_hist))
 
+    adapter_manifest_path = SKILL / "adapters.example.json"
+    adapters = []
+    if adapter_manifest_path.exists():
+        try:
+            a = json.loads(adapter_manifest_path.read_text(encoding="utf-8"))
+            if isinstance(a, list):
+                adapters = a
+            elif isinstance(a, dict):
+                adapters = [a]
+        except Exception:
+            pass
+    adapter_html = ""
+    if adapters:
+        for a in adapters[:8]:
+            adapter_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:80%%'>%s</div>"
+                             "<span class='st-muted'>%s · network=%s · autonomous=%s</span></div>"
+                             % (_html(a.get("adapter_id") or "?"), _html(", ".join(a.get("capabilities") or [])),
+                                _html(a.get("adapter_type") or "?"), _html(a.get("network")),
+                                _html(a.get("autonomous"))))
+    else:
+        adapter_html = "<p class='muted'>暂无 adapter 权限 manifest。</p>"
+
+
     # 关系-情感状态可视化
     rel_rows = []
     if mem.exists():
@@ -573,6 +596,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>A/B 记录</h2>{ab_html}</div>
 <div class="card"><h2>知识桥 Suggest 历史</h2>{suggest_html}</div>
 <div class="card"><h2>关系-情感状态</h2>{rel_html}</div>
+<div class="card"><h2>Adapter 权限矩阵</h2>{adapter_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
