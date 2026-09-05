@@ -24,6 +24,16 @@ class CardGameTest(unittest.TestCase):
         pair_count = sum(1 for c in deck if c["thread_id"])
         self.assertEqual(pair_count, 10)
 
+    def test_role_card_derives_from_persona(self):
+        p = subprocess.run(
+            [sys.executable, str(SKILL / "card_game.py"), "role-card", "--persona", "demo-archivist"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
+        )
+        self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+        d = json.loads(p.stdout)
+        self.assertTrue(d["ok"])
+        self.assertEqual(d["card"]["persona_id"], "demo-archivist")
+
     def test_auto_play_smoke(self):
         home = Path(tempfile.mkdtemp())
         env = dict(os.environ)
