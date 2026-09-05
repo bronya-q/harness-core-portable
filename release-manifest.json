@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T16:15:13.823640+00:00",
+  "generated_at": "2026-09-05T16:18:56.314974+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 254,
+  "count": 255,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.md": "be646848323060f02abf2fca6e0fd392e4c6b7be820bb84271c3dd492622570f",
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
@@ -82,7 +82,7 @@
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "ecea02e16c42d09e4f45f88427be8c1318a7c9ca153de79fb64d1220a2797e70",
     "docs/tasks/2026-09-05-history-sanitization-and-community-focus-plan.md": "739c3879741e849e9b81b01d1e67afae32dfd4fc7b3ebafa6dc38005a34899df",
     "docs/tasks/2026-09-05-real-golden-path-trace.md": "e281c6c67bd049f1aeff2a75ae7ff4498610ae030102e8b752915ddf338fdefb",
-    "docs/tasks/2026-09-05-security-audit-findings.md": "1e8b2783c8018afd181c39c8cf0bd1a6f2337ece8ec56ead727b94c6a59b44e7",
+    "docs/tasks/2026-09-05-security-audit-findings.md": "d677ad6ac499565535e76788d8dd9d72e1e269c4f563c6c6950b4257f585f2b4",
     "docs/tasks/2026-09-05-synthetic-memory-interop-fixture.md": "826987b6ba53370a10f60c166526753f6e6378f6acc85b6fb3bd990b4e25ee86",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
@@ -248,6 +248,7 @@
     "tests/test_migration_and_mode.py": "867a424d62f655d1af6e3fd0226125b982fcbb89b15ed0c44338c6a26158500e",
     "tests/test_ngram_fallback.py": "b0819a5f9240ab045e2ee4dce465acd448e35f761f0e550db9e637ec3b600bb6",
     "tests/test_provider_usage.py": "7ee3824adf1961bbb8f614fb2e7d531200d750e2f254073c696fe532a9acbcb6",
+    "tests/test_real_golden_path.py": "e1fed012dd00dfba641e1f7a5e82ad69b4f129e482ae132349d09a0bffca4ecb",
     "tests/test_release_hygiene.py": "4dddcea0ad5af237e8d3702f165ca257423c43a84d27cb337ac8d37b617fd1a2",
     "tests/test_role_communication.py": "dabbd46f1a4c4061b57a05c28d9878d556bb127703254798c57b372ad6256fae",
     "tests/test_runtime_and_sandbox_gaps.py": "d54e2f629735e021de79680244e08840916b5b5a4571805e57d2ee9426d9692b",
