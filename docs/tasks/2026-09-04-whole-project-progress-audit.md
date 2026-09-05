@@ -682,3 +682,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - 卡牌游戏增加 `role-card` 角色牌衍生；测试覆盖。
 - unittest 总数 56。
+
+## 51. 后续处理记录（2026-09-04 续 39）
+
+- `workspace sandbox run` 受控目录内执行 + 测试；unittest 总数 57。

@@ -1358,6 +1358,50 @@ def cmd_workspace(args):
         return 0
     if sub == "sandbox":
         name = rest[0] if rest else ""
+        if len(rest) >= 2 and rest[1] == "run":
+            command = ""
+            for i, a in enumerate(rest[2:]):
+                if a == "--command" and i + 1 < len(rest[2:]):
+                    command = rest[i + 3]
+            if not name or not command:
+                print("用法：python harness.py workspace sandbox <name> run --command <cmd>")
+                return 1
+            lease_path = WORKSPACE_DIR / name / "workspace.json"
+            if not lease_path.exists():
+                print(json.dumps({"ok": False, "error": "workspace_not_found", "name": name}, ensure_ascii=False))
+                return 1
+            lease = read_json(lease_path)
+            allowed = lease.get("allowed_commands", []) or []
+            forbidden = lease.get("forbidden_paths", []) or []
+            bad = []
+            if lease.get("status") != "active":
+                bad.append("lease_not_active")
+            if lease.get("actual_execution") is True:
+                bad.append("actual_execution_enabled")
+            if command and command not in allowed:
+                bad.append("command_not_allowed:" + command)
+            for pth in forbidden:
+                if "*" not in pth and (Path.cwd() / pth).exists():
+                    bad.append("forbidden_exists:" + pth)
+            if bad:
+                print(json.dumps({"ok": False, "mode": "workspace_sandbox_run", "issues": bad,
+                                  "note": "未执行；沙箱检查未通过。"}, ensure_ascii=False, indent=2))
+                return 1
+            worktree = lease.get("worktree_path")
+            cwd = str(Path(worktree).expanduser()) if worktree and Path(worktree).exists() else str(Path.cwd())
+            import subprocess as sp
+            try:
+                p = sp.run(command, shell=True, cwd=cwd, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=120)
+                print(json.dumps({"ok": p.returncode == 0, "mode": "workspace_sandbox_run",
+                                  "workspace": name, "command": command, "cwd": cwd,
+                                  "returncode": p.returncode, "stdout": p.stdout[:2000], "stderr": p.stderr[:2000],
+                                  "note": "在 lease 目录内执行；不是完整操作系统沙箱。"}, ensure_ascii=False, indent=2))
+                return 0 if p.returncode == 0 else 1
+            except Exception as e:
+                print(json.dumps({"ok": False, "mode": "workspace_sandbox_run", "error": type(e).__name__,
+                                  "detail": str(e), "note": "执行失败。"}, ensure_ascii=False, indent=2))
+                return 1
         command = ""
         for i, a in enumerate(rest[1:]):
             if a == "--command" and i + 1 < len(rest[1:]):
