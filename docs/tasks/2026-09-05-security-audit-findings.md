@@ -62,6 +62,27 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - 单人贡献、1 star、0 fork：按“不可信基线”处理，持续需要外部 review。
 - `harness-core/` 与 `harness_core/` 双目录并存是结构混乱信号。短期用文档说明，长期应统一命名。
 
+## 5.1 全历史扫描量化结果
+
+- `python harness.py secret-scan --history`：**0 命中**。确认整个 git 历史没有真实密钥/令牌形态。
+- `python harness.py boundary-check --history`：量化历史命中类型（仅计数，不输出内容）：
+
+```text
+private_steward_a: 303
+private_steward_b: 303
+private_hybrid_a: 243
+local_persona_ref: 248
+windows_abs_path: 17
+private_overlay: 372
+```
+
+这说明私人人格标识/本机路径确实在历史中大量存在。**当前树已清理，但历史未清理。** 需要按 `docs/tasks/2026-09-05-history-sanitization-and-community-focus-plan.md` 执行，且必须获得仓库所有者授权后再重写/force-push。
+
+## 5.2 已增强工具
+
+- `secret-scan --history`：扫描全历史密钥形态。
+- `boundary-check --history`：统计历史私人标识命中类型（不输出内容）。
+
 ## 处置状态
 
 | 项 | 状态 |
