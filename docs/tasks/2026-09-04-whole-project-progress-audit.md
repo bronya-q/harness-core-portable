@@ -686,3 +686,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 51. 后续处理记录（2026-09-04 续 39）
 
 - `workspace sandbox run` 受控目录内执行 + 测试；unittest 总数 57。
+
+## 52. 后续处理记录（2026-09-04 续 40）
+
+- Dashboard 角色分工卡片；开始体验示例 conocimientos stewards 去私人化。

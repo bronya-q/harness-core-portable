@@ -203,6 +203,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **construct 列表过滤**：`measure construct` 不再把分隔行 `---` 当作构念
 - ✅ **卡牌角色牌衍生**：`card_game.py role-card --persona <id>` 从 persona 资产衍生角色卡
 - ✅ **workspace sandbox run**：`workspace sandbox <name> run --command <cmd>` 在 lease 目录内受控执行（非完整 OS 沙箱）
+- ✅ **角色分工可视化**：Dashboard 新增「角色分工（知识域 → 负责角色）」卡片
+- ✅ **公共示例 stewards 去私人化**：`knowledge-sources.example.json` 的 stewards 改为合成 demo 角色
 
 ## 测试与发布
 

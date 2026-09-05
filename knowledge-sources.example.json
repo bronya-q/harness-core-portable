@@ -10,8 +10,16 @@
       "portable": false,
       "private": true,
       "default_access": "deny",
-      "content_types": ["theory", "timeline", "bibliography", "ethics", "persona_material"],
-      "stewards": ["local-persona"]
+      "content_types": [
+        "theory",
+        "timeline",
+        "bibliography",
+        "ethics",
+        "persona_material"
+      ],
+      "stewards": [
+        "demo-archivist"
+      ]
     },
     {
       "source_id": "local:knowledge-source-b",
@@ -21,8 +29,16 @@
       "portable": false,
       "private": true,
       "default_access": "deny",
-      "content_types": ["economic_theory", "school_debate", "research_diary", "letters", "cognitive_notes"],
-      "stewards": ["local-persona"]
+      "content_types": [
+        "economic_theory",
+        "school_debate",
+        "research_diary",
+        "letters",
+        "cognitive_notes"
+      ],
+      "stewards": [
+        "demo-storykeeper"
+      ]
     }
   ]
 }
