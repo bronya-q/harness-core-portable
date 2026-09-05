@@ -71,12 +71,12 @@ topics: [security, audit, history, git, mcp, memory, ci]
 ## 5.1 历史扫描量化结果（清洗后）
 
 - `python harness.py secret-scan --history`：
-  - `total_refs=177`，`scanned=177`，`failed=0`，`hits=0`
-  - 说明：在 177 个 refs 与现有密钥规则覆盖范围内未发现命中；不等于证明不存在真实凭据。
+  - `total_refs=178`，`scanned=178`，`failed=0`，`hits=0`
+  - 说明：在 178 个 refs 与现有密钥规则覆盖范围内未发现命中；不等于证明不存在真实凭据。
 - `python harness.py boundary-check --history`：
   - `private_identity_hits=0`（私人身份标识类：`local_persona_ref` + 本地加载的私人清单）
   - `failed_scans=0`
-  - `counts`（边界提示项）：`windows_abs_path=19`、`private_overlay=1706`
+  - `counts`（边界提示项）：`windows_abs_path=20`、`private_overlay=1723`
   - 说明：`private_identity_hits=0` 只表示私人身份标识在清洗后的历史中未再检出；`windows_abs_path` / `private_overlay` 仍属于边界提示，需逐步收敛。
 
 ### 清洗前（历史事实记录）
@@ -89,7 +89,30 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - `secret-scan --history`：扫描全历史密钥形态，fail-closed。
 - `boundary-check --history`：统计历史指示命中类型（不输出内容），fail-closed；区分“私人身份标识”与“边界提示项”。
 - `adapter_gate.can()`：未配置 adapter 默认拒绝。
-- `mcp_http_server`：仅允许 loopback 绑定；请求体大小限制（1 MiB）、请求超时（30s）、要求 `application/json`。
+- `mcp_http_server`：仅允许 loopback 绑定；请求体大小限制（1 MiB）、请求超时（30s）、要求 `application/json`、校验顶层对象类型、非法 UTF-8 统一返回错误。
+- CI：MCP extra 安装不再用 `||` 回退掩盖失败；未配置 adapter 时 MCP 工具默认拒绝。
+
+## 6. 外部安全审计交接复核（F-01~F-09）
+
+> 对应桌面交接文档《安全审计交接-本地源码与黄金路径》中的编号。这里只登记当前仓库状态，不复述私人标识。
+
+| 编号 | 问题 | 当前状态 |
+|---|---|---|
+| F-01 | adapter 身份缺失默认放行 | ✅ 已修复：未配置 `HARNESS_MCP_ADAPTER_ID` 时拒绝；`HARNESS_ALLOW_UNCONFIGURED=1` 才放行 |
+| F-02 | HTTP 默认 loopback 但未强制 | ✅ 已修复：非 loopback host 拒绝启动并返回退出码 2 |
+| F-03 | HTTP 无请求体上限/超时/顶层类型检查 | ✅ 已修复：1 MiB 上限、30s 超时、`application/json`、顶层对象、非法 UTF-8 校验 |
+| F-04 | synthetic trace 只是规格检查，不是真实黄金路径 | ⚠️ 未实现真实运行时 trace；本文档只登记，不把它已跑通 |
+| F-05 | pyproject 把标准库声明为分发依赖 | ✅ 已修复：移除 `test = ["unittest"]` |
+| F-06 | CI MCP 安装失败被核心回退掩盖 | ✅ 已修复：去掉 `||` 回退，MCP extra 安装失败会让 CI 失败 |
+| F-07 | rev-list/grep 返回码未检查，失败可能输出零命中 | ✅ 已修复：secret-scan 与 boundary-check 均 fail-closed |
+| F-08 | git grep 命中原文写入报告 | ✅ 已修复：只输出 ref/file/line/rule，不输出匹配原文 |
+| F-09 | boundary-check 只取最后一个文件计数 | ✅ 已修复：逐行解析 `git grep -c` 并累加，且说明是匹配行数 |
+
+### Gitleaks 命中分类
+
+- 外部审计在 `release-manifest.json` 中报了 4 条 `generic-api-key`，文件内容是 SHA-256 文件哈希清单。
+- 从字段语义看这些是哈希值，不是可用的 API key/secret；当前远程 `release-manifest.json` 仍保留同类哈希。
+- 结论：判定为**哈希误报**，不要求 revoke/rotate；但记录其规则、路径、提交和分类即可。
 
 ## 处置状态
 
