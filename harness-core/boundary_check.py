@@ -62,9 +62,43 @@ def scan():
     return hits
 
 
+def scan_history_counts():
+    """扫描所有 git 历史中的私人标识，只返回类型计数，不输出具体内容。"""
+    import subprocess
+    try:
+        revs = subprocess.run(["git", "-C", str(ROOT), "rev-list", "--all"],
+                              capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+        rev_list = [r for r in revs.stdout.splitlines() if r.strip()]
+    except Exception:
+        return {"error": "git_rev_list_failed"}
+    counts = {name: 0 for _, name in PATTERNS}
+    for rev in rev_list:
+        for pat, name in PATTERNS:
+            try:
+                p = subprocess.run(["git", "-C", str(ROOT), "grep", "-I", "-c", "-E", pat, rev, "--"],
+                                   capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
+                try:
+                    total = int(p.stdout.strip().split(":")[-1])
+                except Exception:
+                    total = 0
+                counts[name] += total
+            except Exception:
+                continue
+    return {k: v for k, v in counts.items() if v > 0}
+
+
 def main():
     if len(sys.argv) >= 2 and sys.argv[1] == "boundary-check":
-        pass
+        history = "--history" in sys.argv
+    else:
+        history = "--history" in sys.argv
+    if history:
+        counts = scan_history_counts()
+        print(json.dumps({"ok": len(counts) == 0, "mode": "boundary_check_history",
+                          "counts": counts,
+                          "note": "仅统计历史命中类型，不输出具体内容；需人工/工具清洗历史。"},
+                         ensure_ascii=False, indent=2))
+        return 0 if len(counts) == 0 else 1
     hits = scan()
     print(json.dumps({"ok": len(hits) == 0, "mode": "boundary_check",
                       "hits": hits[:30], "note": "辅助扫描；命中需人工确认是否属于边界文档/示例。"},
