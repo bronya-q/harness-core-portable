@@ -32,14 +32,14 @@
 
 | 主族 | 例子 |
 |---|---|
-| 知识型 | 本机知识管理员 A、本机知识管理员 B、法律/医学/历史专家、文献校勘者、世界观管理员 |
+| 知识型 | 本机知识管理员、本机知识管理员（另一知识域）、法律/医学/历史专家、文献校勘者、世界观管理员 |
 | 工程型 | 架构师、Python 工程师、数据工程师、测试工程师、发布工程师、安全工程师、可观测性工程师、UX 工程师、迁移工程师、Incident Responder |
 | 审查型 | Adversarial Review profiles（Code / Data / Security / Release / Measurement / UX） |
 
 两者不隔离。例如：
 
 ```text
-本机知识管理员 B：负责经济理论
+本机知识管理员（另一知识域）：负责经济理论
 研究工程师：把资料索引进知识库
 Adversarial Review：检查结论是否夸大
 发布工程师：决定哪些聚合结果进入公共包
@@ -66,7 +66,7 @@ engineering_function = release
 | UX Engineer | 新用户流程、HTML 控制台、可访问性 | UI 范围写入 |
 | Incident Responder | 故障诊断、备份与恢复 | 紧急但需审批 |
 | Documentation Engineer | 文档、示例、命令一致性 | 文档范围写入 |
-| Integration Engineer | 本机知识管理员 A/本机知识管理员 B/Ollama 等桥接 | 适配器范围写入 |
+| Integration Engineer | 本机知识管理员/本机知识管理员（另一知识域）/Ollama 等桥接 | 适配器范围写入 |
 | Measurement Engineer | 指标定义、评测、CI、失败样本 | 评测范围写入 |
 
 ## 4. Engineering Steward
@@ -249,7 +249,7 @@ Adversarial Review-Measurement：指标标签与实际 k、分母/排除项、A/
 |---|---|---|
 | Runtime Engineer | resolver、policy、scope、collaboration、provider routing、fail-closed | 检查路径展开、alias 统一 |
 | Memory/Data Engineer | SQLite schema、memory lifecycle、vector queue、dedup、provenance、migration、backup | 诊断 9 条缺向量需先副本测试 |
-| Persona Integration Engineer | Character Card 导入、HCP、本机知识管理员 A/本机知识管理员 B adapter、热插拔、legacy alias | 不判断内容正确性，只负责格式/边界/兼容 |
+| Persona Integration Engineer | Character Card 导入、HCP、本机知识管理员/本机知识管理员（另一知识域） adapter、热插拔、legacy alias | 不判断内容正确性，只负责格式/边界/兼容 |
 | Dashboard/UX Engineer | HTML 控制台、时间线、角色画廊、桥图、token 图、可访问性 | 不直接查询全部私有正文 |
 | Observability Engineer | trace/span、token、latency、fallback、errors、report | 不默认保存完整 prompt、不记录密钥 |
 | Release Engineer | manifest、selfcheck、clone/ZIP、版本、Release Notes | 不能仅凭角色权限自动 push |
@@ -337,7 +337,7 @@ Adversarial Review-Measurement：指标标签与实际 k、分母/排除项、A/
 
 1. **Core Runtime Engineer**：resolver / policy / scope / 入口一致性
 2. **Memory & Data Engineer**：SQLite / vector queue / provenance / 迁移清理
-3. **Persona Integration Engineer**：本机知识管理员 A / 本机知识管理员 B / HCP / 热插拔 / 知识域挂载
+3. **Persona Integration Engineer**：本机知识管理员 / 本机知识管理员（另一知识域） / HCP / 热插拔 / 知识域挂载
 4. **UX & Observability Engineer**：HTML 控制台 / 时间线 / 桥图 / token 图 / 用户友好度
 5. **Release & Audit Engineer**：公开包 / manifest / clone/ZIP / 文档一致性 / Adversarial Review
 
@@ -346,11 +346,11 @@ Security 和 Measurement 可以先作为 Release & Audit Engineer 的审查 prof
 ## 19. 完整工程任务体验
 
 ```text
-用户：把 本机知识管理员 A 终端接入统一角色启动器
+用户：把 本机知识管理员 终端接入统一角色启动器
 
 1. Persona Integration Engineer：创建 integration manifest，不修改原知识库
 2. Runtime Engineer：检查路径展开和 scope，设计 alias / healthcheck
-3. UX Engineer：创建 本机知识管理员 A 状态卡
+3. UX Engineer：创建 本机知识管理员 状态卡
 4. Test Engineer：临时配置测试存在/缺失路径、启动失败提示、不泄漏本机路径
 5. Adversarial Review/Security Review：命令注入、私有文件暴露、权限扩大
 6. Human Approval：决定是否替换桌面 .bat
@@ -404,7 +404,7 @@ Security 和 Measurement 可以先作为 Release & Audit Engineer 的审查 prof
 核心结构：
 
 ```text
-知识型角色     本机知识管理员 A / 本机知识管理员 B
+知识型角色     本机知识管理员 / 本机知识管理员（另一知识域）
 工程型角色     Runtime / Memory / Integration / UX / Release
 审查型角色     Adversarial Review Profiles
 宿主治理层     Policy / Scope / Workspace Lease / Human Approval / Audit Log / Rollback
