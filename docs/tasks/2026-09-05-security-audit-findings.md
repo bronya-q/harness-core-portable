@@ -114,6 +114,32 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - 从字段语义看这些是哈希值，不是可用的 API key/secret；当前远程 `release-manifest.json` 仍保留同类哈希。
 - 结论：判定为**哈希误报**，不要求 revoke/rotate；但记录其规则、路径、提交和分类即可。
 
+## 7. 禁网 WSL 沙箱测试结果分类
+
+> 这些是外部审计在禁网 WSL 副本中的执行记录。分类原则：工具未启动、环境拦截、无法复现都按失败/未验证记录，不写成通过，也不归为产品漏洞。
+
+### 7.1 Bandit：`Permission denied`，退出码 126
+
+- 事实：Bandit 未能启动，报 `Permission denied`，退出码 126。
+- 分类：**工具未运行 / 环境权限阻塞**。
+- 含义：不是“扫描通过”，也不是产品漏洞；不能据此声称“无 Bandit 问题”。
+- 处置：未通过更换解释器或绕过沙箱来制造全绿；若后续要在该环境运行 Bandit，需按沙箱允许的授权机制处理，或明确记录为 blocked / unverified。
+
+### 7.2 `memory_write_http_confirm`：`URLError: Operation not permitted`
+
+- 失败点：`tests/test_user_experience_flows.UserExperienceFlowsTest.test_memory_write_http_confirm`
+- 报错：`urllib.error.URLError: <urlopen error [Errno 1] Operation not permitted>`
+- 原因：该测试在 `127.0.0.1` 起本地 HTTP 服务，然后用 `urllib.request.urlopen` 访问 `http://127.0.0.1:8777`。WSL 执行时处于**禁网沙箱**，网络/套接字 syscall 被拦截，因此连 loopback 的 `urlopen` 也被拒绝。
+- 分类：**环境限制（禁网拦截 loopback socket）**，不是记忆写入逻辑错误。
+- 佐证：在非禁网本地/CI 上该用例通过；仓库内已新增不依赖 socket 的 `tests/test_real_golden_path.py`（`memory write` 确认/undo/restore）作为替代回归证据。
+- 处置：当前**不应解除禁网**来让该测试通过。若要覆盖该 HTTP 确认链路，应改成不依赖网络 syscall 的内部驱动，或让沙箱明确授权 loopback。
+
+### 7.3 MCP stdio 测试（外部审计未完全分类）
+
+- 外部审计曾报 `tests.test_mcp_server.MCPServerTest.test_initialize_notification_tools_list` 失败（只返回 initialize，未返回 tools/list）。
+- 这是 stdio 时序/缓冲敏感问题，已重写为逐条写/逐条读；在本地与 CI 均通过（含 4 个矩阵 job）。
+- 分类：**已修复的测试稳定性问题**，并非产品功能缺陷。
+
 ## 处置状态
 
 | 项 | 状态 |
