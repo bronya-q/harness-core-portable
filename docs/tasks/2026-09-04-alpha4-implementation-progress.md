@@ -224,6 +224,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **公共边界扫描 CLI**：`python harness.py boundary-check` 扫描私人标识/绝对路径/overlay，支持 allowlist
 - ✅ **release-checklist 纳入 boundary-check**：R2 勾选清单增加公共边界项
 - ✅ **knowledge 自动委派路由**：`python harness.py knowledge route --question <q> --role <r>` 返回 allow / delegate 决策
+- ✅ **MCP memory_list 返回 runtime_context**：runtime 热挂载状态进一步接入 MCP 前端
 
 ## 测试与发布
 

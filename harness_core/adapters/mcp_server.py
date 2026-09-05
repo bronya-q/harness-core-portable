@@ -50,6 +50,11 @@ def _memory_list(scope: str = "character:demo") -> dict:
         result["letters"] = list_letters(scope, limit=3)
     except Exception:
         result["letters"] = []
+    try:
+        from runtime_hotload import load_context
+        result["runtime_context"] = load_context()
+    except Exception:
+        result["runtime_context"] = {}
     return result
 
 
