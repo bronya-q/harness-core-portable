@@ -104,7 +104,17 @@ topics: [security, golden-path, trace, memory, rollback, confirmation]
   - 外部操作 `confirmation_required` + 外部操作 spy 计数为 0（代码中不存在外部发布操作入口）。
 - 因此本页不能宣称“完整黄金路径已验证”；只能证明“现有实现的真实链路已跑通，且上述缺口为未实现而非误报”。
 
-## 7. 建议
+## 7. 回归测试
+
+上述真实链路已固化为可重复测试：`tests/test_real_golden_path.py`
+
+- `test_offline_demo_exits_zero_with_auto_disabled`
+- `test_memory_write_confirmation_undo_restore`
+- `test_humanization_candidate_requires_manual_approval`
+
+运行：`python -m unittest tests.test_real_golden_path -v`
+
+## 8. 建议
 
 - 若要把 F-04 完全闭合，需要在现有 memory/notebook 之上实现一个独立的 evidence → candidate → review → memory 流水线，并提供一个外部操作 gate + spy。
 - 在实现前，`run_scenario.py` 应保持在“规格检查”定位，不被当成端到端测试。
