@@ -32,10 +32,9 @@
 | 层 | 状态 |
 |---|---|
 | Last verified release baseline | `v0.1.0-alpha.2`（Pre-release 已外部回读） |
-| Current main release | `v0.1.0-alpha.3`（GitHub Pre-release 已创建） |
+| Current main release | `v0.1.0-alpha.4`（本轮 Release） |
 | Current main capabilities | 已包含 demo/UX/控制台/用户控制/角色资产/知识域/工程工作区/公共边界 |
 | Unreleased working-tree changes | 当前工作区干净，与 origin/main 同步 |
-| Next release | `v0.1.0-alpha.4`（计划中；见 `docs/tasks/2026-09-04-alpha4-release-preparation-design.md`） |
 | Planned capabilities | 见 v0.2–v0.5 |
 
 **“冻结”与“开发”分开**：tag 是发布冻结点；main 是持续开发。
