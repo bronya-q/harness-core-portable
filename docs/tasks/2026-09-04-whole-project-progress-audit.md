@@ -714,3 +714,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 58. 后续处理记录（2026-09-04 续 46）
 
 - `mcp-verify` 自检脚本（stdio unittest + HTTP loopback）。
+
+## 59. 后续处理记录（2026-09-04 续 47）
+
+- project-check、letter thread；unittest 总数 58。

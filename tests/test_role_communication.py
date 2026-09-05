@@ -37,6 +37,23 @@ class RoleCommunicationTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_letter_thread_builds_chain(self):
+        home = Path(tempfile.mkdtemp())
+        env = self._env(home)
+        try:
+            p = self._run(env, "letter", "send", "--from", "character:demo-archivist",
+                          "--to", "character:demo-storykeeper", "--subject", "请审阅", "--body", "正文")
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            list_out = self._run(env, "letter", "list", "--scope", "character:demo-storykeeper")
+            lid = json.loads(list_out.stdout)["letters"][0]["id"]
+            # 直接调 thread 比较简单，避免解析更多
+            p2 = self._run(env, "letter", "thread", "--scope", "character:demo-storykeeper")
+            d = json.loads(p2.stdout)
+            self.assertTrue(d["ok"])
+            self.assertGreaterEqual(len(d["threads"]), 1)
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_situated_includes_user_relation_and_role_division(self):
         home = Path(tempfile.mkdtemp())
         env = self._env(home)

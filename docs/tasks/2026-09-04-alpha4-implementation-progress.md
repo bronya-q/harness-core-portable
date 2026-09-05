@@ -216,6 +216,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **usage 覆盖审计**：`python harness.py usage audit` 列出非 provider_reported 的入口
 - ✅ **workspace 隔离运行**：`workspace sandbox <name> run --command <cmd> --isolate` 使用临时副本执行
 - ✅ **MCP 自检脚本**：`python harness.py mcp-verify` 一键跑 stdio 单测 + HTTP loopback 冒烟
+- ✅ **项目一键体检**：`python harness.py project-check` 聚合 package_selfcheck / mcp-verify / secret-scan / migration_check
+- ✅ **信件会话线程**：`python harness.py letter thread --scope <s>` 按 in_reply_to 链展示信件线程
 
 ## 测试与发布
 
