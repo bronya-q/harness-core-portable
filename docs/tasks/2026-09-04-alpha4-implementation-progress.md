@@ -202,6 +202,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **notebook / story_core 也做 scope/namespace 规范化**
 - ✅ **construct 列表过滤**：`measure construct` 不再把分隔行 `---` 当作构念
 - ✅ **卡牌角色牌衍生**：`card_game.py role-card --persona <id>` 从 persona 资产衍生角色卡
+- ✅ **workspace sandbox run**：`workspace sandbox <name> run --command <cmd>` 在 lease 目录内受控执行（非完整 OS 沙箱）
 
 ## 测试与发布
 

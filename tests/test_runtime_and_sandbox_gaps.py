@@ -111,6 +111,24 @@ class RuntimeAndSandboxGapsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_workspace_sandbox_run_controlled(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = self._env(home)
+            ws_dir = home / "harness" / "workspaces" / "demo-ws"
+            ws_dir.mkdir(parents=True, exist_ok=True)
+            (ws_dir / "workspace.json").write_text(
+                json.dumps({"status": "active", "actual_execution": False,
+                            "allowed_commands": ["echo hello"], "forbidden_paths": [],
+                            "worktree_path": str(home)}), encoding="utf-8")
+            p = self._run(env, "workspace", "sandbox", "demo-ws", "run", "--command", "echo hello")
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            d = json.loads(p.stdout)
+            self.assertEqual(d["mode"], "workspace_sandbox_run")
+            self.assertIn("hello", d.get("stdout", ""))
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_public_hcp_rejects_html_svg(self):
         home = Path(tempfile.mkdtemp())
         try:
