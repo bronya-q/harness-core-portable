@@ -34,6 +34,7 @@ class DashboardVisualizationTest(unittest.TestCase):
             self.assertIn("公共边界快照", s)
             self.assertIn("A/B 记录", s)
             self.assertIn("知识桥 Suggest 历史", s)
+            self.assertIn("关系-情感状态", s)
             self.assertIn("hb-row", s)
         finally:
             shutil.rmtree(home, ignore_errors=True)

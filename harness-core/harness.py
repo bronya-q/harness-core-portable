@@ -59,6 +59,7 @@ PASSTHROUGH = {
     "user-test": ["user_test_commands.py", ["user-test"]],
     "adversarial": ["adversarial_review.py", ["adversarial"]],
     "runtime": ["runtime_hotload.py", ["runtime"]],
+    "situated": ["situated_context.py", []],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],

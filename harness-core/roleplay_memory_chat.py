@@ -334,8 +334,20 @@ def main():
     card_block = _card_consistency(scope)
     collab_telemetry = _new_collab_telemetry()
     collab_block, collab_telemetry = _collab_block(scope, getattr(args, 'story_namespace', ''), collab_telemetry)
+    mode_block = ""
+    try:
+        from runtime_hotload import load_context
+        rctx = load_context()
+        if rctx.get("persona_id") and (("character:" + rctx["persona_id"]) == scope or rctx["persona_id"] in scope):
+            mode_block = ("【当前情境模式】%s（%s）" + chr(10)) % (
+                rctx.get("mode_id") or "no-mode",
+                (rctx.get("details") or {}).get("display_name", ""),
+            )
+    except Exception:
+        pass
     base_prompt = (
         (situation_block if situation_block else "") +
+        (mode_block if mode_block else "") +
         (card_block if card_block else "") +
         (collab_block if collab_block else "") +
         "【动态长期记忆（只读参考）】\n" + memory_block +
