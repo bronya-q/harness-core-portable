@@ -175,6 +175,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **角色分工**：`situated` 视图新增 `role_division`（source → stewards）
 - ✅ **切身化 / 用户关联处境**：`situated` 视图新增 `user_relation`（关系状态 + 用户关联说明）
 
+## 业务迁移 / adapter 真运行 / 文档抽象 / scope 全入口
+
+- ✅ **业务列级迁移**：`migration apply --backup` 现在为 memory/notebooks/events/vector_queue 补业务列（sixdim / rel_level / status / session_provenance 等）
+- ✅ **adapter 权限矩阵驱动真实运行**：新增 `harness_core/adapter_gate.py`；MCP server 可通过 `HARNESS_MCP_ADAPTER_ID` 强制能力校验，未授权返回 deny
+- ✅ **HYBRID / ENGINEERING 继续抽象**：`本机综合人格 A`、`本机知识管理员 A/B`、`local-persona/b` 等进一步替换为公共占位
+- ✅ **scope 全入口规范化**：`event add/list`、`letter send/list` 也使用 `normalize_scope`
+
 ## 测试与发布
 
 ```text

@@ -34,6 +34,10 @@ except Exception:
 
 
 def _memory_list(scope: str = "character:demo") -> dict:
+    from harness_core.adapter_gate import can, get_adapter_id
+    _aid = get_adapter_id()
+    if _aid and not can(_aid, "memory_read"):
+        return {"ok": False, "error": "adapter_permission_denied", "capability": "memory_read"}
     import subprocess, sys as _sys
     p = subprocess.run([_sys.executable, str(_SKILL / "notebook.py"), "list", "--scope", scope],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
@@ -44,11 +48,19 @@ def _memory_list(scope: str = "character:demo") -> dict:
 
 
 def _events_list(limit: int = 10) -> dict:
+    from harness_core.adapter_gate import can, get_adapter_id
+    _aid = get_adapter_id()
+    if _aid and not can(_aid, "event_read"):
+        return {"ok": False, "error": "adapter_permission_denied", "capability": "event_read"}
     from event_store import list_events
     return {"ok": True, "events": list_events(limit=limit)}
 
 
 def _usage_summary() -> dict:
+    from harness_core.adapter_gate import can, get_adapter_id
+    _aid = get_adapter_id()
+    if _aid and not can(_aid, "usage_read"):
+        return {"ok": False, "error": "adapter_permission_denied", "capability": "usage_read"}
     from event_store import list_usage
     rows = list_usage(limit=1000)
     actual = sum(r.get("actual_tokens") or 0 for r in rows)

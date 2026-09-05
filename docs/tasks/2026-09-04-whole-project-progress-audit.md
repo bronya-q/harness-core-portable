@@ -651,3 +651,11 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **角色分工/信件/切身化/用户关联**：letter send/list/reply、Dashboard 角色信件 + owner 标注、situated 增加 role_division / user_relation。
 - 新增 `tests/test_role_communication.py`；unittest 总数 49。
+
+## 45. 后续处理记录（2026-09-04 续 33）
+
+- **业务列级迁移**：`migration apply --backup` 补 memory/notebooks/events/vector_queue 业务列。
+- **adapter 权限真运行**：`harness_core/adapter_gate.py` 接入 MCP server，`HARNESS_MCP_ADAPTER_ID` 可强制能力校验。
+- **文档继续抽象**：HYBRID / ENGINEERING 再替换一批具体示例。
+- **scope 全入口**：event / letter 也纳入 normalize_scope。
+- 新增/更新测试；unittest 总数 51。

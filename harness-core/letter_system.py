@@ -19,6 +19,9 @@ except Exception:
 HARNESS_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness"
 LETTERS_FILE = HARNESS_DIR / "letters.json"
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from scope_utils import normalize_scope  # noqa: E402
+
 
 def _load():
     if not LETTERS_FILE.exists():
@@ -87,6 +90,7 @@ def main():
     sub = args[0]
     if sub == "send":
         frm = to = subject = body = ""
+        _normalize_inputs = lambda frm, to: (normalize_scope(frm), normalize_scope(to))
         i = 1
         while i < len(args):
             if args[i] == "--from" and i + 1 < len(args):
@@ -99,6 +103,7 @@ def main():
                 body = args[i + 1]; i += 2
             else:
                 i += 1
+        frm, to = _normalize_inputs(frm, to)
         if not frm or not to or not subject:
             print("用法：python harness.py letter send --from <scope> --to <scope> --subject <s> [--body <b>]")
             return 1
@@ -116,6 +121,8 @@ def main():
                 limit = int(args[i + 1]); i += 2
             else:
                 i += 1
+        if scope:
+            scope = normalize_scope(scope)
         letters = list_letters(scope or None, limit)
         print(json.dumps({"ok": True, "letters": letters}, ensure_ascii=False, indent=2))
         return 0

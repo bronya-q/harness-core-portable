@@ -5,6 +5,7 @@ import json
 import sys
 from pathlib import Path
 from event_store import record_event, list_events, record_usage, list_usage
+from scope_utils import normalize_scope
 
 BASELINE_FILE = Path.home() / ".dsh" / "harness" / "usage-baseline.json"
 
@@ -40,6 +41,7 @@ def cmd_event(args):
                 content_provenance = args[i + 1]; i += 2
             else:
                 i += 1
+        scope = normalize_scope(scope)
         if not scope or not event_type:
             print("用法：harness.py event add --scope <s> --event-type <t> [--content-type <c>] [--session-id <id>] "
                   "[--session-provenance real|demo|smoke|regression|unknown] "
@@ -63,6 +65,8 @@ def cmd_event(args):
                 scope = args[i + 1]; i += 2
             else:
                 i += 1
+        if scope:
+            scope = normalize_scope(scope)
         print(json.dumps({"ok": True, "events": list_events(limit, scope)}, ensure_ascii=False, indent=2))
         return 0
     print("未知 event 子命令：" + sub)

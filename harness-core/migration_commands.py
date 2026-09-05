@@ -25,6 +25,26 @@ except Exception:
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 MIN_SCHEMA = 1
 
+# 业务列迁移（仅补列，不删除/重命名现有数据）
+BUSINESS_MIGRATIONS = {
+    "memory.db": {
+        "memories": [("sixdim", "TEXT")],
+        "emotion_state": [("rel_level", "INTEGER NOT NULL DEFAULT 0"),
+                          ("affinity", "REAL NOT NULL DEFAULT 0.0"),
+                          ("trust", "REAL NOT NULL DEFAULT 0.0"),
+                          ("sixdim", "TEXT")],
+    },
+    "notebooks.db": {
+        "notebooks": [("status", "TEXT DEFAULT 'active'")],
+    },
+    "events.db": {
+        "events": [("session_provenance", "TEXT"), ("content_provenance", "TEXT")],
+    },
+    "vector_queue.db": {
+        "queue": [("status", "TEXT"), ("next_retry_at", "REAL"), ("retry_count", "INTEGER NOT NULL DEFAULT 0")],
+    },
+}
+
 DB_FILES = [
     "memory.db",
     "notebooks.db",
@@ -103,6 +123,23 @@ def cmd_dry_run():
     return 0 if not issues else 1
 
 
+def _apply_business_migrations(db_name, con):
+    applied = []
+    for table, cols in BUSINESS_MIGRATIONS.get(db_name, {}).items():
+        try:
+            exists = con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone()
+            if not exists:
+                continue
+            existing = {r[1] for r in con.execute(f"PRAGMA table_info({table})").fetchall()}
+            for col, ddl in cols:
+                if col not in existing:
+                    con.execute(f"ALTER TABLE {table} ADD COLUMN {col} {ddl}")
+                    applied.append(f"{table}.{col}")
+        except Exception:
+            pass
+    return applied
+
+
 def cmd_apply(backup=True):
     """实际执行 schema_version 表迁移（基础）。"""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -137,6 +174,13 @@ def cmd_apply(backup=True):
                 applied.append({"database": name, "action": "add_schema_version_table", "version": MIN_SCHEMA})
             except Exception as e:
                 issues.append(f"{name}:{e}")
+        try:
+            business_applied = _apply_business_migrations(name, con)
+            if business_applied:
+                con.commit()
+                applied.append({"database": name, "action": "business_columns", "columns": business_applied})
+        except Exception as e:
+            issues.append(f"{name}:business_migration:{e}")
         con.close()
     print(json.dumps({"ok": len(issues) == 0, "mode": "migration_apply",
                       "backup": backup_path, "applied": applied, "issues": issues,

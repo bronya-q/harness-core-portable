@@ -41,6 +41,45 @@ class EngineeringReleaseBatchTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_business_migration_adds_columns(self):
+        home = Path(tempfile.mkdtemp())
+        env = dict(os.environ)
+        env["HOME"] = str(home)
+        env["USERPROFILE"] = str(home)
+        env["DSH_HOME"] = str(home)
+        try:
+            mem_dir = home / "memory-emotion"
+            mem_dir.mkdir(parents=True, exist_ok=True)
+            db = mem_dir / "memory.db"
+            con = sqlite3.connect(str(db))
+            con.execute("CREATE TABLE memories(id INTEGER PRIMARY KEY, content TEXT)")
+            con.commit()
+            con.close()
+            p = subprocess.run([sys.executable, str(ROOT / "harness.py"), "migration", "apply", "--backup"],
+                               capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               env=env, timeout=30)
+            d = json.loads(p.stdout)
+            business = [a for a in d["applied"] if a["action"] == "business_columns" and a["database"] == "memory.db"]
+            self.assertTrue(business, "should apply business columns for memory.db")
+            self.assertIn("memories.sixdim", business[0]["columns"])
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
+    def test_adapter_gate_denies_when_env_set(self):
+        # Run MCP server with HARNESS_MCP_ADAPTER_ID set to an adapter without memory_read in example? example has memory_read.
+        # Use a fake adapter id to force deny.
+        env = dict(os.environ)
+        env["HARNESS_MCP_ADAPTER_ID"] = "no-such-adapter"
+        import sys
+        sys.path.insert(0, str(ROOT / "harness-core"))
+        sys.path.insert(0, str(ROOT))
+        from harness_core.adapter_gate import can, get_adapter_id
+        os.environ["HARNESS_MCP_ADAPTER_ID"] = "no-such-adapter"
+        self.assertFalse(can("no-such-adapter", "memory_read"))
+        self.assertEqual(get_adapter_id(), "no-such-adapter")
+        # restore
+        os.environ.pop("HARNESS_MCP_ADAPTER_ID", None)
+
     def test_private_docs_no_private_names(self):
         for rel in ("HYBRID_FUNCTIONAL_PERSONA.md", "ENGINEERING_ROLES.md"):
             text = (ROOT / rel).read_text(encoding="utf-8")
