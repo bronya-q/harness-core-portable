@@ -430,6 +430,23 @@ def main():
     else:
         letters_html = "<p class='muted'>暂无角色信件。</p>"
 
+    letter_threads_html = ""
+    try:
+        from letter_system import threads
+        tds = threads(limit=5)
+        for chain in tds[:5]:
+            if len(chain) >= 2:
+                first = chain[0]
+                last = chain[-1]
+                letter_threads_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:70%%'>%s</div>"
+                                         "<span class='st-muted'>%s 封 · %s → %s</span></div>"
+                                         % (_html(first.get("subject") or "?"), _html(last.get("subject") or "?"),
+                                            len(chain), _html(first.get("from")), _html(last.get("to"))))
+        if not letter_threads_html:
+            letter_threads_html = "<p class='muted'>暂无信件线程。</p>"
+    except Exception:
+        letter_threads_html = "<p class='muted'>暂无信件线程。</p>"
+
     role_division_html = ""
     if kh.get("checks"):
         for c in kh["checks"]:
@@ -649,6 +666,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>关系-情感状态</h2>{rel_html}</div>
 <div class="card"><h2>Adapter 权限矩阵</h2>{adapter_html}</div>
 <div class="card"><h2>角色信件</h2>{letters_html}</div>
+<div class="card"><h2>信件线程</h2>{letter_threads_html}</div>
 <div class="card"><h2>角色分工（知识域 → 负责角色）</h2>{role_division_html}</div>
 <div class="card"><h2>角色运行上下文（roleplay 注入）</h2>{roleplay_ctx_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
