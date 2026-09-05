@@ -108,6 +108,14 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - 新增 `python harness.py user-test template [--write]`：生成可填写的 `docs/user-testing/results-YYYYMMDD-HHMMSS.md`
 - **仍需真人参与**；工具只是让“找人跑”这一步更容易，不代替真实用户
 
+## 本轮批量补齐
+
+- ✅ **首次同意分项扩展**：`privacy consent` 新增 `cross_session_recall / evaluation_use / cross_character_story_share`
+- ✅ **GitHub Issue 模板**：`.github/ISSUE_TEMPLATE/` 增加 bug / feature / user-feedback / security
+- ✅ **HCP 包 schema 强制校验**：`character install` 要求 `schema_version`，可选 `minimum_core_version`
+- ✅ **A/B 逐条指标可视化**：Dashboard A/B 记录显示 `per_query pos/neg/zero`
+- ✅ **Adversarial Review 最小冒烟**：`python harness.py adversarial --draft ... [--evidence-dir ...]`
+
 ## 测试与发布
 
 ```text

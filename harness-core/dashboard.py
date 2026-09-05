@@ -291,19 +291,27 @@ def main():
         for fp in sorted(ev_dir.glob("ab-*.json")):
             try:
                 d = json.loads(fp.read_text(encoding="utf-8"))
+                per_query = d.get("per_query") or []
+                pos = sum(1 for r in per_query if r.get("precision_delta") is not None and r["precision_delta"] > 0)
+                neg = sum(1 for r in per_query if r.get("precision_delta") is not None and r["precision_delta"] < 0)
+                zero = sum(1 for r in per_query if r.get("precision_delta") == 0)
                 ab_records.append({"source": fp.name, "mode": d.get("mode"),
                                    "a": d.get("retriever_a", {}).get("name") or d.get("a", {}).get("file"),
                                    "b": d.get("retriever_b", {}).get("name") or d.get("b", {}).get("file"),
-                                   "generated_at": d.get("generated_at", "")})
+                                   "generated_at": d.get("generated_at", ""),
+                                   "per_query_count": len(per_query),
+                                   "pos": pos, "neg": neg, "zero": zero})
             except Exception:
                 pass
     ab_html = ""
     if ab_records:
         for r in ab_records[:10]:
+            extra = "%s vs %s · %s" % (_html(r.get("a") or "?"), _html(r.get("b") or "?"), _html(r.get("generated_at")))
+            if r.get("per_query_count"):
+                extra += " · pq=%d (pos=%d neg=%d zero=%d)" % (r["per_query_count"], r["pos"], r["neg"], r["zero"])
             ab_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:80%%'>%s</div>"
-                        "<span class='st-muted'>%s vs %s · %s</span></div>"
-                        % (_html(r.get("mode") or "ab"), _html(r.get("source")),
-                           _html(r.get("a") or "?"), _html(r.get("b") or "?"), _html(r.get("generated_at"))))
+                        "<span class='st-muted'>%s</span></div>"
+                        % (_html(r.get("mode") or "ab"), _html(r.get("source")), extra))
     else:
         ab_html = "<p class='muted'>暂无 A/B 记录（用 `ab role/retriever --save <name>` 可保存）。</p>"
 

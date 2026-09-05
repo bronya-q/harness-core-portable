@@ -54,6 +54,21 @@ def write_json(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def _validate_manifest_core(manifest):
+    issues = []
+    if "schema_version" not in manifest:
+        issues.append("missing_schema_version")
+    elif not isinstance(manifest.get("schema_version"), int) or manifest["schema_version"] < 1:
+        issues.append("invalid_schema_version")
+    if "minimum_core_version" in manifest:
+        v = manifest.get("minimum_core_version")
+        if not isinstance(v, (str, int)):
+            issues.append("invalid_minimum_core_version")
+    if "persona_id" not in manifest:
+        issues.append("missing_persona_id")
+    return issues
+
+
 def cmd_character(args):
     if not args:
         print("用法：harness.py character list|install|activate|deactivate|remove|show")
@@ -180,6 +195,10 @@ def cmd_character(args):
                     print(json.dumps({"ok": False, "error": "manifest_not_found"}, ensure_ascii=False))
                     return 1
                 manifest = read_json(manifest_path)
+                core_issues = _validate_manifest_core(manifest)
+                if core_issues:
+                    print(json.dumps({"ok": False, "error": "package_schema_required", "issues": core_issues}, ensure_ascii=False))
+                    return 1
                 pid = manifest.get("persona_id")
                 if not pid:
                     print(json.dumps({"ok": False, "error": "missing_persona_id"}, ensure_ascii=False))
@@ -212,6 +231,10 @@ def cmd_character(args):
             print(json.dumps({"ok": False, "error": "manifest_not_found", "path": str(src)}, ensure_ascii=False))
             return 1
         manifest = read_json(manifest_path)
+        core_issues = _validate_manifest_core(manifest)
+        if core_issues:
+            print(json.dumps({"ok": False, "error": "package_schema_required", "issues": core_issues}, ensure_ascii=False))
+            return 1
         pid = manifest.get("persona_id")
         if not pid:
             print(json.dumps({"ok": False, "error": "missing_persona_id"}, ensure_ascii=False))

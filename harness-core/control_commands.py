@@ -267,7 +267,8 @@ def cmd_privacy(args):
             if not scope or not items:
                 print("用法：privacy consent --set --scope <s> --items memory,story,notebook,telemetry")
                 return 1
-            allowed = {"memory", "story", "notebook", "telemetry"}
+            allowed = {"memory", "story", "notebook", "telemetry",
+                       "cross_session_recall", "evaluation_use", "cross_character_story_share"}
             choice = {x.strip(): True for x in items.split(",") if x.strip() in allowed}
             CONSENT_FILE.parent.mkdir(parents=True, exist_ok=True)
             d = {"schema_version": 1, "scope": scope, "items": choice,

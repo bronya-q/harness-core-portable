@@ -76,7 +76,8 @@ def _ensure_first_run_consent():
     print("\n[首次启动 · 分项同意]")
     print("以下开关只影响本机功能，不等于上传授权；上传始终为 NONE。")
     print("你可以随时用 `python harness.py privacy consent --status` 查看。\n")
-    items = ["memory", "story", "notebook", "telemetry"]
+    items = ["memory", "story", "notebook", "telemetry",
+             "cross_session_recall", "evaluation_use", "cross_character_story_share"]
     choice = {}
     for item in items:
         try:
