@@ -742,3 +742,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 65. 后续处理记录（2026-09-04 续 53）
 
 - knowledge route 自动委派路由（allow/delegate）。
+
+## 66. 后续处理记录（2026-09-04 续 54）
+
+- MCP memory_list 返回 runtime_context。
