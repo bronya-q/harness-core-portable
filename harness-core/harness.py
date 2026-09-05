@@ -68,6 +68,7 @@ PASSTHROUGH = {
     "project-check": ["project_check.py", ["project-check"]],
     "release-checklist": ["release_checklist.py", ["release-checklist"]],
     "boundary-check": ["boundary_check.py", ["boundary-check"]],
+    "runtime-coverage": ["runtime_coverage.py", ["runtime-coverage"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],

@@ -164,6 +164,13 @@ def cmd_doctor(json_out=False):
     auto_enabled = policy.get("flags", {}).get("autonomous_tasks", "disabled") != "disabled"
     checks.append(("自动执行", "已关闭" if not auto_enabled else "已开启（请勿）",
                    "ok" if not auto_enabled else "fail"))
+    try:
+        from runtime_hotload import load_context
+        rctx = load_context()
+        checks.append(("当前 runtime 角色", rctx.get("persona_id") or "未登记",
+                       "ok" if rctx.get("persona_id") else "warn"))
+    except Exception:
+        pass
     upload = False
     checks.append(("网络上传", "未启用" if not upload else "已启用（请勿）",
                    "ok" if not upload else "fail"))
