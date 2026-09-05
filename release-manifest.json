@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T06:48:14.759592+00:00",
+  "generated_at": "2026-09-05T06:53:06.416095+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 237,
+  "count": 238,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.md": "be646848323060f02abf2fca6e0fd392e4c6b7be820bb84271c3dd492622570f",
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
@@ -34,7 +34,7 @@
     "PUBLIC_CONTENT_BOUNDARY.md": "5f679ea3f697e2c761a13004c75fad1355e3586a7835a8f90bea8d0a5e1739e7",
     "QUICKSTART.md": "0a187f8e66beb9637b47be53464f45cddefe268f7c2dddbf4fa138c46a77ae63",
     "QUICKSTART.zh-CN.md": "305d58588ab3b7a8ebeaf4b43b6af754353cb9487de154eef5d5d75edaab20a3",
-    "README.md": "330948e10c8b29b337a70f8b57c90ee9a73fa215ca0956003cfd3474e36734d1",
+    "README.md": "0b0e32e8d6219e4991fea29ae1af06d04e5ce6d7b3b6f75da901b989711683d4",
     "RELEASE_NOTES.md": "cdb2d115529d5fd82df10dfe627f8b103b5f3beea4eb83e817670ff4c5099697",
     "RESEARCH.md": "44a75b3384283df2ecedd9c6dd7fb08203340113238b346ae13548a6487c28b0",
     "ROADMAP.md": "8f8a38abbd8d5e195cbe3cdcd2678f58b0fb2cc949f7d7cf6b5fff705332c6c7",
@@ -60,6 +60,7 @@
     "docs/project-intro-and-feedback.md": "e14bd254c9eeb0346210dedaea4d7d8eb19a4a4c40e40011563e635fee7186b8",
     "docs/releases/v0.1.0-alpha.2.md": "e4b281bf40d7bd8de0a31c7facee23ef9e2733a3586e68897bdda409f059ecc0",
     "docs/releases/v0.1.0-alpha.3.md": "c9880d0301694835a3ddb817cfa361419247463bc54291ce47bb20e99edef815",
+    "docs/tasks/2026-09-04-alpha.4-r2-plan.md": "5dfada3c9a8a0fea1130ea00c80d638bb014fece4658fc4a8074aae4a930d9f7",
     "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "3911a48fe5a9b84087dec6579e1f0249cd6b369bc8281df12f59d61322ce6b5e",
     "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
