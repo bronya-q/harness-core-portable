@@ -722,3 +722,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 60. 后续处理记录（2026-09-04 续 48）
 
 - user-test simulate 模拟管线（非真实用户）。
+
+## 61. 后续处理记录（2026-09-04 续 49）
+
+- release-checklist 命令。
