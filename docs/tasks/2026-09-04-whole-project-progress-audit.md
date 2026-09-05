@@ -758,3 +758,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 69. 后续处理记录（2026-09-04 续 57）
 
 - CI 和 release-checklist 纳入 runtime-coverage。
+
+## 70. 后续处理记录（2026-09-04 续 58）
+
+- Dashboard 信件线程卡。
