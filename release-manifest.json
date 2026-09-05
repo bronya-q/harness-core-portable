@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T07:28:37.783985+00:00",
+  "generated_at": "2026-09-05T07:31:36.354176+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 244,
+  "count": 245,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.md": "be646848323060f02abf2fca6e0fd392e4c6b7be820bb84271c3dd492622570f",
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
@@ -80,6 +80,7 @@
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "5b3cc11ab8d688ca676bd6d1e593f5360959ba05a38b5acd9f1104bd3c06c28d",
+    "docs/tasks/2026-09-05-security-audit-findings.md": "a5df4ad41033ebba844d1c6029bd87f287bfca778c96f33a8fcc8ca641d6b718",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
     "docs/templates/TASK_DESIGN_TEMPLATE.md": "6adf6f960798c458b104a38ef2ab9cb07b049cdd099e193726f0d9124fe2b19e",
     "docs/user-testing/PROTOCOL.md": "2a4afc7766bb43de61ac96d21cb3b816979de7997e5d5f7a224871b87e07334e",
