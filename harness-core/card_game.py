@@ -77,10 +77,34 @@ DISTRACTORS = [
     {"title": "无关提醒", "content": "记得给植物浇水。"},
 ]
 
+ENGINEERING_THREADS = [
+    {
+        "thread_id": "review_loop",
+        "label": "审查循环",
+        "cards": [{"title": "草稿提交", "content": "角色提交一份草稿等待审查。"},
+                  {"title": "对抗审查", "content": "Adversarial Review 提出反例与修订建议。"}],
+    },
+    {
+        "thread_id": "migration_plan",
+        "label": "迁移计划",
+        "cards": [{"title": "schema 检查", "content": "迁移前检查本地 SQLite schema 版本。"},
+                  {"title": "备份准备", "content": "迁移前创建备份，失败可回滚。"}],
+    },
+    {
+        "thread_id": "knowledge_bridge",
+        "label": "知识桥",
+        "cards": [{"title": "委派匹配", "content": "知识桥匹配问题对应的负责域。"},
+                  {"title": "只读访问", "content": "知识桥按授权返回有限上下文。"}],
+    },
+]
 
-def build_deck():
+DECKS = {"classic": THREADS, "engineering": ENGINEERING_THREADS}
+
+
+def build_deck(deck_name="classic"):
+    threads = DECKS.get(deck_name, THREADS)
     deck = []
-    for thread in THREADS:
+    for thread in threads:
         for ci, card in enumerate(thread["cards"]):
             deck.append({
                 "id": "%s-%d" % (thread["thread_id"], ci + 1),
@@ -124,26 +148,32 @@ def _parse_pair(text, n):
     return a - 1, b - 1
 
 
-def play(rounds=3, hand_size=8, seed=None, auto=False):
+def play(rounds=3, hand_size=8, seed=None, auto=False, deck="classic", players=1):
     rng = random.Random(seed)
-    deck = build_deck()
-    score = 0
-    matched = 0
+    deck_cards = build_deck(deck)
+    scores = [0] * players
+    matched = [0] * players
     rounds_played = 0
     for rnd in range(1, rounds + 1):
-        hand = rng.sample(deck, min(hand_size, len(deck)))
+        hand = rng.sample(deck_cards, min(hand_size, len(deck_cards)))
         rounds_played += 1
         _print_hand(hand, rounds_played)
         if auto:
-            # 自动玩家：尝试找配对的相邻牌，用于可复现冒烟验证。
-            for i in range(0, len(hand) - 1):
-                a, b = hand[i], hand[i + 1]
-                if a.get("thread_id") and a["thread_id"] == b.get("thread_id"):
-                    print("  [auto] 选择 %d %d" % (i + 1, i + 2))
-                    score += 10
-                    matched += 1
-                    break
+            for pi in range(players):
+                found = False
+                for i in range(0, len(hand) - 1):
+                    a, b = hand[i], hand[i + 1]
+                    if a.get("thread_id") and a["thread_id"] == b.get("thread_id"):
+                        print("  [auto P%d] 选择 %d %d" % (pi + 1, i + 1, i + 2))
+                        scores[pi] += 10
+                        matched[pi] += 1
+                        found = True
+                        break
+                if not found:
+                    print("  [auto P%d] pass" % (pi + 1))
             continue
+        if players > 1:
+            print("  多人交互模式暂未完整实现；自动模式支持 P1/P2 轮流演示。")
         seen = set()
         while True:
             try:
@@ -156,7 +186,7 @@ def play(rounds=3, hand_size=8, seed=None, auto=False):
             if low in ("pass", "跳过", "结束"):
                 break
             if low in ("end", "quit", "exit", "结束游戏"):
-                return _finish(score, matched, rounds_played)
+                return _finish(scores, matched, rounds_played, players)
             pair = _parse_pair(line, len(hand))
             if pair is None:
                 print("  格式不对，请输入两个不同牌号。")
@@ -167,24 +197,26 @@ def play(rounds=3, hand_size=8, seed=None, auto=False):
                 continue
             a, b = hand[i], hand[j]
             if a.get("thread_id") and a["thread_id"] == b.get("thread_id"):
-                score += 10
-                matched += 1
+                scores[0] += 10
+                matched[0] += 1
                 seen.add(i)
                 seen.add(j)
-                print("  ✓ 命中！+10，当前 %d 分。" % score)
+                print("  ✓ 命中！+10，当前 %d 分。" % scores[0])
             else:
-                score = max(0, score - 3)
-                print("  ✗ 配对失败，-3，当前 %d 分。" % score)
-        if matched >= rounds * 2:
+                scores[0] = max(0, scores[0] - 3)
+                print("  ✗ 配对失败，-3，当前 %d 分。" % scores[0])
+        if sum(matched) >= rounds * 2:
             break
-    return _finish(score, matched, rounds_played)
+    return _finish(scores, matched, rounds_played, players)
 
 
-def _finish(score, matched, rounds_played):
-    print("\n===== 游戏结束 =====")
-    print("  得分：%d" % score)
-    print("  正确配对：%d" % matched)
-    print("  轮次：%d" % rounds_played)
+def _finish(scores, matched, rounds_played, players=1):
+    print()
+    print("===== 游戏结束 =====")
+    for i in range(players):
+        print("  玩家%d：得分 %d · 正确配对 %d" % (i + 1, scores[i], matched[i]))
+    if players == 1:
+        print("  轮次：%d" % rounds_played)
     try:
         from event_store import record_event
         record_event({
@@ -201,7 +233,7 @@ def _finish(score, matched, rounds_played):
         })
     except Exception:
         pass
-    return {"ok": True, "score": score, "matched": matched, "rounds": rounds_played}
+    return {"ok": True, "scores": scores, "matched": matched, "rounds": rounds_played}
 
 
 def main():
@@ -211,16 +243,20 @@ def main():
     ap.add_argument("--hand-size", type=int, default=8)
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--auto", action="store_true", help="automated smoke play")
+    ap.add_argument("--deck", default="classic", choices=list(DECKS.keys()))
+    ap.add_argument("--players", type=int, default=1)
     args = ap.parse_args()
     if args.subcommand == "deck":
-        print(json.dumps(build_deck(), ensure_ascii=False, indent=2))
+        print(json.dumps({"deck": args.deck, "count": len(build_deck(args.deck)),
+                          "cards": build_deck(args.deck)}, ensure_ascii=False, indent=2))
         return 0
     if args.subcommand == "deal":
-        deck = build_deck()
+        deck = build_deck(args.deck)
         hand = deal(deck, args.hand_size)
         print(json.dumps(hand, ensure_ascii=False, indent=2))
         return 0
-    result = play(rounds=args.rounds, hand_size=args.hand_size, seed=args.seed, auto=args.auto)
+    result = play(rounds=args.rounds, hand_size=args.hand_size, seed=args.seed,
+                  auto=args.auto, deck=args.deck, players=args.players)
     return 0 if result["ok"] else 1
 
 

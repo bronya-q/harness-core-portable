@@ -185,8 +185,10 @@ def main():
     if kh.get("checks"):
         for c in kh["checks"]:
             pct = {"ok": 100, "unreadable": 50, "missing": 0, "not_dir": 0}.get(c.get("status"), 0)
-            kn_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%s</div></div>"
-                        % (_html(c.get("display_name") or c.get("source_id")), pct, _html(c.get("status"))))
+            extra = "files=%s · cred=%s" % (_html(c.get("file_count", 0)), _html(c.get("credibility")))
+            kn_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%s</div>"
+                        "<span class='st-muted'>%s</span></div>"
+                        % (_html(c.get("display_name") or c.get("source_id")), pct, _html(c.get("status")), extra))
     else:
         kn_html = "<p class='muted'>暂无知识源配置。</p>"
     if mounts:
@@ -224,6 +226,20 @@ def main():
                       % (_html(prov), pct, v["tokens"], v["rows"]))
     if not prov_html:
         prov_html = "<p class='muted'>暂无 usage。</p>"
+
+    inference_total_ms = 0.0
+    inference_calls = 0
+    for u in usage:
+        comp = u.get("components") or {}
+        if comp.get("inference_ms"):
+            inference_total_ms += float(comp["inference_ms"])
+            inference_calls += 1
+    if inference_calls:
+        inference_html = ("<div class='hb-row'><span>推理总耗时</span><div class='hb' style='width:100%%'>%.0f ms</div>"
+                          "<span class='st-muted'>%d calls · avg %.0f ms</span></div>"
+                          % (inference_total_ms, inference_calls, inference_total_ms / inference_calls))
+    else:
+        inference_html = "<p class='muted'>暂无 provider-reported 推理耗时记录（需 roleplay 使用 Ollama 并返回 duration）。</p>"
 
     # 最近写操作（可撤销预览）
     notes_db = DATA_DIR / "notebooks.db"
@@ -295,7 +311,10 @@ def main():
                 pos = sum(1 for r in per_query if r.get("precision_delta") is not None and r["precision_delta"] > 0)
                 neg = sum(1 for r in per_query if r.get("precision_delta") is not None and r["precision_delta"] < 0)
                 zero = sum(1 for r in per_query if r.get("precision_delta") == 0)
+                deltas = sorted([r for r in per_query if r.get("precision_delta") is not None],
+                                key=lambda r: abs(r["precision_delta"]), reverse=True)[:5]
                 ab_records.append({"source": fp.name, "mode": d.get("mode"),
+                                   "top_deltas": deltas,
                                    "a": d.get("retriever_a", {}).get("name") or d.get("a", {}).get("file"),
                                    "b": d.get("retriever_b", {}).get("name") or d.get("b", {}).get("file"),
                                    "generated_at": d.get("generated_at", ""),
@@ -312,6 +331,15 @@ def main():
             ab_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:80%%'>%s</div>"
                         "<span class='st-muted'>%s</span></div>"
                         % (_html(r.get("mode") or "ab"), _html(r.get("source")), extra))
+            for d in r.get("top_deltas", [])[:5]:
+                val = d.get("precision_delta")
+                if val is None:
+                    continue
+                width = min(100, int(abs(val) * 200))
+                col = "st-green" if val > 0 else ("st-red" if val < 0 else "st-blue")
+                ab_html += ("<div class='hb-row'><span>&nbsp;</span><div class='hb %s' style='width:%d%%'>%.2f</div>"
+                            "<span class='st-muted'>%s</span></div>"
+                            % (col, width, val, _html((d.get("query") or "")[:40])))
     else:
         ab_html = "<p class='muted'>暂无 A/B 记录（用 `ab role/retriever --save <name>` 可保存）。</p>"
 
@@ -494,6 +522,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
   <div class="card"><h2>向量队列</h2>{vq_html}</div>
 </div>
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
+<div class="card"><h2>模型推理 span（provider 记录）</h2>{inference_html}</div>
 <div class="card"><h2>最近写操作（可撤销预览）</h2>{manual_html}</div>
 <div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
 <div class="card"><h2>A/B 记录</h2>{ab_html}</div>

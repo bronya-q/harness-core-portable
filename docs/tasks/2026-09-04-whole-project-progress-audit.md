@@ -611,3 +611,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **批量补齐**：consent 分项扩展、GitHub Issue 模板、HCP 包 schema 强制校验、A/B 逐条指标可视化、Adversarial Review 最小冒烟。
 - 新增 `tests/test_release_hygiene.py`（2 用例），unittest 总数 32。
+
+## 37. 后续处理记录（2026-09-04 续 25）
+
+- **可视化专项**：模型推理 span（roleplay duration_ms + Dashboard）、A/B 逐条 delta 条形、知识桥 file_count/credibility、卡牌工程牌组与 2 人自动演示。
+- unittest 总数仍 32（card_game 测试兼容调整；新增 roleplay duration 未加独立测试）。

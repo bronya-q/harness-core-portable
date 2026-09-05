@@ -17,13 +17,14 @@ class ProviderUsageTest(unittest.TestCase):
         sys.path.insert(0, str(SKILL))
         try:
             from roleplay_memory_chat import _accumulate_provider_usage
-            agg = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
-            _accumulate_provider_usage(agg, {"prompt_eval_count": 10, "eval_count": 5})
-            _accumulate_provider_usage(agg, {"prompt_eval_count": 20, "eval_count": 8})
+            agg = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "duration_ms": 0.0}
+            _accumulate_provider_usage(agg, {"prompt_eval_count": 10, "eval_count": 5, "duration_ms": 100.0})
+            _accumulate_provider_usage(agg, {"prompt_eval_count": 20, "eval_count": 8, "duration_ms": 150.0})
             self.assertEqual(agg["calls"], 2)
             self.assertEqual(agg["prompt_tokens"], 30)
             self.assertEqual(agg["completion_tokens"], 13)
             self.assertEqual(agg["total_tokens"], 43)
+            self.assertAlmostEqual(agg["duration_ms"], 250.0)
         finally:
             shutil.rmtree(home, ignore_errors=True)
 

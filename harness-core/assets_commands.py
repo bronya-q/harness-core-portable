@@ -715,7 +715,20 @@ def _knowledge_health(source_id=None):
             status = "unreadable"
         else:
             status = "ok"
+        file_count = 0
+        if root and root.is_dir():
+            try:
+                file_count = sum(1 for p in root.iterdir() if p.is_file())
+            except Exception:
+                pass
+        if bool(src.get("private", True)) and src.get("default_access", "deny") == "deny":
+            credibility = "private_high_trust"
+        elif bool(src.get("private", True)):
+            credibility = "private_medium"
+        else:
+            credibility = "portable_public"
         checks.append({"source_id": sid, "display_name": src.get("display_name", ""),
+                       "file_count": file_count, "credibility": credibility,
                        "root": str(root) if root else None,
                        "exists": exists, "is_dir": is_dir, "readable": readable,
                        "status": status, "private": bool(src.get("private", True)),

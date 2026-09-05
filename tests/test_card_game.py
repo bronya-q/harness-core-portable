@@ -18,7 +18,8 @@ class CardGameTest(unittest.TestCase):
             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
         )
         self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
-        deck = json.loads(p.stdout)
+        obj = json.loads(p.stdout)
+        deck = obj["cards"] if isinstance(obj, dict) else obj
         self.assertEqual(len(deck), 14)
         pair_count = sum(1 for c in deck if c["thread_id"])
         self.assertEqual(pair_count, 10)

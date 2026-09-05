@@ -116,6 +116,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **A/B 逐条指标可视化**：Dashboard A/B 记录显示 `per_query pos/neg/zero`
 - ✅ **Adversarial Review 最小冒烟**：`python harness.py adversarial --draft ... [--evidence-dir ...]`
 
+## 可视化专项
+
+- ✅ **模型推理 span**：roleplay 采集 Ollama `duration_ms`，Dashboard 显示总/平均推理耗时
+- ✅ **A/B 逐条 delta 图**：Dashboard 对保存的 A/B 记录渲染 precision_delta 正/负条形
+- ✅ **知识桥可视化**：`knowledge health` 增加 `file_count` 与 `credibility`，Dashboard 显示
+- ✅ **卡牌游戏扩展**：`card_game.py` 支持 `--deck classic|engineering`，`--players 2` 自动多人演示
+
 ## 测试与发布
 
 ```text
