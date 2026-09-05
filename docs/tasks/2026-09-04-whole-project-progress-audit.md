@@ -694,3 +694,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 53. 后续处理记录（2026-09-04 续 41）
 
 - `migration apply-script` 支持外部复杂迁移脚本；KNOWLEDGE_STEWARDSHIP / SKILL 文档再抽象。
+
+## 54. 后续处理记录（2026-09-04 续 42）
+
+- roleplay 接入 situated / role_division / letters；situated 视图增加 letters。
