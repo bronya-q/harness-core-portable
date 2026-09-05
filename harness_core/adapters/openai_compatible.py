@@ -25,11 +25,11 @@ class OpenAICompatibleAdapter:
         with urllib.request.urlopen(req, timeout=120) as r:
             return json.loads(r.read().decode("utf-8"))
 
-    def chat_with_usage(self, messages, temperature=0.7, max_tokens=1024):
+    def chat_with_usage(self, messages, temperature=0.7, max_tokens=1024, autorecord=False):
         data = self._post_chat(messages, temperature=temperature, max_tokens=max_tokens)
         content = (data.get("choices") or [{}])[0].get("message", {}).get("content", "")
         usage = data.get("usage") or {}
-        return content, {
+        meta = {
             "provider": "openai_compatible",
             "model": self.model,
             "prompt_tokens": int(usage.get("prompt_tokens") or 0),
@@ -37,6 +37,14 @@ class OpenAICompatibleAdapter:
             "total_tokens": int(usage.get("total_tokens") or 0),
             "raw_usage": usage,
         }
+        if autorecord:
+            try:
+                from harness_core.usage_recorder import record
+                record("openai_compatible", self.model, meta["prompt_tokens"],
+                       meta["completion_tokens"], meta["total_tokens"])
+            except Exception:
+                pass
+        return content, meta
 
     def chat(self, messages, temperature=0.7, max_tokens=1024):
         return self.chat_with_usage(messages, temperature=temperature, max_tokens=max_tokens)[0]

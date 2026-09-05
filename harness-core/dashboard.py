@@ -26,7 +26,7 @@ SKILL = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "memory-emotion"
 sys.path.insert(0, str(SKILL))
 from event_store import list_events, list_usage  # noqa: E402
-from vector_queue import queue_status  # noqa: E402
+from vector_queue import queue_status, queue_history  # noqa: E402
 import assets_commands  # noqa: E402
 import runtime_policy  # noqa: E402
 OUT_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
@@ -173,6 +173,16 @@ def main():
         return "".join(f"<span class='prov-chip'>{_html(k)} {_html(v)}</span> " for k, v in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])))
     provenance_html = f"<p>Session provenance（会话来源）：{prov_counts(events, 'session_provenance')}</p>"
     provenance_html += f"<p>Content provenance（内容来源）：{prov_counts(events, 'content_provenance')}</p>"
+    prov_bars_html = ""
+    sp_counts = Counter((x.get("session_provenance") or "unknown") for x in events)
+    if sp_counts:
+        total = max(1, sum(sp_counts.values()))
+        for k, v in sorted(sp_counts.items(), key=lambda kv: (-kv[1], kv[0])):
+            pct = int(round(v * 100 / total))
+            prov_bars_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%d</div></div>"
+                               % (_html(k), pct, v))
+    else:
+        prov_bars_html = "<p class='muted'>暂无事件。</p>"
 
     # 知识域/向量队列/usage 可视化（纯 CSS，无 JS，符合 CSP）
     try:
@@ -212,6 +222,22 @@ def main():
         vq_html += "<p class='muted'>retryable=%s · stale=%s</p>" % (_html(vq.get("retryable", 0)), _html(vq.get("stale", 0)))
     else:
         vq_html = "<p class='muted'>暂无向量队列记录。</p>"
+
+    try:
+        vq_h = queue_history(limit=8)
+        vq_history = vq_h.get("history", []) if vq_h.get("ok") else []
+    except Exception:
+        vq_history = []
+    vq_trend = ""
+    if vq_history:
+        max_p = max([int(h.get("pending", 0)) for h in vq_history] + [1])
+        for h in vq_history[-6:]:
+            pct = int(round(int(h.get("pending", 0)) * 100 / max_p))
+            vq_trend += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:%d%%'>%d</div>"
+                         "<span class='st-muted'>deferred=%s</span></div>"
+                         % (_html(_ts(h.get("ts"))), pct, h.get("pending", 0), h.get("deferred", 0)))
+    else:
+        vq_trend = "<p class='muted'>暂无历史快照。</p>"
 
     by_provider = {}
     for u in usage:
@@ -538,7 +564,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 </div>
 <div class="grid">
   <div class="card"><h2>知识域与挂载</h2>{kn_html}</div>
-  <div class="card"><h2>向量队列</h2>{vq_html}</div>
+  <div class="card"><h2>向量队列</h2>{vq_html}<p class="st-muted">近期 pending 趋势：</p>{vq_trend}</div>
 </div>
 <div class="card"><h2>Token 来源 / Provider</h2>{prov_html}</div>
 <div class="card"><h2>模型推理 span（provider 记录）</h2>{inference_html}</div>
@@ -552,7 +578,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
   <div class="card"><h2>Token / Context 面板</h2>{li(usage,'model_id',lambda u: f"actual={u.get('actual_tokens')} · baseline={u.get('baseline_tokens')} · avoided={u.get('estimated_avoided_tokens')} · {u.get('usage_source')}")}</div>
 </div>
-<div class="card"><h2>数据来源分组</h2>{provenance_html}</div>
+<div class="card"><h2>数据来源分组</h2>{provenance_html}<p class="st-muted">工作流来源（demo/directed/real 计数）：</p>{prov_bars_html}</div>
 <div class="card"><h2>Span 时间线（数据读取真实耗时）</h2>
 <div class="span-track">
 {''.join(f"<div class='span-bar' style='flex-grow:{v}'> {n}</div>" for n,v in spans)}

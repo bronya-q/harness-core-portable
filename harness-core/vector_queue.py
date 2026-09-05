@@ -17,6 +17,7 @@ QUEUE_DB = DATA_DIR / "vector_queue.db"
 def _connect():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(str(QUEUE_DB), timeout=0.2)
+    con.row_factory = sqlite3.Row
     con.execute("""CREATE TABLE IF NOT EXISTS queue (
         memory_id INTEGER PRIMARY KEY,
         enqueued_at REAL NOT NULL,
@@ -40,6 +41,11 @@ def _connect():
             con.execute(ddl)
     # 旧数据若无 status，视为 pending。
     con.execute("UPDATE queue SET status='pending' WHERE status IS NULL")
+    con.execute("""CREATE TABLE IF NOT EXISTS history(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ts REAL NOT NULL,
+        total INTEGER, pending INTEGER, processing INTEGER,
+        deferred INTEGER, done INTEGER, failed INTEGER, stale INTEGER)""")
     con.commit()
     return con
 
@@ -59,6 +65,17 @@ def enqueue(memory_id):
         return False
 
 
+def queue_history(limit=20):
+    """返回向量队列历史快照（最近 limit 条）。"""
+    try:
+        con = _connect()
+        rows = con.execute("SELECT * FROM history ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
+        con.close()
+        return {"ok": True, "history": [dict(r) for r in rows[::-1]]}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
 def queue_status():
     """返回向量队列的持续监控摘要（不修改队列状态）。"""
     try:
@@ -73,6 +90,12 @@ def queue_status():
                                 (time.time(),)).fetchone()[0]
         stale = con.execute("SELECT COUNT(*) FROM queue WHERE status='processing' AND done_at IS NULL AND processing_at<?",
                             (time.time() - 600,)).fetchone()[0]
+        try:
+            con.execute("INSERT INTO history(ts,total,pending,processing,deferred,done,failed,stale) VALUES(?,?,?,?,?,?,?,?)",
+                        (time.time(), total, pending, processing, deferred, done, failed, stale))
+            con.commit()
+        except Exception:
+            pass
         con.close()
         return {"ok": True, "total": total, "pending": pending, "processing": processing,
                 "deferred": deferred, "failed": failed, "done": done, "retryable": retryable,

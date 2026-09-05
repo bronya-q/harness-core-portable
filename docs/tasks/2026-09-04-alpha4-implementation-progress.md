@@ -137,6 +137,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **关系-情感状态可视化**：Dashboard 新增「关系-情感状态」卡片
 - ✅ **Demo 后续引导**：`demo --offline` 结束后打印下一步命令（dashboard/list/start）
 
+## 数据/测量/可观测 R1
+
+- ✅ **provider usage 记录器**：新增 `harness_core/usage_recorder.py`，OpenAI-compatible adapter 支持 `autorecord=True` 回填 provider_reported
+- ✅ **工作流来源分组**：Dashboard「数据来源分组」增加 demo/directed/real 计数条
+- ✅ **Krippendorff’s alpha**：`measurement_utils.krippendorff_alpha()` + 测试
+- ✅ **vector queue 历史监控**：`queue_status()` 写入 history，`queue_history()` 读取，Dashboard 显示近期 pending 趋势
+
 ## 测试与发布
 
 ```text
