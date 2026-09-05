@@ -216,6 +216,7 @@ def _accumulate_provider_usage(agg, usage):
     agg["prompt_tokens"] += pt
     agg["completion_tokens"] += ct
     agg["total_tokens"] += pt + ct
+    agg["duration_ms"] += float(usage.get("duration_ms") or 0)
 
 
 def generate(model, prompt, num_predict):
@@ -224,11 +225,13 @@ def generate(model, prompt, num_predict):
                "think": False, "options": {"temperature": 0.7, "num_ctx": 8192, "num_predict": num_predict}}
     req = urllib.request.Request(OLLAMA + "/api/generate", data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
                                  headers={"Content-Type": "application/json"})
+    t0 = time.time()
     with urllib.request.urlopen(req, timeout=180) as r:
         data = json.loads(r.read().decode("utf-8"))
     usage = {
         "prompt_eval_count": data.get("prompt_eval_count"),
         "eval_count": data.get("eval_count"),
+        "duration_ms": round((time.time() - t0) * 1000, 1),
     }
     return data.get("response", "").strip(), usage
 
@@ -349,7 +352,7 @@ def main():
     canary_pair_done = False
     selected = args.canary_select
     error_type = None
-    provider_usage = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    provider_usage = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "duration_ms": 0.0}
     try:
         if args.canary_pair and expression_prefix:
             original_output, u1 = generate(model, base_prompt, args.num_predict)
@@ -409,7 +412,8 @@ def main():
                               "completion_tokens": provider_usage["completion_tokens"],
                               "components": {"provider": "ollama", "calls": provider_usage.get("calls", 0),
                                              "prompt_tokens": provider_usage["prompt_tokens"],
-                                             "completion_tokens": provider_usage["completion_tokens"]},
+                                             "completion_tokens": provider_usage["completion_tokens"],
+                                             "inference_ms": provider_usage.get("duration_ms", 0)},
                               "baseline_id": "prompt_chars_estimate",
                               "baseline_tokens": _est_baseline,
                               "estimated_avoided_tokens": max(0, _est_baseline - _est_actual)})
