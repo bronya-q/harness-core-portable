@@ -698,3 +698,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 54. 后续处理记录（2026-09-04 续 42）
 
 - roleplay 接入 situated / role_division / letters；situated 视图增加 letters。
+
+## 55. 后续处理记录（2026-09-04 续 43）
+
+- knowledge index 增加 token 列表 + `search --use-index` 词重叠检索。
