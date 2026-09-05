@@ -646,3 +646,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **写操作网页点确认**：新增 `memory-write-confirm` loopback HTTP 服务，浏览器点确认后写入 notebook，返回 undo 命令；测试覆盖。
 - unittest 总数 46。
+
+## 44. 后续处理记录（2026-09-04 续 32）
+
+- **角色分工/信件/切身化/用户关联**：letter send/list/reply、Dashboard 角色信件 + owner 标注、situated 增加 role_division / user_relation。
+- 新增 `tests/test_role_communication.py`；unittest 总数 49。

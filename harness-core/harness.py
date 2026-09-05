@@ -62,6 +62,7 @@ PASSTHROUGH = {
     "situated": ["situated_context.py", []],
     "secret-scan": ["secret_scan.py", ["secret-scan"]],
     "memory-write-confirm": ["memory_write_confirm.py", ["memory-write-confirm"]],
+    "letter": ["letter_system.py", ["letter"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],

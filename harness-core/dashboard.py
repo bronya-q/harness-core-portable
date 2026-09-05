@@ -412,6 +412,24 @@ def main():
     else:
         adapter_html = "<p class='muted'>暂无 adapter 权限 manifest。</p>"
 
+    letters_path = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "letters.json"
+    letters = []
+    if letters_path.exists():
+        try:
+            ld = json.loads(letters_path.read_text(encoding="utf-8"))
+            letters = ld.get("letters", []) if isinstance(ld, dict) else []
+        except Exception:
+            pass
+    letters_html = ""
+    if letters:
+        for l in letters[-8:][::-1]:
+            letters_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:60%%'>%s</div>"
+                             "<span class='st-muted'>%s → %s · %s</span></div>"
+                             % (_html(l.get("from")), _html(l.get("subject") or "-"),
+                                _html(l.get("from")), _html(l.get("to")), _html(l.get("created_at"))))
+    else:
+        letters_html = "<p class='muted'>暂无角色信件。</p>"
+
 
     # 关系-情感状态可视化
     rel_rows = []
@@ -511,7 +529,7 @@ def main():
             stewards = c.get("stewards", [])
             bound = c.get("bound_roles", [])
             if role in stewards:
-                cell = ("<span class='kgrid-cell st-green'>steward<small>read/quote/summarize/propose_edit</small></span>")
+                cell = ("<span class='kgrid-cell st-green'>owner · steward<small>read/quote/summarize/propose_edit</small></span>")
             elif role in bound:
                 cell = ("<span class='kgrid-cell st-blue'>reader<small>read/quote</small></span>")
             elif c.get("default_access") == "deny":
@@ -597,6 +615,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>知识桥 Suggest 历史</h2>{suggest_html}</div>
 <div class="card"><h2>关系-情感状态</h2>{rel_html}</div>
 <div class="card"><h2>Adapter 权限矩阵</h2>{adapter_html}</div>
+<div class="card"><h2>角色信件</h2>{letters_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>
