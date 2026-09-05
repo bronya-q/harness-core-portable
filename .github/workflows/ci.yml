@@ -30,5 +30,6 @@ jobs:
       - name: R2 local checks
         run: |
           python harness.py secret-scan
+          python harness.py boundary-check
           python harness.py mcp-verify
           python harness.py release-checklist

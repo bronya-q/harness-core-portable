@@ -220,7 +220,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **信件会话线程**：`python harness.py letter thread --scope <s>` 按 in_reply_to 链展示信件线程
 - ✅ **首次用户测试模拟管线**：`python harness.py user-test simulate` 跑 demo + dashboard + memory list，生成 simulated 结果文件
 - ✅ **R2 发布勾选清单**：`python harness.py release-checklist` 输出 R2 DoD 自动/人工勾选项
-- ✅ **CI 集成 R2 本地检查**：`secret-scan` / `mcp-verify` / `release-checklist` 进入 GitHub Actions
+- ✅ **CI 集成 R2 本地检查**：`secret-scan` / `boundary-check` / `mcp-verify` / `release-checklist` 进入 GitHub Actions
+- ✅ **公共边界扫描 CLI**：`python harness.py boundary-check` 扫描私人标识/绝对路径/overlay，支持 allowlist
 
 ## 测试与发布
 
