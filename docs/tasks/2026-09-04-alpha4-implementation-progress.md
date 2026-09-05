@@ -123,6 +123,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **知识桥可视化**：`knowledge health` 增加 `file_count` 与 `credibility`，Dashboard 显示
 - ✅ **卡牌游戏扩展**：`card_game.py` 支持 `--deck classic|engineering`，`--players 2` 自动多人演示
 
+## 运行时/沙箱/热加载 R1
+
+- ✅ **runtime context 状态中枢**：新增 `python harness.py runtime status`，`character activate` / `mode switch` 写入 `~/.dsh/harness/runtime-context.json`
+- ✅ **activation 崩溃恢复模拟**：`character activate --simulate-crash` 保留锁并进入 crash_simulated，`character recover` 可恢复/清理
+- ✅ **HCP 威胁模型补充**：public 包拒绝 `.html/.htm/.svg`，增加目录文件数/大小上限
+- ✅ **知识源索引与检索**：新增 `knowledge index --source <id>`，`knowledge health` 报告 indexed / indexed_file_count
+
 ## 测试与发布
 
 ```text

@@ -616,3 +616,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **可视化专项**：模型推理 span（roleplay duration_ms + Dashboard）、A/B 逐条 delta 条形、知识桥 file_count/credibility、卡牌工程牌组与 2 人自动演示。
 - unittest 总数仍 32（card_game 测试兼容调整；新增 roleplay duration 未加独立测试）。
+
+## 38. 后续处理记录（2026-09-04 续 26）
+
+- **运行时/沙箱/热加载 R1**：runtime context 状态中枢、activation `--simulate-crash` + recover、HCP public 拒绝 HTML/SVG + 资源上限、knowledge index + health indexed。
+- 新增 `tests/test_runtime_and_sandbox_gaps.py`（4 用例），unittest 总数 36。
