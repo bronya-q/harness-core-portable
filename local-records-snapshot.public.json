@@ -4,7 +4,7 @@
   "generated_at": "2026-09-04T11:44:24.808627+00:00",
   "generator_version": "1",
   "generator": "local_records_export.py",
-  "source_commit": "f29a403b0c8f02c9da2d727d24f31f6416044a9a",
+  "source_commit": "dd5721a392caf1b183960835fb87d43113e40a00",
   "environment": {
     "python": "3.13.9",
     "platform": "Windows-11-10.0.26200-SP0",

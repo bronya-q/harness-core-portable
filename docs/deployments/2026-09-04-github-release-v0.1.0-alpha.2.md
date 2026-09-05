@@ -5,7 +5,7 @@ kind: deployment-record
 date: 2026-09-04
 deployed_at: 2026-09-04
 version: v0.1.0-alpha.2
-source_commit: d7f7de7
+source_commit: 3ac847f
 target: github
 deployed_by: bronya-q
 public: true
@@ -37,7 +37,7 @@ topics: [release, github, alpha]
 
 ## 4. 精确版本
 
-- commit: `d7f7de7`
+- commit: `3ac847f`
 - tag: `v0.1.0-alpha.2`
 - release manifest count: 133
 

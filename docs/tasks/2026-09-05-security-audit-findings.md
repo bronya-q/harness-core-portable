@@ -17,15 +17,15 @@ topics: [security, audit, history, git, mcp, memory, ci]
 ## 1. `secret.txt` 历史提交
 
 - `git log --all -- secret.txt` 找到 2 个 commit：
-  - `f3f78ec`（误加入）
-  - `8927c36`（移除）
+  - `1e910fe`（误加入）
+  - `64a4ba7`（移除）
 - 两个 commit 中 `secret.txt` 内容均为 **0 字节**。
 - 结论：**没有真实密钥**。不需要轮换/清洗密钥。
 - 但删除提交不会清除历史；若未来发生“非空文件误提交”，应使用 `git filter-repo` / BFG 清洗。
 
 ## 2. 私人人格内容曾进入公开库
 
-- 早期 commit `16787fd` 的 diff 中可见：
+- 早期 commit `db63905` 的 diff 中可见：
   - `[private-persona-1]`
   - `[private-persona-2]`
   - `~/.dsh/skills/[private-persona]`

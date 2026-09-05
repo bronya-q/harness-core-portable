@@ -3,7 +3,7 @@ title: Public release v0.1.0-alpha.2 design
 status: deployed
 kind: task-design
 date: 2026-09-04
-source_commit: d7f7de7
+source_commit: 3ac847f
 target_version: v0.1.0-alpha.2
 public: true
 contains_private_data: false
