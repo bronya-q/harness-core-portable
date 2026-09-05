@@ -597,3 +597,12 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 - **本地 SQLite 迁移基础**：新增 `python harness.py migration status|check|dry-run|prepare --backup`，检查关键本地库 schema_version；`dry-run` 只读。
 - **情境模式差异对比**：新增 `python harness.py character mode diff --persona <id> --mode-a <a> --mode-b <b>`。
 - 新增 `tests/test_migration_and_mode.py`（2 用例），unittest 总数 29。
+
+## 34. 后续处理记录（2026-09-04 续 22）
+
+- **MCP Inspector 外部验证通过**：新增 `harness_core/adapters/mcp_http_server.py`（loopback HTTP），使用 MCP Inspector CLI 完成 `tools/list` + `tools/call` 验证；`docs/mcp/verification.md` 记录通过证据。
+- 真实宿主（Claude Code / Codex / Copilot）与 Official Registry 仍未做。
+
+## 35. 后续处理记录（2026-09-04 续 23）
+
+- **首次用户测试辅助**：新增 `python harness.py user-test checklist` / `template [--write]`，生成首次用户测试清单与结果模板；新增 `tests/test_user_test_commands.py`。unittest 总数 30。
