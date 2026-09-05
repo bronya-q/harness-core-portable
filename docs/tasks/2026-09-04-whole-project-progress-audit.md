@@ -746,3 +746,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 66. 后续处理记录（2026-09-04 续 54）
 
 - MCP memory_list 返回 runtime_context。
+
+## 67. 后续处理记录（2026-09-04 续 55）
+
+- workspace 列表返回 runtime_context。
