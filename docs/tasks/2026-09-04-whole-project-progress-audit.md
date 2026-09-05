@@ -641,3 +641,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **工程/发布进一步推进**：migration apply 实际写 schema_version、Dashboard adapter 权限矩阵、私人案例文档公共化替换、scope 规范化覆盖 memory 多入口。
 - 新增 `tests/test_engineering_release_batch.py`；unittest 总数 45。
+
+## 43. 后续处理记录（2026-09-04 续 31）
+
+- **写操作网页点确认**：新增 `memory-write-confirm` loopback HTTP 服务，浏览器点确认后写入 notebook，返回 undo 命令；测试覆盖。
+- unittest 总数 46。
