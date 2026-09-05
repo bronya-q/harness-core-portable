@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T06:43:46.099312+00:00",
+  "generated_at": "2026-09-05T06:44:37.246307+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 236,
   "files": {
@@ -72,7 +72,7 @@
     "docs/tasks/2026-09-04-readme-low-friction-onboarding-design.md": "61688dfa4bdcbd929ff26b054331de81ad5450491adbc53eae6f2859ae686bf4",
     "docs/tasks/2026-09-04-readme-screenshots-and-demo-gif-design.md": "75b2aefdd6965d19b43dc67a6f1ac3acb2c03d8e72057bcc58906376e81f0bcb",
     "docs/tasks/2026-09-04-readme-single-path-and-nav-refactor-design.md": "612e2367e1f647b6735d7c1f05c377050a6779eb286d3abe0b8bacb4d7df5a06",
-    "docs/tasks/2026-09-04-remaining-gaps.md": "69093338005cb2c8b4967d08cd3e06346bbd734e7d441bc07aa0181affaeb607",
+    "docs/tasks/2026-09-04-remaining-gaps.md": "d1a61d8f41850feb4aed9ea99a1c510f725a252ab0df566d814c8d961e87259d",
     "docs/tasks/2026-09-04-topics-alignment-and-situated-character-design.md": "4413de44216c4f8c36b0b4fe6166b399b16ff0cb69395edb571c8a28fc6e482f",
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "678693f615325810848b7639e181f85d89a5d7ad449af04e362042f531ac6a1e",
