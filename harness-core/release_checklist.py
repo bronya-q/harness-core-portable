@@ -34,6 +34,7 @@ def main():
         {"id": "r2_registry_pypi", "text": "Registry listing / PyPI 至少一个可回读", "auto": False},
         {"id": "r2_alpha_release", "text": "alpha.4 或 alpha.5 Release 页面 + ZIP 回读", "auto": False},
         {"id": "r2_scope_all", "text": "全域 scope 规范化测试", "auto": True},
+        {"id": "r2_runtime_coverage", "text": "全入口 runtime context 覆盖 7/7", "auto": True},
         {"id": "r2_knowledge_route", "text": "knowledge 自动委派路由可运行", "auto": True},
         {"id": "r2_sandbox_os", "text": "文件系统沙箱达到临时隔离 + 禁写/禁网", "auto": False},
         {"id": "r2_reliability", "text": "至少 3 个构念有双标注信度数字", "auto": False},
