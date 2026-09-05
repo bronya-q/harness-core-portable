@@ -621,3 +621,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **运行时/沙箱/热加载 R1**：runtime context 状态中枢、activation `--simulate-crash` + recover、HCP public 拒绝 HTML/SVG + 资源上限、knowledge index + health indexed。
 - 新增 `tests/test_runtime_and_sandbox_gaps.py`（4 用例），unittest 总数 36。
+
+## 39. 后续处理记录（2026-09-04 续 27）
+
+- **角色/情境/UX R1**：situated 上下文视图、roleplay mode prompt 块、Dashboard 关系-情感状态卡片、Demo 后续引导。
+- 新增/更新测试，unittest 总数 37。

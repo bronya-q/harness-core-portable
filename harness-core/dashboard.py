@@ -364,6 +364,24 @@ def main():
 
     web_html = "<p>Workspaces: %d · Evidence: %d · A/B: %d · Suggest: %d</p>" % (len(workspaces), len(evidence), len(ab_records), len(suggest_hist))
 
+    # 关系-情感状态可视化
+    rel_rows = []
+    if mem.exists():
+        try:
+            rel_rows = _q(mem, "SELECT scope, rel_level, affinity, trust, label FROM emotion_state ORDER BY updated_at DESC LIMIT 10")
+        except Exception:
+            rel_rows = []
+    rel_html = ""
+    if rel_rows:
+        for r in rel_rows:
+            rel_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:60%%'>rel=%s</div>"
+                         "<span class='st-muted'>affinity=%s · trust=%s · %s</span></div>"
+                         % (_html(r.get("scope")), _html(r.get("rel_level")),
+                            _html(r.get("affinity")), _html(r.get("trust")), _html(r.get("label") or "-")))
+    else:
+        rel_html = "<p class='muted'>暂无关系-情感状态记录。</p>"
+
+
     # 公共边界快照（粗略扫描，不替代人工审查）
     boundary_patterns = [
         ("demo-alice", ["demo-alice"]),
@@ -528,6 +546,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>工程工作区 / Evidence</h2>{web_html}<div class="grid" style="margin-top:.4rem"><div class="card" style="margin:0"><h2>Workspace</h2>{ws_html}</div><div class="card" style="margin:0"><h2>Evidence Bundle</h2>{ev_html}</div></div></div>
 <div class="card"><h2>A/B 记录</h2>{ab_html}</div>
 <div class="card"><h2>知识桥 Suggest 历史</h2>{suggest_html}</div>
+<div class="card"><h2>关系-情感状态</h2>{rel_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>

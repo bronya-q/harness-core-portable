@@ -85,6 +85,19 @@ class RuntimeAndSandboxGapsTest(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_situated_context_view(self):
+        home = Path(tempfile.mkdtemp())
+        try:
+            env = self._env(home)
+            p = self._run(env, "situated", "--scope", "character:demo-archivist")
+            self.assertEqual(p.returncode, 0, p.stderr + p.stdout[-300:])
+            d = json.loads(p.stdout)
+            self.assertTrue(d["ok"])
+            self.assertIn("expression", d)
+            self.assertIn("responsibility", d)
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
     def test_public_hcp_rejects_html_svg(self):
         home = Path(tempfile.mkdtemp())
         try:

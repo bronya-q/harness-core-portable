@@ -147,6 +147,11 @@ def main():
     else:
         shutil.rmtree(demo_home, ignore_errors=True)
         line("✓ Demo 数据已自动清理（临时目录已删除）")
+    line("")
+    line("接下来可以：")
+    line("  python harness.py dashboard build   # 查看本地只读控制台")
+    line("  python harness.py memory list --scope character:alice  # 查看刚才的记忆")
+    line("  python harness.py start              # 进入新手引导")
     return 0
 
 

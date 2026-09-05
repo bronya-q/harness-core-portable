@@ -130,6 +130,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **HCP 威胁模型补充**：public 包拒绝 `.html/.htm/.svg`，增加目录文件数/大小上限
 - ✅ **知识源索引与检索**：新增 `knowledge index --source <id>`，`knowledge health` 报告 indexed / indexed_file_count
 
+## 角色/情境/UX R1
+
+- ✅ **情境化上下文视图**：新增 `python harness.py situated --scope <s>`，展示 处境/关系/共同经历/当前状态/责任/表达
+- ✅ **mode 实际策略影响**：roleplay 读取 `runtime-context.json`，把当前 mode 写入 prompt（“当前情境模式”块）
+- ✅ **关系-情感状态可视化**：Dashboard 新增「关系-情感状态」卡片
+- ✅ **Demo 后续引导**：`demo --offline` 结束后打印下一步命令（dashboard/list/start）
+
 ## 测试与发布
 
 ```text
