@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-05T15:51:17.209096+00:00",
+  "generated_at": "2026-09-05T16:15:13.823640+00:00",
   "generated_by": "release_verify.py --generate",
-  "count": 253,
+  "count": 254,
   "files": {
     ".github/ISSUE_TEMPLATE/bug-report.md": "be646848323060f02abf2fca6e0fd392e4c6b7be820bb84271c3dd492622570f",
     ".github/ISSUE_TEMPLATE/bug-report.yaml": "ec9599e5a25ef1330f54e476f69717c663133112c2052d075d8ef201411f7f8d",
@@ -81,6 +81,7 @@
     "docs/tasks/2026-09-04-v0.3-release-preparation-design.md": "d517b6d3198cb92d0bcac8810bb3ca269443a0c8a04aaa2dd85216593e2492bd",
     "docs/tasks/2026-09-04-whole-project-progress-audit.md": "ecea02e16c42d09e4f45f88427be8c1318a7c9ca153de79fb64d1220a2797e70",
     "docs/tasks/2026-09-05-history-sanitization-and-community-focus-plan.md": "739c3879741e849e9b81b01d1e67afae32dfd4fc7b3ebafa6dc38005a34899df",
+    "docs/tasks/2026-09-05-real-golden-path-trace.md": "e281c6c67bd049f1aeff2a75ae7ff4498610ae030102e8b752915ddf338fdefb",
     "docs/tasks/2026-09-05-security-audit-findings.md": "1e8b2783c8018afd181c39c8cf0bd1a6f2337ece8ec56ead727b94c6a59b44e7",
     "docs/tasks/2026-09-05-synthetic-memory-interop-fixture.md": "826987b6ba53370a10f60c166526753f6e6378f6acc85b6fb3bd990b4e25ee86",
     "docs/templates/DEPLOYMENT_RECORD_TEMPLATE.md": "e0d433d3aa434ae7fef4d362c4e13c42728c6055a651b12d373c550128562e0c",
