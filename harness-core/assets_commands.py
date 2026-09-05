@@ -1159,9 +1159,25 @@ def cmd_knowledge(args):
                     seen_snippets.add(key)
                     merged_matches.append({**m, "source_id": sid})
             accs.append({"source_id": sid, "ok": a.get("ok"), "allowed": a.get("allowed")})
+        role_division = []
+        try:
+            hd = _knowledge_health()
+            for c in hd.get("checks", []):
+                if c.get("source_id") == d.get("source_id") or role in (c.get("stewards") or []):
+                    role_division.append({"source_id": c.get("source_id"), "display_name": c.get("display_name"),
+                                          "stewards": c.get("stewards", [])})
+        except Exception:
+            pass
+        letters = []
+        try:
+            from letter_system import list_letters
+            letters = list_letters(role, limit=3)
+        except Exception:
+            pass
         acc = {"ok": True, "role": role, "allowed": True, "matches": merged_matches,
                "delegate": d, "sources": accs, "max_chars": max_chars,
-               "note": "委派匹配 + 多源只读访问（%d 个 source）返回去重上下文；不会修改/上传知识源。" % len(accs)}
+               "role_division": role_division, "letters": letters,
+               "note": "委派匹配 + 多源只读访问（%d 个 source）返回去重上下文；同时参考角色分工与近期信件；不会修改/上传知识源。" % len(accs)}
         _record_suggest_history({
             "at": time.strftime("%Y-%m-%dT%H:%M:%S"), "role": role,
             "question": question, "sources": len(accs), "matches": len(merged_matches),

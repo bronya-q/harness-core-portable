@@ -702,3 +702,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 55. 后续处理记录（2026-09-04 续 43）
 
 - knowledge index 增加 token 列表 + `search --use-index` 词重叠检索。
+
+## 56. 后续处理记录（2026-09-04 续 44）
+
+- suggest 参考 role_division/letters、MCP memory_list 含 letters、Dashboard roleplay 上下文卡。

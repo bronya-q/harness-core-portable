@@ -442,6 +442,27 @@ def main():
     else:
         role_division_html = "<p class='muted'>暂无知识源配置。</p>"
 
+    roleplay_ctx_html = ""
+    try:
+        from situated_context import build as situated_build
+    except Exception:
+        situated_build = None
+    if situated_build:
+        for sc in scopes[:3]:
+            try:
+                sit = situated_build(sc)
+                rd = sit.get("role_division") or []
+                letters = sit.get("letters") or []
+                rd_txt = ", ".join("%s→%s" % (d.get("source_id"), ",".join(d.get("stewards", []))) for d in rd[:2]) or "无"
+                roleplay_ctx_html += ("<div class='hb-row'><span>%s</span><div class='hb' style='width:70%%'>%s</div>"
+                                      "<span class='st-muted'>rd=%s · letters=%d</span></div>"
+                                      % (_html(sc), _html(sit.get("mode_id") or "no-mode"),
+                                         _html(rd_txt), len(letters)))
+            except Exception:
+                pass
+    if not roleplay_ctx_html:
+        roleplay_ctx_html = "<p class='muted'>暂无角色运行上下文记录。</p>"
+
 
     # 关系-情感状态可视化
     rel_rows = []
@@ -629,6 +650,7 @@ code{{background:#f0f0f0;padding:0 .3em;border-radius:3px}}
 <div class="card"><h2>Adapter 权限矩阵</h2>{adapter_html}</div>
 <div class="card"><h2>角色信件</h2>{letters_html}</div>
 <div class="card"><h2>角色分工（知识域 → 负责角色）</h2>{role_division_html}</div>
+<div class="card"><h2>角色运行上下文（roleplay 注入）</h2>{roleplay_ctx_html}</div>
 <div class="card"><h2>公共边界快照</h2>{boundary_html}</div>
 <div class="grid">
   <div class="card"><h2>统一事件时间线</h2>{li(events,'event_type',lambda e: f"[{_ts(e.get('recorded_at'))}] {e.get('event_type')} <span class='muted'>scope={e.get('scope')} · content={e.get('content_type')}</span>")}</div>

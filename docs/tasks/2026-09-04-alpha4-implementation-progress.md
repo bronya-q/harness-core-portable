@@ -210,6 +210,9 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **letter/situated/role_division 接入 roleplay 实际决策**：roleplay prompt 现在加入「角色分工 / 用户关联 / 近期信件」
 - ✅ **situated 视图增加信件上下文**：`situated` 输出 `letters`
 - ✅ **knowledge 全文索引检索**：`knowledge index` 存 token 列表，`knowledge search --use-index` 按词重叠打分检索
+- ✅ **knowledge suggest 主动参考 role_division / letters**：返回责任分工与近期信件
+- ✅ **MCP memory_list 显示最近信件**：`memory_list` 响应包含 `letters`
+- ✅ **Dashboard 可视化 roleplay 注入上下文**：新增「角色运行上下文（roleplay 注入）」卡片
 
 ## 测试与发布
 
