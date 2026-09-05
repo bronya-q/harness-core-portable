@@ -606,3 +606,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 35. 后续处理记录（2026-09-04 续 23）
 
 - **首次用户测试辅助**：新增 `python harness.py user-test checklist` / `template [--write]`，生成首次用户测试清单与结果模板；新增 `tests/test_user_test_commands.py`。unittest 总数 30。
+
+## 36. 后续处理记录（2026-09-04 续 24）
+
+- **批量补齐**：consent 分项扩展、GitHub Issue 模板、HCP 包 schema 强制校验、A/B 逐条指标可视化、Adversarial Review 最小冒烟。
+- 新增 `tests/test_release_hygiene.py`（2 用例），unittest 总数 32。
