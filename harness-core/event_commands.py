@@ -138,6 +138,25 @@ def cmd_usage(args):
                           "avoided_tokens": avoided, "by_source": by_source,
                           "by_provider": by_provider}, ensure_ascii=False, indent=2))
         return 0
+    if sub == "audit":
+        rows = list_usage(limit=1000)
+        by_source = {}
+        by_provider = {}
+        uncovered = []
+        for r in rows:
+            src = r.get("usage_source") or "unknown"
+            by_source[src] = by_source.get(src, 0) + 1
+            prov = r.get("provider") or "unreported"
+            by_provider[prov] = by_provider.get(prov, 0) + 1
+            if src != "provider_reported":
+                uncovered.append({"model_id": r.get("model_id"), "usage_source": src, "provider": prov})
+        print(json.dumps({"ok": True, "mode": "usage_audit", "rows": len(rows),
+                          "by_source": by_source, "by_provider": by_provider,
+                          "non_provider_rows": len(uncovered),
+                          "non_provider_samples": uncovered[:10],
+                          "note": "审计哪些入口还未上报 provider 真实 token；不代表缺失入口本身。"},
+                         ensure_ascii=False, indent=2))
+        return 0
     if sub == "baseline":
         bsub = args[1] if len(args) > 1 else ""
         if bsub == "set":
