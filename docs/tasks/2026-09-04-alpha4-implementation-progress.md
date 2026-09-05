@@ -223,6 +223,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **CI 集成 R2 本地检查**：`secret-scan` / `boundary-check` / `mcp-verify` / `release-checklist` 进入 GitHub Actions
 - ✅ **公共边界扫描 CLI**：`python harness.py boundary-check` 扫描私人标识/绝对路径/overlay，支持 allowlist
 - ✅ **release-checklist 纳入 boundary-check**：R2 勾选清单增加公共边界项
+- ✅ **knowledge 自动委派路由**：`python harness.py knowledge route --question <q> --role <r>` 返回 allow / delegate 决策
 
 ## 测试与发布
 

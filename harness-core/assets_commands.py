@@ -1069,6 +1069,41 @@ def cmd_knowledge(args):
         print(json.dumps({"ok": True, "mode": "knowledge_explain", **c,
                           "note": "知识源健康/可信度/索引状态视图。"}, ensure_ascii=False, indent=2))
         return 0 if c.get("status") == "ok" else 1
+    if sub == "route":
+        question = role = ""
+        limit = 3
+        max_chars = 200
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--question" and i + 1 < len(args1):
+                question = args1[i + 1]
+            if a == "--role" and i + 1 < len(args1):
+                role = args1[i + 1]
+            if a == "--limit" and i + 1 < len(args1):
+                limit = int(args1[i + 1])
+            if a == "--max-chars" and i + 1 < len(args1):
+                max_chars = int(args1[i + 1])
+        if not question or not role:
+            print("用法：python harness.py knowledge route --question <问题> --role <persona_id> [--limit 3] [--max-chars 200]")
+            return 1
+        d = _knowledge_delegate(question, role)
+        if not d.get("matched"):
+            print(json.dumps({"ok": True, "decision": "no_match", **d,
+                              "note": "未匹配知识域；当前角色可直接回答。"}, ensure_ascii=False, indent=2))
+            return 0
+        if d.get("allowed"):
+            hits = d.get("hits") or []
+            q = hits[0] if hits else question
+            acc = _knowledge_access(role, d["source_id"], q, limit, max_chars)
+            acc["decision"] = "allow"
+            acc["delegate"] = d
+            print(json.dumps(acc, ensure_ascii=False, indent=2))
+            return 0 if acc.get("ok") else 1
+        print(json.dumps({"ok": True, "decision": "delegate", "source_id": d.get("source_id"),
+                          "display_name": d.get("display_name"), "responsible_roles": d.get("responsible_roles"),
+                          "delegate_to": d.get("responsible_roles", [])[0] if d.get("responsible_roles") else None,
+                          "note": "当前角色无权访问；建议切换到负责角色。"}, ensure_ascii=False, indent=2))
+        return 0
     if sub == "search":
         source_id = query = ""
         limit = 10
