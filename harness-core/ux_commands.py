@@ -30,6 +30,7 @@ CONSENT_FILE = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness
 
 sys.path.insert(0, str(SKILL))
 import vector_queue  # noqa: E402
+from scope_utils import normalize_scope  # noqa: E402
 
 
 def _read_policy_example():
@@ -184,7 +185,8 @@ def cmd_doctor(json_out=False):
 
 
 def cmd_inspect(scope):
-    print(f"Scope：{scope}\n")
+    scope = normalize_scope(scope)
+    print(f"Scope：{scope}" + chr(10))
     r = _run("notebook.py", "list", "--scope", scope)
     notes = r.get("notes", []) if isinstance(r, dict) else []
     print("[经历笔记]")
@@ -194,7 +196,6 @@ def cmd_inspect(scope):
             print(f"  - [v{n.get('version')}][{n.get('kind')}] {n.get('content')[:60]}")
     else:
         print("  暂无记录")
-    # shared story core count
     s = _run("story_core.py", "get", "--namespace", "story:" + scope.split(":")[-1])
     core_obj = (s or {}).get("core") or {}
     core = core_obj.get("content") if isinstance(core_obj, dict) else None

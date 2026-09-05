@@ -78,6 +78,7 @@ def main():
     ap.add_argument("--draft", required=True)
     ap.add_argument("--evidence-dir", default=None)
     ap.add_argument("--persona", default="adversarial-review")
+    ap.add_argument("--save", default=None)
     args = ap.parse_args()
     result = review(args.draft, args.evidence_dir, args.persona)
     try:
@@ -87,6 +88,12 @@ def main():
                       "session_provenance": "smoke", "version": 1})
     except Exception:
         pass
+    if args.save:
+        out_dir = ROOT / "docs" / "tasks"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out = out_dir / ("adversarial-review-" + args.save + ".json")
+        out.write_text(json.dumps({"ok": True, **result}, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+        result["saved"] = str(out)
     print(json.dumps({"ok": True, **result}, ensure_ascii=False, indent=2))
     return 0
 
