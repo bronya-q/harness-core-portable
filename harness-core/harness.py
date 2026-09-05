@@ -64,6 +64,7 @@ PASSTHROUGH = {
     "memory-write-confirm": ["memory_write_confirm.py", ["memory-write-confirm"]],
     "letter": ["letter_system.py", ["letter"]],
     "host-guide": ["host_guide.py", ["host-guide"]],
+    "mcp-verify": ["mcp_verify.py", ["mcp-verify"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],

@@ -215,6 +215,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **Dashboard 可视化 roleplay 注入上下文**：新增「角色运行上下文（roleplay 注入）」卡片
 - ✅ **usage 覆盖审计**：`python harness.py usage audit` 列出非 provider_reported 的入口
 - ✅ **workspace 隔离运行**：`workspace sandbox <name> run --command <cmd> --isolate` 使用临时副本执行
+- ✅ **MCP 自检脚本**：`python harness.py mcp-verify` 一键跑 stdio 单测 + HTTP loopback 冒烟
 
 ## 测试与发布
 
