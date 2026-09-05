@@ -28,6 +28,7 @@ def main():
     items = [
         {"id": "r2_project_check", "text": "project-check 在干净环境全绿", "auto": _run("project_check", ["harness.py", "project-check"])["rc"] == 0},
         {"id": "r2_mcp_verify", "text": "mcp-verify 通过并在 CI 固定", "auto": _run("mcp_verify", ["harness.py", "mcp-verify"])["rc"] == 0},
+        {"id": "r2_boundary_check", "text": "公共边界扫描 boundary-check 通过", "auto": _run("boundary_check", ["harness.py", "boundary-check"])["rc"] == 0},
         {"id": "r2_host_backfill", "text": "真实宿主至少一个回填结果", "auto": False},
         {"id": "r2_user_real", "text": "首次用户真人至少一条记录", "auto": False},
         {"id": "r2_registry_pypi", "text": "Registry listing / PyPI 至少一个可回读", "auto": False},

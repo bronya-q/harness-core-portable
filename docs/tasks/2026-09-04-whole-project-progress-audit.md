@@ -734,3 +734,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 63. 后续处理记录（2026-09-04 续 51）
 
 - boundary-check CLI + allowlist + CI 接入。
+
+## 64. 后续处理记录（2026-09-04 续 52）
+
+- release-checklist 纳入 boundary-check。
