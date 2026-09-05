@@ -107,7 +107,7 @@ topics: [inventory, partial, gap, roadmap, review]
 
 | 功能 | 已完成 | 仍缺 |
 |---|---|---|
-| MCP server | ✅ R1 | Inspector / Registry / 真实宿主未做 |
+| MCP server | ✅ R1 | Inspector（HTTP loopback）已通过；Registry / 真实宿主未做 |
 | `harness_core` Python API | ✅ 基础 | 覆盖入口不全 |
 | provider usage | ✅ roleplay provider_reported | 未全入口覆盖 |
 | vector queue retry 语义 | ✅ R1 | 未做端到端持续监控面板 |

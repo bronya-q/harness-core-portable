@@ -93,25 +93,32 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
   - `character mode diff --persona <id> --mode-a <a> --mode-b <b>`
   - 输出两个模式的 display_name / capabilities / effect / 权限差异
 
-## 尝试过 / 未通过
+## MCP Inspector 外部验证（已通过）
 
-- [ ] **MCP Inspector**
-  - Windows `npx @modelcontextprotocol/inspector --cli --method tools/list python -m harness_core.adapters.mcp_server` 超时（rc=124）
-  - WSL Debian 尝试同样未取得输出
-  - 未伪造成功；下一步排查 npx/stdio target 传递，或用最小 Node MCP server 做平台对比
+- ✅ 通过 **HTTP loopback transport**：
+  - `python -m harness_core.adapters.mcp_http_server --port <port>`
+  - `npx @modelcontextprotocol/inspector --cli --format json --method tools/list --server-url http://127.0.0.1:<port>/mcp`
+  - `tools/call` 也通过（`_memory_list` 返回正常）
+- ⬜ 仍未做：Official MCP Registry 提交、Claude Code / Codex / Copilot 真实宿主验证
+- 记录见 `docs/mcp/verification.md`
+
+## 首次用户测试辅助
+
+- 新增 `python harness.py user-test checklist`：输出任务清单 + 记录字段 + protocol 路径
+- 新增 `python harness.py user-test template [--write]`：生成可填写的 `docs/user-testing/results-YYYYMMDD-HHMMSS.md`
+- **仍需真人参与**；工具只是让“找人跑”这一步更容易，不代替真实用户
 
 ## 测试与发布
 
 ```text
-unittest discover   PASS  23 tests
-release_verify      PASS  205 entries
+unittest discover   PASS  29 tests
+release_verify      PASS  208 entries
 package_selfcheck   PASS
 ```
 
 ## 下一步（按清单）
 
-1. MCP Inspector 挂起根因排查
-2. 首次同意向导在 `start` 后的引导/空态细化
-3. 高风险操作二次确认（workspace / evidence / privacy export）
-4. A/B / Evidence / Workspace 可视化
-5. 知识桥继续做“受控查询返回有限上下文”（当前 suggest 已经覆盖最小步）
+1. 首次用户反馈（当前瓶颈）
+2. 真实宿主验证（Claude Code / Codex / Copilot）
+3. Official MCP Registry 提交（需外部账号/审核）
+4. 恢复时继续补齐 `partial-implementation-inventory.md` 中 ❌ / 🟡 项

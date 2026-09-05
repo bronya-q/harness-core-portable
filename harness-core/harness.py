@@ -56,6 +56,7 @@ PASSTHROUGH = {
     "workspace": ["assets_commands.py", ["workspace"]],
     "schema": ["schema_commands.py", ["schema"]],
     "migration": ["migration_commands.py", ["migration"]],
+    "user-test": ["user_test_commands.py", ["user-test"]],
     "event": ["event_commands.py", ["event"]],
     "usage": ["event_commands.py", ["usage"]],
     "ab": ["comparison_commands.py", ["ab"]],
