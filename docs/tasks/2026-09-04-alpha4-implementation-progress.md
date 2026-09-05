@@ -199,6 +199,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **scope 再补**：`inspect` 也使用 `normalize_scope`
 - ✅ **Adversarial Review 保存**：`python harness.py adversarial --save <name>` 把审查结果写入 `docs/tasks/adversarial-review-*.json`
 - ✅ **知识源 explain 视图**：`python harness.py knowledge explain --source <id>` 展示健康/可信度/索引状态
+- ✅ **notebook / story_core 也做 scope/namespace 规范化**
+- ✅ **construct 列表过滤**：`measure construct` 不再把分隔行 `---` 当作构念
 
 ## 测试与发布
 

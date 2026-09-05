@@ -23,7 +23,7 @@ def cmd_construct():
             if line.startswith("| ") and "construct_id" in line:
                 continue
             parts = [x.strip() for x in line.strip("|").split("|")]
-            if len(parts) >= 4 and parts[0]:
+            if len(parts) >= 4 and parts[0] and parts[0] != "---" and not parts[0].startswith("|"):
                 ids.append({"construct_id": parts[0], "construct_name": parts[1], "type": parts[2]})
     print(json.dumps({"ok": True, "mode": "construct_list", "count": len(ids), "constructs": ids[:100],
                       "note": "来自 CONSTRUCT_DICTIONARY.md；只有定义，不代表信效度。"}, ensure_ascii=False, indent=2))

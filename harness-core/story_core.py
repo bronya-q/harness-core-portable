@@ -115,6 +115,12 @@ def main():
     p = sub.add_parser("diff"); p.add_argument("--namespace", required=True); p.set_defaults(fn=diff)
     p = sub.add_parser("restore"); p.add_argument("--namespace", required=True); p.add_argument("--version", type=int, required=True); p.set_defaults(fn=restore)
     args = ap.parse_args()
+    if getattr(args, "namespace", None):
+        try:
+            from scope_utils import normalize_scope
+            args.namespace = normalize_scope(args.namespace)
+        except Exception:
+            pass
     return args.fn(args)
 
 if __name__ == "__main__":

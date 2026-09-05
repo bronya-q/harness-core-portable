@@ -158,6 +158,12 @@ def main():
     p = sub.add_parser("timeline"); p.add_argument("--scope", required=True); p.set_defaults(fn=timeline)
     p = sub.add_parser("restore"); p.add_argument("--scope", required=True); p.add_argument("--version", type=int, required=True); p.set_defaults(fn=restore)
     args = ap.parse_args()
+    if getattr(args, "scope", None):
+        try:
+            from scope_utils import normalize_scope
+            args.scope = normalize_scope(args.scope)
+        except Exception:
+            pass
     return args.fn(args)
 
 if __name__ == "__main__":
