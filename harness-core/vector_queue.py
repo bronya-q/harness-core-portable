@@ -76,6 +76,22 @@ def queue_history(limit=20):
         return {"ok": False, "error": str(exc)}
 
 
+def queue_alert(stale_threshold=20, failed_threshold=5):
+    """返回向量队列告警列表（threshold 缺省值仅用于本地提示）。"""
+    try:
+        st = queue_status()
+        alerts = []
+        if not st.get("ok"):
+            return {"ok": True, "alerts": ["queue_status_unavailable"]}
+        if int(st.get("stale") or 0) >= stale_threshold:
+            alerts.append("stale_count_high:%s" % st.get("stale"))
+        if int(st.get("failed") or 0) >= failed_threshold:
+            alerts.append("failed_count_high:%s" % st.get("failed"))
+        return {"ok": True, "alerts": alerts, "thresholds": {"stale": stale_threshold, "failed": failed_threshold}}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
 def queue_status():
     """返回向量队列的持续监控摘要（不修改队列状态）。"""
     try:

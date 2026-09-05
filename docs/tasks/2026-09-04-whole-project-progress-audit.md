@@ -659,3 +659,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 - **文档继续抽象**：HYBRID / ENGINEERING 再替换一批具体示例。
 - **scope 全入口**：event / letter 也纳入 normalize_scope。
 - 新增/更新测试；unittest 总数 51。
+
+## 46. 后续处理记录（2026-09-04 续 34）
+
+- **可观测/威胁/沙箱补充**：vector queue alert、HCP 拒绝更多可执行脚本、workspace sandbox dry-run。
+- unittest 总数 52。

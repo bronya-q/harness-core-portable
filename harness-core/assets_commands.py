@@ -416,7 +416,7 @@ def _validate_package(src, target):
                     sig = zf.read(info)[:8]
                     if sig != bytes([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]):
                         issues.append("mime_mismatch_png:" + n)
-                if target == "public" and n.rsplit(".", 1)[-1].lower() in ("exe", "bat", "cmd", "sh", "ps1", "com"):
+                if target == "public" and n.rsplit(".", 1)[-1].lower() in ("exe", "bat", "cmd", "sh", "ps1", "com", "py", "js", "mjs", "ts", "rb", "pl"):
                     issues.append("executable_script:" + n)
             if total_size > 200 * 1024 * 1024:
                 issues.append("zip_too_large:" + str(total_size))
@@ -475,7 +475,7 @@ def _validate_package(src, target):
                 ext = f.suffix.lower().lstrip(".")
                 if target == "public" and ext in ("html", "htm", "svg"):
                     issues.append("untrusted_html_svg:" + str(f.relative_to(src)))
-                if target == "public" and ext in ("exe", "bat", "cmd", "sh", "ps1", "com"):
+                if target == "public" and ext in ("exe", "bat", "cmd", "sh", "ps1", "com", "py", "js", "mjs", "ts", "rb", "pl"):
                     issues.append("executable_script:" + str(f.relative_to(src)))
                 import json as _json
                 if f.suffix.lower() in (".json", ".jsonl"):
@@ -1318,6 +1318,38 @@ def cmd_workspace(args):
         shutil.rmtree(p)
         print(json.dumps({"ok": True, "released": name}, ensure_ascii=False))
         return 0
+    if sub == "sandbox":
+        name = rest[0] if rest else ""
+        command = ""
+        for i, a in enumerate(rest[1:]):
+            if a == "--command" and i + 1 < len(rest[1:]):
+                command = rest[i + 2]
+        if not name:
+            print("用法：harness.py workspace sandbox <name> --command <cmd> [--dry-run]")
+            return 1
+        lease_path = WORKSPACE_DIR / name / "workspace.json"
+        if not lease_path.exists():
+            print(json.dumps({"ok": False, "error": "workspace_not_found", "name": name}, ensure_ascii=False))
+            return 1
+        lease = read_json(lease_path)
+        allowed = lease.get("allowed_commands", []) or []
+        forbidden = lease.get("forbidden_paths", []) or []
+        bad = []
+        if lease.get("status") != "active":
+            bad.append("lease_not_active")
+        if lease.get("actual_execution") is True:
+            bad.append("actual_execution_enabled")
+        if command and command not in allowed:
+            bad.append("command_not_allowed:" + command)
+        for pth in forbidden:
+            if "*" not in pth and (Path.cwd() / pth).exists():
+                bad.append("forbidden_exists:" + pth)
+        ok = not bad
+        print(json.dumps({"ok": ok, "mode": "workspace_sandbox_dry_run", "workspace": name,
+                          "command": command, "allowed_commands": allowed,
+                          "forbidden_exists": bad, "note": "dry-run 只读检查，不是沙箱执行。"},
+                         ensure_ascii=False, indent=2))
+        return 0 if ok else 1
     print("未知 workspace 子命令：" + sub)
     return 1
 

@@ -182,6 +182,12 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **HYBRID / ENGINEERING 继续抽象**：`本机综合人格 A`、`本机知识管理员 A/B`、`local-persona/b` 等进一步替换为公共占位
 - ✅ **scope 全入口规范化**：`event add/list`、`letter send/list` 也使用 `normalize_scope`
 
+## 可观测 / 威胁 / 沙箱补充
+
+- ✅ **vector queue 告警**：`queue_alert()` 检测 stale/failed 阈值，`data status` 输出 alerts
+- ✅ **HCP 可执行脚本扩展**：public 包拒绝 `.py/.js/.mjs/.ts/.rb/.pl` 等可执行脚本
+- ✅ **workspace sandbox dry-run**：`workspace sandbox <name> --command <cmd>` 只读检查 allowed_commands / forbidden_paths / actual_execution
+
 ## 测试与发布
 
 ```text
