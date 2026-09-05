@@ -13,7 +13,8 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 
 # alpha.4 实现推进记录
 
-> ⏸️ **施工暂停 / CONSTRUCTION PAUSED**
+> 🚀 **alpha.4 已发布**：`v0.1.0-alpha.4` Pre-release 已创建并可回读。
+> 本记录保留为 alpha.4 推进存档；R2 计划见 `docs/tasks/2026-09-04-alpha.4-r2-plan.md`。
 >
 > 当前暂停批量功能推进，本记录转为存档。恢复时先核对本文件与 `docs/tasks/2026-09-04-partial-implementation-inventory.md`。
 

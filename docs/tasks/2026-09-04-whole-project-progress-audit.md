@@ -762,3 +762,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 70. 后续处理记录（2026-09-04 续 58）
 
 - Dashboard 信件线程卡。
+
+## 71. 后续处理记录（2026-09-05 续 59）
+
+- alpha.4 已发布；alpha.4 progress 标记为已发布存档。
