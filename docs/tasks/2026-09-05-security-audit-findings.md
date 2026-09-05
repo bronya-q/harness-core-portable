@@ -140,6 +140,53 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - 这是 stdio 时序/缓冲敏感问题，已重写为逐条写/逐条读；在本地与 CI 均通过（含 4 个矩阵 job）。
 - 分类：**已修复的测试稳定性问题**，并非产品功能缺陷。
 
+## 8. 审计工具链本身复核（audit-wsl.sh）
+
+> 复核对象：本机审计脚本（位于仓库外的 `../harness/bin/audit-wsl.sh`，即用户 harness 工作区的 `bin/audit-wsl.sh`）。该脚本不能仅凭“退出 0”作为全链通过证据；以下逐条记录真实调用结构与掩埋风险。
+
+### 8.1 已正确区分“严重”结果的工具
+
+- `gitleaks detect`：rc=1 记 FAIL，rc=124 超时记 FAIL。
+- `trivy fs --exit-code 1`：rc=1 记 FAIL，rc=124 超时记 FAIL。
+- 这两个工具会对“真实命中/超时”设置 `FAILED=1`，最终退出非 0。
+
+### 8.2 使用 `|| true` 会吞掉错误/超时的工具
+
+| 工具 | 当前调用 | 风险 |
+|---|---|---|
+| shellcheck | `shellcheck ... || true` | 任何失败/超时都被吞掉，只留输出行 |
+| bandit | `bandit ... || true`（且先 `-c pyproject.toml` 再回退无配置） | 未启动、Permission denied、超时都算“完成” |
+| pip-audit | `pip-audit ... || true` | 依赖风险、未安装、超时都不使脚本失败 |
+| semgrep | `semgrep --config=auto ... || true` | `--config=auto` 可能联网失败；禁网下失败被吞掉，不能证明无问题 |
+
+- 结论：**只要这些工具是 `|| true`，最终“done”就不能当作“这些扫描全部通过”。**
+- 处置：不修改脚本去制造全绿；后续要么拆分“严格”与“可选”两段，要么给每项单独记录 `rc`、超时、覆盖范围。
+
+### 8.3 pip-audit 覆盖范围不足
+
+- 脚本只在存在 `$TARGET/requirements.txt` 时运行 `pip-audit -r requirements.txt`。
+- 本项目实际依赖声明主要在：
+  - `pyproject.toml` 的 `[project.optional-dependencies]`（如 `mcp = ["mcp>=1,<2"]`）
+  - `PORTABLE_REQUIREMENTS.txt`
+- 因此当前 `pip-audit` **未覆盖项目真实依赖面**。
+- 注意：`PORTABLE_REQUIREMENTS.txt` 含 `python>=3.13` 这类版本约束，**不能未经判断当普通 pip requirements 安装**。
+
+### 8.4 Semgrep 联网依赖
+
+- `--config=auto` 需要联网拉取规则；在禁网环境下失败不代表仓库无问题。
+- 建议：本地固定规则集（如 `--config=python` 或本地规则文件），并记录规则来源与版本，避免“禁网失败 = 通过”。
+
+### 8.5 缺失工具只记录 missing
+
+- 脚本对未安装工具只追加到 `missing` 数组，最终只打印“未安装工具: ...”，不会使退出码受影响。
+- 因此必须逐工具列明：**可用 / 未安装 / 已运行 / 失败 / 超时**，不能只看脚本最后一行。
+
+### 8.6 对“审计结果”的修正表述
+
+- 外部审计已执行：unittest 66 项 2 errors、gitleaks 4 findings、bandit Permission denied、trivy/semgrep/pip-audit 未完成。
+- 本仓库侧独立验证：unittest 71 项通过、package_selfcheck 通过、secret/boundary history fail-closed 全绿、mcp-verify 通过。
+- 两者不能混同：外部确认的“环境限制/未运行”不因本仓库本地通过而变成已通过；本仓库本地通过也不代表 WSL 禁网沙箱全链完成。
+
 ## 处置状态
 
 | 项 | 状态 |
