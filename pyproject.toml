@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "harness-core-portable"
-version = "0.1.0a3"
+version = "0.1.0a4"
 description = "Local-first AI role memory, context visibility, and persona/knowledge/engineering runtime."
 readme = "README.md"
 requires-python = ">=3.11"
