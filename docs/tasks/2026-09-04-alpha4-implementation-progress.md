@@ -188,6 +188,12 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **HCP 可执行脚本扩展**：public 包拒绝 `.py/.js/.mjs/.ts/.rb/.pl` 等可执行脚本
 - ✅ **workspace sandbox dry-run**：`workspace sandbox <name> --command <cmd>` 只读检查 allowed_commands / forbidden_paths / actual_execution
 
+## 测量学 CLI / 宿主导航 / 知识搜索
+
+- ✅ **测量学 CLI**：`python harness.py measure construct` 列出构念字典；`measure reliability --file <r.json>` 计算 Cohen’s κ / Krippendorff’s α
+- ✅ **宿主导航**：`python harness.py host-guide` 输出 Claude Code / Codex / Copilot 接入步骤
+- ✅ **知识源 search 别名**：`python harness.py knowledge search --source <id> --query <q>`
+
 ## 测试与发布
 
 ```text

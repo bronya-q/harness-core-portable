@@ -1028,6 +1028,26 @@ def cmd_knowledge(args):
         result = _knowledge_index(source_id)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("ok") else 1
+    if sub == "search":
+        source_id = query = ""
+        limit = 10
+        max_chars = 200
+        args1 = args[1:]
+        for i, a in enumerate(args1):
+            if a == "--source" and i + 1 < len(args1):
+                source_id = args1[i + 1]
+            if a == "--query" and i + 1 < len(args1):
+                query = args1[i + 1]
+            if a == "--limit" and i + 1 < len(args1):
+                limit = int(args1[i + 1])
+            if a == "--max-chars" and i + 1 < len(args1):
+                max_chars = int(args1[i + 1])
+        if not source_id or not query:
+            print("用法：python harness.py knowledge search --source <source_id> --query <text> [--limit 10] [--max-chars 200]")
+            return 1
+        result = _knowledge_access("", source_id, query, limit, max_chars)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("ok") else 1
     if sub == "access":
         role = source_id = query = ""
         limit = 10

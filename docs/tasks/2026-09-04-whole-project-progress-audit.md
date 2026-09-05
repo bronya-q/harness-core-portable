@@ -664,3 +664,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **可观测/威胁/沙箱补充**：vector queue alert、HCP 拒绝更多可执行脚本、workspace sandbox dry-run。
 - unittest 总数 52。
+
+## 47. 后续处理记录（2026-09-04 续 35）
+
+- **测量学 CLI**：`measure construct` / `measure reliability`；**宿主导航** `host-guide`；**knowledge search 别名**。
+- 新增 `tests/test_measurement_admin.py`；unittest 总数 55。
