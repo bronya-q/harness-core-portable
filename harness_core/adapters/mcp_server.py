@@ -42,9 +42,15 @@ def _memory_list(scope: str = "character:demo") -> dict:
     p = subprocess.run([_sys.executable, str(_SKILL / "notebook.py"), "list", "--scope", scope],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
     try:
-        return json.loads(p.stdout)
+        result = json.loads(p.stdout)
     except Exception:
         return {"ok": False, "raw": p.stdout[-300:], "stderr": p.stderr[-300:]}
+    try:
+        from letter_system import list_letters
+        result["letters"] = list_letters(scope, limit=3)
+    except Exception:
+        result["letters"] = []
+    return result
 
 
 def _events_list(limit: int = 10) -> dict:
