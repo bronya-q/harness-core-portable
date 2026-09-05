@@ -85,6 +85,50 @@ def cmd_template(write=False):
     return 0
 
 
+def cmd_simulate(write=True):
+    """模拟首测流程：跑 demo + dashboard + 找记忆，生成一份标记为 simulated 的结果文件。
+    这不是真实用户结果，只用于测试 pipeline。
+    """
+    import subprocess
+    home = Path.home() / ".dsh"
+    env = dict(__import__("os").environ)
+    results = []
+    steps = []
+    def run(*args):
+        p = subprocess.run([sys.executable, str(ROOT / "harness.py"), *args],
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", env=env, timeout=120)
+        steps.append({"args": list(args), "rc": p.returncode})
+        results.append({"pass": p.returncode == 0})
+        return p
+    run("demo", "--offline", "--keep")
+    run("dashboard", "build")
+    run("memory", "list", "--scope", "character:alice")
+    ts = time.strftime("%Y%m%d-%H%M%S")
+    md = [
+        "# 首次用户测试模拟记录 " + ts,
+        "",
+        "> ⚠️ 这是 **simulated** 自动管线演示，不是真实用户结果。",
+        "",
+        "## 步骤",
+        "",
+    ]
+    for st in steps:
+        md.append("- `" + " ".join(st["args"]) + "` rc=" + str(st["rc"]))
+    md += ["", "## 结果（模拟）", "",
+           "| participant_id | completion | time_seconds | where_stuck | wrong_commands_count | ... |",
+           "|---|---|---|---|---|---|",
+           "| simulated-p1 | pass | n/a | n/a | 0 | ... |", ""]
+    content = chr(10).join(md) + chr(10)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUT_DIR / ("simulated-" + ts + ".md")
+    out.write_text(content, encoding="utf-8")
+    print(json.dumps({"ok": True, "mode": "user_test_simulate", "output": str(out),
+                      "steps": len(steps), "all_pass": all(r["pass"] for r in results),
+                      "note": "模拟管线；不是真实用户。"}, ensure_ascii=False, indent=2))
+    return 0 if all(r["pass"] for r in results) else 1
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
@@ -100,6 +144,8 @@ def main():
         return cmd_checklist()
     if sub == "template":
         return cmd_template("--write" in args)
+    if sub == "simulate":
+        return cmd_simulate()
     print(__doc__)
     return 1
 
