@@ -61,6 +61,36 @@ def list_letters(scope=None, limit=20):
     return letters[-limit:][::-1]
 
 
+def threads(scope=None, limit=20):
+    """按 in_reply_to 链构建信件线程视图。"""
+    d = _load()
+    letters = d.get("letters", [])
+    if scope:
+        letters = [x for x in letters if x.get("from") == scope or x.get("to") == scope]
+    by_id = {x["id"]: x for x in letters}
+    roots = [x for x in letters if not x.get("in_reply_to")]
+    # 把回复挂到根/父
+    threads_out = []
+    for root in roots:
+        chain = [root]
+        cur = root
+        while True:
+            child = next((x for x in letters if x.get("in_reply_to") == cur.get("id")), None)
+            if not child:
+                break
+            chain.append(child)
+            cur = child
+        threads_out.append(chain)
+    if not roots:
+        # 全部都是回复时，按 in_reply_to 聚合成伪根
+        groups = {}
+        for x in letters:
+            groups.setdefault(x.get("in_reply_to") or x.get("id"), []).append(x)
+        for g in groups.values():
+            threads_out.append(sorted(g, key=lambda x: x.get("created_at", "")))
+    return threads_out[-limit:][::-1]
+
+
 def reply(letter_id, frm, body):
     d = _load()
     letters = d.get("letters", [])
@@ -125,6 +155,22 @@ def main():
             scope = normalize_scope(scope)
         letters = list_letters(scope or None, limit)
         print(json.dumps({"ok": True, "letters": letters}, ensure_ascii=False, indent=2))
+        return 0
+    if sub == "thread":
+        scope = ""
+        limit = 20
+        i = 1
+        while i < len(args):
+            if args[i] == "--scope" and i + 1 < len(args):
+                scope = args[i + 1]; i += 2
+            elif args[i] == "--limit" and i + 1 < len(args):
+                limit = int(args[i + 1]); i += 2
+            else:
+                i += 1
+        if scope:
+            scope = normalize_scope(scope)
+        t = threads(scope or None, limit)
+        print(json.dumps({"ok": True, "threads": t}, ensure_ascii=False, indent=2))
         return 0
     if sub == "reply":
         lid = frm = body = ""
