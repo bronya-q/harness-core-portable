@@ -457,6 +457,10 @@ def _validate_package(src, target):
             issues.append("private_local_manifest")
     if not manifest.get("persona_id"):
         issues.append("missing_persona_id")
+    if "schema_version" not in manifest or not isinstance(manifest.get("schema_version"), int) or manifest["schema_version"] < 1:
+        issues.append("missing_schema_version")
+    if "minimum_core_version" in manifest and not isinstance(manifest.get("minimum_core_version"), (str, int)):
+        issues.append("invalid_minimum_core_version")
     # absolute path scan in all text files
     root = src if src.is_dir() else Path(manifest_path)
     if src.is_dir():

@@ -631,3 +631,8 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 
 - **数据/测量/可观测 R1**：provider usage 记录器、工作流来源分组条、Krippendorff’s alpha、vector queue 历史监控。
 - 更新测试；unittest 总数 37（新增 krippendorff 用例与 vector history 断言）。
+
+## 41. 后续处理记录（2026-09-04 续 29）
+
+- **工程/发布工程 R1**：package schema 校验（validate+install）、migration policy 声明、adapter permission schema、secret-scan、断开 adapter 测试、scope 规范化、私人文档迁移设计。
+- 更新测试；unittest 总数 40。

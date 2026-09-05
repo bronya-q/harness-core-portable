@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adapter_id": "harness-core-mcp",
+  "adapter_type": "mcp",
+  "capabilities": ["memory_read", "event_read", "usage_read"],
+  "allowed_scopes": ["character:demo-archivist", "character:demo-storykeeper"],
+  "network": "none",
+  "autonomous": false,
+  "max_memory_chars": 1200,
+  "max_knowledge_snippets": 3
+}

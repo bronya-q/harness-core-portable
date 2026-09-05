@@ -28,6 +28,9 @@ BACKUP_ROOT = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-
 PRIVACY_DIR = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness-dashboard"
 CONSENT_FILE = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "consent.json"
 
+sys.path.insert(0, str(SKILL))
+from scope_utils import normalize_scope  # noqa: E402
+
 
 def _run(script, *args):
     p = subprocess.run([sys.executable, str(SKILL / script), *args],
@@ -206,6 +209,7 @@ code{background:#f0f0f0;padding:.1rem .3rem;border-radius:3px}</style></head><bo
         if not q:
             print("用法：harness.py memory search --query <query> [--scope <scope>] [--limit 10]")
             return 1
+        scope = normalize_scope(scope)
         exact = _run("memory_store.py", "search", "--query", q, "--scope", scope or "default", "--limit", str(limit))
         if isinstance(exact, list) and exact:
             print(json.dumps({"ok": True, "source": "exact_substring", "results": exact,
