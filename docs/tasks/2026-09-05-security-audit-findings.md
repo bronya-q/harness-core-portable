@@ -33,8 +33,8 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - 这些是**私人人格 scope / 本机路径标识**，属于可识别私人内容的元信息。
 - 未在本次检查中发现真实对话正文/日记文本被纳入公开提交（主要是命令示例和 scope 名）。
 - 风险：Git 历史可回溯；fork/缓存可能留存。
-- 处置：暂时不重写历史（会破坏 fork 与发布记录）；在后续需要时用 `git filter-repo` / BFG 清洗，并同步轮换/脱敏本地实际私人库。
-- 建议：任何新提交前先跑 `python harness.py boundary-check`。
+- 处置：已另建 [历史清理、安全处置与社区聚焦整改方案](2026-09-05-history-sanitization-and-community-focus-plan.md)。当前只完成事实核对，未在日常工作副本执行历史重写；是否 force-push、重打 tag、清理 GitHub 缓存，需维护窗口和明确授权。
+- 建议：任何新提交前先跑 `python harness.py boundary-check`，并按整改方案执行 secret / boundary 扫描。
 
 ## 3. 记忆系统 + MCP 持久化注入面
 
@@ -67,7 +67,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
 | 项 | 状态 |
 |---|---|
 | secret.txt | ✅ 无真实密钥 |
-| 私人人格历史标识 | ⚠️ 存在，建议未来清洗 |
+| 私人人格历史标识 | ⚠️ 存在，已登记历史清理方案；暂未授权重写 |
 | MCP memory_list 暴露面 | 🟡 当前暴露有限；需加 provenance 过滤 |
 | 记忆投毒防护 | ❌ 未实现，需后续 |
 | CI workflow | ✅ 无风险 |

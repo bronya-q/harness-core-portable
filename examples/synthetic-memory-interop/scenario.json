@@ -128,6 +128,36 @@
       "supersedes": ["memory-001"]
     }
   ],
+  "reviews": [
+    {
+      "review_id": "review-001",
+      "candidate_id": "candidate-001",
+      "decision": "approved",
+      "result_memory_id": "memory-001",
+      "reviewed_by": "fictional-user-alex"
+    },
+    {
+      "review_id": "review-002",
+      "candidate_id": "candidate-002",
+      "decision": "approved",
+      "result_memory_id": "memory-002",
+      "reviewed_by": "fictional-user-alex"
+    },
+    {
+      "review_id": "review-003",
+      "candidate_id": "candidate-003",
+      "decision": "approved",
+      "result_memory_id": "memory-003",
+      "reviewed_by": "fictional-user-alex"
+    },
+    {
+      "review_id": "review-004",
+      "candidate_id": "candidate-004",
+      "decision": "approved",
+      "result_memory_id": "memory-004",
+      "reviewed_by": "fictional-user-alex"
+    }
+  ],
   "requests": [
     {
       "request_id": "request-001",
@@ -139,6 +169,7 @@
       "expected": {
         "provided_memory_ids": [],
         "response_mode": "normal",
+        "response": "这是一个虚构的本地记忆演示项目，用来检查候选审核和后续读取。",
         "permission": "not_applicable"
       }
     },
@@ -151,6 +182,7 @@
       "expected": {
         "provided_memory_ids": ["memory-001"],
         "response_mode": "concise",
+        "response": "这是一个检查记忆来源、审核和实际读取的本地演示。",
         "permission": "not_applicable"
       }
     },
@@ -163,6 +195,7 @@
       "expected": {
         "provided_memory_ids": ["memory-001"],
         "response_mode": "detailed",
+        "response": "Evidence 保存实际发生过的原始记录，方便追溯来源；Approved Memory 保存经过用户审核、允许在以后继续参考的内容。原始记录不会因为被系统看见，就自动变成长期偏好。",
         "memory_effects": {"memory-001": "overridden_by_current_intent"},
         "creates_candidate": false,
         "permission": "not_applicable"
@@ -178,6 +211,7 @@
       "expected": {
         "provided_memory_ids": ["memory-001", "memory-002"],
         "response_mode": "detailed",
+        "response": "我会先核对同步失败发生在哪一步，再检查输入、权限和工具返回；审查记录里会保留失败证据，避免为了简短省掉必要的排查信息。",
         "memory_effects": {
           "memory-001": "lower_priority_general_preference",
           "memory-002": "selected_specific_preference"
@@ -195,6 +229,7 @@
       "expected": {
         "provided_memory_ids": ["memory-003"],
         "response_mode": "confirmation_request",
+        "response": "我可以先准备发布步骤，但还不能替你发布。请明确确认这一次发布操作。",
         "permission": "confirmation_required",
         "executed": false
       }
@@ -209,6 +244,7 @@
         "provided_memory_ids": ["memory-004"],
         "excluded_memory_ids": {"memory-001": "superseded"},
         "response_mode": "task_appropriate",
+        "response": "流程会先保存原始证据，再提出候选交给用户审核；只有批准后的记忆才会进入后续请求。回答长度按当前问题需要决定。",
         "permission": "not_applicable"
       }
     }
