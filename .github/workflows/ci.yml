@@ -31,5 +31,6 @@ jobs:
         run: |
           python harness.py secret-scan
           python harness.py boundary-check
+          python harness.py runtime-coverage
           python harness.py mcp-verify
           python harness.py release-checklist

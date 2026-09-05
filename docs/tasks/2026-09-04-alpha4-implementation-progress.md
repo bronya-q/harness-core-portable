@@ -228,6 +228,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **workspace 列表返回 runtime_context**：runtime 热挂载状态接入 workspace 前端
 - ✅ **memory list 返回 runtime_context**
 - ✅ **runtime-coverage 审计**：`python harness.py runtime-coverage` 统计 7/7 入口消费 runtime context
+- ✅ **CI/清单纳入 runtime-coverage**：GitHub Actions + release-checklist 自动勾选
 
 ## 测试与发布
 

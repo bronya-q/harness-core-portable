@@ -754,3 +754,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 68. 后续处理记录（2026-09-04 续 56）
 
 - memory list runtime、doctor runtime、runtime-coverage 7/7。
+
+## 69. 后续处理记录（2026-09-04 续 57）
+
+- CI 和 release-checklist 纳入 runtime-coverage。
