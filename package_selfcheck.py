@@ -56,7 +56,7 @@ def main():
         issues.extend(data_lr.get("issues", []))
 
     # 1c) 标准库功能回归测试
-    p_ut = subprocess.run([sys.executable, "-m", "unittest", "discover"], cwd=str(ROOT),
+    p_ut = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests"], cwd=str(ROOT),
                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
     checks["unittest"] = {"rc": p_ut.returncode, "tail": p_ut.stdout[-300:]}
     if p_ut.returncode != 0:

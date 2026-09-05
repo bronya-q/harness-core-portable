@@ -1,9 +1,9 @@
 ---
 title: alpha.4 实现推进记录
-status: in_progress
+status: archived
 kind: progress
 date: 2026-09-04
-updated_at: 2026-09-04
+updated_at: 2026-09-05
 owner_role: release-engineer
 target_version: v0.1.0-alpha.4
 public: true
