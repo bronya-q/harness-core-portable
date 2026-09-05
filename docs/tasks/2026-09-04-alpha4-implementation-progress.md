@@ -219,6 +219,7 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - ✅ **项目一键体检**：`python harness.py project-check` 聚合 package_selfcheck / mcp-verify / secret-scan / migration_check
 - ✅ **信件会话线程**：`python harness.py letter thread --scope <s>` 按 in_reply_to 链展示信件线程
 - ✅ **首次用户测试模拟管线**：`python harness.py user-test simulate` 跑 demo + dashboard + memory list，生成 simulated 结果文件
+- ✅ **R2 发布勾选清单**：`python harness.py release-checklist` 输出 R2 DoD 自动/人工勾选项
 
 ## 测试与发布
 
