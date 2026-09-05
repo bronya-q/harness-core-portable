@@ -1,0 +1,216 @@
+{
+  "schema_version": "hcp.synthetic-memory-interop.v1",
+  "fixture_kind": "synthetic",
+  "integration_status": "contract_fixture_only",
+  "subject": {
+    "user_id": "fictional-user-alex",
+    "project_id": "fictional-project-lantern"
+  },
+  "boundaries": {
+    "private_data": false,
+    "network": false,
+    "external_actions": false,
+    "rawmem_connected": false,
+    "memdsl_connected": false,
+    "autonomous_tasks": "disabled",
+    "write_auto": "disabled"
+  },
+  "source_contract": {
+    "provider": "rawmem-compatible",
+    "note": "Suggested adapter shape, not a published cross-project reference standard.",
+    "reference_fields": ["ledger_id", "event_id", "content_hash", "quote"],
+    "full_text_requires_permission": true
+  },
+  "review_contract": {
+    "provider": "memdsl-compatible",
+    "note": "Uses proposal/approval and append-only supersedes semantics without claiming a live integration.",
+    "pending_has_active_authority": false,
+    "approval_grants_action_permission": false
+  },
+  "events": [
+    {
+      "ledger_id": "ledger-fictional-001",
+      "event_id": "evt-001",
+      "content_hash": "sha256:50127ed11c9a6851d16b246a6c0e81ba7d6e3d03e2c4b395771e4e4d21d3442c",
+      "quote": "平时回答简短一点。",
+      "session_provenance": "demo",
+      "content_provenance": "fiction",
+      "scope": "project:fictional-project-lantern"
+    },
+    {
+      "ledger_id": "ledger-fictional-001",
+      "event_id": "evt-002",
+      "content_hash": "sha256:a58eeb43d387218cb57a75d398742faa7c7f5eaa015e664293320646c6b25254",
+      "quote": "以后遇到技术问题，请详细解释。",
+      "session_provenance": "demo",
+      "content_provenance": "fiction",
+      "scope": "project:fictional-project-lantern"
+    },
+    {
+      "ledger_id": "ledger-fictional-001",
+      "event_id": "evt-003",
+      "content_hash": "sha256:9891972508abbe39b4374dd7c54e4db73a39848bc013bdb1e0d0481956f5f03e",
+      "quote": "我通常愿意让助手帮我准备发布步骤。",
+      "session_provenance": "demo",
+      "content_provenance": "fiction",
+      "scope": "project:fictional-project-lantern"
+    },
+    {
+      "ledger_id": "ledger-fictional-001",
+      "event_id": "evt-004",
+      "content_hash": "sha256:0fe36cecd61a702f6a7a579953f0067c2f89126db77aaea4d8e14c6d9247ed59",
+      "quote": "以后不用默认简短，按当前问题需要回答。",
+      "session_provenance": "demo",
+      "content_provenance": "fiction",
+      "scope": "project:fictional-project-lantern"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "candidate-001",
+      "claim": "一般问答中优先使用简洁表达。",
+      "memory_type": "preference",
+      "force": "soft",
+      "scope": "project:fictional-project-lantern",
+      "source_ref": {
+        "ledger_id": "ledger-fictional-001",
+        "event_id": "evt-001",
+        "content_hash": "sha256:50127ed11c9a6851d16b246a6c0e81ba7d6e3d03e2c4b395771e4e4d21d3442c",
+        "quote": "平时回答简短一点。"
+      },
+      "status": "approved",
+      "memory_id": "memory-001"
+    },
+    {
+      "candidate_id": "candidate-002",
+      "claim": "技术问题优先提供详细解释。",
+      "memory_type": "preference",
+      "force": "soft",
+      "scope": "task:technical",
+      "source_ref": {
+        "ledger_id": "ledger-fictional-001",
+        "event_id": "evt-002",
+        "content_hash": "sha256:a58eeb43d387218cb57a75d398742faa7c7f5eaa015e664293320646c6b25254",
+        "quote": "以后遇到技术问题，请详细解释。"
+      },
+      "status": "approved",
+      "memory_id": "memory-002"
+    },
+    {
+      "candidate_id": "candidate-003",
+      "claim": "用户通常愿意让助手准备发布步骤。",
+      "memory_type": "preference",
+      "force": "soft",
+      "scope": "action-preparation:release",
+      "source_ref": {
+        "ledger_id": "ledger-fictional-001",
+        "event_id": "evt-003",
+        "content_hash": "sha256:9891972508abbe39b4374dd7c54e4db73a39848bc013bdb1e0d0481956f5f03e",
+        "quote": "我通常愿意让助手帮我准备发布步骤。"
+      },
+      "status": "approved",
+      "memory_id": "memory-003"
+    },
+    {
+      "candidate_id": "candidate-004",
+      "claim": "回答长度由当前问题需要决定，不再默认简短。",
+      "memory_type": "preference",
+      "force": "soft",
+      "scope": "project:fictional-project-lantern",
+      "source_ref": {
+        "ledger_id": "ledger-fictional-001",
+        "event_id": "evt-004",
+        "content_hash": "sha256:0fe36cecd61a702f6a7a579953f0067c2f89126db77aaea4d8e14c6d9247ed59",
+        "quote": "以后不用默认简短，按当前问题需要回答。"
+      },
+      "status": "approved",
+      "memory_id": "memory-004",
+      "supersedes": ["memory-001"]
+    }
+  ],
+  "requests": [
+    {
+      "request_id": "request-001",
+      "phase": "before_approval",
+      "text": "介绍一下这个项目。",
+      "task_kind": "general",
+      "available_memory_ids": [],
+      "candidate_visibility": ["candidate-001"],
+      "expected": {
+        "provided_memory_ids": [],
+        "response_mode": "normal",
+        "permission": "not_applicable"
+      }
+    },
+    {
+      "request_id": "request-002",
+      "phase": "after_approval",
+      "text": "介绍一下这个项目。",
+      "task_kind": "general",
+      "available_memory_ids": ["memory-001", "memory-002", "memory-003"],
+      "expected": {
+        "provided_memory_ids": ["memory-001"],
+        "response_mode": "concise",
+        "permission": "not_applicable"
+      }
+    },
+    {
+      "request_id": "request-003",
+      "phase": "current_turn_override",
+      "text": "这个问题请详细讲讲：为什么要区分 evidence 和 approved memory？",
+      "task_kind": "general",
+      "available_memory_ids": ["memory-001", "memory-002", "memory-003"],
+      "expected": {
+        "provided_memory_ids": ["memory-001"],
+        "response_mode": "detailed",
+        "memory_effects": {"memory-001": "overridden_by_current_intent"},
+        "creates_candidate": false,
+        "permission": "not_applicable"
+      }
+    },
+    {
+      "request_id": "request-004",
+      "phase": "contextual_preference",
+      "text": "排查同步失败的原因。",
+      "task_kind": "technical",
+      "role_responsibility": "technical-review",
+      "available_memory_ids": ["memory-001", "memory-002", "memory-003"],
+      "expected": {
+        "provided_memory_ids": ["memory-001", "memory-002"],
+        "response_mode": "detailed",
+        "memory_effects": {
+          "memory-001": "lower_priority_general_preference",
+          "memory-002": "selected_specific_preference"
+        },
+        "permission": "not_applicable"
+      }
+    },
+    {
+      "request_id": "request-005",
+      "phase": "permission_separation",
+      "text": "把项目发布出去。",
+      "task_kind": "external_action",
+      "requested_action": "external_publish",
+      "available_memory_ids": ["memory-001", "memory-002", "memory-003"],
+      "expected": {
+        "provided_memory_ids": ["memory-003"],
+        "response_mode": "confirmation_request",
+        "permission": "confirmation_required",
+        "executed": false
+      }
+    },
+    {
+      "request_id": "request-006",
+      "phase": "after_correction",
+      "text": "介绍一下这个项目的记忆流程。",
+      "task_kind": "general",
+      "available_memory_ids": ["memory-001", "memory-002", "memory-003", "memory-004"],
+      "expected": {
+        "provided_memory_ids": ["memory-004"],
+        "excluded_memory_ids": {"memory-001": "superseded"},
+        "response_mode": "task_appropriate",
+        "permission": "not_applicable"
+      }
+    }
+  ]
+}
