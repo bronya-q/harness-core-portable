@@ -726,3 +726,7 @@ MCP 外部生态：尚未 Inspector/Registry/host-tested
 ## 61. 后续处理记录（2026-09-04 续 49）
 
 - release-checklist 命令。
+
+## 62. 后续处理记录（2026-09-04 续 50）
+
+- CI 加入 R2 本地检查（secret-scan / mcp-verify / release-checklist）。
