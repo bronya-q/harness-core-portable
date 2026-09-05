@@ -68,10 +68,30 @@ def build(scope=None):
                                         "capabilities": m.get("capabilities", [])}
             except Exception:
                 pass
+    # 用户关联处境
+    user_relation = {"user_scope": "user", "relation_to_user": rel,
+                     "note": "用户关联处境：基于关系状态 + 用户纠错/偏好记录，当前为只读视图。"}
+
+    # 角色分工/知识域负责人
+    role_division = []
+    sources_path = Path(os.environ.get("DSH_HOME", Path.home() / ".dsh")) / "harness" / "knowledge-sources.json"
+    if not sources_path.exists():
+        sources_path = SKILL.parent / "knowledge-sources.example.json"
+    if sources_path.exists():
+        try:
+            scfg = json.loads(sources_path.read_text(encoding="utf-8"))
+            for s in scfg.get("sources", []):
+                role_division.append({"source_id": s.get("source_id"), "display_name": s.get("display_name"),
+                                      "stewards": s.get("stewards", []), "default_access": s.get("default_access")})
+        except Exception:
+            pass
+
     return {"scope": scope, "persona_id": persona_id, "mode_id": mode_id,
             "situation": {"active_persona": persona_id, "active_mode": mode_id,
                           "role": "当前角色/情境模式"},
             "relationship": rel,
+            "user_relation": user_relation,
+            "role_division": role_division,
             "shared_experience": {"notebooks": notes[:3], "story_core": story_rows[:2]},
             "current_state": {"mode_effects": mode_effects or {},
                               "autonomous": "disabled", "network": "none"},

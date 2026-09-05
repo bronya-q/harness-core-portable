@@ -168,6 +168,13 @@ topics: [alpha4, progress, knowledge, memory, dashboard, ngram, consent]
 - 完成后显示 id / version / undo 命令
 - 只监听 `127.0.0.1`，不自动上传
 
+## 角色分工 / 信件 / 切身化 / 用户关联
+
+- ✅ **角色信件系统**：`python harness.py letter send|list|reply`，Dashboard 新增「角色信件」卡片
+- ✅ **独立角色掌握知识域**：Dashboard 知识域网格中 steward 标注为 `owner · steward`
+- ✅ **角色分工**：`situated` 视图新增 `role_division`（source → stewards）
+- ✅ **切身化 / 用户关联处境**：`situated` 视图新增 `user_relation`（关系状态 + 用户关联说明）
+
 ## 测试与发布
 
 ```text
