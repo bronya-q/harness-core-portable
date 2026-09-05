@@ -27,3 +27,8 @@ jobs:
         run: python package_selfcheck.py
       - name: Unit tests
         run: python -m unittest discover
+      - name: R2 local checks
+        run: |
+          python harness.py secret-scan
+          python harness.py mcp-verify
+          python harness.py release-checklist
