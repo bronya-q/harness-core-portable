@@ -83,7 +83,9 @@ python harness.py demo --offline
 
 ## 本地 Dashboard 预览
 
-![Harness Core Portable 本地控制台预览](docs/images/harness-dashboard-preview.png)
+[![Harness Core Portable 本地控制台预览（长图）](docs/images/harness-dashboard-preview.png)](docs/images/harness-dashboard-preview.png)
+
+> 上方是完整长图；在 GitHub 上点开图片可查看完整 Dashboard。
 
 本地只读 HTML 控制台（由 `demo --offline --keep` + `dashboard build` + 无头浏览器生成的**真实合成数据截图**，不包含任何真实用户数据）。运行：
 
