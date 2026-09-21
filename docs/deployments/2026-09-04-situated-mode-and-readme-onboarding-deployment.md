@@ -5,7 +5,7 @@ kind: deployment-record
 date: 2026-09-04
 deployed_at: 2026-09-04
 version: main
-source_commit: 3e29340
+source_commit: a72af82
 target: github-main
 deployed_by: bronya-q
 public: true
@@ -32,12 +32,12 @@ topics: [readme, mode, situated-character, onboarding]
 
 ## 4. 精确版本
 
-- 最新 commit: `3e29340`
+- 最新 commit: `a72af82`
 - release manifest count: 153
 
 ## 5. 涉及文件
 
-见 commit `00935a0` / `628ac05` / `d218ee2` / `3e29340`。
+见 commit `aad0e18` / `a258ecc` / `175ac14` / `a72af82`。
 
 ## 6. 执行步骤
 

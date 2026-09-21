@@ -5,7 +5,7 @@ kind: deployment-record
 date: 2026-09-04
 deployed_at: 2026-09-04
 version: v0.1.0-alpha.3
-source_commit: 3201a21
+source_commit: 9cb83c7
 target: github
 deployed_by: bronya-q
 public: true
@@ -35,7 +35,7 @@ topics: [release, alpha, github, mcp, character, workspace]
 
 ## 4. 精确版本
 
-- commit: `3201a21`
+- commit: `9cb83c7`
 - tag: `v0.1.0-alpha.3`
 - release manifest count: 182（以 tag 冻结点为准）
 

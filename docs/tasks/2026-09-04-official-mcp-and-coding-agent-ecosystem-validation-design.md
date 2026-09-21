@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: ecosystem-integration-review
-source_commit: 83e724b
+source_commit: e34daf5
 target_version: v0.5+
 public: true
 contains_private_data: false

@@ -6,7 +6,7 @@ date: 2026-09-05
 verified_at: 2026-09-05
 version: v0.1.0-alpha.4
 release_id: 383167139
-source_commit: c253d74
+source_commit: 6397a80
 target: github
 verified_by: external-audit
 public: true
@@ -33,7 +33,7 @@ assets: 0
 ```text
 tag: v0.1.0-alpha.4 (annotated, unsigned)
 tag object: 8923a9c9e8c4d1eff398f133325a221400d0bbf2
-frozen commit: c253d74534fba7a99ec9e2f466823709046aa0e6
+frozen commit: 6397a80a84e17c1e5c19b2b6f12f08a4bdee9ff4
 verified: false
 reason: unsigned
 ```
@@ -59,7 +59,7 @@ unittest discover   PASS  58 tests
 ### 最初失败（audit 时）
 
 ```text
-run: 33952129886   (alpha.4 冻结提交 c253d74)
+run: 33952129886   (alpha.4 冻结提交 6397a80)
 conclusion: failure
 Ubuntu 3.13   package_selfcheck 失败
 Ubuntu 3.11   跑到 unit tests 后被取消
@@ -69,7 +69,7 @@ Windows 3.11/3.13  被取消
 ### 已修复
 
 - 重写 `tests/test_mcp_server.py`（逐条写/逐条读，降低时序敏感）。
-- 后续 push（`bc0bfb2`、`cf52ee5`）CI 已通过：
+- 后续 push（`aab16b9`、`5fe1753`）CI 已通过：
 
 ```text
 run 33952679446   completed success

@@ -17,7 +17,7 @@ topics: [security, golden-path, trace, memory, rollback, confirmation]
 ## 1. 环境与基线
 
 - 仓库：`harness-core-portable-repo`
-- 基线提交：`32673ca`
+- 基线提交：`dafef06`
 - 运行方式：`python harness.py ...` / `python harness-core/...`，子进程调用真实实现
 - 隔离：`HOME`/`USERPROFILE`/`DSH_HOME` 指向 `docs/rebuild/golden-path-home`
 - 数据目录：`docs/rebuild/golden-path-home/.dsh/memory-emotion/`
@@ -84,7 +84,7 @@ topics: [security, golden-path, trace, memory, rollback, confirmation]
 
 | 黄金路径步骤 | 证据 | 状态 |
 |---|---|---|
-| clean checkout / 可复现安装 | git 基线 `32673ca`；未做 wheel 全量复测 | 🟡 部分 |
+| clean checkout / 可复现安装 | git 基线 `dafef06`；未做 wheel 全量复测 | 🟡 部分 |
 | offline demo | 真实 demo 子进程 + DB 状态 | ✅ |
 | candidate | humanization `initiative-add`（shadow） | ✅ 真实候选 |
 | 人工审核 | `decide --action approve`（不自动执行） | ✅ |
