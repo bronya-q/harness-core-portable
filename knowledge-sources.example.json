@@ -6,7 +6,7 @@
       "source_id": "local:knowledge-source-a",
       "display_name": "Private Knowledge Source A",
       "kind": "directory",
-      "root": "[PRIVATE_LOCAL_KB]",
+      "root": "~/.dsh/harness-local/knowledge-source-a",
       "portable": false,
       "private": true,
       "default_access": "deny",

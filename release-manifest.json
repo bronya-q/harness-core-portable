@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-21T15:32:40.023594+00:00",
+  "generated_at": "2026-09-21T15:36:51.428249+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 255,
   "files": {
@@ -217,7 +217,7 @@
     "harness_core/client.py": "a4182076877c1cf7c1a7167a581acdfa3afb5e022cacdd84417eae14756d3d5b",
     "harness_core/measurement_utils.py": "d9f484866ff7440912617d89be733c3af8da9619fe654e875374e7f9f49c264e",
     "harness_core/usage_recorder.py": "c8250e932c2b439680282d323fa1ca6ff56849f16e722d15fe3ae096cf015168",
-    "knowledge-sources.example.json": "d100383a317b97d85a0f51f1a8e1c6fc450e0613da9f1056ea0bf3490387d0cb",
+    "knowledge-sources.example.json": "69e39fed4fe7a4fa5c1f3e3dbea762ba53f58b95ded6cecdb2c75b4dfbdc0c4b",
     "local-records-snapshot.public.json": "755d539e07bad1ca3ce4eb0f68f84f4d7a43ef57a3a4202ec7fd3ec7cca0bac5",
     "local_records_export.py": "52788d57985ad1877ff2f13439124618d393525eea33bdeb15c66a64276bfe83",
     "local_records_verify.py": "34b7c8645b9c354c90ba25e35a3b6e2cf08ecf5f1d73ca0e46579084cf6866a1",
