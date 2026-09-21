@@ -77,7 +77,7 @@
 - 真实截图 / GIF
 - CI 与跨平台
 
-→ [README「需要大家一起来」](https://github.com/bronya-q/harness-core-portable#需要大家一起来真的这些我一个人搞不定)
+→ [README](../README.md)
 
 > 哪怕只来 1 个人，也比没人强。
 > 不管大家有没有装，都祝看到的朋友们用 AI 许愿工程一次就成，DSH 版本更新兼容性依旧稳定。

@@ -91,7 +91,7 @@ test (ubuntu-latest, 3.11)   ✓
 
 ```text
 release-checklist: 5 / 12
-CI 基线: 失败
+CI 基线（冻结时）: 失败（后续已转绿）
 外部证据: 基本没有
 ```
 

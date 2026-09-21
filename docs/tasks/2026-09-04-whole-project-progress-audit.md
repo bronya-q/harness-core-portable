@@ -14,6 +14,8 @@ topics: [project-audit, progress, roadmap, release, mcp, testing]
 
 # Harness Core Portable 全项目进展审计
 
+> **历史快照（2026-09-04）**：本文中“无 GitHub Actions / CI 未接入”等结论已被后续 CI 接入与转绿取代；最新状态以 README、`docs/DEPLOYMENTS_INDEX.md` 和 `docs/tasks/2026-09-05-security-audit-findings.md` 为准。
+
 ## 1. 审计口径
 
 本报告区分：

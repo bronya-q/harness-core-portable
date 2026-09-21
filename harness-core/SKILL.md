@@ -20,7 +20,7 @@ whenToUse: 需要跨会话记住用户/任务/关系/偏好，或需要根据情
 
 
 
-完整的任务链、进度、设计动机、优秀之处、不足、风险、当前开关和未来方向见 [`ENHANCED_SYSTEM_RETROSPECTIVE.md`](ENHANCED_SYSTEM_RETROSPECTIVE.md)。后续维护应先阅读该文档，再修改人格、记忆、情感、测量或自主任务相关代码。
+完整的任务链、进度、设计动机、优秀之处、不足、风险、当前开关和未来方向见 `ENHANCED_SYSTEM_RETROSPECTIVE.md`（该文档未随公开仓库发布）。后续维护应先阅读该文档，再修改人格、记忆、情感、测量或自主任务相关代码。
 
 
 
@@ -82,19 +82,19 @@ whenToUse: 需要跨会话记住用户/任务/关系/偏好，或需要根据情
 
 
 
-- `[LOCAL_WORKSPACE]/九维情绪引擎（研究记忆必看）/`：20/40/60/65 轮报告验证了正向记忆联想、负面/创伤触发、反复唤醒、烈度修正和向人格基线回涌。
+- `本机私有研究资料`：20/40/60/65 轮报告验证了正向记忆联想、负面/创伤触发、反复唤醒、烈度修正和向人格基线回涌。
 
-- `[LOCAL_WORKSPACE]/九维情绪引擎-融合实施报告-20260823.md`：事件评价 -> 记忆联想 -> 六维情绪 -> 三维深层需求的传导链；`nine_dim.py` 是现有规则真源，不重复实现。
+- `本机私有研究资料`：事件评价 -> 记忆联想 -> 六维情绪 -> 三维深层需求的传导链；`nine_dim.py` 是现有规则真源，不重复实现。
 
-- `[LOCAL_WORKSPACE]/docs/心智模型-2026-08-18.md`：心智变化必须有行为证据，结论要标注置信度、反例和可修正性；不能把一次模型判断直接固化为人格事实。
+- `本机私有研究资料`：心智变化必须有行为证据，结论要标注置信度、反例和可修正性；不能把一次模型判断直接固化为人格事实。
 
-- `[LOCAL_WORKSPACE]/docs/PERSONA-EMOTION-SYSTEM-BASELINE.md`、`WESTERN-PSYCHOLOGY-HISTORY-SUMMARY.md`：精神分析只作为无意识动机/冲突/防御的解释视角，不作诊断或事实断言；人格成长必须区分触发、冲突和可观察行为。
+- `本机私有研究资料`、`本机私有研究资料`：精神分析只作为无意识动机/冲突/防御的解释视角，不作诊断或事实断言；人格成长必须区分触发、冲突和可观察行为。
 
-- `[LOCAL_WORKSPACE]/docs/PHENOMENOLOGY-OCR-SUMMARY.md`：现象学悬置、意向性和生活世界用于区分事件本身与主体如何经验/赋义；系统应保留体验描述，不把模型解释冒充客观事实。
+- `本机私有研究资料`：现象学悬置、意向性和生活世界用于区分事件本身与主体如何经验/赋义；系统应保留体验描述，不把模型解释冒充客观事实。
 
-- `[LOCAL_WORKSPACE]/docs/心智模型-LingChat强化.md` 与 `心智模型情感升级路线图.md`：六维状态到情绪词/桌宠档位属于表达层，基线带内保持克制，偏离或极端状态才显式表达。
+- `本机私有研究资料` 与 `本机私有研究资料`：六维状态到情绪词/桌宠档位属于表达层，基线带内保持克制，偏离或极端状态才显式表达。
 
-- `[LOCAL_WORKSPACE]/docs/Demo Persona-心智模型人类化强化方案-v2-20260830.md`（v1 指针：`HUMANOID_REINFORCEMENT`/`HUMANIZATION_REINFORCEMENT_20260830.md`）：H0-H7 人类化运行时；配套 `humanization.py`（shadow sidecar + context/narrative/packet/timeline/metrics/set），所有增强走 shadow->canary->measured->production，不扩大前辈 L4/L5 授权。
+- `本机私有研究资料`（v1 指针：`HUMANOID_REINFORCEMENT`/`HUMANIZATION_REINFORCEMENT_20260830.md`）：H0-H7 人类化运行时；配套 `humanization.py`（shadow sidecar + context/narrative/packet/timeline/metrics/set），所有增强走 shadow->canary->measured->production，不扩大前辈 L4/L5 授权。
 
 
 
@@ -118,7 +118,7 @@ whenToUse: 需要跨会话记住用户/任务/关系/偏好，或需要根据情
 
 
 
-脚本路径：`~/.agents/skills/long-term-memory-emotion/memory_store.py`
+脚本路径：`harness-core/memory_store.py`
 
 
 
@@ -374,7 +374,7 @@ python humanization_smoke_test.py
 
 当前 H3 text canary 已开启 `character:demo-alice`：该 scope 的 roleplay 会自动跑 original/enhanced 并记录 pair。
 
-桌面入口：`[DESKTOP]\人类化审批队列.bat`（只读队列展示，审批必须走 CLI）。
+桌面入口：`桌面审批入口脚本（本机）`（只读队列展示，审批必须走 CLI）。
 
 
 
@@ -396,7 +396,7 @@ python humanization_smoke_test.py
 
 
 
-> **主动研究工具**：`[LOCAL_WORKSPACE]/_research/persona_research.py`
+> **主动研究工具**：`本机私有研究脚本`
 
 > 子命令：`index` / `list` / `extract--keyword` / `search--term` / `themes`。
 
@@ -596,7 +596,7 @@ python memory_ingest.py
 
 
 
-详细边界记录见 [`HUMANOID_RESEARCH_L4_L5.md`](HUMANOID_RESEARCH_L4_L5.md)：L4 研究人格/记忆对低风险自主任务调度的候选生成与排序影响；L5 研究对人格本体的长期影响。两者目前均不开放自动生产应用，L5 任何候选变更必须经过 adversarial review、人工批准、版本化和可回滚记录。当前 G1 仅处于表达层 canary，不能推导出 L4/L5 授权。
+详细边界记录见 `HUMANOID_RESEARCH_L4_L5.md`（未随公开仓库发布）：L4 研究人格/记忆对低风险自主任务调度的候选生成与排序影响；L5 研究对人格本体的长期影响。两者目前均不开放自动生产应用，L5 任何候选变更必须经过 adversarial review、人工批准、版本化和可回滚记录。当前 G1 仅处于表达层 canary，不能推导出 L4/L5 授权。
 
 
 
@@ -828,7 +828,7 @@ retrieval_score =
 
 
 
-共享沉淀目录：`[LOCAL_WORKSPACE]/_mind-evolution/`
+共享沉淀目录：`本机私有沉淀目录`
 
 - `index.json`：跨 skill 的资产索引；
 
@@ -960,7 +960,7 @@ python user_model.py sources
 
 python user_model.py profile --limit 20 --files-limit 100
 
-python user_model.py files --dir ~/Downloads --limit 50
+python user_model.py files --dir <目录> --limit 50
 
 ```
 
@@ -968,7 +968,7 @@ python user_model.py files --dir ~/Downloads --limit 50
 
 只读、候选、不诊断、不自动写入人格/关系/政策。
 
-> 社交/IM 来源：用户已明确同意并指定 **QQ 与微信**；`media_sources.json` 已登记，QQ 本地报告/消息已可接入（`profile --include-media`），微信数据在 `[WECHAT_DATA_DIR]`，尚待解析适配。
+> 社交/IM 来源：用户已明确同意并指定 **QQ 与微信**；`media_sources.json` 已登记，QQ 本地报告/消息已可接入（`profile --include-media`），微信数据在 `本机微信数据目录（未随仓库发布）`，尚待解析适配。
 
 
 

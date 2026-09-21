@@ -73,7 +73,7 @@ python -m unittest discover -s tests -v
 ```text
 fixture contract checks  30/30 PASS
 fixture unit tests        8/8 PASS
-full unittest             66 tests PASS
+full unittest             66 tests PASS（历史记录；当前仓库为 71 个，见 tests/test_real_golden_path.py）
 ```
 
 这些结果证明 fixture 内部合同一致，不证明真实模型质量、真实 rawmem/memdsl 对接或真实宿主集成。

@@ -6,7 +6,7 @@
 > 它做的是让“关系型 AI 界面”**更稳定、更连续、更可信任**。
 
 ```text
-版本：v0.1.0-alpha.3
+版本：v0.1.0-alpha.4
 状态：alpha / WIP
 License：MIT
 Python：3.13+
@@ -446,7 +446,7 @@ docs/mcp/verification.md
 | 模型推理 span | 需要真实 provider 链路 | 用你的模型/宿主跑一次，回填 duration |
 
 > 这不是重复上面“需要大家一起来”里的小任务；上面是具体动作，这里是把它们串起来的硬骨头。
-> 详细缺口清单见 [`docs/tasks/2026-09-04-remaining-gaps.md`](docs/tasks/2026-09-04-remaining-gaps.md)。
+> 详细缺口清单见上方“效果与边界”一节。
 
 ## 文档
 

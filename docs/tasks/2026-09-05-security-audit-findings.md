@@ -37,7 +37,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
   - 执行 `git filter-repo --replace-text`，将私人人格名与相关标识替换为 demo 占位名称。
   - 远程 main 已更新到清洗后的提交；标签同步更新。
   - 清洗后的 **private-identity 类命中为 0**；当前工作树边界扫描通过。
-  - 注意：`windows_abs_path`（19 处，历史）与 `private_overlay`（1706 处，历史）属于**边界提示项**，不是私人身份标识；它们仍需要在未来文件规范中逐步收敛，不应被当作“已完全无痕”。
+  - 注意：`windows_abs_path` 与 `private_overlay` 不是私人身份标识，但也不能降级成“无害提示”。其中 `windows_abs_path` 包含真实本机绝对路径（例如旧 `CREDITS.md` 中的 Windows 用户路径），仍存在于可达历史，需要单独处理；本次重写只清掉私人人格标识。
 
 ## 3. 记忆系统 + MCP 持久化注入面
 
@@ -57,6 +57,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
   - 只跑本地检查
   - 已增加 history 扫描：`secret-scan --history`、`boundary-check --history`
   - 已为 MCP 自检注入 `HARNESS_MCP_ADAPTER_ID=harness-core-mcp`
+  - 远端 GitHub Actions 最新 run #79（commit `50f0a75`）`conclusion=success`；因此索引/计划里“CI 失败”必须标为“冻结时失败、后续已转绿”
   - 结论：安全（但仍需保持“公共 CI 不做内容上传/网络回传”原则）
 - `scripts/create-github-release.sh`：
   - 只要求 `gh auth status`
@@ -70,19 +71,27 @@ topics: [security, audit, history, git, mcp, memory, ci]
 
 ## 5.1 历史扫描量化结果（清洗后）
 
+> 以下数字是**快照**，会随提交增长；不要把它们当作常驻值。当前快照对应 commit `50f0a75`。
+
 - `python harness.py secret-scan --history`：
-  - `total_refs=178`，`scanned=178`，`failed=0`，`hits=0`
-  - 说明：在 178 个 refs 与现有密钥规则覆盖范围内未发现命中；不等于证明不存在真实凭据。
+  - `total_refs=183`，`scanned=183`，`failed=0`，`hits=0`
+  - 说明：只代表该次运行在 183 个 refs 与现有密钥规则覆盖范围内未发现命中；不等于证明不存在真实凭据。
 - `python harness.py boundary-check --history`：
   - `private_identity_hits=0`（私人身份标识类：`local_persona_ref` + 本地加载的私人清单）
   - `failed_scans=0`
-  - `counts`（边界提示项）：`windows_abs_path=20`、`private_overlay=1723`
-  - 说明：`private_identity_hits=0` 只表示私人身份标识在清洗后的历史中未再检出；`windows_abs_path` / `private_overlay` 仍属于边界提示，需逐步收敛。
+  - `counts`：`windows_abs_path=25`、`private_overlay=1808`
+  - 说明：`private_identity_hits=0` 只表示私人身份标识类未检出；`windows_abs_path` 包含真实本机路径，仍是未清问题。
 
 ### 清洗前（历史事实记录）
 
 - 在历史重写前，上述边界扫描曾在清洗后的替代清单上误计（因为 `git filter-repo --replace-text` 把扫描器源码中的私人名也替换成了中文占位符）。
 - 已修复：公共扫描器不再包含具体私人名规则，改为通用规则 + 本地私有规则文件（`HARNESS_PRIVATE_IDENTIFIERS_FILE`）加载，私有清单不提交公开库。
+
+### 5.1.1 仍在可达历史中的本机路径（未清）
+
+- 可达提交 `05a259f:CREDITS.md` 仍含本机 Windows 用户目录绝对路径（具体路径不写入公开文档）；`harness-core/SKILL.md` 的多个历史版本还含盘符绝对路径与 `~/Documents/<本机工作区>/...` 等私有路径。
+- 这些命中在上次历史重写后仍然存在，因为 replacement list 只覆盖私人人格标识，未覆盖本机路径。
+- 当前工作树已对这些文档做脱敏；若要把它们从 `main` 与所有 tag 的可达历史中清除，需要另行授权的第二次历史重写。
 
 ## 5.2 已增强工具
 
@@ -142,7 +151,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
 
 ## 8. 审计工具链本身复核（audit-wsl.sh）
 
-> 复核对象：本机审计脚本（位于仓库外的 `../harness/bin/audit-wsl.sh`，即用户 harness 工作区的 `bin/audit-wsl.sh`）。该脚本不能仅凭“退出 0”作为全链通过证据；以下逐条记录真实调用结构与掩埋风险。
+> 复核对象：本机 WSL 审计脚本（未随仓库发布，公开文档不记录其本机路径）。该脚本不能仅凭“退出 0”作为全链通过证据；以下逐条记录真实调用结构与掩埋风险。
 
 ### 8.1 已正确区分“严重”结果的工具
 
