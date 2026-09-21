@@ -230,7 +230,7 @@ harness_core_portable-0.1.0-py3-none-any.whl
 - Linux/macOS 安装可用；
 - console script 已在隔离 venv 中端到端验证。
 
-另外，Python package version 当前为 `0.1.0`，Git tag 为 `v0.1.0-alpha.3`。正式发布前应采用一致的 PEP 440 版本，例如 `0.1.0a3`，并同步 MCP metadata。
+另外（**当时状态**），Python package version 为 `0.1.0`，Git tag 为 `v0.1.0-alpha.3`；正式发布前应采用一致的 PEP 440 版本。后续已更新：当前 `pyproject.toml` 为 `0.1.0a4`，tag 为 `v0.1.0-alpha.4`。
 
 ## 6. 仓库内 MCP metadata
 

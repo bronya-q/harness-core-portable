@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-21T15:16:49.845391+00:00",
+  "generated_at": "2026-09-21T15:21:23.642690+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 255,
   "files": {
@@ -67,7 +67,7 @@
     "docs/tasks/2026-09-04-alpha4-implementation-progress.md": "4df075e3c77eb4359050b065961907dcec16024443092fc86f77be720abab0bd",
     "docs/tasks/2026-09-04-alpha4-release-preparation-design.md": "5947f52d3dddc5a175bb05cbc05e6d22f5f0579d122d08f68d94bd76980e1497",
     "docs/tasks/2026-09-04-first-time-user-testing-design.md": "2aee21ff489baa96f0db73f4efedea1d4b21de10f68176037cf35edf72a57ce1",
-    "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "4c96431b334bb35e468e48e30fc01be73eb4385fb49f08da3029b0a53bff41cf",
+    "docs/tasks/2026-09-04-mcp-and-coding-agent-integration-completed-work.md": "a732a261203c2262496ccf04ad26b60bf36a2e18ae48c8c1d63b4b14b1d5f3e0",
     "docs/tasks/2026-09-04-official-mcp-and-coding-agent-ecosystem-validation-design.md": "9ef46dc2c58b7e7640dad3c339b9e6e5e97976a297e91dcf04510b71ef4f437d",
     "docs/tasks/2026-09-04-partial-implementation-inventory.md": "c97058c188cfa35b1762395134c6fdda63307adb6e24c925091bd112e606d3a5",
     "docs/tasks/2026-09-04-private-document-migration.md": "3c55ff1e2ad178e6a31ecf6947fcac751e7d8194056803f74bc44ffdf114e5ec",
