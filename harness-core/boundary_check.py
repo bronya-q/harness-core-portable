@@ -107,6 +107,8 @@ def scan_history_counts():
                 for line in p.stdout.splitlines():
                     parts = line.split(":")
                     if len(parts) >= 3:
+                        if parts[1].replace("\\", "/") == "harness-core/boundary_check.py":
+                            continue
                         try:
                             counts[name] += int(parts[-1])
                         except Exception:

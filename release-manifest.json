@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "algorithm": "sha256",
-  "generated_at": "2026-09-21T15:23:23.402407+00:00",
+  "generated_at": "2026-09-21T15:30:20.441703+00:00",
   "generated_by": "release_verify.py --generate",
   "count": 255,
   "files": {
@@ -104,7 +104,7 @@
     "harness-core/assets_commands.py": "327f5b21e9aef3971c3345024fca2e459c486a97e60a6e8cfe250c9900ade4f5",
     "harness-core/atomic_fact_retriever.py": "fb71a860f36f7364d64a269abce4eca8c25141e46c479a01d69125aef984314a",
     "harness-core/atomic_facts_build.py": "cd191ac7044a3c5af707189751cbe7deabfa2e07340c400197a5a397e2a7e26b",
-    "harness-core/boundary_check.py": "acf35de3d302e071b9beca2ef087e4f42fa8fe322fc95b26115529329adfcacb",
+    "harness-core/boundary_check.py": "2032477e294ee78dab257d1ba6de812e5c9547a94f62bfaf16ee40fe2b111343",
     "harness-core/card_game.py": "311ffbf052b99b83fdd608973c18486027b4b8b5147273b03983b1890053573d",
     "harness-core/character_workbench.py": "7e4089b70183d91699323d4174e4c366e44d91ff50db132e3ad08fa3d6e747b8",
     "harness-core/cognitive_dynamics.py": "50be19bbcb44e254c94afe5511496282616866ed338caa145c5f31d1fad91ea2",
