@@ -9,6 +9,7 @@
 import argparse
 import difflib
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -43,12 +44,16 @@ def similarity_norm(a, b):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--upstream-root", default=str(Path.home() / "Documents" / "harness" / "_research" / "NEKO"))
+    ap.add_argument("--upstream-root", default=os.environ.get("HARNESS_UPSTREAM_ROOT"))
     ap.add_argument("--max-upstream", type=int, default=10)
     ap.add_argument("--max-size-kb", type=int, default=100)
     ap.add_argument("--depth", type=int, default=2)
     ap.add_argument("--threshold", type=float, default=0.5)
     args = ap.parse_args()
+    if not args.upstream_root:
+        print(json.dumps({"ok": False, "error": "upstream_root_required",
+                          "hint": "请通过 --upstream-root 或 HARNESS_UPSTREAM_ROOT 指定私有上游目录（不写入公开文档）"}, ensure_ascii=False, indent=2))
+        return 1
 
     repo_files = collect_py(ROOT, 3, 200)
     upstream_files = collect_py(args.upstream_root, args.depth, args.max_size_kb)[:args.max_upstream]

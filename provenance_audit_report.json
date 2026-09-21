@@ -1,7 +1,7 @@
 {
   "repo_files": 58,
   "upstream_files": 10,
-  "upstream_root": "[LOCAL_WORKSPACE]/_research/NEKO",
+  "upstream_root": "[private-local]",
   "threshold": 0.5,
   "hits": [],
   "conclusion": "受控比对完成；高相似度命中见上。"
