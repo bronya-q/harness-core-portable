@@ -5,7 +5,7 @@ kind: remediation-plan
 date: 2026-09-05
 updated_at: 2026-09-05
 owner_role: security-audit
-source_commit: 2fe4fd6
+source_commit: 76d51c7
 target_version: post-alpha.4
 public: true
 contains_private_data: false
@@ -65,7 +65,7 @@ GitHub 官方文档还提示：旧 clone 可能把已删除内容重新推回，
 
 因此本文件只批准调查与演练，不批准远端重写。真正 force-push、重打 tag、编辑 Release 前需要仓库所有者明确授权。
 
-> **执行更新（2026-09-05 后）**：仓库所有者已明确授权，已完成 mirror 演练、`git filter-repo` 清洗、远端 main 与 tag 更新。清洗后 `private_identity_hits=0`；但本机路径类（如旧 `CREDITS.md` 中的 Windows 用户路径）仍存在于可达历史，本次重写未覆盖，需另行授权处理。上文“不批准远端重写”为当时状态。
+> **执行更新（2026-09-05 后）**：仓库所有者已明确授权，已完成两次 mirror 演练与 `git filter-repo` 清洗，并 force-update 远端 main 与 tag。第二次重写覆盖本机路径类（Windows 用户目录绝对路径、微信数据目录、`~/Documents` 下的私有工作区、桌面路径、模型目录 及变体），重写后全部可达 refs 的本机路径变体命中为 0。上文“不批准远端重写”为当时状态。
 
 ## 4. P0：历史清理方案
 

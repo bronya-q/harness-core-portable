@@ -5,7 +5,7 @@ kind: task-design
 date: 2026-09-04
 updated_at: 2026-09-04
 owner_role: memory-governance-review
-source_commit: d060308
+source_commit: b756b1e
 target_version: v0.5+
 public: true
 contains_private_data: false

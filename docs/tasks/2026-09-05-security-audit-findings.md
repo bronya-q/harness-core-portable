@@ -23,8 +23,8 @@ topics: [security, audit, history, git, mcp, memory, ci]
 ## 1. `secret.txt` 历史提交
 
 - `git log --all -- secret.txt` 找到 2 个 commit：
-  - `1e910fe`（误加入）
-  - `64a4ba7`（移除）
+  - `0b2c8ad`（误加入）
+  - `c207e29`（移除）
 - 两个 commit 中 `secret.txt` 内容均为 **0 字节**。
 - 结论：**没有真实密钥**。不需要轮换/清洗密钥。
 - 但删除提交不会清除历史；本次仍按整改方案执行了 `git filter-repo` 历史清洗，以防未来出现“非空文件误提交”时无法恢复。
@@ -57,7 +57,7 @@ topics: [security, audit, history, git, mcp, memory, ci]
   - 只跑本地检查
   - 已增加 history 扫描：`secret-scan --history`、`boundary-check --history`
   - 已为 MCP 自检注入 `HARNESS_MCP_ADAPTER_ID=harness-core-mcp`
-  - 远端 GitHub Actions 最新 run #79（commit `50f0a75`）`conclusion=success`；因此索引/计划里“CI 失败”必须标为“冻结时失败、后续已转绿”
+  - 远端 GitHub Actions 最新 run #79（commit `8edb348`）`conclusion=success`；因此索引/计划里“CI 失败”必须标为“冻结时失败、后续已转绿”
   - 结论：安全（但仍需保持“公共 CI 不做内容上传/网络回传”原则）
 - `scripts/create-github-release.sh`：
   - 只要求 `gh auth status`
@@ -69,29 +69,29 @@ topics: [security, audit, history, git, mcp, memory, ci]
 - 单人贡献、1 star、0 fork：按“不可信基线”处理，持续需要外部 review。
 - `harness-core/` 与 `harness_core/` 双目录并存是结构混乱信号。短期用文档说明，长期应统一命名。
 
-## 5.1 历史扫描量化结果（清洗后）
+## 5.1 历史扫描量化结果（第二次重写后）
 
-> 以下数字是**快照**，会随提交增长；不要把它们当作常驻值。当前快照对应 commit `50f0a75`。
+> 数字会随提交增长，以下只描述方法与被检查范围，不把 refs 数写死。
 
-- `python harness.py secret-scan --history`：
-  - `total_refs=183`，`scanned=183`，`failed=0`，`hits=0`
-  - 说明：只代表该次运行在 183 个 refs 与现有密钥规则覆盖范围内未发现命中；不等于证明不存在真实凭据。
+- `python harness.py secret-scan --history`：`failed=0`、`hits=0`；代表在全部可达 refs 与现有密钥规则覆盖范围内未发现命中。
 - `python harness.py boundary-check --history`：
-  - `private_identity_hits=0`（私人身份标识类：`local_persona_ref` + 本地加载的私人清单）
+  - `private_identity_hits=0`
   - `failed_scans=0`
-  - `counts`：`windows_abs_path=25`、`private_overlay=1808`
-  - 说明：`private_identity_hits=0` 只表示私人身份标识类未检出；`windows_abs_path` 包含真实本机路径，仍是未清问题。
+  - `windows_abs_path=0`（本机绝对路径变体已在第二次重写中清理；扫描器自身命中已排除）
+  - 剩余 `private_overlay` 为文档化的 overlay 引用，不是用户本机路径。
+  - 说明：这只代表当前规则与 refs 覆盖范围内未发现本机路径，不代表不存在其他形式的私人信息。
 
 ### 清洗前（历史事实记录）
 
-- 在历史重写前，上述边界扫描曾在清洗后的替代清单上误计（因为 `git filter-repo --replace-text` 把扫描器源码中的私人名也替换成了中文占位符）。
-- 已修复：公共扫描器不再包含具体私人名规则，改为通用规则 + 本地私有规则文件（`HARNESS_PRIVATE_IDENTIFIERS_FILE`）加载，私有清单不提交公开库。
+- 第一次历史重写只覆盖私人人格标识，导致本机路径类仍留在历史中。
+- 第二次历史重写（`git filter-repo --replace-text`）已覆盖 Windows 用户目录绝对路径、微信数据目录、`~/Documents` 下的私有工作区、桌面路径、模型目录 及单/双反斜杠变体。
+- 重写后对所有可达 refs 复扫：上述本机路径变体 0 命中；当前工作树也已完成脱敏。
 
-### 5.1.1 仍在可达历史中的本机路径（未清）
+### 5.1.1 本机路径历史清洗（已执行第二次重写）
 
-- 可达提交 `05a259f:CREDITS.md` 仍含本机 Windows 用户目录绝对路径（具体路径不写入公开文档）；`harness-core/SKILL.md` 的多个历史版本还含盘符绝对路径与 `~/Documents/<本机工作区>/...` 等私有路径。
-- 这些命中在上次历史重写后仍然存在，因为 replacement list 只覆盖私人人格标识，未覆盖本机路径。
-- 当前工作树已对这些文档做脱敏；若要把它们从 `main` 与所有 tag 的可达历史中清除，需要另行授权的第二次历史重写。
+- 第二次重写后，`main` 与所有 tag 的可达历史中，本机路径变体命中为 0。
+- 当前工作树的 md、`harness-core/wechat_adapter.py`、`harness-core/mind_precipitate.py`、`audit_provenance.py`、`provenance_audit_report.json` 均已移除硬编码本机路径。
+- 注意：旧 clone、fork、GitHub 缓存仍可能保留旧对象；需要重新 clone 或等待 GitHub GC。
 
 ## 5.2 已增强工具
 
